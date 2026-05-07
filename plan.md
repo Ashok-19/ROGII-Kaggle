@@ -55,7 +55,11 @@ Add a lightweight experiment table around the current notebook before changing f
 
 Proof: the train hidden target has 3,783,989 rows across 773 wells, so single-fold or public-only feedback can be noisy. The public/private split is hidden, and the visible local test set is not validation.
 
-## Priority 1: GR Missingness Reliability Features
+### Note:
+
+- ***All scores with priority fixes implemented are compounded. Eg: If priority 2 fix is applied and tested, there were also priority 1 fix applied as well***
+
+## Priority 1: GR Missingness Reliability Features [score improved from 12.025 to 11.886]
 
 Add these incremental features to `build_hidden_features`:
 
@@ -70,7 +74,7 @@ Expected impact: low-risk feature gain. Current notebook only has `gr_missing` p
 
 Validation tier: dataset-verified problem, unvalidated feature gain.
 
-## Priority 2: Typewell Reliability, Residual, and Geology Features
+## Priority 2: Typewell Reliability, Residual, and Geology Features [score decreased from 11.886 to 14.018]
 
 Extend existing typewell features rather than replacing them:
 
