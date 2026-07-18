@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-18T19:20:58Z",
+  "payload": {
+    "decision_id": "D004",
+    "decided_at": "2026-07-19",
+    "title": "Reject naive structural extrapolation",
+    "decision": "Retain last-known TVT and reject unconditional constant, heel-linear, quadratic, and damped-spline continuation of U=TVT+Z. Keep U only as an interpretable representation, diagnostic coordinate, and candidate-feature space.",
+    "rationale": "All controls passed, but the best challenger scored 39.6546 versus 15.9099 and improved 0/25 frozen fold cells. Oracle diagnostics show that a median U-slope error of only 0.00819 ft per row compounds across long suffixes even though visible and hidden U slopes correlate 0.928.",
+    "source_ids": "experiments/E002/RESULT.md,experiments/E002/results/summary.json",
+    "revisit_trigger": "A legal feature set predicts heel-to-toe U-slope change or hidden TVT drift with signed repeated-fold evidence and all controls."
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "hypothesis",
+  "recorded_at": "2026-07-18T19:20:58Z",
+  "payload": {
+    "hypothesis_id": "H001",
+    "title": "Naive surface-target continuation",
+    "statement": "Unconditional constant, robust-linear, quadratic, or damped-spline continuation of visible-prefix U=TVT+Z will outperform last-known TVT.",
+    "status": "rejected",
+    "priority": 1,
+    "evidence_for": "U=TVT+Z is substantially smoother than the wrong-sign transform and its visible/hidden slopes have strong oracle correlation.",
+    "evidence_against": "E002 scored 39.6546 for the best challenger versus 15.9099 baseline, with 0/25 fold-cell wins and worse tails in every hidden-length regime.",
+    "next_test": "Predict the small heel-to-toe U-slope delta and hidden TVT drift separately; evaluate risk detection separately from signed action."
+  }
+}

@@ -171,6 +171,9 @@ class LearningDashboardTests(unittest.TestCase):
         html = (ROOT / "dashboard/learn.html").read_text(encoding="utf-8")
         self.assertGreaterEqual(len(content["feature_groups"]), 5)
         self.assertGreaterEqual(len(content["breakthroughs"]), 4)
+        self.assertEqual(content["updated_at"], "2026-07-19")
+        self.assertTrue(any(item["id"] == "B005" for item in content["breakthroughs"]))
+        self.assertIn("trend_transfer", html)
         for hook in ("/api/learning", "wellSelect", "geometryPlot", "targetPlot", "grPlot", "presetOracle"):
             self.assertIn(hook, html)
         self.assertIn("Learning simulator", html)

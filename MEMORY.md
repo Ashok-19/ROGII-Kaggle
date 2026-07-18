@@ -9,7 +9,7 @@ Last updated: 2026-07-18
 - Best Kaggle-MCP-verified submission for this account/team history: 7.119 on 2026-07-16, ref 54754431.
 - User-reported best: 6.888; submission reference not yet verified.
 - Current public top-100 cutoff in the archived snapshot: 6.799.
-- E001 validation infrastructure is complete; no competition model training has started.
+- E001 validation infrastructure is complete. E002 is complete and rejected; no competition model training has started.
 
 ## Foundation completed
 
@@ -19,6 +19,7 @@ Last updated: 2026-07-18
 - Copied notebook audited: seven named external datasets plus one opaque mount; three named datasets have unknown licenses.
 - SQLite experiment ledger, auto-sync CLI, dashboard, manifests, validation protocol, and roadmap are installed.
 - E001 is promoted: five deterministic whole-well fold maps, one shared evaluator, controls, reports, and hashes are frozen.
+- E002 is rejected: the transform sign is verified, but every naive low-order structural continuation lost to last-known TVT on all 25 frozen fold cells.
 - The dashboard Learning Lab provides a beginner-first visual guide, real-well interactive playground, feature glossary, error demonstrations, idea prompts, and a breakthrough timeline.
 
 ## Durable understanding
@@ -34,6 +35,10 @@ Last updated: 2026-07-18
 - E001 reproduced last-known-TVT RMSE 15.9098528707 on 3,783,989 hidden rows.
 - Baseline SSE decomposes into 67.75% per-well mean/datum, 14.53% linear trend, and 17.72% remaining shape.
 - Worst 5% and 10% of wells contribute 38.99% and 52.48% of baseline SSE.
+- E002 verified that visible `U = TVT + Z` row changes are much smoother than `TVT - Z` (RMS ratio 0.158), but smoothness does not make heel trend safely extrapolatable.
+- Robust-linear U was the best structural challenger at 39.6546 RMSE versus 15.9099 for last-known TVT; it won 0/25 frozen fold cells.
+- Oracle-only diagnostics show visible and hidden U slopes correlate 0.928 with 97.93% sign agreement, yet the median absolute slope error is 0.00819 ft/row and compounds across long suffixes.
+- Median hidden U slope nearly equals hidden Z slope, leaving median hidden TVT slope near zero; last-known TVT captures this cancellation better than naive U continuation.
 
 ## Decisions
 
@@ -44,10 +49,11 @@ Last updated: 2026-07-18
 - `folds/v1.json` through `folds/v5.json`, data signature `6ebe65b4...fe77`, and E001 metric/control semantics are immutable.
 - Heavy training, large OOF generation, and accelerator workflows should use Kaggle MCP notebook sessions after committing exact code/configuration.
 - Material breakthroughs and newly understood failure modes must also be added to the Learning Lab in evidence-labeled visual form.
+- Naive constant/heel-linear/quadratic/spline U continuation is rejected. U remains useful only as a representation, diagnostic, and evidence space until signed future-trend change is legally predictable.
 
 ## Exact next action
 
-Run E002: reproduce a structural baseline ladder on frozen folds, verifying transform sign conventions before constant, robust-linear, quadratic, and constrained-spline candidates are compared.
+Run E003: quantify datum and trend oracle headroom, then test whether legal visible-prefix, trajectory, GR-availability, surface, and whole-well features predict heel-to-toe U-slope delta, hidden TVT drift, risk magnitude, and signed action separately.
 
 ## Open risks
 

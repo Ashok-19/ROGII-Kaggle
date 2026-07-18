@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-07-18",
+  "updated_at": "2026-07-19",
   "title": "ROGII Competition Learning Lab",
   "subtitle": "A beginner-first visual guide to the data, geology, target, validation, and idea space.",
   "beginner_path": [
@@ -148,8 +148,8 @@
     {
       "id": "surface",
       "title": "Separate easy wiggle from hard trend",
-      "plain": "The known trajectory explains some local movement. The difficult part is where the entire geological path sits and how it drifts.",
-      "technical": "The project tracks U = TVT + Z, per-well datum, suffix trend, and residual shape, while explicitly verifying sign conventions."
+      "plain": "The structural coordinate is smooth, but a tiny slope mistake repeated over thousands of rows can still move the prediction tens of feet.",
+      "technical": "E002 verifies U = TVT + Z as the smoother sign convention, then rejects unconditional constant, heel-linear, quadratic, and damped-spline continuation. Future models must estimate the heel-to-toe slope change or TVT drift."
     },
     {
       "id": "alignment",
@@ -207,8 +207,23 @@
       "summary": "A lower grouped-CV score has scored worse publicly than an older model in documented competition experiments.",
       "why_it_matters": "Repeated folds, controls, shift tests, and a decorrelated final family are mandatory."
     }
+,
+    {
+      "id": "B005",
+      "date": "2026-07-19",
+      "title": "Smooth U does not make heel trend portable",
+      "evidence": "local_verified",
+      "visual": "trend_transfer",
+      "summary": "E002 verified the U sign but rejected every naive structural continuation. Robust-linear U scored 39.6546 versus 15.9099 for last-known TVT and won 0 of 25 frozen fold cells.",
+      "why_it_matters": "Visible and hidden U slopes correlate 0.928, yet a median slope error of 0.00819 ft per row compounds to roughly 41 ft over 5,000 rows. Model the future slope change or TVT drift instead of extending the heel trend unchanged."
+    }
   ],
   "idea_questions": [
+    {
+      "signal": "trend transfer",
+      "question": "Can legal visible-prefix and whole-well evidence predict the small difference between heel U slope and toe U slope without using hidden labels at inference?",
+      "falsifier": "Signed slope-delta correlation disappears on repeated folds, or an uncertainty model detects large errors but cannot choose the correction direction."
+    },
     {
       "signal": "geometry",
       "question": "Can a feature predict how the structural trend changes after the TVT_input boundary without using hidden labels?",
@@ -264,6 +279,12 @@
     {
       "title": "E001 validated results",
       "local_path": "experiments/E001/RESULT.md",
+      "url": ""
+    }
+,
+    {
+      "title": "E002 rejected structural ladder",
+      "local_path": "experiments/E002/RESULT.md",
       "url": ""
     }
   ]

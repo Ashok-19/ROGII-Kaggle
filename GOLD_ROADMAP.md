@@ -21,13 +21,13 @@ Completed before model development:
 - `AGENTS.md`, `MEMORY.md`, control-first workflow, SQLite ledger, auto-sync CLI, validation command, and dashboard created.
 - Previous roadmap preserved under `archive/legacy/`.
 
-No new model family is considered started until the validation harness and independent baselines are frozen.
+E001 is promoted and frozen. E002 completed the independent structural ladder and rejected every naive U continuation; last-known TVT remains the retained baseline.
 
 ## What the evidence changes
 
 ### 1. The target is structural position
 
-Let `U = TVT + Z`. The known trajectory contributes most local TVT wiggle through `-Z`. The difficult part is the smooth per-well level/trend of `U`, including datum uncertainty and structural breaks. Direct row-wise TVT prediction is therefore not the only or preferred framing.
+Let `U = TVT + Z`. E002 verifies that U is the smoother and correctly signed structural coordinate, but also shows that smoothness is not enough for long-horizon extrapolation. Constant, heel-linear, quadratic, and damped-spline U continuations scored 39.65–115.84 RMSE versus 15.91 for last-known TVT. Hidden U generally moves almost with Z, leaving TVT nearly flat; the next target is the small heel-to-toe U-slope change or hidden TVT drift, not raw U continuation.
 
 ### 2. The error is concentrated
 
@@ -129,6 +129,8 @@ Deliverables: archive, source/claim registry, workflow, memory, dashboard, datab
 
 ### July 19–20 — Validation harness and independent baselines
 
+Status: completed. E001 was promoted; E002 was rejected with all controls passing.
+
 Deliverables:
 
 - Freeze fold map v1 and repeated maps v2–v5.
@@ -138,6 +140,8 @@ Deliverables:
 - Verify controls and leakage sentinel.
 
 Exit gate: identical reruns reproduce metrics; pooled and direct RMSE agree; no ID/order leakage; all controls pass.
+
+Measured outcome: E002 retained last-known TVT at 15.9099 RMSE. Robust-linear U was the least-bad challenger at 39.6546, won 0/25 fold cells, and degraded long-hidden RMSE to 48.5525. The candidate matrix is retained only for diagnostics and future disagreement features.
 
 ### July 21–23 — Candidate-bank reconstruction
 
@@ -226,8 +230,8 @@ These defaults may be revised only through a recorded decision before seeing the
 ## Immediate experiment queue
 
 1. **E001 — Metric and fold harness — completed 2026-07-18.** Evaluator, five fold maps, leakage controls, reports, and hashes are frozen.
-2. **E002 — Structural baseline ladder — next.** Verify transform sign conventions, then compare constant, robust linear, quadratic, and constrained spline formulations.
-3. **E003 — Datum/trend oracle decomposition.** Quantify learnable headroom and per-well sign problem.
+2. **E002 — Structural baseline ladder — completed and rejected 2026-07-19.** Sign verified; last-known TVT retained; naive U continuation rejected after 0/25 fold-cell wins.
+3. **E003 — Datum/trend oracle and transfer predictability — next.** Quantify oracle headroom and test legal prediction of heel-to-toe U-slope delta, hidden TVT drift, risk magnitude, and signed action separately.
 4. **E004 — Clean PF and trellis candidates.** Independent implementations with OOF paths.
 5. **E005 — Candidate evidence tree stack.** Positive/no-op/duplicate/shuffle controls.
 6. **E006 — Horizontal self-correlation candidate.** Template-shuffle control.
