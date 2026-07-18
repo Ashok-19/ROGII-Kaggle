@@ -26,6 +26,37 @@ class E002StructuralTests(unittest.TestCase):
         self.assertAlmostEqual(slope, 0.03, places=4)
         self.assertGreaterEqual(scale, 0.0)
 
+    def test_official_rejected_result_artifacts_match_manifest(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        result_dir = root / "experiments" / "E002" / "results"
+        artifact_manifest = json.loads((result_dir / "artifact_manifest.json").read_text(encoding="utf-8"))
+        for item in artifact_manifest["files"]:
+            path = result_dir / item["path"]
+            self.assertTrue(path.exists(), item["path"])
+            self.assertEqual(path.stat().st_size, item["bytes"], item["path"])
+            self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), item["sha256"], item["path"])
+        for item in artifact_manifest["fold_files"]:
+            path = root / item["path"]
+            self.assertEqual(path.stat().st_size, item["bytes"], item["path"])
+            self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), item["sha256"], item["path"])
+        for item in artifact_manifest["external_artifacts"]:
+            path = root / "artifacts" / "E002" / "structural-ladder" / item["path"]
+            if path.exists():
+                self.assertEqual(path.stat().st_size, item["bytes"], item["path"])
+                self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), item["sha256"], item["path"])
+        summary = json.loads((result_dir / "summary.json").read_text(encoding="utf-8"))
+        self.assertEqual(summary["status"], "rejected")
+        self.assertEqual(summary["selected_candidate"], "last_known_tvt")
+        self.assertEqual(summary["best_challenger"], "robust_linear_u")
+        self.assertEqual(summary["improved_fold_cells"]["robust_linear_u"], 0)
+        self.assertTrue(all(detail["pass"] for detail in summary["controls"].values()))
+        self.assertAlmostEqual(summary["candidate_metrics"]["last_known_tvt"]["rmse"], 15.909852870734554)
+        self.assertAlmostEqual(summary["candidate_metrics"]["robust_linear_u"]["rmse"], 39.65457653359809)
+        self.assertAlmostEqual(
+            summary["trend_transfer_diagnostic"]["visible_to_hidden_u_slope_correlation_oracle"],
+            0.9282910652020927,
+        )
+
     def test_fixture_run_is_promoted_and_byte_deterministic(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

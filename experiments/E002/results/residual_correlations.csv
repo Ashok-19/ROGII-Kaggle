@@ -1,0 +1,11 @@
+candidate_a,candidate_b,residual_correlation
+constant_u,constrained_spline_u,0.925987302167
+constant_u,quadratic_u,0.488585210933
+constant_u,robust_linear_u,0.179699234254
+last_known_tvt,constant_u,0.0122065056073
+last_known_tvt,constrained_spline_u,0.0987369987061
+last_known_tvt,quadratic_u,0.0227207462985
+last_known_tvt,robust_linear_u,0.305189319116
+quadratic_u,constrained_spline_u,0.603142129676
+robust_linear_u,constrained_spline_u,0.409501824578
+robust_linear_u,quadratic_u,0.418253446478

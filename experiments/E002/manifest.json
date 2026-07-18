@@ -2,13 +2,13 @@
   "experiment_id": "E002",
   "title": "Structural baseline ladder",
   "hypothesis": "Continuing the smooth structural coordinate U = TVT + Z with conservative low-order trends will materially beat direct last-known-TVT continuation while remaining stable on repeated whole-well folds and long hidden suffixes.",
-  "status": "designed",
+  "status": "rejected",
   "track": "surface",
   "priority": 2,
   "owner": "NNMax",
   "parent_id": "E001",
   "created_at": "2026-07-18T19:02:00Z",
-  "updated_at": "2026-07-18T19:02:00Z",
+  "updated_at": "2026-07-18T19:20:58Z",
   "design": {
     "baseline": "E001 last_known_tvt at pooled RMSE 15.9098528707",
     "legal_inputs": [
@@ -30,7 +30,8 @@
       "wrong-sign constant continuation",
       "fold-cell and hidden-length regime metrics",
       "per-well datum/trend/shape decomposition",
-      "residual correlations against last-known and constant-U paths"
+      "residual correlations against last-known and constant-U paths",
+      "post-hoc hidden-label oracle diagnostic for heel-to-toe U-slope transfer"
     ],
     "controls": [
       "positive synthetic legal-slope signal",
@@ -45,5 +46,75 @@
     "runtime_budget_minutes": 20,
     "config_path": "experiments/E002/config.json"
   },
-  "runs": []
+  "conclusion": {
+    "retained_candidate": "last_known_tvt",
+    "best_challenger": "robust_linear_u",
+    "decision": "Reject naive low-order U continuation. Keep U as a representation and evidence space, not an unconditional suffix extrapolator.",
+    "result_path": "experiments/E002/RESULT.md",
+    "verification_path": "experiments/E002/verification.json"
+  },
+  "runs": [
+    {
+      "run_id": "R20260718-1916-e002-structural",
+      "status": "rejected",
+      "started_at": "2026-07-18T19:16:57Z",
+      "ended_at": "2026-07-18T19:20:58Z",
+      "git_sha": "4c59d85c384a70c5892f76c25fda084d80556360",
+      "fold_map": "folds/v1.json,folds/v2.json,folds/v3.json,folds/v4.json,folds/v5.json",
+      "config_path": "experiments/E002/config.json",
+      "artifact_dir": "artifacts/E002/structural-ladder",
+      "controls": {
+        "data_integrity": true,
+        "visible_sign_verification": true,
+        "algebraic_roundtrip": true,
+        "pooled_rmse_consistency": true,
+        "noop": true,
+        "duplicate": true,
+        "wrong_sign": true,
+        "synthetic_positive": true,
+        "shuffled_evidence": true,
+        "leakage_sentinel": true,
+        "runtime": true,
+        "byte_identical_rerun": true
+      },
+      "metrics": [
+        {"split": "cv", "name": "rmse", "value": 39.65457653359809, "unit": "ft"},
+        {"split": "cv", "name": "median_well_rmse", "value": 21.54472497275093, "unit": "ft"},
+        {"split": "cv", "name": "p90_well_rmse", "value": 60.53271665569387, "unit": "ft"},
+        {"split": "cv", "name": "p95_well_rmse", "value": 73.26864611930176, "unit": "ft"},
+        {"split": "cv", "name": "worst_5pct_sse_share", "value": 0.4238540739769386, "unit": "share"},
+        {"split": "cv", "name": "worst_10pct_sse_share", "value": 0.5837865403838667, "unit": "share"},
+        {"split": "baseline", "name": "rmse", "value": 15.909852870734554, "unit": "ft"},
+        {"split": "candidate", "name": "constant_u_rmse", "value": 107.49482425817835, "unit": "ft"},
+        {"split": "candidate", "name": "robust_linear_u_rmse", "value": 39.65457653359809, "unit": "ft"},
+        {"split": "candidate", "name": "quadratic_u_rmse", "value": 115.84308748386937, "unit": "ft"},
+        {"split": "candidate", "name": "constrained_spline_u_rmse", "value": 69.24163651012175, "unit": "ft"},
+        {"split": "stability", "name": "improved_fold_cells", "value": 0, "unit": "of_25"},
+        {"split": "diagnostic", "name": "visible_sign_ratio", "value": 0.15800629233776933, "unit": "ratio"},
+        {"split": "oracle_diagnostic", "name": "visible_hidden_u_slope_correlation", "value": 0.9282910652020927, "unit": "correlation"},
+        {"split": "oracle_diagnostic", "name": "visible_hidden_u_sign_agreement", "value": 0.9793014230271668, "unit": "share"},
+        {"split": "oracle_diagnostic", "name": "median_absolute_u_slope_delta", "value": 0.008191650179387725, "unit": "ft_per_row"},
+        {"split": "runtime", "name": "wall_seconds", "value": 241.49, "unit": "seconds"},
+        {"split": "runtime", "name": "max_rss_kb", "value": 35504, "unit": "kilobytes"}
+      ],
+      "well_metrics_path": "experiments/E002/results/challenger_well_metrics.csv",
+      "artifacts": [
+        {"artifact_id": "E002-summary", "path": "experiments/E002/results/summary.json", "kind": "summary", "sha256": "a314d670be3da150a68d41ede28669a553922814d04cb127c0ec3473f6cf5bd8", "bytes": 34074},
+        {"artifact_id": "E002-candidates", "path": "experiments/E002/results/candidate_metrics.csv", "kind": "metrics", "sha256": "88cd4a9fee940871e90bccaa2cf5aec126c4c4a8bda51d3f5d31dc50238c8ef7", "bytes": 2032},
+        {"artifact_id": "E002-folds", "path": "experiments/E002/results/fold_metrics.csv", "kind": "metrics", "sha256": "e2933751932920d4b496d286bd113593b630cc167b7fa86784a15e1adcaf2a3b", "bytes": 14214},
+        {"artifact_id": "E002-regimes", "path": "experiments/E002/results/regime_metrics.csv", "kind": "metrics", "sha256": "edbdd7726684d34aeef1973b8a9c3962739ec3555758a3cc599b436f0d55254b", "bytes": 6560},
+        {"artifact_id": "E002-controls", "path": "experiments/E002/results/control_metrics.csv", "kind": "controls", "sha256": "3af5325d198a4cd2ab5bf74c9f7a9c66c79239ce6e44ad15f187b3418796ff43", "bytes": 1076},
+        {"artifact_id": "E002-correlations", "path": "experiments/E002/results/residual_correlations.csv", "kind": "diagnostic", "sha256": "4a592fbe9e13609b7f4180139de2be85510c86968718990e6ae1ef41507ce84b", "bytes": 498},
+        {"artifact_id": "E002-parameters", "path": "experiments/E002/results/parameter_diagnostics.csv", "kind": "diagnostic", "sha256": "fc3fdcf738391593a68b185278e32063df18e868a04bc9db04d872cde957284a", "bytes": 128827},
+        {"artifact_id": "E002-all-wells", "path": "experiments/E002/results/all_candidate_well_metrics.csv", "kind": "well_metrics", "sha256": "1cd658b2d572940dc8e26d640bfa2c37fad9f82f08234dacb01a599ad35b3865", "bytes": 1252615},
+        {"artifact_id": "E002-retained-wells", "path": "experiments/E002/results/selected_well_metrics.csv", "kind": "well_metrics", "sha256": "de5905c5b4df0f13a88d67682376820de8fa179103d7d91173363d376085da61", "bytes": 119847},
+        {"artifact_id": "E002-challenger-wells", "path": "experiments/E002/results/challenger_well_metrics.csv", "kind": "well_metrics", "sha256": "470c0b944821f51a393764f33b4a68707a56e6138a208a58aa6827f31c6e9614", "bytes": 120767},
+        {"artifact_id": "E002-trend-transfer", "path": "experiments/E002/results/trend_transfer_diagnostics.csv", "kind": "oracle_diagnostic", "sha256": "98adb276a0086be627edfe52e8854e7415784a2f7772e9263152959195cc70ec", "bytes": 75636},
+        {"artifact_id": "E002-artifact-manifest", "path": "experiments/E002/results/artifact_manifest.json", "kind": "manifest", "sha256": "4ffae58f86fe74366a01f92cff9aae643bd76933c84ca17ce635d0a13d17afdc", "bytes": 2770},
+        {"artifact_id": "E002-oof", "path": "artifacts/E002/structural-ladder/oof_predictions.csv.gz", "kind": "oof_predictions", "sha256": "9052488ff964092e716e1045cc0f9bd69b6af63993984021d5697e68859f58cd", "bytes": 110694385}
+      ],
+      "notes": "All controls passed, but every structural challenger lost to last-known TVT on all 25 frozen fold cells. Robust-linear U was the least-bad challenger at 39.6546 RMSE. The hidden-label trend-transfer analysis is diagnostic only and ineligible for modeling.",
+      "updated_at": "2026-07-18T19:20:58Z"
+    }
+  ]
 }

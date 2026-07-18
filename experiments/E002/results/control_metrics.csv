@@ -1,0 +1,12 @@
+control,status,detail_json
+algebraic_roundtrip,pass,{}
+data_integrity,pass,"{""data_signature"":""6ebe65b403f80fefd97dcd7bbfce7314252e779a1837c97364cf55761590fe77"",""expected_wells"":773,""well_count"":773}"
+duplicate,pass,"{""rmse"":107.49482425817835,""well_mean_error_correlation"":1.0}"
+leakage_sentinel,pass,"{""eligible_for_modeling"":false,""rmse"":0.0,""uses_hidden_target"":true}"
+noop,pass,"{""rmse"":15.909852870734554}"
+pooled_rmse_consistency,pass,"{""maximum_relative_difference"":1.186098640791615e-13}"
+runtime,pass,"{""budget_minutes"":20}"
+shuffled_evidence,pass,"{""actual_linear_rmse"":39.65457653359809,""actual_shuffled_rmse"":152.94643836143658,""synthetic_positive_rmse"":0.0,""synthetic_shuffled_rmse"":62.326946451050226}"
+synthetic_positive,pass,"{""null_rmse"":44.22586374856215,""positive_rmse"":0.0}"
+visible_sign_verification,pass,"{""minus_rms"":1.1897215248699644,""plus_rms"":0.1879834870591403,""plus_to_minus_ratio"":0.15800629233776933}"
+wrong_sign,pass,"{""correct_sign_rmse"":107.49482425817835,""wrong_sign_rmse"":111.31949239250446}"

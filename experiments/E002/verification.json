@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E002",
+  "run_id": "R20260718-1916-e002-structural",
+  "code_sha": "4c59d85c384a70c5892f76c25fda084d80556360",
+  "official_run": {
+    "started_at": "2026-07-18T19:16:57Z",
+    "ended_at": "2026-07-18T19:20:58Z",
+    "wall_seconds": 241.49,
+    "max_rss_kb": 35504
+  },
+  "independent_verification_run": {
+    "wall_seconds": 247.31,
+    "max_rss_kb": 35160
+  },
+  "result_files_compared": 12,
+  "result_files_byte_identical": true,
+  "oof_artifact": {
+    "path": "artifacts/E002/structural-ladder/oof_predictions.csv.gz",
+    "bytes": 110694385,
+    "sha256": "9052488ff964092e716e1045cc0f9bd69b6af63993984021d5697e68859f58cd",
+    "byte_identical": true,
+    "tracked": false
+  },
+  "controls_passed": 11,
+  "controls_failed": 0,
+  "result_status": "rejected",
+  "retained_candidate": "last_known_tvt",
+  "best_challenger": "robust_linear_u"
+}

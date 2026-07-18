@@ -1,0 +1,95 @@
+{
+  "external_artifacts": [
+    {
+      "bytes": 110694385,
+      "path": "oof_predictions.csv.gz",
+      "sha256": "9052488ff964092e716e1045cc0f9bd69b6af63993984021d5697e68859f58cd",
+      "tracked": false
+    }
+  ],
+  "files": [
+    {
+      "bytes": 1252615,
+      "path": "all_candidate_well_metrics.csv",
+      "sha256": "1cd658b2d572940dc8e26d640bfa2c37fad9f82f08234dacb01a599ad35b3865"
+    },
+    {
+      "bytes": 2032,
+      "path": "candidate_metrics.csv",
+      "sha256": "88cd4a9fee940871e90bccaa2cf5aec126c4c4a8bda51d3f5d31dc50238c8ef7"
+    },
+    {
+      "bytes": 120767,
+      "path": "challenger_well_metrics.csv",
+      "sha256": "470c0b944821f51a393764f33b4a68707a56e6138a208a58aa6827f31c6e9614"
+    },
+    {
+      "bytes": 1076,
+      "path": "control_metrics.csv",
+      "sha256": "3af5325d198a4cd2ab5bf74c9f7a9c66c79239ce6e44ad15f187b3418796ff43"
+    },
+    {
+      "bytes": 14214,
+      "path": "fold_metrics.csv",
+      "sha256": "e2933751932920d4b496d286bd113593b630cc167b7fa86784a15e1adcaf2a3b"
+    },
+    {
+      "bytes": 128827,
+      "path": "parameter_diagnostics.csv",
+      "sha256": "fc3fdcf738391593a68b185278e32063df18e868a04bc9db04d872cde957284a"
+    },
+    {
+      "bytes": 6560,
+      "path": "regime_metrics.csv",
+      "sha256": "edbdd7726684d34aeef1973b8a9c3962739ec3555758a3cc599b436f0d55254b"
+    },
+    {
+      "bytes": 498,
+      "path": "residual_correlations.csv",
+      "sha256": "4a592fbe9e13609b7f4180139de2be85510c86968718990e6ae1ef41507ce84b"
+    },
+    {
+      "bytes": 119847,
+      "path": "selected_well_metrics.csv",
+      "sha256": "de5905c5b4df0f13a88d67682376820de8fa179103d7d91173363d376085da61"
+    },
+    {
+      "bytes": 34074,
+      "path": "summary.json",
+      "sha256": "a314d670be3da150a68d41ede28669a553922814d04cb127c0ec3473f6cf5bd8"
+    },
+    {
+      "bytes": 75636,
+      "path": "trend_transfer_diagnostics.csv",
+      "sha256": "98adb276a0086be627edfe52e8854e7415784a2f7772e9263152959195cc70ec"
+    }
+  ],
+  "fold_files": [
+    {
+      "bytes": 15743,
+      "path": "folds/v1.json",
+      "sha256": "89ea99a594547b5b1457cdbd5d9d4f562d6b6f8f3f3a55ff8e3633b0e98ef555"
+    },
+    {
+      "bytes": 15743,
+      "path": "folds/v2.json",
+      "sha256": "8a116f8b60463c55c7f23fa640fee542352c9250b8775a9e98086f3cad7c938e"
+    },
+    {
+      "bytes": 15743,
+      "path": "folds/v3.json",
+      "sha256": "da69b7be2f115a2df2da1fd26f3d2e331503a43723cf3d24d4aaee2d3e79efa9"
+    },
+    {
+      "bytes": 15743,
+      "path": "folds/v4.json",
+      "sha256": "38b64e8ec4b904d5ce1bf105516d925724a518152302ef2ec48cf1867336153c"
+    },
+    {
+      "bytes": 15743,
+      "path": "folds/v5.json",
+      "sha256": "911011522eca1d1cb06e10ca5ac24b19b799796eb92560b6b6fd95921a9836ef"
+    }
+  ],
+  "schema_version": 1
+}
