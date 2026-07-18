@@ -91,6 +91,14 @@ Public leaderboard scores update belief; they do not retroactively change a hypo
 
 Use stable IDs: `H###` hypotheses, `E###` experiments, `RYYYYMMDD-HHMM-<slug>` runs, `D###` decisions, `T###` tasks.
 
+## Compute execution policy
+
+- Keep lightweight deterministic validation, data-contract checks, report generation, and small smoke tests local.
+- Use Kaggle MCP notebook sessions for heavy workflows, accelerator-backed training, large OOF generation, expensive parameter sweeps, and full-scale performance testing when Kaggle compute materially shortens iteration time.
+- Commit the exact code and configuration before launching a Kaggle run. Record the Git SHA, Kaggle notebook reference/version, attached datasets, accelerator, seeds, runtime, and produced artifact hashes in the experiment manifest.
+- Repository code, manifests, and archived artifacts remain the source of truth; transient notebook state is not an experiment record.
+- Keep final notebook parity separate: internet disabled, approved portable inputs only, deterministic inference, and runtime below the competition limit.
+
 ## Validation-first version control
 
 - Commit and push completed work only after the relevant validation suite passes and the Git diff has been reviewed.

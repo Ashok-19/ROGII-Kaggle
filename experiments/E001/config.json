@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E001",
+  "input_glob": "data/train/*__horizontal_well.csv",
+  "n_folds": 5,
+  "fold_seeds": [104729, 130363, 155921, 181081, 209759],
+  "expected_wells": 773,
+  "expected_baseline_rmse": 15.91,
+  "baseline_tolerance": 0.02,
+  "baseline": "last visible TVT repeated across the hidden suffix",
+  "metrics": [
+    "pooled row RMSE",
+    "fold RMSE",
+    "median/p90/p95/max per-well RMSE",
+    "worst 5% and 10% SSE share",
+    "datum/trend/shape SSE decomposition"
+  ],
+  "controls": [
+    "known synthetic legal signal",
+    "zero/no-op",
+    "duplicate predictor",
+    "shuffled legal evidence",
+    "explicit target leakage sentinel"
+  ]
+}
