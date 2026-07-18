@@ -137,6 +137,8 @@ class E002StructuralTests(unittest.TestCase):
             )
             self.assertEqual(first["status"], "promoted")
             self.assertEqual(first["selected_candidate"], "robust_linear_u")
+            self.assertEqual(first["best_challenger"], "robust_linear_u")
+            self.assertGreater(first["trend_transfer_diagnostic"]["visible_to_hidden_u_slope_correlation_oracle"], 0.99)
             self.assertLess(first["candidate_metrics"]["robust_linear_u"]["rmse"], 1e-8)
             self.assertTrue(all(detail["pass"] for detail in first["controls"].values()))
             self.assertLess(first["sign_verification"]["plus_to_minus_ratio"], 0.05)

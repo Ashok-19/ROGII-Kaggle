@@ -73,6 +73,31 @@ class StructuralParameters:
     spline_displacement: float
 
 
+@dataclass
+class TrendAccumulator:
+    rows: int = 0
+    sum_x: float = 0.0
+    sum_y: float = 0.0
+    sum_x_sq: float = 0.0
+    sum_xy: float = 0.0
+
+    def add(self, x: float, y: float) -> None:
+        self.rows += 1
+        self.sum_x += x
+        self.sum_y += y
+        self.sum_x_sq += x * x
+        self.sum_xy += x * y
+
+    def finalize(self) -> tuple[float, float]:
+        if self.rows <= 0:
+            raise ValueError("trend accumulator has no rows")
+        count = float(self.rows)
+        denominator = self.sum_x_sq - self.sum_x * self.sum_x / count
+        numerator = self.sum_xy - self.sum_x * self.sum_y / count
+        slope = numerator / denominator if denominator > 0.0 else 0.0
+        return self.sum_y / count, slope
+
+
 def _stable_int(*parts: object) -> int:
     payload = "|".join(str(part) for part in parts).encode("utf-8")
     return int.from_bytes(hashlib.sha256(payload).digest()[:8], "big")
@@ -471,6 +496,7 @@ def run_e002(
     synthetic_sse = {"null": 0.0, "positive": 0.0, "shuffled": 0.0}
     synthetic_rows = 0
     direct_sse = {candidate: 0.0 for candidate in ALL_CANDIDATES}
+    hidden_trends: dict[str, dict[str, float | int | bool]] = {}
     oof_path = artifact_dir / "oof_predictions.csv.gz"
     oof_fields = ["well_id", "row_index", "hidden_index", "md", "z", "target", *LEGAL_CANDIDATES]
 
@@ -480,6 +506,9 @@ def run_e002(
             fitted = parameters[profile.well_id]
             path = train_dir / f"{profile.well_id}__horizontal_well.csv"
             accumulators = {candidate: ErrorAccumulator() for candidate in ALL_CANDIDATES}
+            hidden_u_trend = TrendAccumulator()
+            hidden_tvt_trend = TrendAccumulator()
+            hidden_z_trend = TrendAccumulator()
             hidden_index = 0
             row_index = 0
             with path.open(newline="", encoding="utf-8-sig") as handle:
@@ -508,6 +537,9 @@ def run_e002(
                         accumulators[candidate].add(error, float(hidden_index))
                     for pair, accumulator in correlations.items():
                         accumulator.add(errors[pair[0]], errors[pair[1]])
+                    hidden_u_trend.add(float(hidden_index), target + z)
+                    hidden_tvt_trend.add(float(hidden_index), target)
+                    hidden_z_trend.add(float(hidden_index), z)
 
                     delta_md = md - fitted.last_visible_md
                     synthetic_target = fitted.u_last + synthetic_coefficients[profile.well_id] * delta_md - z
@@ -535,6 +567,22 @@ def run_e002(
                 raise DataValidationError(
                     f"{path}: scored hidden rows {hidden_index}, expected {profile.hidden_rows}"
                 )
+            _, hidden_u_slope = hidden_u_trend.finalize()
+            _, hidden_tvt_slope = hidden_tvt_trend.finalize()
+            _, hidden_z_slope = hidden_z_trend.finalize()
+            hidden_trends[profile.well_id] = {
+                "well_id": profile.well_id,
+                "visible_u_slope": fitted.robust_slope,
+                "hidden_u_slope_oracle": hidden_u_slope,
+                "hidden_tvt_slope_oracle": hidden_tvt_slope,
+                "hidden_z_slope": hidden_z_slope,
+                "u_slope_delta_oracle": hidden_u_slope - fitted.robust_slope,
+                "visible_hidden_u_sign_match_oracle": (
+                    fitted.robust_slope == 0.0
+                    or hidden_u_slope == 0.0
+                    or math.copysign(1.0, fitted.robust_slope) == math.copysign(1.0, hidden_u_slope)
+                ),
+            }
             for candidate, accumulator in accumulators.items():
                 model_metrics[candidate][profile.well_id] = accumulator.finalize(profile.well_id)
 
@@ -573,19 +621,23 @@ def run_e002(
     regime_lookup = {
         (str(row["candidate"]), str(row["regime"])): row for row in regime_rows
     }
-    legal_ranked = sorted(
+    challenger_ranked = sorted(
         LEGAL_CANDIDATES[1:],
         key=lambda candidate: (float(summaries[candidate]["rmse"]), candidate),
     )
-    selected = legal_ranked[0]
+    best_challenger = challenger_ranked[0]
+    retained_candidate = min(
+        LEGAL_CANDIDATES,
+        key=lambda candidate: (float(summaries[candidate]["rmse"]), candidate),
+    )
     promotion = config["promotion"]
-    selected_summary = summaries[selected]
-    pooled_gain = float(baseline["rmse"]) - float(selected_summary["rmse"])
-    p90_delta = float(selected_summary["p90_well_rmse"]) - float(baseline["p90_well_rmse"])
-    worst5_delta = float(selected_summary["worst_5pct_sse_share"]) - float(baseline["worst_5pct_sse_share"])
+    challenger_summary = summaries[best_challenger]
+    pooled_gain = float(baseline["rmse"]) - float(challenger_summary["rmse"])
+    p90_delta = float(challenger_summary["p90_well_rmse"]) - float(baseline["p90_well_rmse"])
+    worst5_delta = float(challenger_summary["worst_5pct_sse_share"]) - float(baseline["worst_5pct_sse_share"])
     long_gain = (
         float(regime_lookup[("last_known_tvt", "long_hidden")]["rmse"])
-        - float(regime_lookup[(selected, "long_hidden")]["rmse"])
+        - float(regime_lookup[(best_challenger, "long_hidden")]["rmse"])
     )
 
     pooled_consistency = max(
@@ -672,7 +724,7 @@ def run_e002(
     control_pass = all(bool(item["pass"]) for item in controls.values())
     gates = {
         "minimum_pooled_gain": pooled_gain >= float(promotion["minimum_pooled_rmse_gain"]),
-        "fold_cell_stability": improved_cells[selected] >= int(promotion["minimum_improved_fold_cells"]),
+        "fold_cell_stability": improved_cells[best_challenger] >= int(promotion["minimum_improved_fold_cells"]),
         "p90_tail": p90_delta <= float(promotion["maximum_p90_well_rmse_deterioration"]),
         "worst_5pct_share": worst5_delta <= float(promotion["maximum_worst_5pct_sse_share_increase"]),
         "long_hidden_stress": long_gain > 0.0 if bool(promotion["require_long_hidden_improvement"]) else True,
@@ -681,6 +733,26 @@ def run_e002(
     }
     promoted = all(gates.values())
 
+    trend_correlation = OnlineCorrelation()
+    trend_rows = [hidden_trends[well_id] for well_id in sorted(hidden_trends)]
+    for row in trend_rows:
+        trend_correlation.add(float(row["visible_u_slope"]), float(row["hidden_u_slope_oracle"]))
+    trend_transfer = {
+        "visible_to_hidden_u_slope_correlation_oracle": trend_correlation.value(),
+        "visible_hidden_u_sign_agreement_oracle": sum(
+            1 for row in trend_rows if bool(row["visible_hidden_u_sign_match_oracle"])
+        ) / len(trend_rows),
+        "median_visible_u_slope": statistics.median(float(row["visible_u_slope"]) for row in trend_rows),
+        "median_hidden_u_slope_oracle": statistics.median(float(row["hidden_u_slope_oracle"]) for row in trend_rows),
+        "median_hidden_tvt_slope_oracle": statistics.median(float(row["hidden_tvt_slope_oracle"]) for row in trend_rows),
+        "median_hidden_z_slope": statistics.median(float(row["hidden_z_slope"]) for row in trend_rows),
+        "median_absolute_u_slope_delta_oracle": statistics.median(
+            abs(float(row["u_slope_delta_oracle"])) for row in trend_rows
+        ),
+        "uses_hidden_target": True,
+        "eligible_for_modeling": False,
+    }
+
     candidate_rows = []
     for candidate in ALL_CANDIDATES:
         summary = summaries[candidate]
@@ -688,7 +760,8 @@ def run_e002(
             {
                 "candidate": candidate,
                 "eligible": candidate in LEGAL_CANDIDATES,
-                "selected": candidate == selected,
+                "selected": candidate == retained_candidate,
+                "best_challenger": candidate == best_challenger,
                 "rmse": summary["rmse"],
                 "gain_vs_last_known": float(baseline["rmse"]) - float(summary["rmse"]),
                 "median_well_rmse": summary["median_well_rmse"],
@@ -706,7 +779,8 @@ def run_e002(
 
     parameter_rows = [asdict(parameters[well_id]) for well_id in sorted(parameters)]
     all_well_rows: list[dict[str, Any]] = []
-    selected_well_rows: list[dict[str, Any]] = []
+    retained_well_rows: list[dict[str, Any]] = []
+    challenger_well_rows: list[dict[str, Any]] = []
     for candidate in ALL_CANDIDATES:
         for well_id in sorted(model_metrics[candidate]):
             metric = model_metrics[candidate][well_id]
@@ -731,14 +805,17 @@ def run_e002(
                 **folds,
             }
             all_well_rows.append(row)
-            if candidate == selected:
-                selected_well_rows.append({key: value for key, value in row.items() if key != "candidate"})
+            if candidate == retained_candidate:
+                retained_well_rows.append({key: value for key, value in row.items() if key != "candidate"})
+            if candidate == best_challenger:
+                challenger_well_rows.append({key: value for key, value in row.items() if key != "candidate"})
 
     summary = {
         "schema_version": 1,
         "experiment_id": "E002",
         "status": "promoted" if promoted else "rejected",
-        "selected_candidate": selected,
+        "selected_candidate": retained_candidate,
+        "best_challenger": best_challenger,
         "data": data_profile,
         "sign_verification": {
             "visible_difference_rows": visible_diff_rows,
@@ -751,8 +828,10 @@ def run_e002(
         "improved_fold_cells": improved_cells,
         "regime_metrics": regime_rows,
         "residual_correlations": _correlation_rows(correlations),
+        "trend_transfer_diagnostic": trend_transfer,
         "selection": {
-            "candidate": selected,
+            "candidate": best_challenger,
+            "retained_candidate": retained_candidate,
             "pooled_rmse_gain": pooled_gain,
             "p90_well_rmse_delta": p90_delta,
             "worst_5pct_sse_share_delta": worst5_delta,
@@ -792,9 +871,16 @@ def run_e002(
         correlation_rows,
     )
     all_well_fields = list(all_well_rows[0])
-    selected_well_fields = list(selected_well_rows[0])
+    retained_well_fields = list(retained_well_rows[0])
+    challenger_well_fields = list(challenger_well_rows[0])
     _write_csv(output_dir / "all_candidate_well_metrics.csv", all_well_fields, all_well_rows)
-    _write_csv(output_dir / "selected_well_metrics.csv", selected_well_fields, selected_well_rows)
+    _write_csv(output_dir / "selected_well_metrics.csv", retained_well_fields, retained_well_rows)
+    _write_csv(output_dir / "challenger_well_metrics.csv", challenger_well_fields, challenger_well_rows)
+    _write_csv(
+        output_dir / "trend_transfer_diagnostics.csv",
+        list(trend_rows[0]),
+        trend_rows,
+    )
     control_rows = [
         {
             "control": name,
@@ -814,6 +900,8 @@ def run_e002(
         output_dir / "residual_correlations.csv",
         output_dir / "all_candidate_well_metrics.csv",
         output_dir / "selected_well_metrics.csv",
+        output_dir / "challenger_well_metrics.csv",
+        output_dir / "trend_transfer_diagnostics.csv",
         output_dir / "control_metrics.csv",
     ]
     artifact_manifest = {
