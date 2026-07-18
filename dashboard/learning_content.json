@@ -1,0 +1,270 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-07-18",
+  "title": "ROGII Competition Learning Lab",
+  "subtitle": "A beginner-first visual guide to the data, geology, target, validation, and idea space.",
+  "beginner_path": [
+    {
+      "step": 1,
+      "title": "Follow the drilled path",
+      "text": "Each CSV is one horizontal well. MD moves forward along the borehole while X, Y, and Z describe where the drill bit is in space."
+    },
+    {
+      "step": 2,
+      "title": "Use the visible prefix",
+      "text": "TVT_input is known only at the beginning of the well. It becomes blank at one boundary and stays blank through the hidden suffix."
+    },
+    {
+      "step": 3,
+      "title": "Read geological clues",
+      "text": "Gamma ray, the typewell reference, trajectory geometry, and named formation surfaces provide imperfect clues about geological position."
+    },
+    {
+      "step": 4,
+      "title": "Predict every hidden TVT",
+      "text": "The final notebook must output one TVT value for each hidden row, in the exact sample-submission order."
+    },
+    {
+      "step": 5,
+      "title": "Protect against expensive wells",
+      "text": "The metric pools squared error across rows. A few badly shifted wells can dominate the total score."
+    }
+  ],
+  "feature_groups": [
+    {
+      "group": "Well geometry",
+      "purpose": "Where the drill bit is and how it moves.",
+      "features": [
+        {
+          "name": "MD",
+          "plain_name": "Measured depth",
+          "meaning": "Distance travelled along the curved borehole, not straight-down depth.",
+          "use": "Provides row order, distance since the prediction boundary, segment length, and local trajectory scale.",
+          "watch_out": "A one-foot MD change does not imply a one-foot vertical change."
+        },
+        {
+          "name": "X / Y",
+          "plain_name": "Horizontal coordinates",
+          "meaning": "Map position of the well path.",
+          "use": "Can describe direction, neighbouring wells, and broad spatial context.",
+          "watch_out": "Spatial similarity must pass leave-spatial-out validation before it is trusted."
+        },
+        {
+          "name": "Z",
+          "plain_name": "Vertical coordinate",
+          "meaning": "Vertical position in the file's coordinate convention; values are commonly negative.",
+          "use": "Explains part of the high-frequency movement in TVT and helps form structural transforms such as U = TVT + Z.",
+          "watch_out": "Z and TVT are different coordinates. Treating them as interchangeable produces large errors."
+        }
+      ]
+    },
+    {
+      "group": "Target and visibility",
+      "purpose": "What is known and what must be predicted.",
+      "features": [
+        {
+          "name": "TVT",
+          "plain_name": "Target geological-position coordinate",
+          "meaning": "The value scored by Kaggle. In this dataset it behaves like a geological interpretation coordinate, not simply physical vertical depth or layer thickness.",
+          "use": "Training truth and the final prediction target.",
+          "watch_out": "The name is easy to interpret too literally. Always verify equations against the actual sign and scale in the data."
+        },
+        {
+          "name": "TVT_input",
+          "plain_name": "Visible TVT prefix",
+          "meaning": "Exact TVT values supplied at the beginning of each well, followed by a contiguous blank suffix.",
+          "use": "Anchors the prediction at the heel and supplies level, slope, curvature, and stability features.",
+          "watch_out": "Hidden TVT labels may never be used by a legal validation or inference feature."
+        }
+      ]
+    },
+    {
+      "group": "Logging signal",
+      "purpose": "A pattern that may reveal which geological layer the bit is crossing.",
+      "features": [
+        {
+          "name": "GR",
+          "plain_name": "Gamma-ray log",
+          "meaning": "A rock-response signal measured along the horizontal well. Peaks and valleys can resemble patterns in the typewell reference.",
+          "use": "Alignment, warping, self-correlation, segmentation, candidate scoring, and uncertainty.",
+          "watch_out": "Repeated motifs and missing intervals make pointwise matching ambiguous. Low GR mismatch does not guarantee low TVT error."
+        }
+      ]
+    },
+    {
+      "group": "Formation reference columns",
+      "purpose": "Named geological reference surfaces sampled along the well path.",
+      "features": [
+        {
+          "name": "ANCC / ASTNU / ASTNL / EGFDU / EGFDL / BUDA",
+          "plain_name": "Formation-surface coordinates",
+          "meaning": "Six competition-provided reference surfaces. Their relative spacing and movement can describe a shared geological frame.",
+          "use": "Surface-relative offsets, dip proxies, candidate constraints, and whole-well context.",
+          "watch_out": "Do not assume they are independent 3D ground truth. Their construction and relation to the typewell require controlled tests."
+        }
+      ]
+    },
+    {
+      "group": "Typewell reference",
+      "purpose": "A vertical reference signature for the geological sequence.",
+      "features": [
+        {
+          "name": "typewell TVT",
+          "plain_name": "Reference geological axis",
+          "meaning": "The vertical reference is indexed by TVT rather than horizontal-well MD.",
+          "use": "Defines the coordinate on which typewell GR is compared with a candidate horizontal-well TVT path.",
+          "watch_out": "It is not a direct lookup for unknown TVT. The model must infer the alignment or warp."
+        },
+        {
+          "name": "typewell GR",
+          "plain_name": "Reference gamma-ray signature",
+          "meaning": "The expected GR pattern along the reference TVT axis.",
+          "use": "Forward-model a candidate TVT path, compare the implied typewell GR with observed horizontal GR, and rank candidate paths.",
+          "watch_out": "Different TVT paths can match similar GR motifs, especially when the signal is repetitive or missing."
+        },
+        {
+          "name": "Geology",
+          "plain_name": "Optional reference annotation",
+          "meaning": "A typewell annotation column that may be sparse or blank.",
+          "use": "Potential segmentation or regime context when present and legally available.",
+          "watch_out": "Missingness and inconsistent availability must be handled explicitly."
+        }
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "id": "mission",
+      "title": "The task is suffix reconstruction",
+      "plain": "You see the beginning of a TVT path and must continue it for the rest of the same well.",
+      "technical": "Predict every row after the TVT_input boundary; Kaggle scores pooled row-level RMSE."
+    },
+    {
+      "id": "coordinate",
+      "title": "TVT is a geological coordinate",
+      "plain": "Think of TVT as the well's position inside a geological reference frame, not just how deep the drill bit is.",
+      "technical": "Trajectory, formation surfaces, and GR alignment jointly constrain the mapping from MD and Z to TVT."
+    },
+    {
+      "id": "surface",
+      "title": "Separate easy wiggle from hard trend",
+      "plain": "The known trajectory explains some local movement. The difficult part is where the entire geological path sits and how it drifts.",
+      "technical": "The project tracks U = TVT + Z, per-well datum, suffix trend, and residual shape, while explicitly verifying sign conventions."
+    },
+    {
+      "id": "alignment",
+      "title": "GR matching is an alignment problem",
+      "plain": "The horizontal and vertical GR curves use different horizontal axes, so they must be warped before comparison.",
+      "technical": "Candidate TVT paths map MD samples onto the typewell TVT axis; the resulting forward GR mismatch is evidence, not proof."
+    },
+    {
+      "id": "tails",
+      "title": "A few wells can control the score",
+      "plain": "Many wells may look acceptable while a small set of large shifts creates most of the squared error.",
+      "technical": "E001 found the worst 5% of wells contributed 38.99% of baseline SSE and the worst 10% contributed 52.48%."
+    },
+    {
+      "id": "uncertainty",
+      "title": "Knowing a well is risky is not enough",
+      "plain": "A model may identify difficult wells without knowing whether to move the prediction upward or downward.",
+      "technical": "Risk detection and signed correction are evaluated separately; routing requires evidence that the chosen action has the correct direction."
+    }
+  ],
+  "breakthroughs": [
+    {
+      "id": "B001",
+      "date": "2026-07-18",
+      "title": "Validation substrate frozen",
+      "evidence": "local_verified",
+      "visual": "error_stack",
+      "summary": "E001 reproduced the last-known-TVT baseline at 15.9098528707 RMSE over 3,783,989 hidden rows and froze five deterministic whole-well fold maps.",
+      "why_it_matters": "Every later idea can now be judged with the same metric, folds, tail diagnostics, and controls."
+    },
+    {
+      "id": "B002",
+      "date": "2026-07-18",
+      "title": "Datum and trend dominate baseline error",
+      "evidence": "local_verified",
+      "visual": "error_stack",
+      "summary": "The last-known baseline assigned 67.75% of SSE to per-well mean/datum, 14.53% to linear suffix trend, and 17.72% to remaining shape.",
+      "why_it_matters": "The campaign should focus on whole-well structural level and drift before chasing tiny row-local corrections."
+    },
+    {
+      "id": "B003",
+      "date": "2026-07-18",
+      "title": "Weak diverse candidates may still be useful",
+      "evidence": "winning_note_supported",
+      "visual": "ensemble_paths",
+      "summary": "Award-winning notes show that a weak standalone candidate can improve an ensemble when its residuals differ from the main model.",
+      "why_it_matters": "Candidate quality includes error diversity, not only individual RMSE."
+    },
+    {
+      "id": "B004",
+      "date": "2026-07-18",
+      "title": "CV and leaderboard ordering can invert",
+      "evidence": "winning_note_supported",
+      "visual": "cv_lb_split",
+      "summary": "A lower grouped-CV score has scored worse publicly than an older model in documented competition experiments.",
+      "why_it_matters": "Repeated folds, controls, shift tests, and a decorrelated final family are mandatory."
+    }
+  ],
+  "idea_questions": [
+    {
+      "signal": "geometry",
+      "question": "Can a feature predict how the structural trend changes after the TVT_input boundary without using hidden labels?",
+      "falsifier": "The feature loses its gain on repeated whole-well maps or on a harsher spatial/typewell split."
+    },
+    {
+      "signal": "gamma ray",
+      "question": "Can candidate-path ranking use GR pattern shape while remaining robust to repeated motifs and reversed movement?",
+      "falsifier": "A shuffled-template control performs similarly or low GR mismatch does not correlate with TVT improvement."
+    },
+    {
+      "signal": "surfaces",
+      "question": "Do formation-relative offsets provide a stable shared frame beyond what Z and the visible TVT prefix already contain?",
+      "falsifier": "Duplicate/no-op controls match the gain or leave-spatial/typewell-out performance collapses."
+    },
+    {
+      "signal": "whole well",
+      "question": "Can a whole-well candidate avoid the error accumulation of purely sequential particle updates?",
+      "falsifier": "The candidate improves easy wells but increases worst-5% SSE share or fails runtime constraints."
+    },
+    {
+      "signal": "uncertainty",
+      "question": "Can disagreement predict both risk magnitude and the correct signed action?",
+      "falsifier": "Risk ranking is useful but signed correction correlation remains near zero."
+    },
+    {
+      "signal": "ensemble",
+      "question": "Does a weak candidate reduce pooled RMSE when blended with the strongest OOF path because its residual correlation is low?",
+      "falsifier": "Cross-fit blend weight collapses to zero or the gain appears on only one fold map."
+    }
+  ],
+  "sources": [
+    {
+      "title": "Official competition snapshot",
+      "local_path": "archive/competition/official_summary.md",
+      "url": "https://www.kaggle.com/competitions/rogii-wellbore-geology-prediction"
+    },
+    {
+      "title": "Diagram of the problem discussion",
+      "local_path": "archive/discussions/messages_001.jsonl#topic-697418",
+      "url": "https://www.kaggle.com/competitions/rogii-wellbore-geology-prediction/discussion/697418"
+    },
+    {
+      "title": "UI visualizer discussion",
+      "local_path": "archive/discussions/messages_001.jsonl#topic-700424",
+      "url": "https://www.kaggle.com/competitions/rogii-wellbore-geology-prediction/discussion/700424"
+    },
+    {
+      "title": "Winning-note synthesis",
+      "local_path": "archive/writeups/synthesis.md",
+      "url": ""
+    },
+    {
+      "title": "E001 validated results",
+      "local_path": "experiments/E001/RESULT.md",
+      "url": ""
+    }
+  ]
+}

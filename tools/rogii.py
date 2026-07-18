@@ -11,6 +11,7 @@ import csv
 import hashlib
 import json
 import os
+import re
 import sqlite3
 import sys
 import time
@@ -20,7 +21,7 @@ from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any, Iterable
-from urllib.parse import urlparse
+from urllib.parse import parse_qs, urlparse
 
 DEFAULT_ROOT = Path(__file__).resolve().parents[1]
 
@@ -38,6 +39,18 @@ def read_json(path: Path) -> Any:
         return json.loads(path.read_text(encoding="utf-8"))
     except json.JSONDecodeError as exc:
         raise ValueError(f"Invalid JSON in {path}: {exc}") from exc
+
+
+def float_or_none(value: Any) -> float | None:
+    if value is None:
+        return None
+    text = str(value).strip()
+    if not text:
+        return None
+    try:
+        return float(text)
+    except ValueError:
+        return None
 
 
 def parse_metric_arg(text: str) -> dict[str, Any]:
@@ -64,6 +77,7 @@ class Tracker:
         self.seed_path = self.root / "tracking" / "seed.json"
         self._last_signature = ""
         self._last_sync_monotonic = 0.0
+        self._learning_well_cache: dict[str, dict[str, Any]] = {}
 
     def connect(self) -> sqlite3.Connection:
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
@@ -374,13 +388,183 @@ class Tracker:
                 out.append({"rank": rank, "score": float(row["score"]), "team": row["team_name"]})
         return out
 
+    @staticmethod
+    def _sample_indices(length: int, max_points: int, must_include: Iterable[int] = ()) -> list[int]:
+        if length <= 0:
+            return []
+        limit = max(2, int(max_points))
+        if length <= limit:
+            return list(range(length))
+        indices = {0, length - 1}
+        for value in must_include:
+            if 0 <= value < length:
+                indices.add(int(value))
+        slots = max(2, limit - len(indices))
+        for step in range(slots):
+            indices.add(round(step * (length - 1) / max(1, slots - 1)))
+        return sorted(indices)
+
+    def learning_state(self) -> dict[str, Any]:
+        content_path = self.root / "dashboard" / "learning_content.json"
+        profile_path = self.root / "experiments" / "E001" / "results" / "data_profile.csv"
+        metrics_path = self.root / "experiments" / "E001" / "results" / "well_metrics.csv"
+        summary_path = self.root / "experiments" / "E001" / "results" / "summary.json"
+        for path in (content_path, profile_path, metrics_path, summary_path):
+            if not path.exists():
+                raise FileNotFoundError(path)
+        content = read_json(content_path)
+        summary = read_json(summary_path)
+        with profile_path.open(newline="", encoding="utf-8") as handle:
+            profiles = {row["well_id"]: row for row in csv.DictReader(handle)}
+        catalog: list[dict[str, Any]] = []
+        with metrics_path.open(newline="", encoding="utf-8") as handle:
+            for row in csv.DictReader(handle):
+                well_id = row["well_id"]
+                profile = profiles.get(well_id, {})
+                sse = float_or_none(row.get("sse")) or 0.0
+                datum_sse = float_or_none(row.get("datum_sse")) or 0.0
+                trend_sse = float_or_none(row.get("trend_sse")) or 0.0
+                shape_sse = float_or_none(row.get("shape_sse")) or 0.0
+                catalog.append(
+                    {
+                        "well_id": well_id,
+                        "rmse": float_or_none(row.get("rmse")),
+                        "mean_error": float_or_none(row.get("mean_error")),
+                        "sse": sse,
+                        "hidden_rows": int(profile.get("hidden_rows") or row.get("rows_scored") or 0),
+                        "known_rows": int(profile.get("known_rows") or 0),
+                        "total_rows": int(profile.get("total_rows") or 0),
+                        "regime": row.get("regime") or "unknown",
+                        "datum_share": datum_sse / sse if sse > 0 else 0.0,
+                        "trend_share": trend_sse / sse if sse > 0 else 0.0,
+                        "shape_share": shape_sse / sse if sse > 0 else 0.0,
+                    }
+                )
+        baseline = summary["actual_target_metrics"]["last_known_tvt"]
+        median_rmse = float(baseline["median_well_rmse"])
+        selectors = [
+            ("Typical well", min(catalog, key=lambda x: abs((x["rmse"] or 0.0) - median_rmse))),
+            ("Largest SSE", max(catalog, key=lambda x: x["sse"])),
+            ("Datum-dominated", max(catalog, key=lambda x: x["datum_share"])),
+            ("Trend-dominated", max(catalog, key=lambda x: x["trend_share"])),
+            ("Shape-dominated", max(catalog, key=lambda x: x["shape_share"])),
+            ("Shortest hidden zone", min(catalog, key=lambda x: x["hidden_rows"])),
+            ("Longest hidden zone", max(catalog, key=lambda x: x["hidden_rows"])),
+        ]
+        recommended: list[dict[str, Any]] = []
+        seen: set[str] = set()
+        for label, item in selectors:
+            if item["well_id"] in seen:
+                continue
+            seen.add(item["well_id"])
+            recommended.append({"label": label, **item})
+        return {
+            "generated_at": utcnow(),
+            "content": content,
+            "e001": {
+                "baseline": baseline,
+                "data": summary["data"],
+                "controls": summary["controls"],
+            },
+            "recommended_wells": recommended,
+            "well_catalog": sorted(catalog, key=lambda x: x["well_id"]),
+        }
+
+    def learning_well(self, well_id: str, max_points: int = 1600) -> dict[str, Any]:
+        if not re.fullmatch(r"[0-9a-f]{8}", well_id):
+            raise ValueError("well_id must be an eight-character lowercase hexadecimal ID")
+        cache_key = f"{well_id}:{max_points}"
+        if cache_key in self._learning_well_cache:
+            return self._learning_well_cache[cache_key]
+        horizontal_path = self.root / "data" / "train" / f"{well_id}__horizontal_well.csv"
+        typewell_path = self.root / "data" / "train" / f"{well_id}__typewell.csv"
+        if not horizontal_path.exists():
+            raise FileNotFoundError(horizontal_path)
+        formation_names = ["ANCC", "ASTNU", "ASTNL", "EGFDU", "EGFDL", "BUDA"]
+        rows: list[dict[str, float | None]] = []
+        with horizontal_path.open(newline="", encoding="utf-8") as handle:
+            reader = csv.DictReader(handle)
+            available_formations = [name for name in formation_names if name in (reader.fieldnames or [])]
+            for raw in reader:
+                item: dict[str, float | None] = {}
+                for name in ["MD", "X", "Y", "Z", "TVT", "TVT_input", "GR", *available_formations]:
+                    item[name] = float_or_none(raw.get(name))
+                rows.append(item)
+        if not rows:
+            raise ValueError(f"well {well_id} contains no rows")
+        hidden_start = len(rows)
+        seen_hidden = False
+        for index, row in enumerate(rows):
+            visible = row.get("TVT_input") is not None
+            if not visible and not seen_hidden:
+                hidden_start = index
+                seen_hidden = True
+            elif visible and seen_hidden:
+                raise ValueError(f"well {well_id} has non-contiguous TVT_input visibility")
+        if hidden_start <= 0 or hidden_start >= len(rows):
+            raise ValueError(f"well {well_id} does not contain a visible prefix and hidden suffix")
+        indices = self._sample_indices(len(rows), max_points, (hidden_start - 1, hidden_start))
+        series_names = ["MD", "X", "Y", "Z", "TVT", "TVT_input", "GR", *available_formations]
+        series = {name: [rows[index].get(name) for index in indices] for name in series_names}
+        typewell_rows: list[dict[str, float | None]] = []
+        if typewell_path.exists():
+            with typewell_path.open(newline="", encoding="utf-8") as handle:
+                for raw in csv.DictReader(handle):
+                    typewell_rows.append({"TVT": float_or_none(raw.get("TVT")), "GR": float_or_none(raw.get("GR"))})
+        type_indices = self._sample_indices(len(typewell_rows), 1800)
+        typewell = {
+            "TVT": [typewell_rows[index]["TVT"] for index in type_indices],
+            "GR": [typewell_rows[index]["GR"] for index in type_indices],
+        }
+        metrics: dict[str, Any] = {}
+        metrics_path = self.root / "experiments" / "E001" / "results" / "well_metrics.csv"
+        if metrics_path.exists():
+            with metrics_path.open(newline="", encoding="utf-8") as handle:
+                for row in csv.DictReader(handle):
+                    if row.get("well_id") == well_id:
+                        metrics = {
+                            "rmse": float_or_none(row.get("rmse")),
+                            "mean_error": float_or_none(row.get("mean_error")),
+                            "sse": float_or_none(row.get("sse")),
+                            "datum_share": (float_or_none(row.get("datum_sse")) or 0.0) / (float_or_none(row.get("sse")) or 1.0),
+                            "trend_share": (float_or_none(row.get("trend_sse")) or 0.0) / (float_or_none(row.get("sse")) or 1.0),
+                            "shape_share": (float_or_none(row.get("shape_sse")) or 0.0) / (float_or_none(row.get("sse")) or 1.0),
+                            "regime": row.get("regime") or "unknown",
+                        }
+                        break
+        last_visible = rows[hidden_start - 1]
+        payload = {
+            "well_id": well_id,
+            "source": str(horizontal_path.relative_to(self.root)),
+            "metadata": {
+                "total_rows": len(rows),
+                "sampled_rows": len(indices),
+                "known_rows": hidden_start,
+                "hidden_rows": len(rows) - hidden_start,
+                "hidden_start_md": rows[hidden_start].get("MD"),
+                "last_visible_md": last_visible.get("MD"),
+                "last_visible_z": last_visible.get("Z"),
+                "last_visible_tvt": last_visible.get("TVT"),
+                "formation_names": available_formations,
+            },
+            "original_indices": indices,
+            "series": series,
+            "typewell": typewell,
+            "e001_metrics": metrics,
+        }
+        if len(self._learning_well_cache) >= 32:
+            oldest_key = next(iter(self._learning_well_cache))
+            self._learning_well_cache.pop(oldest_key, None)
+        self._learning_well_cache[cache_key] = payload
+        return payload
+
     def validate(self) -> dict[str, Any]:
         required = [
             "AGENTS.md", "MEMORY.md", "GOLD_ROADMAP.md", "PROJECT_WORKFLOW.md",
             "archive/README.md", "archive/claims.csv", "archive/sources.csv",
             "archive/discussions/index.csv", "archive/discussions/synthesis.md",
             "archive/writeups/synthesis.md", "tracking/schema.sql", "tracking/seed.json",
-            "dashboard/index.html", "tools/rogii.py",
+            "dashboard/index.html", "dashboard/learn.html", "dashboard/learning_content.json", "tools/rogii.py",
         ]
         errors: list[str] = []
         warnings: list[str] = []
@@ -420,6 +604,13 @@ class Tracker:
                 errors.append("seed discussion message count mismatch")
         except Exception as exc:
             errors.append(f"seed/dependency validation: {exc}")
+        try:
+            learning = read_json(self.root / "dashboard" / "learning_content.json")
+            for field in ("schema_version", "updated_at", "title", "feature_groups", "breakthroughs"):
+                if not learning.get(field):
+                    errors.append(f"dashboard/learning_content.json missing {field}")
+        except Exception as exc:
+            errors.append(f"learning dashboard validation: {exc}")
         for path in sorted((self.root / "experiments").glob("**/manifest.json")):
             try:
                 data = read_json(path)
@@ -512,6 +703,7 @@ def add_run(args: argparse.Namespace, tracker: Tracker) -> Path:
 class DashboardHandler(BaseHTTPRequestHandler):
     tracker: Tracker
     index_path: Path
+    learning_path: Path
 
     def log_message(self, fmt: str, *args: Any) -> None:
         sys.stderr.write("dashboard: " + fmt % args + "\n")
@@ -526,7 +718,9 @@ class DashboardHandler(BaseHTTPRequestHandler):
         self.wfile.write(body)
 
     def do_GET(self) -> None:  # noqa: N802
-        path = urlparse(self.path).path
+        parsed = urlparse(self.path)
+        path = parsed.path
+        query = parse_qs(parsed.query)
         try:
             if path == "/api/state":
                 self._json(self.tracker.state())
@@ -538,8 +732,32 @@ class DashboardHandler(BaseHTTPRequestHandler):
             if path == "/api/sync":
                 self._json(self.tracker.sync_if_needed(force=True))
                 return
+            if path == "/api/learning":
+                self._json(self.tracker.learning_state())
+                return
+            if path == "/api/learning/well":
+                well_id = query.get("well_id", [""])[0]
+                if not well_id:
+                    self._json({"error": "well_id query parameter is required"}, 400)
+                    return
+                try:
+                    self._json(self.tracker.learning_well(well_id))
+                except ValueError as exc:
+                    self._json({"error": str(exc)}, 400)
+                except FileNotFoundError as exc:
+                    self._json({"error": str(exc)}, 404)
+                return
             if path in ("/", "/index.html"):
                 body = self.index_path.read_bytes()
+                self.send_response(HTTPStatus.OK)
+                self.send_header("Content-Type", "text/html; charset=utf-8")
+                self.send_header("Content-Length", str(len(body)))
+                self.send_header("Cache-Control", "no-store")
+                self.end_headers()
+                self.wfile.write(body)
+                return
+            if path in ("/learn", "/learn.html"):
+                body = self.learning_path.read_bytes()
                 self.send_response(HTTPStatus.OK)
                 self.send_header("Content-Type", "text/html; charset=utf-8")
                 self.send_header("Content-Length", str(len(body)))
@@ -557,8 +775,11 @@ def run_dashboard(tracker: Tracker, host: str, port: int, open_browser: bool) ->
     handler = type("ROGIIDashboardHandler", (DashboardHandler,), {})
     handler.tracker = tracker
     handler.index_path = tracker.root / "dashboard" / "index.html"
+    handler.learning_path = tracker.root / "dashboard" / "learn.html"
     if not handler.index_path.exists():
         raise FileNotFoundError(handler.index_path)
+    if not handler.learning_path.exists():
+        raise FileNotFoundError(handler.learning_path)
     server = ThreadingHTTPServer((host, port), handler)
     url = f"http://{host}:{port}"
     print(f"ROGII dashboard: {url}")
