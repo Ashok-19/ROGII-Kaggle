@@ -91,6 +91,17 @@ Public leaderboard scores update belief; they do not retroactively change a hypo
 
 Use stable IDs: `H###` hypotheses, `E###` experiments, `RYYYYMMDD-HHMM-<slug>` runs, `D###` decisions, `T###` tasks.
 
+## Validation-first version control
+
+- Commit and push completed work only after the relevant validation suite passes and the Git diff has been reviewed.
+- Use small, cohesive, incremental commits so regressions can be isolated and reverted. Do not combine unrelated experiments, refactors, documentation, generated outputs, or fixes in one commit.
+- A large commit is permitted only for an unavoidable bootstrap, repository import, or indivisible migration; document the exception in the commit message or project memory.
+- Stage explicit paths only. Never include unrelated pre-existing modifications, local scratch data, generated databases, credentials, opaque artifacts, or unreviewed files.
+- Before each commit: sync project state, run scoped tests plus `python tools/rogii.py validate`, inspect status and diff, and confirm the staged path list exactly matches the intended change.
+- After a successful commit, push it to the configured upstream in the same work session unless the user explicitly requests a local-only commit. Verify that the remote branch contains the commit before reporting success.
+- If validation, commit, or push fails, preserve the working state, record the failure clearly, and do not claim the change was shipped.
+- Experiment and submission records must reference the exact committed Git SHA used to produce their artifacts.
+
 ## End-of-session duties
 
 - Sync and validate: `python tools/rogii.py sync && python tools/rogii.py validate`.
