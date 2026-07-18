@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E002",
+  "data_signature": "6ebe65b403f80fefd97dcd7bbfce7314252e779a1837c97364cf55761590fe77",
+  "expected_wells": 773,
+  "fold_files": [
+    "folds/v1.json",
+    "folds/v2.json",
+    "folds/v3.json",
+    "folds/v4.json",
+    "folds/v5.json"
+  ],
+  "candidates": {
+    "last_known_tvt": {},
+    "constant_u": {},
+    "robust_linear_u": {
+      "window_rows": 512,
+      "huber_k": 1.5,
+      "iterations": 6,
+      "slope_min": -0.08,
+      "slope_max": 0.08
+    },
+    "quadratic_u": {
+      "window_rows": 1024,
+      "linear_window_rows": 512,
+      "huber_k": 1.5,
+      "iterations": 6,
+      "slope_min": -0.08,
+      "slope_max": 0.08,
+      "curvature_min": -0.00005,
+      "curvature_max": 0.00005,
+      "max_abs_u_drift": 180.0
+    },
+    "constrained_spline_u": {
+      "linear_window_rows": 512,
+      "huber_k": 1.5,
+      "iterations": 6,
+      "slope_min": -0.08,
+      "slope_max": 0.08,
+      "transition_fraction": 1.0,
+      "transition_min_rows": 512,
+      "transition_max_rows": 2048,
+      "endpoint_slope_fraction": 0.0,
+      "endpoint_displacement_fraction": 0.8,
+      "max_abs_u_drift": 120.0
+    }
+  },
+  "sign_verification": {
+    "required_plus_to_minus_rms_ratio_max": 0.30,
+    "description": "On visible TVT_input rows, compare row-difference RMS for TVT+Z against TVT-Z before hidden-label scoring."
+  },
+  "promotion": {
+    "minimum_pooled_rmse_gain": 0.15,
+    "minimum_improved_fold_cells": 20,
+    "total_fold_cells": 25,
+    "maximum_p90_well_rmse_deterioration": 0.25,
+    "maximum_worst_5pct_sse_share_increase": 0.02,
+    "require_long_hidden_improvement": true,
+    "maximum_runtime_minutes": 20
+  },
+  "controls": {
+    "wrong_sign_constant": true,
+    "noop": true,
+    "duplicate": true,
+    "synthetic_positive": true,
+    "shuffled_slope": true,
+    "leakage_sentinel": true,
+    "byte_identical_rerun": true
+  }
+}

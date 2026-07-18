@@ -1,0 +1,49 @@
+{
+  "experiment_id": "E002",
+  "title": "Structural baseline ladder",
+  "hypothesis": "Continuing the smooth structural coordinate U = TVT + Z with conservative low-order trends will materially beat direct last-known-TVT continuation while remaining stable on repeated whole-well folds and long hidden suffixes.",
+  "status": "designed",
+  "track": "surface",
+  "priority": 2,
+  "owner": "NNMax",
+  "parent_id": "E001",
+  "created_at": "2026-07-18T19:02:00Z",
+  "updated_at": "2026-07-18T19:02:00Z",
+  "design": {
+    "baseline": "E001 last_known_tvt at pooled RMSE 15.9098528707",
+    "legal_inputs": [
+      "MD and row order",
+      "Z trajectory for every row",
+      "visible TVT_input prefix only",
+      "known prediction-boundary and suffix length",
+      "frozen E001 fold assignments for reporting only"
+    ],
+    "fold_map": "frozen folds/v1.json through folds/v5.json",
+    "candidates": [
+      "constant U continuation anchored at the final visible row",
+      "boundary-anchored Huber robust-linear U continuation",
+      "clipped low-order quadratic U continuation",
+      "bounded cubic-Hermite U continuation whose slope damps to zero"
+    ],
+    "diagnostics": [
+      "visible-prefix sign verification for TVT+Z versus TVT-Z",
+      "wrong-sign constant continuation",
+      "fold-cell and hidden-length regime metrics",
+      "per-well datum/trend/shape decomposition",
+      "residual correlations against last-known and constant-U paths"
+    ],
+    "controls": [
+      "positive synthetic legal-slope signal",
+      "zero/no-op",
+      "duplicate constant-U predictor",
+      "shuffled per-well structural slope",
+      "wrong-sign transform",
+      "intentional target leakage sentinel",
+      "byte-identical rerun"
+    ],
+    "promotion": "Promote the best legal candidate only if pooled RMSE improves at least 0.15, at least 20/25 frozen fold cells improve, p90 well RMSE worsens by no more than 0.25, worst-5% SSE share rises by no more than 0.02, the long-hidden stress slice improves, controls pass, and runtime remains below 20 minutes.",
+    "runtime_budget_minutes": 20,
+    "config_path": "experiments/E002/config.json"
+  },
+  "runs": []
+}
