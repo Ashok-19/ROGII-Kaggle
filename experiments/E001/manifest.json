@@ -2,38 +2,94 @@
   "experiment_id": "E001",
   "title": "Metric, fold, and control harness",
   "hypothesis": "A deterministic whole-well suffix evaluator with explicit controls will reproduce the known last-known-TVT baseline and detect both true signal and intentional leakage.",
-  "status": "designed",
+  "status": "promoted",
   "track": "validation",
   "priority": 1,
   "owner": "NNMax",
   "parent_id": null,
   "created_at": "2026-07-18T16:50:00Z",
-  "updated_at": "2026-07-18T16:50:00Z",
+  "updated_at": "2026-07-18T17:21:21Z",
   "design": {
     "baseline": "last_known_tvt, expected pooled RMSE about 15.91",
     "legal_inputs": [
       "well ID for grouping",
-      "row order",
+      "row order and MD",
       "TVT_input visible prefix",
       "evaluation suffix mask"
     ],
     "fold_map": "folds/v1.json plus repeated maps v2-v5",
     "controls": [
-      "known-signal positive",
+      "known synthetic legal-signal positive",
       "zero/no-op",
-      "duplicate feature",
-      "shuffled evidence",
-      "intentional leakage sentinel"
+      "duplicate predictor",
+      "shuffled legal evidence",
+      "intentional target leakage sentinel"
     ],
     "metrics": [
       "pooled RMSE",
       "fold RMSE",
       "median/p90/p95/max well RMSE",
       "worst 5% and 10% SSE share",
-      "mean-error SSE share"
+      "datum/trend/shape SSE decomposition"
     ],
     "promotion": "Metric parity, deterministic rerun, all controls pass, and archive/dashboard validation remain healthy.",
     "runtime_budget_minutes": 20
   },
-  "runs": []
+  "runs": [
+    {
+      "run_id": "R20260718-1720-e001-validation",
+      "status": "complete",
+      "started_at": "2026-07-18T17:20:28Z",
+      "ended_at": "2026-07-18T17:21:21Z",
+      "updated_at": "2026-07-18T17:21:21Z",
+      "git_sha": "d2b0066c36988c5f8dcb77c54350bc641e167f82",
+      "fold_map": "folds/v1.json; repeated folds/v2.json through folds/v5.json",
+      "config_path": "experiments/E001/config.json",
+      "artifact_dir": "experiments/E001/results",
+      "well_metrics_path": "experiments/E001/results/well_metrics.csv",
+      "controls": {
+        "data_integrity": "pass",
+        "reference_baseline": "pass",
+        "pooled_rmse_consistency": "pass",
+        "positive": "pass",
+        "noop": "pass",
+        "duplicate": "pass",
+        "shuffle": "pass",
+        "leakage_sentinel": "pass",
+        "byte_identical_rerun": "pass"
+      },
+      "metrics": [
+        {"split": "cv", "name": "rmse", "value": 15.909852870734554},
+        {"split": "cv", "name": "median_well_rmse", "value": 10.665140786694149},
+        {"split": "cv", "name": "p90_well_rmse", "value": 22.97253656713635},
+        {"split": "cv", "name": "p95_well_rmse", "value": 29.010764433298625},
+        {"split": "cv", "name": "max_well_rmse", "value": 70.63937461968051},
+        {"split": "cv", "name": "worst_5pct_sse_share", "value": 0.38990723847856895},
+        {"split": "cv", "name": "worst_10pct_sse_share", "value": 0.5247630979620322},
+        {"split": "cv", "name": "mean_error_sse_share", "value": 0.6774749875800951},
+        {"split": "cv", "name": "linear_trend_sse_share", "value": 0.14532916828171324},
+        {"split": "cv", "name": "shape_sse_share", "value": 0.1771958441381921},
+        {"split": "oracle_diagnostic", "name": "datum_removed_rmse", "value": 9.035409988099246},
+        {"split": "oracle_diagnostic", "name": "datum_trend_removed_rmse", "value": 6.6971947701210714},
+        {"split": "validation", "name": "runtime_seconds", "value": 53.06},
+        {"split": "validation", "name": "fold_hidden_load_ratio", "value": 1.0080323950260734},
+        {"split": "control", "name": "synthetic_positive_rmse", "value": 0.0},
+        {"split": "control", "name": "synthetic_shuffled_rmse", "value": 65.29902729533676}
+      ],
+      "artifacts": [
+        {"path": "experiments/E001/results/summary.json", "kind": "summary", "sha256": "ae7c2da24cfd655f016700bc9018154972c32e1312c3a56ac0ec2106cad27b7d", "bytes": 10074},
+        {"path": "experiments/E001/results/control_metrics.csv", "kind": "controls", "sha256": "01692131cc2cd0c51238c95f10d643eeba7716b076f3ce2ada613236717faeae", "bytes": 1101},
+        {"path": "experiments/E001/results/data_profile.csv", "kind": "data_profile", "sha256": "413ab8d1e7eadb34b9edea0336c2f9871bb28bfab6be80785ba4cde4e8c04601", "bytes": 91175},
+        {"path": "experiments/E001/results/fold_metrics.csv", "kind": "fold_metrics", "sha256": "3537446d1668fd99c8dc44f09e9ded5676caf6b1813590ef750334562fd6f415", "bytes": 1129},
+        {"path": "experiments/E001/results/well_metrics.csv", "kind": "well_metrics", "sha256": "9e29d3eff8c628a23ec9b00992323b65deba10a2c4f25e766af18f12457c0e4a", "bytes": 108941},
+        {"path": "experiments/E001/results/artifact_manifest.json", "kind": "artifact_manifest", "sha256": "600f753120b71c128a15548fe5971042ce5628225a5cb40b27747e9926186e8e", "bytes": 1538},
+        {"path": "folds/v1.json", "kind": "fold_map", "sha256": "89ea99a594547b5b1457cdbd5d9d4f562d6b6f8f3f3a55ff8e3633b0e98ef555", "bytes": 15743},
+        {"path": "folds/v2.json", "kind": "fold_map", "sha256": "8a116f8b60463c55c7f23fa640fee542352c9250b8775a9e98086f3cad7c938e", "bytes": 15743},
+        {"path": "folds/v3.json", "kind": "fold_map", "sha256": "da69b7be2f115a2df2da1fd26f3d2e331503a43723cf3d24d4aaee2d3e79efa9", "bytes": 15743},
+        {"path": "folds/v4.json", "kind": "fold_map", "sha256": "38b64e8ec4b904d5ce1bf105516d925724a518152302ef2ec48cf1867336153c", "bytes": 15743},
+        {"path": "folds/v5.json", "kind": "fold_map", "sha256": "911011522eca1d1cb06e10ca5ac24b19b799796eb92560b6b6fd95921a9836ef", "bytes": 15743}
+      ],
+      "notes": "Promoted evaluator. Three committed-code full runs produced byte-identical copies of all 11 core artifacts. The oracle target predictor is an illegal leakage sentinel only."
+    }
+  ]
 }

@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-18T17:21:21Z",
+  "payload": {
+    "decision_id": "D003",
+    "decided_at": "2026-07-18",
+    "title": "Freeze E001 validation substrate",
+    "decision": "Promote E001 and freeze folds/v1.json through folds/v5.json, the data signature, metric definitions, and control semantics.",
+    "rationale": "The 773-well full run reproduced the registered baseline, passed all controls, and produced byte-identical artifacts across three committed-code runs.",
+    "source_ids": "experiments/E001/results/summary.json",
+    "revisit_trigger": "Only a demonstrated evaluator defect with a separately recorded migration decision."
+  }
+}

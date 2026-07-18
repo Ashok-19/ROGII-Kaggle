@@ -1,0 +1,384 @@
+{
+  "actual_target_metrics": {
+    "duplicate": {
+      "datum_removed_rmse": 9.035409988099246,
+      "datum_trend_removed_rmse": 6.6971947701210714,
+      "linear_trend_sse_share": 0.14532916828171324,
+      "max_well_rmse": 70.63937461968051,
+      "mean_error_sse_share": 0.6774749875800951,
+      "median_well_rmse": 10.665140786694149,
+      "p90_well_rmse": 22.97253656713635,
+      "p95_well_rmse": 29.010764433298625,
+      "rmse": 15.909852870734554,
+      "rows_scored": 3783989,
+      "shape_sse_share": 0.1771958441381921,
+      "sse": 957816230.7485013,
+      "wells_scored": 773,
+      "worst_10pct_sse_share": 0.5247630979620322,
+      "worst_5pct_sse_share": 0.38990723847856895
+    },
+    "last_known_tvt": {
+      "datum_removed_rmse": 9.035409988099246,
+      "datum_trend_removed_rmse": 6.6971947701210714,
+      "linear_trend_sse_share": 0.14532916828171324,
+      "max_well_rmse": 70.63937461968051,
+      "mean_error_sse_share": 0.6774749875800951,
+      "median_well_rmse": 10.665140786694149,
+      "p90_well_rmse": 22.97253656713635,
+      "p95_well_rmse": 29.010764433298625,
+      "rmse": 15.909852870734554,
+      "rows_scored": 3783989,
+      "shape_sse_share": 0.1771958441381921,
+      "sse": 957816230.7485013,
+      "wells_scored": 773,
+      "worst_10pct_sse_share": 0.5247630979620322,
+      "worst_5pct_sse_share": 0.38990723847856895
+    },
+    "noop": {
+      "datum_removed_rmse": 9.035409988099246,
+      "datum_trend_removed_rmse": 6.6971947701210714,
+      "linear_trend_sse_share": 0.14532916828171324,
+      "max_well_rmse": 70.63937461968051,
+      "mean_error_sse_share": 0.6774749875800951,
+      "median_well_rmse": 10.665140786694149,
+      "p90_well_rmse": 22.97253656713635,
+      "p95_well_rmse": 29.010764433298625,
+      "rmse": 15.909852870734554,
+      "rows_scored": 3783989,
+      "shape_sse_share": 0.1771958441381921,
+      "sse": 957816230.7485013,
+      "wells_scored": 773,
+      "worst_10pct_sse_share": 0.5247630979620322,
+      "worst_5pct_sse_share": 0.38990723847856895
+    },
+    "oracle_target": {
+      "datum_removed_rmse": 0.0,
+      "datum_trend_removed_rmse": 0.0,
+      "linear_trend_sse_share": null,
+      "max_well_rmse": 0.0,
+      "mean_error_sse_share": null,
+      "median_well_rmse": 0.0,
+      "p90_well_rmse": 0.0,
+      "p95_well_rmse": 0.0,
+      "rmse": 0.0,
+      "rows_scored": 3783989,
+      "shape_sse_share": null,
+      "sse": 0.0,
+      "wells_scored": 773,
+      "worst_10pct_sse_share": null,
+      "worst_5pct_sse_share": null
+    }
+  },
+  "controls": {
+    "data_integrity": {
+      "expected_wells": 773,
+      "max_visible_target_delta": 0.0,
+      "observed_wells": 773,
+      "pass": true
+    },
+    "duplicate": {
+      "pass": true,
+      "residual_correlation": 1.0,
+      "rmse": 15.909852870734554
+    },
+    "known_signal_positive": {
+      "pass": true,
+      "synthetic_null_rmse": 44.225863748562126,
+      "synthetic_positive_rmse": 0.0
+    },
+    "leakage_sentinel": {
+      "eligible_for_modeling": false,
+      "pass": true,
+      "policy": "target-reading predictors are measured only as an explicit sentinel and are rejected",
+      "rmse": 0.0,
+      "uses_target": true
+    },
+    "noop": {
+      "pass": true,
+      "rmse": 15.909852870734554
+    },
+    "pooled_rmse_consistency": {
+      "direct_sse": 957816230.7483877,
+      "pass": true,
+      "relative_difference": 1.186098640791615e-13,
+      "relative_tolerance": 1e-12,
+      "well_aggregated_sse": 957816230.7485013
+    },
+    "reference_baseline": {
+      "expected_rmse": 15.91,
+      "observed_rmse": 15.909852870734554,
+      "pass": true,
+      "tolerance": 0.02
+    },
+    "repeated_fold_maps": {
+      "map_count": 5,
+      "max_to_min_hidden_rows": 1.0080323950260734,
+      "pass": true,
+      "unique_fingerprints": 5
+    },
+    "shuffled_evidence": {
+      "pass": true,
+      "synthetic_null_rmse": 44.225863748562126,
+      "synthetic_positive_rmse": 0.0,
+      "synthetic_shuffled_rmse": 65.29902729533676
+    }
+  },
+  "data": {
+    "data_signature": "6ebe65b403f80fefd97dcd7bbfce7314252e779a1837c97364cf55761590fe77",
+    "hidden_rows": 3783989,
+    "known_rows": 1308266,
+    "max_visible_target_delta": 0.0,
+    "total_rows": 5092255,
+    "well_count": 773
+  },
+  "experiment_id": "E001",
+  "folds": [
+    {
+      "fingerprint": "03ef22d2844547366a9a3b78d301a23be65a82b36669fe1b0044c3b308f4e2d7",
+      "fold_summary": [
+        {
+          "fold": 0,
+          "hidden_rows": 758630,
+          "known_rows": 270867,
+          "total_rows": 1029497,
+          "wells": 159
+        },
+        {
+          "fold": 1,
+          "hidden_rows": 758223,
+          "known_rows": 265076,
+          "total_rows": 1023299,
+          "wells": 156
+        },
+        {
+          "fold": 2,
+          "hidden_rows": 757077,
+          "known_rows": 257603,
+          "total_rows": 1014680,
+          "wells": 154
+        },
+        {
+          "fold": 3,
+          "hidden_rows": 754075,
+          "known_rows": 253827,
+          "total_rows": 1007902,
+          "wells": 151
+        },
+        {
+          "fold": 4,
+          "hidden_rows": 755984,
+          "known_rows": 260893,
+          "total_rows": 1016877,
+          "wells": 153
+        }
+      ],
+      "seed": 104729,
+      "version": "v1"
+    },
+    {
+      "fingerprint": "74f7e2c5c935bf0e3cc9dc78866c742793cbc0ea78891eb8c562a6c8937680b2",
+      "fold_summary": [
+        {
+          "fold": 0,
+          "hidden_rows": 755021,
+          "known_rows": 253220,
+          "total_rows": 1008241,
+          "wells": 151
+        },
+        {
+          "fold": 1,
+          "hidden_rows": 758677,
+          "known_rows": 262454,
+          "total_rows": 1021131,
+          "wells": 154
+        },
+        {
+          "fold": 2,
+          "hidden_rows": 755260,
+          "known_rows": 271536,
+          "total_rows": 1026796,
+          "wells": 160
+        },
+        {
+          "fold": 3,
+          "hidden_rows": 756289,
+          "known_rows": 262080,
+          "total_rows": 1018369,
+          "wells": 156
+        },
+        {
+          "fold": 4,
+          "hidden_rows": 758742,
+          "known_rows": 258976,
+          "total_rows": 1017718,
+          "wells": 152
+        }
+      ],
+      "seed": 130363,
+      "version": "v2"
+    },
+    {
+      "fingerprint": "62820ba48d9b989b9c0d6c96115039702a99791b23f605e850fca59d467d4cbe",
+      "fold_summary": [
+        {
+          "fold": 0,
+          "hidden_rows": 754707,
+          "known_rows": 255275,
+          "total_rows": 1009982,
+          "wells": 148
+        },
+        {
+          "fold": 1,
+          "hidden_rows": 759374,
+          "known_rows": 259242,
+          "total_rows": 1018616,
+          "wells": 153
+        },
+        {
+          "fold": 2,
+          "hidden_rows": 754375,
+          "known_rows": 262530,
+          "total_rows": 1016905,
+          "wells": 155
+        },
+        {
+          "fold": 3,
+          "hidden_rows": 758692,
+          "known_rows": 262810,
+          "total_rows": 1021502,
+          "wells": 158
+        },
+        {
+          "fold": 4,
+          "hidden_rows": 756841,
+          "known_rows": 268409,
+          "total_rows": 1025250,
+          "wells": 159
+        }
+      ],
+      "seed": 155921,
+      "version": "v3"
+    },
+    {
+      "fingerprint": "8552beca6ab34630e41be0d319f0f4bea52db0d76904a4d417901dd7c0510670",
+      "fold_summary": [
+        {
+          "fold": 0,
+          "hidden_rows": 754790,
+          "known_rows": 261855,
+          "total_rows": 1016645,
+          "wells": 154
+        },
+        {
+          "fold": 1,
+          "hidden_rows": 757687,
+          "known_rows": 265161,
+          "total_rows": 1022848,
+          "wells": 156
+        },
+        {
+          "fold": 2,
+          "hidden_rows": 756528,
+          "known_rows": 258714,
+          "total_rows": 1015242,
+          "wells": 153
+        },
+        {
+          "fold": 3,
+          "hidden_rows": 755483,
+          "known_rows": 253627,
+          "total_rows": 1009110,
+          "wells": 152
+        },
+        {
+          "fold": 4,
+          "hidden_rows": 759501,
+          "known_rows": 268909,
+          "total_rows": 1028410,
+          "wells": 158
+        }
+      ],
+      "seed": 181081,
+      "version": "v4"
+    },
+    {
+      "fingerprint": "6acdd1eae62d21e3c86d1ccb74388f2412ad70d239feca8715e8b2fb84a76463",
+      "fold_summary": [
+        {
+          "fold": 0,
+          "hidden_rows": 757854,
+          "known_rows": 262833,
+          "total_rows": 1020687,
+          "wells": 153
+        },
+        {
+          "fold": 1,
+          "hidden_rows": 753449,
+          "known_rows": 262067,
+          "total_rows": 1015516,
+          "wells": 157
+        },
+        {
+          "fold": 2,
+          "hidden_rows": 757626,
+          "known_rows": 271403,
+          "total_rows": 1029029,
+          "wells": 159
+        },
+        {
+          "fold": 3,
+          "hidden_rows": 759031,
+          "known_rows": 253717,
+          "total_rows": 1012748,
+          "wells": 151
+        },
+        {
+          "fold": 4,
+          "hidden_rows": 756029,
+          "known_rows": 258246,
+          "total_rows": 1014275,
+          "wells": 153
+        }
+      ],
+      "seed": 209759,
+      "version": "v5"
+    }
+  ],
+  "predictor_policy": {
+    "duplicate": {
+      "eligible_for_modeling": false,
+      "uses_target": false
+    },
+    "last_known_tvt": {
+      "eligible_for_modeling": true,
+      "uses_target": false
+    },
+    "noop": {
+      "eligible_for_modeling": false,
+      "uses_target": false
+    },
+    "oracle_target": {
+      "eligible_for_modeling": false,
+      "uses_target": true
+    }
+  },
+  "schema_version": 1,
+  "status": "pass",
+  "synthetic_control_metrics": {
+    "null": {
+      "rmse": 44.225863748562126,
+      "rows_scored": 3783989,
+      "sse": 7401206344.778081
+    },
+    "positive": {
+      "rmse": 0.0,
+      "rows_scored": 3783989,
+      "sse": 0.0
+    },
+    "shuffled": {
+      "rmse": 65.29902729533676,
+      "rows_scored": 3783989,
+      "sse": 16134788958.681013
+    }
+  }
+}

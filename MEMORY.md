@@ -9,7 +9,7 @@ Last updated: 2026-07-18
 - Best Kaggle-MCP-verified submission for this account/team history: 7.119 on 2026-07-16, ref 54754431.
 - User-reported best: 6.888; submission reference not yet verified.
 - Current public top-100 cutoff in the archived snapshot: 6.799.
-- Training/testing of new solution tracks has not started. Foundation and evidence collection come first.
+- E001 validation infrastructure is complete; no competition model training has started.
 
 ## Foundation completed
 
@@ -18,6 +18,7 @@ Last updated: 2026-07-18
 - Official rules, timeline, evaluation, leaderboard, submission history, and data summary archived.
 - Copied notebook audited: seven named external datasets plus one opaque mount; three named datasets have unknown licenses.
 - SQLite experiment ledger, auto-sync CLI, dashboard, manifests, validation protocol, and roadmap are installed.
+- E001 is promoted: five deterministic whole-well fold maps, one shared evaluator, controls, reports, and hashes are frozen.
 
 ## Durable understanding
 
@@ -29,6 +30,9 @@ Last updated: 2026-07-18
 - Aggregate CV may invert against the public leaderboard.
 - Risk detection does not prove signed correction direction.
 - Weak but decorrelated models may improve an ensemble; stacking individually good corrections may still fail.
+- E001 reproduced last-known-TVT RMSE 15.9098528707 on 3,783,989 hidden rows.
+- Baseline SSE decomposes into 67.75% per-well mean/datum, 14.53% linear trend, and 17.72% remaining shape.
+- Worst 5% and 10% of wells contribute 38.99% and 52.48% of baseline SSE.
 
 ## Decisions
 
@@ -36,10 +40,12 @@ Last updated: 2026-07-18
 - No private/opaque or unknown-license artifact enters the final solution.
 - No model is promoted from a single aggregate CV number.
 - One final slot should represent a public-proven family; the other should be a decorrelated, control-validated private-expectation family.
+- `folds/v1.json` through `folds/v5.json`, data signature `6ebe65b4...fe77`, and E001 metric/control semantics are immutable.
+- Heavy training, large OOF generation, and accelerator workflows should use Kaggle MCP notebook sessions after committing exact code/configuration.
 
 ## Exact next action
 
-Freeze deterministic whole-well fold maps and implement the metric/control suite. Then reproduce last-known-TVT and simple `U` baselines before any complex model work.
+Run E002: reproduce a structural baseline ladder on frozen folds, verifying transform sign conventions before constant, robust-linear, quadratic, and constrained-spline candidates are compared.
 
 ## Open risks
 

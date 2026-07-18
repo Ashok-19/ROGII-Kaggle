@@ -225,8 +225,8 @@ These defaults may be revised only through a recorded decision before seeing the
 
 ## Immediate experiment queue
 
-1. **E001 — Metric and fold harness.** Prove the evaluator and leakage controls.
-2. **E002 — Structural `U` baseline ladder.** Constant, robust linear, quadratic, spline.
+1. **E001 — Metric and fold harness — completed 2026-07-18.** Evaluator, five fold maps, leakage controls, reports, and hashes are frozen.
+2. **E002 — Structural baseline ladder — next.** Verify transform sign conventions, then compare constant, robust linear, quadratic, and constrained spline formulations.
 3. **E003 — Datum/trend oracle decomposition.** Quantify learnable headroom and per-well sign problem.
 4. **E004 — Clean PF and trellis candidates.** Independent implementations with OOF paths.
 5. **E005 — Candidate evidence tree stack.** Positive/no-op/duplicate/shuffle controls.

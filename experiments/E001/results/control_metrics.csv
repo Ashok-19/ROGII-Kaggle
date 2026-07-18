@@ -1,0 +1,10 @@
+control,status,detail_json
+data_integrity,pass,"{""expected_wells"":773,""max_visible_target_delta"":0.0,""observed_wells"":773}"
+duplicate,pass,"{""residual_correlation"":1.0,""rmse"":15.909852870734554}"
+known_signal_positive,pass,"{""synthetic_null_rmse"":44.225863748562126,""synthetic_positive_rmse"":0.0}"
+leakage_sentinel,pass,"{""eligible_for_modeling"":false,""policy"":""target-reading predictors are measured only as an explicit sentinel and are rejected"",""rmse"":0.0,""uses_target"":true}"
+noop,pass,"{""rmse"":15.909852870734554}"
+pooled_rmse_consistency,pass,"{""direct_sse"":957816230.7483877,""relative_difference"":1.186098640791615e-13,""relative_tolerance"":1e-12,""well_aggregated_sse"":957816230.7485013}"
+reference_baseline,pass,"{""expected_rmse"":15.91,""observed_rmse"":15.909852870734554,""tolerance"":0.02}"
+repeated_fold_maps,pass,"{""map_count"":5,""max_to_min_hidden_rows"":1.0080323950260734,""unique_fingerprints"":5}"
+shuffled_evidence,pass,"{""synthetic_null_rmse"":44.225863748562126,""synthetic_positive_rmse"":0.0,""synthetic_shuffled_rmse"":65.29902729533676}"

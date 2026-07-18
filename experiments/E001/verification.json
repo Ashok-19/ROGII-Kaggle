@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E001",
+  "run_id": "R20260718-1720-e001-validation",
+  "git_sha": "d2b0066c36988c5f8dcb77c54350bc641e167f82",
+  "timed_run_started_at": "2026-07-18T17:20:28Z",
+  "timed_run_ended_at": "2026-07-18T17:21:21Z",
+  "runtime_seconds": 53.06,
+  "full_committed_code_runs": 3,
+  "files_compared_per_verification": 11,
+  "byte_identical": true,
+  "data_signature": "6ebe65b403f80fefd97dcd7bbfce7314252e779a1837c97364cf55761590fe77",
+  "validation": {
+    "python_compile": "pass",
+    "unit_and_integration_tests": "6/6 pass",
+    "full_data_controls": "9/9 pass",
+    "tracker_sync": "pass",
+    "project_validation": "pass",
+    "sqlite_integrity": "ok"
+  },
+  "notes": "The official fold/result files and two independent post-commit verification runs were byte-identical. Runtime is from the third full committed-code run."
+}

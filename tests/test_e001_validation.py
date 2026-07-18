@@ -87,6 +87,25 @@ class E001ValidationTests(unittest.TestCase):
             manifest = json.loads((first_output / "artifact_manifest.json").read_text(encoding="utf-8"))
             self.assertEqual(len(manifest["fold_files"]), 5)
 
+    def test_official_artifacts_match_manifest(self):
+        manifest_path = ROOT / "experiments" / "E001" / "manifest.json"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        self.assertEqual(manifest["status"], "promoted")
+        self.assertEqual(len(manifest["runs"]), 1)
+        run = manifest["runs"][0]
+        self.assertEqual(run["git_sha"], "d2b0066c36988c5f8dcb77c54350bc641e167f82")
+        for artifact in run["artifacts"]:
+            path = ROOT / artifact["path"]
+            self.assertTrue(path.exists(), artifact["path"])
+            self.assertEqual(path.stat().st_size, artifact["bytes"], artifact["path"])
+            import hashlib
+
+            digest = hashlib.sha256(path.read_bytes()).hexdigest()
+            self.assertEqual(digest, artifact["sha256"], artifact["path"])
+        summary = json.loads((ROOT / "experiments" / "E001" / "results" / "summary.json").read_text(encoding="utf-8"))
+        self.assertEqual(summary["status"], "pass")
+        self.assertEqual(summary["data"]["data_signature"], "6ebe65b403f80fefd97dcd7bbfce7314252e779a1837c97364cf55761590fe77")
+
     def test_noncontiguous_visibility_is_rejected(self):
         with tempfile.TemporaryDirectory() as tmp:
             train = Path(tmp) / "data" / "train"

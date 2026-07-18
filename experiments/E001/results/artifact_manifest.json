@@ -1,0 +1,57 @@
+{
+  "files": [
+    {
+      "bytes": 1101,
+      "path": "control_metrics.csv",
+      "sha256": "01692131cc2cd0c51238c95f10d643eeba7716b076f3ce2ada613236717faeae"
+    },
+    {
+      "bytes": 91175,
+      "path": "data_profile.csv",
+      "sha256": "413ab8d1e7eadb34b9edea0336c2f9871bb28bfab6be80785ba4cde4e8c04601"
+    },
+    {
+      "bytes": 1129,
+      "path": "fold_metrics.csv",
+      "sha256": "3537446d1668fd99c8dc44f09e9ded5676caf6b1813590ef750334562fd6f415"
+    },
+    {
+      "bytes": 10074,
+      "path": "summary.json",
+      "sha256": "ae7c2da24cfd655f016700bc9018154972c32e1312c3a56ac0ec2106cad27b7d"
+    },
+    {
+      "bytes": 108941,
+      "path": "well_metrics.csv",
+      "sha256": "9e29d3eff8c628a23ec9b00992323b65deba10a2c4f25e766af18f12457c0e4a"
+    }
+  ],
+  "fold_files": [
+    {
+      "bytes": 15743,
+      "path": "v1.json",
+      "sha256": "89ea99a594547b5b1457cdbd5d9d4f562d6b6f8f3f3a55ff8e3633b0e98ef555"
+    },
+    {
+      "bytes": 15743,
+      "path": "v2.json",
+      "sha256": "8a116f8b60463c55c7f23fa640fee542352c9250b8775a9e98086f3cad7c938e"
+    },
+    {
+      "bytes": 15743,
+      "path": "v3.json",
+      "sha256": "da69b7be2f115a2df2da1fd26f3d2e331503a43723cf3d24d4aaee2d3e79efa9"
+    },
+    {
+      "bytes": 15743,
+      "path": "v4.json",
+      "sha256": "38b64e8ec4b904d5ce1bf105516d925724a518152302ef2ec48cf1867336153c"
+    },
+    {
+      "bytes": 15743,
+      "path": "v5.json",
+      "sha256": "911011522eca1d1cb06e10ca5ac24b19b799796eb92560b6b6fd95921a9836ef"
+    }
+  ],
+  "schema_version": 1
+}
