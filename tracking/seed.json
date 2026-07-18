@@ -1,0 +1,609 @@
+{
+  "meta": {
+    "competition_name": "ROGII - Wellbore Geology Prediction",
+    "competition_slug": "rogii-wellbore-geology-prediction",
+    "snapshot_date": "2026-07-18",
+    "final_deadline_utc": "2026-08-05T23:59:00Z",
+    "final_deadline_ist": "2026-08-06T05:29:00+05:30",
+    "leader_score": "4.859",
+    "leader_team": "shu01",
+    "verified_best_public_score": "7.119",
+    "user_reported_best_score": "6.888",
+    "train_wells": "773",
+    "hidden_test_wells_approx": "200",
+    "discussion_topics_archived": "132",
+    "discussion_messages_archived": "981"
+  },
+  "sources": [
+    {
+      "source_id": "S_OFFICIAL",
+      "title": "Kaggle official competition pages",
+      "kind": "official",
+      "url": "https://www.kaggle.com/competitions/rogii-wellbore-geology-prediction",
+      "local_path": "archive/competition/official_summary.md",
+      "accessibility": "public",
+      "license": "competition terms",
+      "confidence": "confirmed",
+      "last_checked": "2026-07-18",
+      "notes": "Rules, timeline, evaluation, data and code requirements."
+    },
+    {
+      "source_id": "S_LOCAL_EDA",
+      "title": "Local ROGII EDA",
+      "kind": "local_data",
+      "url": "",
+      "local_path": "eda_findings/README.md",
+      "accessibility": "repo",
+      "license": "project",
+      "confidence": "confirmed",
+      "last_checked": "2026-07-18",
+      "notes": "Computed from competition train data."
+    },
+    {
+      "source_id": "S_WIGGLE",
+      "title": "The Wiggle Is Free, the Trend Is the Wall",
+      "kind": "winning_writeup",
+      "url": "https://www.kaggle.com/writeups/malyshevdanil/the-wiggle-is-free-the-trend-is-the-wall",
+      "local_path": "archive/writeups/the_wiggle_is_free.md",
+      "accessibility": "public",
+      "license": "author copyright",
+      "confidence": "strong",
+      "last_checked": "2026-07-18",
+      "notes": "Controlled experiments and score ladder."
+    },
+    {
+      "source_id": "S_CONTROL",
+      "title": "When Better CV Scores Worse",
+      "kind": "winning_writeup",
+      "url": "https://www.kaggle.com/writeups/radiantallomancer/when-better-cv-scores-worse-a-control-first-geost",
+      "local_path": "archive/writeups/control_first_geosteering.md",
+      "accessibility": "public",
+      "license": "author copyright",
+      "confidence": "strong",
+      "last_checked": "2026-07-18",
+      "notes": "Control-first validation and contribution ledger."
+    },
+    {
+      "source_id": "S_DISCUSSIONS",
+      "title": "All ROGII competition discussions",
+      "kind": "discussion_archive",
+      "url": "https://www.kaggle.com/competitions/rogii-wellbore-geology-prediction/discussion",
+      "local_path": "archive/discussions/index.csv",
+      "accessibility": "public",
+      "license": "participant copyright",
+      "confidence": "mixed",
+      "last_checked": "2026-07-18",
+      "notes": "132 topics and 981 messages."
+    },
+    {
+      "source_id": "S_NOTEBOOK",
+      "title": "Copied public notebook audit",
+      "kind": "notebook",
+      "url": "https://www.kaggle.com/code/ashok205/rogii-kim-om020",
+      "local_path": "archive/competition/notebook_audit.md",
+      "accessibility": "private notebook with public dependencies",
+      "license": "mixed/unknown",
+      "confidence": "confirmed metadata",
+      "last_checked": "2026-07-18",
+      "notes": "Not an approved reproducible baseline."
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "C001",
+      "category": "official",
+      "claim": "Final metric is pooled row-level RMSE.",
+      "evidence_class": "official",
+      "confidence": "confirmed",
+      "source_id": "S_OFFICIAL",
+      "implication": "All CV aggregation must pool scored rows; per-well averages are diagnostic only.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C002",
+      "category": "official",
+      "claim": "Hidden test contains roughly 200 wells; visible test contains only a few train-derived authoring examples.",
+      "evidence_class": "official",
+      "confidence": "confirmed",
+      "source_id": "S_OFFICIAL",
+      "implication": "Visible test overlap cannot validate hidden-test generalization.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C003",
+      "category": "data",
+      "claim": "Training has 773 wells and every simulated target mask is a suffix.",
+      "evidence_class": "local_data",
+      "confidence": "confirmed",
+      "source_id": "S_LOCAL_EDA",
+      "implication": "Use whole-well hidden-suffix simulation.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C004",
+      "category": "baseline",
+      "claim": "Last-known-TVT continuation has about 15.91 pooled RMSE locally.",
+      "evidence_class": "local_data",
+      "confidence": "confirmed",
+      "source_id": "S_LOCAL_EDA",
+      "implication": "Every formulation must beat this and report delta.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C005",
+      "category": "target",
+      "claim": "Most high-frequency TVT variation is inherited from known trajectory; smooth U=TVT+Z is the main target.",
+      "evidence_class": "writeup_plus_physics",
+      "confidence": "strong",
+      "source_id": "S_WIGGLE",
+      "implication": "Model U level/trend and convert back to TVT.",
+      "status": "active"
+    },
+    {
+      "claim_id": "C006",
+      "category": "error",
+      "claim": "A small fraction of wells dominates squared error.",
+      "evidence_class": "independent_writeups",
+      "confidence": "strong",
+      "source_id": "S_CONTROL",
+      "implication": "Report worst-well and SSE concentration metrics for every run.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C007",
+      "category": "error",
+      "claim": "Per-well mean/datum error explains a large fraction of SSE.",
+      "evidence_class": "writeup_controlled",
+      "confidence": "strong",
+      "source_id": "S_CONTROL",
+      "implication": "Decompose residual into datum, trend and shape.",
+      "status": "active"
+    },
+    {
+      "claim_id": "C008",
+      "category": "validation",
+      "claim": "Aggregate grouped CV ordering can invert on the public leaderboard.",
+      "evidence_class": "writeup_score_pairs",
+      "confidence": "strong",
+      "source_id": "S_CONTROL",
+      "implication": "Require controls, repeated folds, harsher splits and final-family diversity.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C009",
+      "category": "ensemble",
+      "claim": "A weak standalone model can improve a strong ensemble when residual correlation is low.",
+      "evidence_class": "writeup_controlled",
+      "confidence": "strong",
+      "source_id": "S_CONTROL",
+      "implication": "Optimize ensemble weights on OOF residual covariance, not standalone score.",
+      "status": "active"
+    },
+    {
+      "claim_id": "C010",
+      "category": "negative",
+      "claim": "Individually validated corrections can harm when stacked.",
+      "evidence_class": "writeup_real_lb",
+      "confidence": "strong",
+      "source_id": "S_WIGGLE",
+      "implication": "Test every component in final placement and retain negative configurations.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C011",
+      "category": "uncertainty",
+      "claim": "Risk detection is easier than predicting the signed correction direction.",
+      "evidence_class": "writeup_controlled",
+      "confidence": "strong",
+      "source_id": "S_CONTROL",
+      "implication": "Do not actuate a gate without signed-direction evidence.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C012",
+      "category": "public_notebook",
+      "claim": "Copied notebook uses seven named external datasets and one opaque mount.",
+      "evidence_class": "kaggle_metadata",
+      "confidence": "confirmed",
+      "source_id": "S_NOTEBOOK",
+      "implication": "Treat it as an idea catalogue, not a reproducible baseline.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C013",
+      "category": "licenses",
+      "claim": "Three named notebook datasets show unknown licenses.",
+      "evidence_class": "kaggle_metadata",
+      "confidence": "confirmed",
+      "source_id": "S_NOTEBOOK",
+      "implication": "Quarantine those artifacts pending license/provenance resolution.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C014",
+      "category": "discussion",
+      "claim": "Participants report tabular, non-tabular and pure-physics systems in the 5.x–6.x range.",
+      "evidence_class": "participant_claims",
+      "confidence": "unverified",
+      "source_id": "S_DISCUSSIONS",
+      "implication": "Maintain multiple formulation tracks; do not copy undisclosed claims.",
+      "status": "hypothesis"
+    },
+    {
+      "claim_id": "C015",
+      "category": "features",
+      "claim": "Known-prefix typewell alignment quality has local correlation about 0.454 with hidden oracle quality.",
+      "evidence_class": "local_data",
+      "confidence": "confirmed",
+      "source_id": "S_LOCAL_EDA",
+      "implication": "Use alignment quality as a feature/gate, not as definitive selector.",
+      "status": "active"
+    },
+    {
+      "claim_id": "C016",
+      "category": "data",
+      "claim": "Hidden-zone GR missingness is substantial and highly variable.",
+      "evidence_class": "local_data",
+      "confidence": "confirmed",
+      "source_id": "S_LOCAL_EDA",
+      "implication": "Add missingness-aware regimes and no-GR fallbacks.",
+      "status": "active"
+    }
+  ],
+  "submissions": [
+    {
+      "submission_id": "K54754431",
+      "run_id": null,
+      "kaggle_ref": "54754431",
+      "submitted_at": "2026-07-16T06:53:02.277Z",
+      "public_score": 7.119,
+      "private_score": null,
+      "description": "Notebook rogii kim om020 | Version 1",
+      "selected": 0,
+      "source": "kaggle_mcp"
+    },
+    {
+      "submission_id": "K54015375",
+      "run_id": null,
+      "kaggle_ref": "54015375",
+      "submitted_at": "2026-06-24T15:18:45.600Z",
+      "public_score": 7.233,
+      "private_score": null,
+      "description": "Notebook ROGII LB7295 Public Rebuild | Version 1",
+      "selected": 0,
+      "source": "kaggle_mcp"
+    },
+    {
+      "submission_id": "K53301426",
+      "run_id": null,
+      "kaggle_ref": "53301426",
+      "submitted_at": "2026-06-02T19:01:41.837Z",
+      "public_score": 8.863,
+      "private_score": null,
+      "description": "Notebook [LB] [SCORE] [8.863] | Version 1",
+      "selected": 0,
+      "source": "kaggle_mcp"
+    },
+    {
+      "submission_id": "K52785498",
+      "run_id": null,
+      "kaggle_ref": "52785498",
+      "submitted_at": "2026-05-18T18:11:35.640Z",
+      "public_score": 9.931,
+      "private_score": null,
+      "description": "Notebook ROGII |🐼 h-blend v1 | Version 1",
+      "selected": 0,
+      "source": "kaggle_mcp"
+    },
+    {
+      "submission_id": "K52657636",
+      "run_id": null,
+      "kaggle_ref": "52657636",
+      "submitted_at": "2026-05-14T17:43:00.947Z",
+      "public_score": 9.9,
+      "private_score": null,
+      "description": "Notebook 9.251 ROGII-Wellbore Geology Prediction: DWT-based | Version 5",
+      "selected": 0,
+      "source": "kaggle_mcp"
+    },
+    {
+      "submission_id": "K52657625",
+      "run_id": null,
+      "kaggle_ref": "52657625",
+      "submitted_at": "2026-05-14T17:42:38.037Z",
+      "public_score": 9.766,
+      "private_score": null,
+      "description": "Notebook 9.251 ROGII-Wellbore Geology Prediction: DWT-based | Version 5",
+      "selected": 0,
+      "source": "kaggle_mcp"
+    },
+    {
+      "submission_id": "K52657306",
+      "run_id": null,
+      "kaggle_ref": "52657306",
+      "submitted_at": "2026-05-14T17:28:59.153Z",
+      "public_score": 10.122,
+      "private_score": null,
+      "description": "Notebook 9.251 ROGII-Wellbore Geology Prediction: DWT-based | Version 4",
+      "selected": 0,
+      "source": "kaggle_mcp"
+    },
+    {
+      "submission_id": "K52657276",
+      "run_id": null,
+      "kaggle_ref": "52657276",
+      "submitted_at": "2026-05-14T17:27:39.413Z",
+      "public_score": 10.179,
+      "private_score": null,
+      "description": "Notebook 9.251 ROGII-Wellbore Geology Prediction: DWT-based | Version 2",
+      "selected": 0,
+      "source": "kaggle_mcp"
+    },
+    {
+      "submission_id": "K52657248",
+      "run_id": null,
+      "kaggle_ref": "52657248",
+      "submitted_at": "2026-05-14T17:26:30.590Z",
+      "public_score": 10.241,
+      "private_score": null,
+      "description": "Notebook 9.251 ROGII-Wellbore Geology Prediction: DWT-based | Version 3",
+      "selected": 0,
+      "source": "kaggle_mcp"
+    },
+    {
+      "submission_id": "K52612818",
+      "run_id": null,
+      "kaggle_ref": "52612818",
+      "submitted_at": "2026-05-13T11:25:27.370Z",
+      "public_score": 9.969,
+      "private_score": null,
+      "description": "Notebook 9.251 ROGII-Wellbore Geology Prediction: DWT-based | Version 1",
+      "selected": 0,
+      "source": "kaggle_mcp"
+    },
+    {
+      "submission_id": "K52590237",
+      "run_id": null,
+      "kaggle_ref": "52590237",
+      "submitted_at": "2026-05-12T19:14:56.133Z",
+      "public_score": 10.138,
+      "private_score": null,
+      "description": "Notebook ROGII thbdh v10 as-is | Version 1",
+      "selected": 0,
+      "source": "kaggle_mcp"
+    },
+    {
+      "submission_id": "K52432526",
+      "run_id": null,
+      "kaggle_ref": "52432526",
+      "submitted_at": "2026-05-07T19:59:54.383Z",
+      "public_score": 14.804,
+      "private_score": null,
+      "description": "Notebook Triple-Signal Beam Search + Dual PF + LightGBM | Version 1",
+      "selected": 0,
+      "source": "kaggle_mcp"
+    },
+    {
+      "submission_id": "K52429851",
+      "run_id": null,
+      "kaggle_ref": "52429851",
+      "submitted_at": "2026-05-07T17:47:22.110Z",
+      "public_score": 14.018,
+      "private_score": null,
+      "description": "Notebook LightGBM - public modified | Version 11",
+      "selected": 0,
+      "source": "kaggle_mcp"
+    },
+    {
+      "submission_id": "K52421262",
+      "run_id": null,
+      "kaggle_ref": "52421262",
+      "submitted_at": "2026-05-07T12:07:44.580Z",
+      "public_score": 11.886,
+      "private_score": null,
+      "description": "Notebook LightGBM - public modified | Version 7",
+      "selected": 0,
+      "source": "kaggle_mcp"
+    },
+    {
+      "submission_id": "K52409332",
+      "run_id": null,
+      "kaggle_ref": "52409332",
+      "submitted_at": "2026-05-07T03:59:15.373Z",
+      "public_score": 12.052,
+      "private_score": null,
+      "description": "Same as v4 - no rolling mean for submission",
+      "selected": 0,
+      "source": "kaggle_mcp"
+    },
+    {
+      "submission_id": "K52398734",
+      "run_id": null,
+      "kaggle_ref": "52398734",
+      "submitted_at": "2026-05-06T19:01:04.370Z",
+      "public_score": 12.046,
+      "private_score": null,
+      "description": "Gemini suggested changes",
+      "selected": 0,
+      "source": "kaggle_mcp"
+    },
+    {
+      "submission_id": "K52387779",
+      "run_id": null,
+      "kaggle_ref": "52387779",
+      "submitted_at": "2026-05-06T12:04:25.970Z",
+      "public_score": 12.025,
+      "private_score": null,
+      "description": "Notebook LightGBM - public modified | Version 3",
+      "selected": 0,
+      "source": "kaggle_mcp"
+    },
+    {
+      "submission_id": "K52385448",
+      "run_id": null,
+      "kaggle_ref": "52385448",
+      "submitted_at": "2026-05-06T10:49:42.317Z",
+      "public_score": 12.686,
+      "private_score": null,
+      "description": "Notebook Wellbore Geology Prediction | LightGBM 56b8cb | Version 1",
+      "selected": 0,
+      "source": "kaggle_mcp"
+    }
+  ],
+  "hypotheses": [
+    {
+      "hypothesis_id": "H001",
+      "title": "Surface-target formulation",
+      "statement": "Predicting smooth U=TVT+Z level and trend will outperform direct TVT regression under repeated whole-well suffix CV.",
+      "status": "queued",
+      "priority": 1,
+      "evidence_for": "Two winning notes and physical decomposition.",
+      "evidence_against": "Structural breaks may violate smoothness.",
+      "next_test": "Build flat, linear, quadratic and robust-spline U baselines with identical folds."
+    },
+    {
+      "hypothesis_id": "H002",
+      "title": "Candidate residual tabular stack",
+      "statement": "Tree models over legal trajectory, prefix, alignment and candidate-path features can improve a physics candidate without learning raw row TVT directly.",
+      "status": "queued",
+      "priority": 2,
+      "evidence_for": "Participant claims and public pipelines.",
+      "evidence_against": "CV/LB inversion and artifact leakage risk.",
+      "next_test": "Positive-control feature pack, then no-op/duplicate/shuffle controls."
+    },
+    {
+      "hypothesis_id": "H003",
+      "title": "Decorrelated sequence correction",
+      "statement": "A small sequence correction trained on candidate residuals can improve a strong structural baseline when OOF error correlation is low.",
+      "status": "queued",
+      "priority": 3,
+      "evidence_for": "Both winning writeups.",
+      "evidence_against": "Many neural architectures plateaued or overfit.",
+      "next_test": "Small GRU/TCN with strict ablation and residual-correlation report."
+    },
+    {
+      "hypothesis_id": "H004",
+      "title": "Risk without actuation",
+      "statement": "Uncertainty features can identify expensive wells but cannot safely choose correction sign.",
+      "status": "active",
+      "priority": 2,
+      "evidence_for": "Control-first writeup.",
+      "evidence_against": "A signed proxy may exist in prefix backtests.",
+      "next_test": "Measure AUC/rank correlation separately from signed datum correlation."
+    },
+    {
+      "hypothesis_id": "H005",
+      "title": "Self-correlation candidate",
+      "statement": "Horizontal pre-PS GR self-correlation provides a useful candidate independent of typewell matching for selected regimes.",
+      "status": "queued",
+      "priority": 4,
+      "evidence_for": "Host material and discussions.",
+      "evidence_against": "Repeated motifs and toe missingness.",
+      "next_test": "Implement legal prefix-template correlation with shuffled-template control."
+    },
+    {
+      "hypothesis_id": "H006",
+      "title": "Spatial datum prior",
+      "statement": "Legal cross-well spatial/context features can reduce datum error under leave-spatial-out validation.",
+      "status": "blocked",
+      "priority": 5,
+      "evidence_for": "Local offset structure and discussion interest.",
+      "evidence_against": "Winning note reports non-transfer and coordinate uncertainty.",
+      "next_test": "First prove coordinate semantics and pass leave-spatial/typewell-out control."
+    }
+  ],
+  "tasks": [
+    {
+      "task_id": "T001",
+      "title": "Freeze independent baseline folds",
+      "status": "next",
+      "priority": 1,
+      "phase": "validation",
+      "depends_on": "",
+      "due_at": "2026-07-19"
+    },
+    {
+      "task_id": "T002",
+      "title": "Implement metric and control suite",
+      "status": "next",
+      "priority": 1,
+      "phase": "validation",
+      "depends_on": "T001",
+      "due_at": "2026-07-19"
+    },
+    {
+      "task_id": "T003",
+      "title": "Rebuild last-known and U baselines",
+      "status": "queued",
+      "priority": 1,
+      "phase": "baseline",
+      "depends_on": "T002",
+      "due_at": "2026-07-20"
+    },
+    {
+      "task_id": "T004",
+      "title": "Build candidate-bank interface",
+      "status": "queued",
+      "priority": 2,
+      "phase": "modeling",
+      "depends_on": "T003",
+      "due_at": "2026-07-21"
+    },
+    {
+      "task_id": "T005",
+      "title": "Create experiment manifest for every run",
+      "status": "done",
+      "priority": 1,
+      "phase": "workflow",
+      "depends_on": "",
+      "due_at": "2026-07-18"
+    },
+    {
+      "task_id": "T006",
+      "title": "Audit public artifact provenance",
+      "status": "blocked",
+      "priority": 3,
+      "phase": "compliance",
+      "depends_on": "",
+      "due_at": "2026-07-22"
+    },
+    {
+      "task_id": "T007",
+      "title": "Build Kaggle runtime parity notebook",
+      "status": "queued",
+      "priority": 2,
+      "phase": "deployment",
+      "depends_on": "T004",
+      "due_at": "2026-07-29"
+    },
+    {
+      "task_id": "T008",
+      "title": "Reserve two final-family slots",
+      "status": "queued",
+      "priority": 1,
+      "phase": "finalization",
+      "depends_on": "T007",
+      "due_at": "2026-08-03"
+    }
+  ],
+  "decisions": [
+    {
+      "decision_id": "D001",
+      "decided_at": "2026-07-18",
+      "title": "Copied notebook is not baseline",
+      "decision": "Treat it only as an idea catalogue.",
+      "rationale": "Opaque/private mount, unknown licenses, external artifact lineage and visible-test overlap.",
+      "source_ids": "S_NOTEBOOK",
+      "revisit_trigger": "All dependencies become licensed, reproducible and pass local controls."
+    },
+    {
+      "decision_id": "D002",
+      "decided_at": "2026-07-18",
+      "title": "Control-first promotion",
+      "decision": "No model is promoted from one aggregate CV score.",
+      "rationale": "Observed CV/LB inversion and concentrated well-level SSE.",
+      "source_ids": "S_CONTROL,S_WIGGLE",
+      "revisit_trigger": "Never during this competition."
+    }
+  ]
+}

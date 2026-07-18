@@ -1,3 +1,18 @@
 data/
 #plan.md
 .venv
+
+# ROGII generated state and local agent work
+scratch/
+.chatgpt/workspace-locks/
+.chatgpt/operations/
+tracking/rogii.sqlite
+tracking/rogii.sqlite-wal
+tracking/rogii.sqlite-shm
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Generated experiment artifacts
+artifacts/
+reports/generated/

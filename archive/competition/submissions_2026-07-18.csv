@@ -1,0 +1,21 @@
+ref,date,public_score,status,description,file_name,submitted_by,team_name,url
+54754431,2026-07-16T06:53:02.277Z,7.119,COMPLETE,Notebook rogii kim om020 | Version 1,submission.csv,ashok205,Stochastic,/code/ashok205/rogii-kim-om020?scriptVersionId=335650941
+54015375,2026-06-24T15:18:45.600Z,7.233,COMPLETE,Notebook ROGII LB7295 Public Rebuild | Version 1,submission.csv,ashok205,Stochastic,/code/ashok205/rogii-lb7295-public-rebuild?scriptVersionId=330085400
+53301426,2026-06-02T19:01:41.837Z,8.863,COMPLETE,Notebook [LB] [SCORE] [8.863] | Version 1,submission.csv,ashok205,Stochastic,/code/ashok205/lb-score-8-863?scriptVersionId=324005018
+52785498,2026-05-18T18:11:35.640Z,9.931,COMPLETE,Notebook ROGII |🐼 h-blend v1 | Version 1,submission.csv,ashok205,Stochastic,/code/ashok205/rogii-h-blend-v1?scriptVersionId=320393712
+52657636,2026-05-14T17:43:00.947Z,9.900,COMPLETE,Notebook 9.251 ROGII-Wellbore Geology Prediction: DWT-based | Version 5,submission.csv,ashok205,Stochastic,/code/ashok205/9-251-rogii-wellbore-geology-prediction-dwt-based?scriptVersionId=319378209
+52657625,2026-05-14T17:42:38.037Z,9.766,COMPLETE,Notebook 9.251 ROGII-Wellbore Geology Prediction: DWT-based | Version 5,submission.csv,ashok205,Stochastic,/code/ashok205/9-251-rogii-wellbore-geology-prediction-dwt-based?scriptVersionId=319378192
+52657306,2026-05-14T17:28:59.153Z,10.122,COMPLETE,Notebook 9.251 ROGII-Wellbore Geology Prediction: DWT-based | Version 4,submission.csv,ashok205,Stochastic,/code/ashok205/9-251-rogii-wellbore-geology-prediction-dwt-based?scriptVersionId=319375762
+52657276,2026-05-14T17:27:39.413Z,10.179,COMPLETE,Notebook 9.251 ROGII-Wellbore Geology Prediction: DWT-based | Version 2,submission.csv,ashok205,Stochastic,/code/ashok205/9-251-rogii-wellbore-geology-prediction-dwt-based?scriptVersionId=319375585
+52657248,2026-05-14T17:26:30.590Z,10.241,COMPLETE,Notebook 9.251 ROGII-Wellbore Geology Prediction: DWT-based | Version 3,submission.csv,ashok205,Stochastic,/code/ashok205/9-251-rogii-wellbore-geology-prediction-dwt-based?scriptVersionId=319375660
+52612818,2026-05-13T11:25:27.370Z,9.969,COMPLETE,Notebook 9.251 ROGII-Wellbore Geology Prediction: DWT-based | Version 1,submission.csv,ashok205,Stochastic,/code/ashok205/9-251-rogii-wellbore-geology-prediction-dwt-based?scriptVersionId=318932544
+52590237,2026-05-12T19:14:56.133Z,10.138,COMPLETE,Notebook ROGII thbdh v10 as-is | Version 1,submission.csv,ashok205,Stochastic,/code/ashok205/rogii-thbdh-v10-as-is?scriptVersionId=318769083
+52432526,2026-05-07T19:59:54.383Z,14.804,COMPLETE,Notebook Triple-Signal Beam Search + Dual PF + LightGBM | Version 1,submission.csv,ashok205,Stochastic,/code/ashok205/triple-signal-beam-search-dual-pf-lightgbm?scriptVersionId=317456780
+52429851,2026-05-07T17:47:22.110Z,14.018,COMPLETE,Notebook LightGBM - public modified | Version 11,submission.csv,ashok205,Stochastic,/code/ashok205/lightgbm-public-modified?scriptVersionId=317425972
+52421262,2026-05-07T12:07:44.580Z,11.886,COMPLETE,Notebook LightGBM - public modified | Version 7,submission.csv,ashok205,Stochastic,/code/ashok205/lightgbm-public-modified?scriptVersionId=317357864
+52409332,2026-05-07T03:59:15.373Z,12.052,COMPLETE,Same as v4 - no rolling mean for submission,submission.csv,ashok205,Stochastic,/code/ashok205/lightgbm-public-modified?scriptVersionId=317260276
+52398734,2026-05-06T19:01:04.370Z,12.046,COMPLETE,Gemini suggested changes,submission.csv,ashok205,Stochastic,/code/ashok205/lightgbm-public-modified?scriptVersionId=317130445
+52387779,2026-05-06T12:04:25.970Z,12.025,COMPLETE,Notebook LightGBM - public modified | Version 3,submission.csv,ashok205,Stochastic,/code/ashok205/lightgbm-public-modified?scriptVersionId=317045787
+52386375,2026-05-06T11:22:07.050Z,,COMPLETE,,submission.csv,ashok205,Stochastic,/code/ashok205/lightgbm-public-modified?scriptVersionId=317045166
+52385448,2026-05-06T10:49:42.317Z,12.686,COMPLETE,Notebook Wellbore Geology Prediction | LightGBM 56b8cb | Version 1,submission.csv,ashok205,Stochastic,/code/ashok205/wellbore-geology-prediction-lightgbm-56b8cb?scriptVersionId=317035452
+52384924,2026-05-06T10:32:57.083Z,,COMPLETE,Public version as it is,submission.csv,ashok205,Stochastic,/code/ashok205/lightgbm-public-modified?scriptVersionId=317034573

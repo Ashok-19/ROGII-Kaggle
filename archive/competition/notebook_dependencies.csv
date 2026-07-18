@@ -1,0 +1,9 @@
+source,accessible,license,size_bytes,version,last_updated,risk
+<opaque/private mount>,no portable identifier,unknown,,,,BLOCKED: cannot reproduce or audit by slug
+phongnguyn23021656/koolbox-offline,true,Unknown,55531037,1,2025-12-05T02:34:36.197Z,QUARANTINE: accessible but license unknown
+nina2025/rogii-03,true,Unknown,3471115,5,2026-06-02T10:04:42.297Z,QUARANTINE: accessible but license unknown
+pilkwang/rogii-model-package,true,CC0: Public Domain,452155253,9,2026-05-31T22:19:10.973Z,accessible; still audit provenance and training code
+thbdh5765/rogii-v10-fresh-artifacts,true,CC0: Public Domain,706451596,1,2026-05-11T20:09:16.820Z,accessible; still audit provenance and training code
+fleongg/rogii-claude-models-pub,true,CC0: Public Domain,25936423,1,2026-06-07T19:21:25.580Z,accessible; still audit provenance and training code
+needless090/rogii-tabicl-mirror,true,Unknown,114577620,1,2026-05-09T07:32:35.340Z,QUARANTINE: accessible but license unknown
+ravaghi/wellbore-geology-prediction-artifacts,true,Apache 2.0,8039023672,6,2026-06-04T14:39:56.717Z,accessible; still audit provenance and training code

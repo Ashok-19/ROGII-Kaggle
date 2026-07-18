@@ -1,0 +1,17 @@
+claim_id,category,claim,evidence_class,confidence,source_id,implication,status
+C001,official,Final metric is pooled row-level RMSE.,official,confirmed,S_OFFICIAL,All CV aggregation must pool scored rows; per-well averages are diagnostic only.,accepted
+C002,official,Hidden test contains roughly 200 wells; visible test contains only a few train-derived authoring examples.,official,confirmed,S_OFFICIAL,Visible test overlap cannot validate hidden-test generalization.,accepted
+C003,data,Training has 773 wells and every simulated target mask is a suffix.,local_data,confirmed,S_LOCAL_EDA,Use whole-well hidden-suffix simulation.,accepted
+C004,baseline,Last-known-TVT continuation has about 15.91 pooled RMSE locally.,local_data,confirmed,S_LOCAL_EDA,Every formulation must beat this and report delta.,accepted
+C005,target,Most high-frequency TVT variation is inherited from known trajectory; smooth U=TVT+Z is the main target.,writeup_plus_physics,strong,S_WIGGLE,Model U level/trend and convert back to TVT.,active
+C006,error,A small fraction of wells dominates squared error.,independent_writeups,strong,S_CONTROL,Report worst-well and SSE concentration metrics for every run.,accepted
+C007,error,Per-well mean/datum error explains a large fraction of SSE.,writeup_controlled,strong,S_CONTROL,"Decompose residual into datum, trend and shape.",active
+C008,validation,Aggregate grouped CV ordering can invert on the public leaderboard.,writeup_score_pairs,strong,S_CONTROL,"Require controls, repeated folds, harsher splits and final-family diversity.",accepted
+C009,ensemble,A weak standalone model can improve a strong ensemble when residual correlation is low.,writeup_controlled,strong,S_CONTROL,"Optimize ensemble weights on OOF residual covariance, not standalone score.",active
+C010,negative,Individually validated corrections can harm when stacked.,writeup_real_lb,strong,S_WIGGLE,Test every component in final placement and retain negative configurations.,accepted
+C011,uncertainty,Risk detection is easier than predicting the signed correction direction.,writeup_controlled,strong,S_CONTROL,Do not actuate a gate without signed-direction evidence.,accepted
+C012,public_notebook,Copied notebook uses seven named external datasets and one opaque mount.,kaggle_metadata,confirmed,S_NOTEBOOK,"Treat it as an idea catalogue, not a reproducible baseline.",accepted
+C013,licenses,Three named notebook datasets show unknown licenses.,kaggle_metadata,confirmed,S_NOTEBOOK,Quarantine those artifacts pending license/provenance resolution.,accepted
+C014,discussion,"Participants report tabular, non-tabular and pure-physics systems in the 5.x–6.x range.",participant_claims,unverified,S_DISCUSSIONS,Maintain multiple formulation tracks; do not copy undisclosed claims.,hypothesis
+C015,features,Known-prefix typewell alignment quality has local correlation about 0.454 with hidden oracle quality.,local_data,confirmed,S_LOCAL_EDA,"Use alignment quality as a feature/gate, not as definitive selector.",active
+C016,data,Hidden-zone GR missingness is substantial and highly variable.,local_data,confirmed,S_LOCAL_EDA,Add missingness-aware regimes and no-GR fallbacks.,active
