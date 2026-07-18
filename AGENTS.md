@@ -99,6 +99,15 @@ Use stable IDs: `H###` hypotheses, `E###` experiments, `RYYYYMMDD-HHMM-<slug>` r
 - Repository code, manifests, and archived artifacts remain the source of truth; transient notebook state is not an experiment record.
 - Keep final notebook parity separate: internet disabled, approved portable inputs only, deterministic inference, and runtime below the competition limit.
 
+## Visual learning documentation
+
+- Treat `dashboard/learn.html` and `dashboard/learning_content.json` as durable project documentation and an idea-generation tool, not optional presentation polish.
+- When a promoted experiment, verified breakthrough, changed problem framing, newly understood feature, important failure mode, or useful negative result is not already explained visually, update the Learning Lab in the same workstream.
+- Write for a beginner who knows no geology or competition terminology: introduce the physical picture first, define every term, then connect it to features, candidate predictions, controls, and score consequences.
+- Prefer interactive diagrams, real-well examples, before/after paths, error decompositions, and simple controls over dense prose. Preserve an explicit boundary between educational simulations, hidden-label oracles, participant claims, and legal validated evidence.
+- Every breakthrough entry must include its date, evidence class, plain-language summary, why it matters, and a visual representation. Never present an unverified discussion claim or public-notebook result as established fact.
+- Validate the Learning Lab API, JavaScript syntax, page routes, real-well boundary handling, and mobile-safe static structure before committing dashboard updates.
+
 ## Validation-first version control
 
 - Commit and push completed work only after the relevant validation suite passes and the Git diff has been reviewed.

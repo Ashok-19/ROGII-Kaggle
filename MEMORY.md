@@ -19,6 +19,7 @@ Last updated: 2026-07-18
 - Copied notebook audited: seven named external datasets plus one opaque mount; three named datasets have unknown licenses.
 - SQLite experiment ledger, auto-sync CLI, dashboard, manifests, validation protocol, and roadmap are installed.
 - E001 is promoted: five deterministic whole-well fold maps, one shared evaluator, controls, reports, and hashes are frozen.
+- The dashboard Learning Lab provides a beginner-first visual guide, real-well interactive playground, feature glossary, error demonstrations, idea prompts, and a breakthrough timeline.
 
 ## Durable understanding
 
@@ -42,6 +43,7 @@ Last updated: 2026-07-18
 - One final slot should represent a public-proven family; the other should be a decorrelated, control-validated private-expectation family.
 - `folds/v1.json` through `folds/v5.json`, data signature `6ebe65b4...fe77`, and E001 metric/control semantics are immutable.
 - Heavy training, large OOF generation, and accelerator workflows should use Kaggle MCP notebook sessions after committing exact code/configuration.
+- Material breakthroughs and newly understood failure modes must also be added to the Learning Lab in evidence-labeled visual form.
 
 ## Exact next action
 
