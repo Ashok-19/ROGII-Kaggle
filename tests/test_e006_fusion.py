@@ -54,6 +54,17 @@ class E006FusionTests(unittest.TestCase):
         broken["fusion"]["weight_grid"] = [0.0, 0.5, 0.5, 1.0]
         with self.assertRaises(DataValidationError):
             validate_e006_config(broken)
+        for mutate in (
+            lambda item: item["reliability"].update(gate_minimum_score=math.nan),
+            lambda item: item["fusion"].update(fallback_weight=2.0),
+            lambda item: item["selection"].update(no_post_score_threshold_changes=False),
+            lambda item: item["deployment"].update(internet=True),
+            lambda item: item.update(fold_files=["folds/v1.json"] * 5),
+        ):
+            malformed = json.loads(json.dumps(self.config))
+            mutate(malformed)
+            with self.assertRaises(DataValidationError):
+                validate_e006_config(malformed)
 
     def test_blend_sufficient_matches_direct_accumulator(self) -> None:
         truth = [10.0, 11.0, 12.0, 13.0]
@@ -124,6 +135,28 @@ class E006FusionTests(unittest.TestCase):
         strong = _effective_weight("nested_reliability_shrink", 0.75, diagnostics["cccccccc"], reference, "cccccccc", self.config)
         weak = _effective_weight("nested_reliability_shrink", 0.75, diagnostics["aaaaaaaa"], reference, "aaaaaaaa", self.config)
         self.assertGreater(strong, weak)
+
+    def test_reliability_equal_ties_extremes_and_nonfinite_values(self) -> None:
+        tied = {
+            well_id: FusionDiagnostic(0.5, 0.5, 0.1, 10.0, "", 0.0, 0.0)
+            for well_id in ("aaaaaaaa", "bbbbbbbb", "cccccccc")
+        }
+        reference = _make_reference(tied)
+        values = [
+            _effective_weight("nested_reliability_shrink", 0.75, detail, reference, well_id, self.config)
+            for well_id, detail in tied.items()
+        ]
+        self.assertTrue(all(math.isfinite(value) and 0.0 <= value <= 0.75 for value in values))
+        extreme = FusionDiagnostic(1.0, 1.0, 1.0, 1e9, "", 0.0, 0.0)
+        capped = _effective_weight("nested_disagreement_cap", 0.75, extreme, reference, "dddddddd", self.config)
+        self.assertGreaterEqual(capped, 0.0)
+        self.assertLess(capped, 0.75)
+        with self.assertRaises(DataValidationError):
+            _make_reference({})
+        with self.assertRaises(DataValidationError):
+            _make_reference({"aaaaaaaa": FusionDiagnostic(math.nan, 0.5, 0.1, 1.0, "", 0.0, 0.0)})
+        with self.assertRaises(DataValidationError):
+            _effective_weight("nested_conservative_grid", math.inf, tied["aaaaaaaa"], reference, "aaaaaaaa", self.config)
 
     def test_context_shuffle_is_deterministic_and_has_no_fixed_points(self) -> None:
         ids = [f"{index:08x}" for index in range(25)]
@@ -234,6 +267,9 @@ class E006FusionTests(unittest.TestCase):
             lambda item: item["alignment"].update(datum_offsets_ft=[]),
             lambda item: item["particle_filter"].update(temperature=0.0),
             lambda item: item.update(e004_model={}),
+            lambda item: item.update(model_name="unavailable_candidate"),
+            lambda item: item.update(internet_required=True),
+            lambda item: item["e004_model"].update(feature_scales=[]),
         ):
             broken = json.loads(json.dumps(model))
             mutate(broken)
@@ -244,6 +280,22 @@ class E006FusionTests(unittest.TestCase):
             path.write_text("{not json", encoding="utf-8")
             with self.assertRaises(DeploymentDataError):
                 load_e006_model(path)
+
+    def test_deployment_all_missing_gr_falls_back_exactly_to_e004(self) -> None:
+        e005 = json.loads((ROOT / "experiments/E005/config.json").read_text(encoding="utf-8"))
+        curve = E006TypewellCurve((0.0, 1.0, 2.0, 3.0), (10.0, 11.0, 12.0, 13.0), 0.0, 3.0, 11.5, math.sqrt(1.25))
+        horizontal = {
+            "known_rows": 3,
+            "row_count": 5,
+            "columns": {
+                "GR": [10.0, 11.0, 12.0, None, None],
+                "TVT_input": [0.0, 1.0, 2.0, None, None],
+            },
+        }
+        base = [2.25, 2.5]
+        predicted, detail = particle_path(horizontal, curve, base, e005["alignment"], e005["particle_filter"])
+        self.assertEqual(predicted, base)
+        self.assertEqual(detail["fallback_reason"], "low_hidden_gr_coverage")
 
     def test_deployment_particle_path_rejects_bad_base_contract(self) -> None:
         e005 = json.loads((ROOT / "experiments/E005/config.json").read_text(encoding="utf-8"))

@@ -254,6 +254,38 @@ def validate_e006_config(config: Mapping[str, Any]) -> None:
         raise DataValidationError("E006 requires five outer folds per repeated map")
     if str(config["selection"]["rule"]).strip() == "":
         raise DataValidationError("E006 selection rule is empty")
+    if int(config.get("expected_wells", 0)) <= 0:
+        raise DataValidationError("E006 expected_wells must be positive")
+    signature = str(config.get("data_signature", ""))
+    if len(signature) != 64 or any(character not in "0123456789abcdef" for character in signature):
+        raise DataValidationError("E006 data signature must be a lowercase SHA-256")
+    fold_files = list(config.get("fold_files", []))
+    if len(fold_files) != 5 or len(set(fold_files)) != 5:
+        raise DataValidationError("E006 requires five unique fold files")
+    if not bool(config.get("selection", {}).get("no_post_score_candidate_additions")) or not bool(config.get("selection", {}).get("no_post_score_threshold_changes")):
+        raise DataValidationError("E006 post-score mutation guards must remain enabled")
+    reliability = config.get("reliability", {})
+    for name in ("gate_minimum_score", "gate_maximum_disagreement_percentile", "disagreement_cap_percentile"):
+        try:
+            value = float(reliability[name])
+        except (KeyError, TypeError, ValueError) as exc:
+            raise DataValidationError(f"E006 reliability.{name} is malformed") from exc
+        if not math.isfinite(value) or not (0.0 <= value <= 1.0):
+            raise DataValidationError(f"E006 reliability.{name} must be finite and in [0,1]")
+    fusion = config.get("fusion", {})
+    for name in ("inner_minimum_gain_vs_e004", "inner_maximum_p90_deterioration", "inner_maximum_worst5_sse_share_increase", "conservative_rmse_slack"):
+        try:
+            value = float(fusion[name])
+        except (KeyError, TypeError, ValueError) as exc:
+            raise DataValidationError(f"E006 fusion.{name} is malformed") from exc
+        if not math.isfinite(value) or value < 0.0:
+            raise DataValidationError(f"E006 fusion.{name} must be finite and nonnegative")
+    fallback_weight = float(fusion.get("fallback_weight", math.nan))
+    if not math.isfinite(fallback_weight) or not (0.0 <= fallback_weight <= 1.0):
+        raise DataValidationError("E006 fusion fallback weight must be in [0,1]")
+    deployment = config.get("deployment", {})
+    if bool(deployment.get("internet")) or list(deployment.get("external_artifacts", [])):
+        raise DataValidationError("E006 deployment must remain offline and self-contained")
 
 
 def _pf_for_base(well: WellData, base: Sequence[float], e005: Mapping[str, Any], *, with_margin: bool) -> tuple[list[float], FusionDiagnostic]:
@@ -444,7 +476,30 @@ def _select_inner_weights(stats: Mapping[str, BlendSufficient], config: Mapping[
     return rmse_weight, conservative, rows
 
 
+def _validate_diagnostic(detail: FusionDiagnostic, well_id: str) -> None:
+    values = (
+        detail.hidden_gr_coverage,
+        detail.pf_effective_fraction,
+        detail.visible_alignment_margin,
+        detail.disagreement_rms,
+        detail.pf_datum,
+        detail.pf_toe,
+    )
+    if not all(math.isfinite(float(value)) for value in values):
+        raise DataValidationError(f"{well_id}: non-finite E006 reliability diagnostic")
+    if not (0.0 <= float(detail.hidden_gr_coverage) <= 1.0):
+        raise DataValidationError(f"{well_id}: invalid hidden GR coverage")
+    if not (0.0 <= float(detail.pf_effective_fraction) <= 1.0):
+        raise DataValidationError(f"{well_id}: invalid PF effective fraction")
+    if float(detail.disagreement_rms) < 0.0:
+        raise DataValidationError(f"{well_id}: negative PF-E004 disagreement")
+
+
 def _make_reference(diagnostics: Mapping[str, FusionDiagnostic]) -> ReliabilityReference:
+    if not diagnostics:
+        raise DataValidationError("E006 reliability reference cannot be empty")
+    for well_id, detail in diagnostics.items():
+        _validate_diagnostic(detail, well_id)
     def pairs(getter: Any) -> tuple[tuple[float, str], ...]:
         return tuple(sorted((float(getter(detail)), well_id) for well_id, detail in diagnostics.items()))
 
@@ -480,6 +535,9 @@ def _reliability(detail: FusionDiagnostic, reference: ReliabilityReference, well
 
 
 def _effective_weight(candidate: str, base_weight: float, detail: FusionDiagnostic, reference: ReliabilityReference, well_id: str, config: Mapping[str, Any]) -> float:
+    if not math.isfinite(float(base_weight)):
+        raise DataValidationError(f"{well_id}: non-finite E006 base weight")
+    _validate_diagnostic(detail, well_id)
     base = _clip(float(base_weight), 0.0, 1.0)
     if candidate in {"nested_conservative_grid", "duplicate_conservative"}:
         return base

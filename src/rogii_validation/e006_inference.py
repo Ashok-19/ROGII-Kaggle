@@ -269,6 +269,10 @@ def _validate_path_settings(alignment: Mapping[str, Any], particle: Mapping[str,
 def validate_e006_model(model: Mapping[str, Any]) -> None:
     if not isinstance(model, Mapping) or model.get("schema_version") != 1 or model.get("experiment_id") != "E006":
         raise DeploymentDataError("unsupported E006 model schema")
+    if model.get("model_name") != "nested_conservative_grid":
+        raise DeploymentDataError("unsupported E006 deployment candidate")
+    if model.get("surfaces_required") is not False or model.get("external_artifacts_required") is not False or model.get("internet_required") is not False:
+        raise DeploymentDataError("E006 deployment model must be surface-free, self-contained, and offline")
     try:
         weight = float(model.get("fusion_weight", math.nan))
     except (TypeError, ValueError) as exc:
@@ -281,6 +285,17 @@ def validate_e006_model(model: Mapping[str, Any]) -> None:
     for key in ("selected_features", "feature_medians", "feature_means", "feature_scales", "ridge_coefficients", "target_means", "target_scales", "visible_slope_windows", "visible_backtest_fractions"):
         if key not in e004_model:
             raise DeploymentDataError(f"embedded E004 model missing {key}")
+    feature_arrays = [
+        list(e004_model["selected_features"]),
+        list(e004_model["feature_medians"]),
+        list(e004_model["feature_means"]),
+        list(e004_model["feature_scales"]),
+        list(e004_model["ridge_coefficients"]),
+    ]
+    if not feature_arrays[0] or len({len(values) for values in feature_arrays}) != 1:
+        raise DeploymentDataError("embedded E004 feature arrays have inconsistent lengths")
+    if len(e004_model["target_means"]) < 2 or len(e004_model["target_scales"]) < 2:
+        raise DeploymentDataError("embedded E004 target arrays are malformed")
     alignment = model.get("alignment")
     particle = model.get("particle_filter")
     if not isinstance(alignment, Mapping) or not isinstance(particle, Mapping):
