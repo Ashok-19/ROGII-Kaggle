@@ -1,3 +1,5 @@
+import csv
+import gzip
 import json
 import math
 import unittest
@@ -23,7 +25,9 @@ from rogii_validation.fusion import (
     _template_path,
     validate_e006_config,
 )
-from rogii_validation.gr_path import TypewellCurve, WellData
+from rogii_validation.e004_inference import read_horizontal
+from rogii_validation.e006_inference import E006TypewellCurve, particle_path
+from rogii_validation.gr_path import TypewellCurve, WellData, _calibration, _hidden_samples, _particle_path, read_well
 from rogii_validation.harness import DataValidationError, ErrorAccumulator
 
 
@@ -191,6 +195,44 @@ class E006FusionTests(unittest.TestCase):
         valid = BlendSufficient.from_paths("aaaaaaaa", [0.0], [1.0], [2.0])
         with self.assertRaises(DataValidationError):
             valid.metric(math.inf)
+
+    def test_deployment_particle_path_matches_frozen_training_implementation(self) -> None:
+        well_id = "000d7d20"
+        base = []
+        with gzip.open(ROOT / "artifacts/E005/oof_predictions.csv.gz", "rt", newline="", encoding="utf-8") as handle:
+            for row in csv.DictReader(handle):
+                if row["well_id"] == well_id:
+                    base.append(float(row["e004_geometry_prefix"]))
+                elif base:
+                    break
+        e005 = json.loads((ROOT / "experiments/E005/config.json").read_text(encoding="utf-8"))
+        horizontal_path = ROOT / f"data/train/{well_id}__horizontal_well.csv"
+        typewell_path = ROOT / f"data/train/{well_id}__typewell.csv"
+        well = read_well(horizontal_path, typewell_path, require_truth=True)
+        calibration = _calibration(well, well.typewell, int(e005["alignment"]["minimum_visible_calibration_samples"]))
+        self.assertIsNotNone(calibration)
+        samples = _hidden_samples(well, int(e005["alignment"]["maximum_gr_samples_per_well"]))
+        expected, expected_detail = _particle_path(
+            well,
+            base,
+            well.typewell,
+            samples,
+            calibration,
+            e005["alignment"],
+            e005["particle_filter"],
+        )
+        deployed, deployed_detail = particle_path(
+            read_horizontal(horizontal_path, require_truth=False),
+            E006TypewellCurve.read(typewell_path),
+            base,
+            e005["alignment"],
+            e005["particle_filter"],
+        )
+        self.assertEqual(len(deployed), len(expected))
+        self.assertLess(max(abs(left - right) for left, right in zip(deployed, expected)), 1e-12)
+        self.assertAlmostEqual(deployed_detail["effective_fraction"], expected_detail["effective_fraction"], places=12)
+        self.assertAlmostEqual(deployed_detail["pf_datum"], expected_detail["datum"], places=12)
+        self.assertAlmostEqual(deployed_detail["pf_toe"], expected_detail["toe"], places=12)
 
 
 if __name__ == "__main__":
