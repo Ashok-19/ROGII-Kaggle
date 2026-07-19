@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E005",
+  "data_signature": "6ebe65b403f80fefd97dcd7bbfce7314252e779a1837c97364cf55761590fe77",
+  "expected_wells": 773,
+  "fold_files": [
+    "folds/v1.json",
+    "folds/v2.json",
+    "folds/v3.json",
+    "folds/v4.json",
+    "folds/v5.json"
+  ],
+  "legal_horizontal_inputs": ["MD", "X", "Y", "Z", "GR", "TVT_input"],
+  "legal_typewell_inputs": ["TVT", "GR"],
+  "forbidden_inputs": [
+    "hidden TVT used as a predictor",
+    "ANCC",
+    "ASTNU",
+    "ASTNL",
+    "EGFDU",
+    "EGFDL",
+    "BUDA",
+    "typewell Geology",
+    "public leaderboard score used for selection",
+    "external inferred labels or opaque artifacts"
+  ],
+  "candidate_order": [
+    "last_known_tvt",
+    "e004_geometry_prefix",
+    "align_affine",
+    "align_visible_path",
+    "pf_gr_path",
+    "trellis_gr_path",
+    "no_gr_geometry_prefix",
+    "no_gr_typewell_affine",
+    "axis_confusion",
+    "duplicate_align",
+    "shuffled_typewell_gr",
+    "oracle_target"
+  ],
+  "eligible_candidates": [
+    "align_affine",
+    "align_visible_path",
+    "pf_gr_path",
+    "trellis_gr_path"
+  ],
+  "diagnostic_blend_weights": [0.25, 0.5, 0.75],
+  "e004": {
+    "config_path": "experiments/E004/config.json",
+    "candidate": "geometry_prefix",
+    "expected_rmse": 15.491306398267565,
+    "expected_submission_sha256": "62ae06575baa647a5e09686bc9369cbc7303ac391e5c028468593dd6b58d5279"
+  },
+  "alignment": {
+    "maximum_gr_samples_per_well": 256,
+    "minimum_gr_samples": 24,
+    "minimum_hidden_gr_coverage": 0.10,
+    "minimum_visible_calibration_samples": 24,
+    "gr_clip_z": 4.0,
+    "huber_delta_z": 1.5,
+    "datum_offsets_ft": [-30.0, -20.0, -10.0, 0.0, 10.0, 20.0, 30.0],
+    "toe_offsets_ft": [-40.0, -20.0, 0.0, 20.0, 40.0],
+    "datum_prior_scale_ft": 30.0,
+    "toe_prior_scale_ft": 60.0,
+    "prior_weight": 0.08,
+    "typewell_margin_ft": 20.0,
+    "flat_typewell_std_min": 0.001,
+    "maximum_absolute_correction_ft": 60.0
+  },
+  "particle_filter": {
+    "temperature": 1.0,
+    "block_samples": 16,
+    "minimum_effective_fraction": 0.10,
+    "resample_jitter_ft": 0.0,
+    "deterministic": true
+  },
+  "trellis": {
+    "maximum_anchors": 128,
+    "offset_states_ft": [-40.0, -35.0, -30.0, -25.0, -20.0, -15.0, -10.0, -5.0, 0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0],
+    "maximum_transition_ft": 10.0,
+    "transition_penalty": 0.04,
+    "offset_prior_penalty": 0.0025,
+    "boundary_anchor_penalty": 0.08
+  },
+  "no_gr_typewell_affine": {
+    "visible_window_rows": 512,
+    "slope_clip_ft_per_md": 0.02,
+    "damping": 0.20
+  },
+  "stress": {
+    "spatial_bins": 5,
+    "typewell_clusters": 5,
+    "tail_fractions": [0.05, 0.10, 0.20],
+    "ambiguity_margin_threshold": 0.02,
+    "long_suffix_quantile": 0.80,
+    "high_missing_gr_quantile": 0.80
+  },
+  "controls": {
+    "shuffled_gr_minimum_rmse_loss": 0.10,
+    "duplicate_maximum_prediction_delta": 1e-12,
+    "oracle_maximum_rmse": 1e-12,
+    "pooled_sse_relative_tolerance": 1e-12,
+    "e004_rmse_tolerance": 1e-9
+  },
+  "promotion": {
+    "minimum_gain_vs_last_known": 0.35,
+    "minimum_gain_vs_e004": 0.10,
+    "minimum_map_wins": 4,
+    "maximum_p90_deterioration_vs_each_comparator": 0.50,
+    "maximum_worst5_sse_share_increase_vs_each_comparator": 0.01,
+    "require_positive_spatial_gain_vs_e004": true,
+    "require_positive_typewell_cluster_gain_vs_e004": true,
+    "maximum_residual_correlation_to_e004_for_diversity": 0.995,
+    "maximum_runtime_minutes": 45,
+    "maximum_rss_mb": 1536
+  },
+  "deployment": {
+    "maximum_package_mb": 100,
+    "require_exact_sample_ids_and_order": true,
+    "require_finite_predictions": true,
+    "require_no_gr_fallback": true,
+    "require_local_notebook_byte_parity_if_promoted": true,
+    "require_private_internet_disabled_kaggle_parity_if_promoted": true,
+    "internet": false,
+    "external_artifacts": []
+  },
+  "edge_cases": [
+    "all missing horizontal GR",
+    "long hidden GR missing interval",
+    "missing visible-prefix GR with valid hidden GR",
+    "repeated periodic GR motifs",
+    "flat typewell GR",
+    "duplicate typewell pattern",
+    "reversed or non-monotone inferred TVT movement",
+    "boundary correction clipping",
+    "single hidden row",
+    "short hidden suffix",
+    "long hidden suffix",
+    "nonuniform MD",
+    "duplicate MD",
+    "no typewell TVT overlap",
+    "very short typewell",
+    "candidate overrun beyond typewell range",
+    "missing horizontal/typewell pair",
+    "noncontiguous TVT_input",
+    "duplicate missing extra wrong-order or visible-row sample IDs",
+    "non-finite candidate output",
+    "malformed configuration or candidate arrays"
+  ]
+}

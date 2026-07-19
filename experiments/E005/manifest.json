@@ -1,0 +1,64 @@
+{
+  "experiment_id": "E005",
+  "title": "Clean typewell-horizontal GR candidate bank",
+  "hypothesis": "Test-available horizontal and typewell GR can identify a bounded TVT path correction that improves both last-known TVT and the exact E004 geometry-prefix comparator under repeated whole-well suffix validation without increasing tail risk.",
+  "status": "designed",
+  "track": "sequence_alignment",
+  "priority": 1,
+  "owner": "NNMax",
+  "parent_id": "E004",
+  "created_at": "2026-07-19T12:00:00Z",
+  "updated_at": "2026-07-19T12:00:00Z",
+  "design": {
+    "task_id": "T010",
+    "hypothesis_id": "H008",
+    "baseline": "last_known_tvt",
+    "deployment_comparator": "e004_geometry_prefix",
+    "legal_inputs": [
+      "horizontal MD/X/Y/Z/GR",
+      "contiguous visible TVT_input prefix",
+      "paired typewell TVT/GR"
+    ],
+    "forbidden_inputs": [
+      "hidden TVT predictor access",
+      "formation surfaces absent from test",
+      "typewell Geology",
+      "leaderboard-guided selection",
+      "external inferred labels or opaque artifacts"
+    ],
+    "fold_maps": ["folds/v1.json", "folds/v2.json", "folds/v3.json", "folds/v4.json", "folds/v5.json"],
+    "candidate_order": [
+      "last_known_tvt",
+      "e004_geometry_prefix",
+      "align_affine",
+      "align_visible_path",
+      "pf_gr_path",
+      "trellis_gr_path",
+      "no_gr_geometry_prefix",
+      "no_gr_typewell_affine",
+      "axis_confusion",
+      "duplicate_align",
+      "shuffled_typewell_gr",
+      "oracle_target"
+    ],
+    "controls": [
+      "exact E004 comparator reproduction",
+      "no-op baseline",
+      "duplicate alignment",
+      "shuffled typewell GR",
+      "axis confusion",
+      "oracle leakage sentinel",
+      "pooled SSE consistency",
+      "independent artifact reproduction"
+    ],
+    "harsher_splits": ["spatial blocks", "typewell clusters", "long suffix", "high GR missingness", "ambiguous alignment"],
+    "promotion": "An eligible candidate must improve pooled RMSE by at least 0.35 versus last-known and 0.10 versus E004, win at least four of five repeated maps, deteriorate p90 by no more than 0.50 ft and worst-5% SSE share by no more than 0.01 versus either comparator, retain positive gains under both spatial and typewell-cluster stress, pass shuffled/duplicate/no-GR/runtime/memory controls, and satisfy the pre-registered diversity condition.",
+    "deployment": "Kaggle packaging and private internet-disabled parity are authorized only after all statistical promotion gates pass. A deployment-ready candidate must also reconstruct exact sample IDs/order with finite values and preserve no-GR fallback behavior.",
+    "runtime_budget_minutes": 45,
+    "maximum_rss_mb": 1536,
+    "maximum_package_mb": 100,
+    "config_path": "experiments/E005/config.json",
+    "pre_registration_path": "experiments/E005/PRE_REGISTRATION.md"
+  },
+  "runs": []
+}
