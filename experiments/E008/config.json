@@ -14,6 +14,8 @@
     "e006_oof": "artifacts/E006/oof_predictions.csv.gz",
     "e006_oof_sha256": "9b9f26cd8ad82e32dbc0f9ba1466cb38424cd3bbf7001c1079a9867fb5a324b4",
     "e006_expected_rmse": 14.933140787236884,
+    "e004_expected_rmse": 15.491306398267565,
+    "last_known_expected_rmse": 15.909852870734554,
     "e006_summary": "experiments/E006/results/summary.json",
     "e006_model": "experiments/E006/results/model.json",
     "e006_model_sha256": "bee16499c6361395d556dd5c4ff8555e95739c36f68444b3d0dfcf648d73cddf",
