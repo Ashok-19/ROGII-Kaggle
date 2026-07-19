@@ -37,6 +37,7 @@
   "visible_only_design": {
     "pseudo_boundary_fractions": [0.65, 0.75, 0.85],
     "selection_scope": "The final visible-prefix segment is treated as pseudo-hidden. Actual hidden-suffix TVT is forbidden during design.",
+    "boundary_leakage_guard": "Every local U-slope target and prior window must end strictly before the pseudo-boundary; centered windows touching the pseudo-hidden segment are forbidden.",
     "absolute_residual_transfer": "rejected before pre-registration because every tested strength materially worsened visible-only pseudo-holdout RMSE",
     "selected_fingerprint_neighbors": 5,
     "selected_fixed_strength": 0.1,

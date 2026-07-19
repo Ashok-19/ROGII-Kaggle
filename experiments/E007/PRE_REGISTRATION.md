@@ -14,6 +14,8 @@ Actual hidden-suffix `TVT` is evaluator-only. It cannot define fingerprints, slo
 
 Before this registration, candidate mechanics were compared only by moving the visibility boundary inside the supplied prefix at fractions 0.65, 0.75, and 0.85. The final visible segment was treated as pseudo-hidden; the real hidden suffix was never scored.
 
+Every local U-slope target and prior window is fully contained before its pseudo-boundary. Centered windows that touch the pseudo-hidden segment are forbidden; a boundary audit re-ran all three fractions under this stricter rule and retained positive gain at each fraction.
+
 Absolute TVT-residual transfer was falsified and is permanently excluded because every tested strength materially worsened the visible-only pseudo-holdout. Local structural-slope transfer was positive at every pseudo-boundary. The frozen design uses five nearest fingerprints and records 0.10 as the fixed visible-only reference strength. Hidden scoring may not add candidates or change these mechanics.
 
 ## Frozen self-correlation path

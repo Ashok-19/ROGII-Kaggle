@@ -12,6 +12,7 @@ from .learnability import run_e003
 from .deployment import run_e004
 from .gr_path import run_e005
 from .fusion import run_e006
+from .self_correlation import run_e007
 
 __all__ = [
     "DEFAULT_FOLD_SEEDS",
@@ -24,5 +25,6 @@ __all__ = [
     "run_e004",
     "run_e005",
     "run_e006",
+    "run_e007",
     "scan_profiles",
 ]
