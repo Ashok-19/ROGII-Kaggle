@@ -2,6 +2,7 @@ import csv
 import gzip
 import json
 import math
+import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -21,12 +22,23 @@ from rogii_validation.fusion import (
     _fit_context,
     _pf_for_base,
     _make_reference,
+    _eligible_from_gates,
+    _mark_candidate_gate_rows,
+    _parent_pf_control,
     _select_inner_weights,
     _template_path,
     validate_e006_config,
 )
 from rogii_validation.e004_inference import read_horizontal
-from rogii_validation.e006_inference import E006TypewellCurve, particle_path
+from rogii_validation.e006_inference import (
+    E006TypewellCurve,
+    build_e006_prediction_map,
+    load_e006_model,
+    particle_path,
+    validate_e006_model,
+    write_e006_submission,
+)
+from rogii_validation.e004_inference import DeploymentDataError
 from rogii_validation.gr_path import TypewellCurve, WellData, _calibration, _hidden_samples, _particle_path, read_well
 from rogii_validation.harness import DataValidationError, ErrorAccumulator
 
@@ -195,6 +207,113 @@ class E006FusionTests(unittest.TestCase):
         valid = BlendSufficient.from_paths("aaaaaaaa", [0.0], [1.0], [2.0])
         with self.assertRaises(DataValidationError):
             valid.metric(math.inf)
+
+    def test_parent_pf_control_requires_both_hash_audit_and_rmse_tolerance(self) -> None:
+        base = {"pass": True, "pf_rmse": 15.0, "sha256": "a" * 64}
+        self.assertTrue(_parent_pf_control(base, 15.0, 1e-9)["pass"])
+        self.assertFalse(_parent_pf_control(base, 14.0, 1e-9)["pass"])
+        self.assertFalse(_parent_pf_control({**base, "pass": False}, 15.0, 1e-9)["pass"])
+
+    def test_runtime_or_memory_failure_clears_final_candidate_pass_flags(self) -> None:
+        gates = {candidate: {"statistical": True, "runtime": True, "memory": True} for candidate in self.config["eligible_candidates"]}
+        gates["nested_conservative_grid"]["runtime"] = False
+        eligible = _eligible_from_gates(gates)
+        self.assertNotIn("nested_conservative_grid", eligible)
+        rows = [{"candidate": candidate, "passed_all_gates": True} for candidate in self.config["candidate_order"]]
+        _mark_candidate_gate_rows(rows, eligible)
+        lookup = {row["candidate"]: row["passed_all_gates"] for row in rows}
+        self.assertFalse(lookup["nested_conservative_grid"])
+        self.assertFalse(lookup["e004_geometry_prefix"])
+
+    def test_deployment_model_validation_rejects_malformed_models(self) -> None:
+        model = json.loads((ROOT / "experiments/E006/results/model.json").read_text(encoding="utf-8"))
+        validate_e006_model(model)
+        for mutate in (
+            lambda item: item.update(schema_version=2),
+            lambda item: item.update(fusion_weight=math.nan),
+            lambda item: item["alignment"].update(datum_offsets_ft=[]),
+            lambda item: item["particle_filter"].update(temperature=0.0),
+            lambda item: item.update(e004_model={}),
+        ):
+            broken = json.loads(json.dumps(model))
+            mutate(broken)
+            with self.assertRaises(DeploymentDataError):
+                validate_e006_model(broken)
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "model.json"
+            path.write_text("{not json", encoding="utf-8")
+            with self.assertRaises(DeploymentDataError):
+                load_e006_model(path)
+
+    def test_deployment_particle_path_rejects_bad_base_contract(self) -> None:
+        e005 = json.loads((ROOT / "experiments/E005/config.json").read_text(encoding="utf-8"))
+        horizontal_path = ROOT / "data/train/000d7d20__horizontal_well.csv"
+        typewell_path = ROOT / "data/train/000d7d20__typewell.csv"
+        horizontal = read_horizontal(horizontal_path, require_truth=False)
+        curve = E006TypewellCurve.read(typewell_path)
+        hidden_rows = int(horizontal["row_count"]) - int(horizontal["known_rows"])
+        with self.assertRaises(DeploymentDataError):
+            particle_path(horizontal, curve, [1.0] * (hidden_rows - 1), e005["alignment"], e005["particle_filter"])
+        bad = [1.0] * hidden_rows
+        bad[-1] = math.inf
+        with self.assertRaises(DeploymentDataError):
+            particle_path(horizontal, curve, bad, e005["alignment"], e005["particle_filter"])
+
+    def test_typewell_reader_averages_duplicates_and_rejects_degenerate_inputs(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            duplicate = root / "duplicate.csv"
+            duplicate.write_text("TVT,GR\n1,10\n1,14\n2,20\n", encoding="utf-8")
+            curve = E006TypewellCurve.read(duplicate)
+            self.assertEqual(curve.tvt, (1.0, 2.0))
+            self.assertEqual(curve.gr, (12.0, 20.0))
+            missing = root / "missing.csv"
+            missing.write_text("TVT,Other\n1,10\n2,20\n", encoding="utf-8")
+            with self.assertRaises(DeploymentDataError):
+                E006TypewellCurve.read(missing)
+            degenerate = root / "degenerate.csv"
+            degenerate.write_text("TVT,GR\n1,10\n1,12\n", encoding="utf-8")
+            with self.assertRaises(DeploymentDataError):
+                E006TypewellCurve.read(degenerate)
+
+    def test_submission_contract_rejects_bad_ids_and_serializes_deterministically(self) -> None:
+        predictions = {"aaaaaaaa_3": 1.23456789, "aaaaaaaa_4": -2.0}
+        wells = [{"well_id": "aaaaaaaa"}]
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            output = root / "submission.csv"
+            with patch("rogii_validation.e006_inference.build_e006_prediction_map", return_value=(predictions, wells)):
+                valid = root / "valid.csv"
+                valid.write_text("id,tvt\naaaaaaaa_3,0\naaaaaaaa_4,0\n", encoding="utf-8")
+                first = write_e006_submission({}, root, valid, output)
+                fixed = output.read_bytes()
+                second = write_e006_submission({}, root, valid, output)
+                self.assertEqual(fixed, output.read_bytes())
+                self.assertEqual(first["sha256"], second["sha256"])
+                self.assertIn(b"1.23457", fixed)
+                cases = {
+                    "duplicate": "id,tvt\naaaaaaaa_3,0\naaaaaaaa_3,0\n",
+                    "missing": "id,tvt\naaaaaaaa_3,0\n",
+                    "extra": "id,tvt\naaaaaaaa_3,0\naaaaaaaa_4,0\naaaaaaaa_5,0\n",
+                    "empty": "id,tvt\n,0\naaaaaaaa_4,0\n",
+                    "wrong_header": "tvt,id\n0,aaaaaaaa_3\n0,aaaaaaaa_4\n",
+                }
+                for name, text in cases.items():
+                    sample = root / f"{name}.csv"
+                    sample.write_text(text, encoding="utf-8")
+                    with self.assertRaises(DeploymentDataError, msg=name):
+                        write_e006_submission({}, root, sample, output)
+
+    def test_prediction_map_rejects_empty_test_directory_and_malformed_model(self) -> None:
+        model = json.loads((ROOT / "experiments/E006/results/model.json").read_text(encoding="utf-8"))
+        with tempfile.TemporaryDirectory() as directory:
+            empty = Path(directory)
+            with self.assertRaises(DeploymentDataError):
+                build_e006_prediction_map(model, empty)
+        broken = json.loads(json.dumps(model))
+        broken["fusion_weight"] = 2.0
+        with self.assertRaises(DeploymentDataError):
+            build_e006_prediction_map(broken, ROOT / "data/test")
 
     def test_deployment_particle_path_matches_frozen_training_implementation(self) -> None:
         well_id = "000d7d20"

@@ -205,6 +205,89 @@ def _apply_affine(base: Sequence[float], datum: float, toe: float, curve: E006Ty
     return out
 
 
+_ALIGNMENT_REQUIRED = {
+    "datum_offsets_ft",
+    "toe_offsets_ft",
+    "maximum_gr_samples_per_well",
+    "minimum_visible_calibration_samples",
+    "minimum_hidden_gr_coverage",
+    "minimum_gr_samples",
+    "flat_typewell_std_min",
+    "gr_clip_z",
+    "huber_delta_z",
+    "prior_weight",
+    "datum_prior_scale_ft",
+    "toe_prior_scale_ft",
+    "maximum_absolute_correction_ft",
+    "typewell_margin_ft",
+}
+_PARTICLE_REQUIRED = {"block_samples", "temperature"}
+
+
+def _validate_path_settings(alignment: Mapping[str, Any], particle: Mapping[str, Any]) -> None:
+    missing_alignment = _ALIGNMENT_REQUIRED - set(alignment)
+    missing_particle = _PARTICLE_REQUIRED - set(particle)
+    if missing_alignment or missing_particle:
+        raise DeploymentDataError(
+            f"E006 path settings missing alignment={sorted(missing_alignment)} particle={sorted(missing_particle)}"
+        )
+    try:
+        datum_offsets = [float(value) for value in alignment["datum_offsets_ft"]]
+        toe_offsets = [float(value) for value in alignment["toe_offsets_ft"]]
+        positive = {
+            "gr_clip_z": float(alignment["gr_clip_z"]),
+            "huber_delta_z": float(alignment["huber_delta_z"]),
+            "datum_prior_scale_ft": float(alignment["datum_prior_scale_ft"]),
+            "toe_prior_scale_ft": float(alignment["toe_prior_scale_ft"]),
+            "maximum_absolute_correction_ft": float(alignment["maximum_absolute_correction_ft"]),
+            "temperature": float(particle["temperature"]),
+        }
+        nonnegative = {
+            "flat_typewell_std_min": float(alignment["flat_typewell_std_min"]),
+            "prior_weight": float(alignment["prior_weight"]),
+            "typewell_margin_ft": float(alignment["typewell_margin_ft"]),
+        }
+        maximum_samples = int(alignment["maximum_gr_samples_per_well"])
+        minimum_calibration = int(alignment["minimum_visible_calibration_samples"])
+        minimum_samples = int(alignment["minimum_gr_samples"])
+        minimum_coverage = float(alignment["minimum_hidden_gr_coverage"])
+        block_samples = int(particle["block_samples"])
+    except (TypeError, ValueError) as exc:
+        raise DeploymentDataError("E006 path settings contain non-numeric values") from exc
+    if not datum_offsets or not toe_offsets or any(not math.isfinite(value) for value in datum_offsets + toe_offsets):
+        raise DeploymentDataError("E006 particle offset grids must be non-empty and finite")
+    if any(not math.isfinite(value) or value <= 0.0 for value in positive.values()):
+        raise DeploymentDataError("E006 positive path settings must be finite and greater than zero")
+    if any(not math.isfinite(value) or value < 0.0 for value in nonnegative.values()):
+        raise DeploymentDataError("E006 nonnegative path settings must be finite")
+    if maximum_samples < 1 or minimum_calibration < 1 or minimum_samples < 1 or block_samples < 1:
+        raise DeploymentDataError("E006 sample-count settings must be positive integers")
+    if not math.isfinite(minimum_coverage) or not (0.0 <= minimum_coverage <= 1.0):
+        raise DeploymentDataError("E006 minimum hidden GR coverage must be in [0,1]")
+
+
+def validate_e006_model(model: Mapping[str, Any]) -> None:
+    if not isinstance(model, Mapping) or model.get("schema_version") != 1 or model.get("experiment_id") != "E006":
+        raise DeploymentDataError("unsupported E006 model schema")
+    try:
+        weight = float(model.get("fusion_weight", math.nan))
+    except (TypeError, ValueError) as exc:
+        raise DeploymentDataError("invalid E006 fusion weight") from exc
+    if not math.isfinite(weight) or not (0.0 <= weight <= 1.0):
+        raise DeploymentDataError("invalid E006 fusion weight")
+    e004_model = model.get("e004_model")
+    if not isinstance(e004_model, Mapping) or e004_model.get("schema_version") != 1 or e004_model.get("experiment_id") != "E004":
+        raise DeploymentDataError("invalid embedded E004 model")
+    for key in ("selected_features", "feature_medians", "feature_means", "feature_scales", "ridge_coefficients", "target_means", "target_scales", "visible_slope_windows", "visible_backtest_fractions"):
+        if key not in e004_model:
+            raise DeploymentDataError(f"embedded E004 model missing {key}")
+    alignment = model.get("alignment")
+    particle = model.get("particle_filter")
+    if not isinstance(alignment, Mapping) or not isinstance(particle, Mapping):
+        raise DeploymentDataError("E006 model is missing path settings")
+    _validate_path_settings(alignment, particle)
+
+
 def particle_path(
     horizontal: Mapping[str, Any],
     curve: E006TypewellCurve,
@@ -215,6 +298,11 @@ def particle_path(
     columns = horizontal["columns"]
     known_rows = int(horizontal["known_rows"])
     hidden_rows = int(horizontal["row_count"]) - known_rows
+    _validate_path_settings(alignment, particle)
+    if hidden_rows <= 0 or len(base) != hidden_rows:
+        raise DeploymentDataError("E006 base path length does not match the hidden suffix")
+    if any(not math.isfinite(float(value)) for value in base):
+        raise DeploymentDataError("E006 base path contains non-finite values")
     gr = columns["GR"]
     tvt_input = columns["TVT_input"]
     hidden = gr[known_rows:]
@@ -272,16 +360,16 @@ def particle_path(
 
 
 def load_e006_model(path: Path) -> dict[str, Any]:
-    model = json.loads(path.read_text(encoding="utf-8"))
-    if model.get("schema_version") != 1 or model.get("experiment_id") != "E006":
-        raise DeploymentDataError(f"{path}: unsupported E006 model schema")
-    weight = float(model.get("fusion_weight", math.nan))
-    if not math.isfinite(weight) or not (0.0 <= weight <= 1.0):
-        raise DeploymentDataError(f"{path}: invalid E006 fusion weight")
+    try:
+        model = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise DeploymentDataError(f"{path}: could not load E006 model") from exc
+    validate_e006_model(model)
     return model
 
 
 def build_e006_prediction_map(model: Mapping[str, Any], test_dir: Path) -> tuple[dict[str, float], list[dict[str, Any]]]:
+    validate_e006_model(model)
     e004_model = model["e004_model"]
     horizontal_files = sorted(test_dir.glob("*__horizontal_well.csv"))
     if not horizontal_files:

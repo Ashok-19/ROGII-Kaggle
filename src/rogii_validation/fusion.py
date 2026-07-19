@@ -553,6 +553,27 @@ def _parent_oof_audit(path: Path, expected_sha: str) -> dict[str, Any]:
     }
 
 
+def _parent_pf_control(
+    parent_audit: Mapping[str, Any],
+    expected_rmse: float,
+    tolerance: float,
+) -> dict[str, Any]:
+    passed = bool(parent_audit.get("pass")) and abs(
+        float(parent_audit.get("pf_rmse", math.inf)) - float(expected_rmse)
+    ) <= float(tolerance)
+    return {**parent_audit, "pass": passed}
+
+
+def _eligible_from_gates(gates_by_candidate: Mapping[str, Mapping[str, bool]]) -> list[str]:
+    return [candidate for candidate in ELIGIBLE if all(bool(value) for value in gates_by_candidate[candidate].values())]
+
+
+def _mark_candidate_gate_rows(rows: Sequence[dict[str, Any]], eligible: Sequence[str]) -> None:
+    allowed = set(eligible)
+    for row in rows:
+        row["passed_all_gates"] = row["candidate"] in allowed
+
+
 def run_e006(
     *,
     root: Path,
@@ -867,12 +888,16 @@ def run_e006(
         for candidate in ALL_CANDIDATES
     )
     parent_audit = _parent_oof_audit(root / str(config["parents"]["e005_oof_path"]), str(config["parents"]["e005_oof_sha256"]))
-    parent_audit_pass = bool(parent_audit.get("pass")) and abs(float(parent_audit.get("pf_rmse", math.inf)) - float(config["parents"]["e005_expected_pf_rmse_for_parent_audit_only"])) <= float(config["controls"]["parent_pf_audit_rmse_tolerance"])
+    parent_control = _parent_pf_control(
+        parent_audit,
+        float(config["parents"]["e005_expected_pf_rmse_for_parent_audit_only"]),
+        float(config["controls"]["parent_pf_audit_rmse_tolerance"]),
+    )
     controls = {
         "data_integrity": {"pass": data_profile["data_signature"] == config["data_signature"] and len(well_ids) == int(config["expected_wells"]), "data_signature": data_profile["data_signature"], "wells": len(well_ids)},
         "nested_membership": {"pass": all(bool(row["pass"]) for row in membership_rows), "contexts": len(membership_rows)},
         "e004_exact_comparator": {"pass": abs(e004_rmse - float(config["parents"]["e004_expected_rmse"])) <= float(config["controls"]["e004_rmse_tolerance"]), "observed_rmse": e004_rmse, "expected_rmse": config["parents"]["e004_expected_rmse"]},
-        "parent_pf_audit": {"pass": parent_audit_pass, **parent_audit},
+        "parent_pf_audit": parent_control,
         "zero_weight_noop": {"pass": True, "maximum_prediction_delta": 0.0},
         "duplicate_fusion": {"pass": duplicate_delta <= float(config["controls"]["duplicate_maximum_prediction_delta"]), "maximum_prediction_delta": duplicate_delta},
         "pooled_sse_consistency": {"pass": pooled_difference <= float(config["controls"]["pooled_sse_relative_tolerance"]), "maximum_relative_difference": pooled_difference},
@@ -926,7 +951,7 @@ def run_e006(
             "nonzero_maps": int(stability["maps_with_nonzero_median_weight"]) >= int(config["controls"]["minimum_maps_with_nonzero_median_weight"]),
             "weight_range": float(stability["outer_weight_range"]) <= float(config["controls"]["maximum_outer_weight_range"]),
         }
-    eligible = [candidate for candidate in ELIGIBLE if all(gates_by_candidate[candidate].values())]
+    eligible = _eligible_from_gates(gates_by_candidate)
     mean_map_rmse = {
         candidate: _mean([float(map_lookup[(str(fold_map["version"]), candidate)]["rmse"]) for fold_map in fold_maps])
         for candidate in ELIGIBLE
@@ -985,9 +1010,13 @@ def run_e006(
     for candidate in gates_by_candidate:
         gates_by_candidate[candidate]["runtime"] = resource_controls["runtime"]["pass"]
         gates_by_candidate[candidate]["memory"] = resource_controls["memory"]["pass"]
-    eligible = [candidate for candidate in ELIGIBLE if all(gates_by_candidate[candidate].values())]
+    eligible = _eligible_from_gates(gates_by_candidate)
     selected_candidate = min(eligible, key=lambda candidate: (mean_map_rmse[candidate], list(ELIGIBLE).index(candidate))) if eligible else None
     status = "promoted" if selected_candidate else "rejected"
+
+    _mark_candidate_gate_rows(candidate_rows, eligible)
+    if selected_candidate is None:
+        selected_well_rows = []
 
     output_dir.mkdir(parents=True, exist_ok=True)
     artifact_dir.mkdir(parents=True, exist_ok=True)
