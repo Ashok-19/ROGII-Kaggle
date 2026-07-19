@@ -1,0 +1,14 @@
+{
+  "type": "hypothesis",
+  "recorded_at": "2026-07-19T19:00:00Z",
+  "payload": {
+    "hypothesis_id": "H013",
+    "title": "Nonlinear candidate coverage and visible-prefix selector regret",
+    "statement": "A legal bank of genuinely different whole-well nonlinear paths can achieve candidate-oracle RMSE below 5, and multi-cut visible-prefix evidence plus calibrated uncertainty can retain enough of that coverage without hidden-label routing.",
+    "status": "active",
+    "priority": 1,
+    "evidence_for": "The 773-well oracle smooth curve reaches 3.1106 while the oracle line stalls at 6.6972. Amer reports complementary PF/HMM sample errors, and Pilkwang exposes PF, beam, DTW, self-correlation, projection and uncertainty candidates.",
+    "evidence_against": "The fixed PF/beam selector scores 10.5831 and concentrates 61.95% of SSE in its worst decile. Repeated GR motifs, missingness, faults, and prefix-to-suffix distribution shift may make legal selection impossible even when oracle coverage is strong.",
+    "next_test": "E010: freeze a legal candidate bank, calculate oracle coverage under all maps, then train/evaluate only visible-prefix multi-cut selector probabilities and regret. Preserve E006 fallback and require repeated, tail, shift, control, runtime and parity gates."
+  }
+}

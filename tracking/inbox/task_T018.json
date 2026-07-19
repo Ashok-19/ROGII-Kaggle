@@ -1,0 +1,13 @@
+{
+  "type": "task",
+  "recorded_at": "2026-07-19T19:00:00Z",
+  "payload": {
+    "task_id": "T018",
+    "title": "Refresh Kaggle public intelligence",
+    "status": "active",
+    "priority": 2,
+    "phase": "intelligence",
+    "depends_on": "",
+    "due_at": "2026-08-05"
+  }
+}

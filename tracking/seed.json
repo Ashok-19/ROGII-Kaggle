@@ -12,7 +12,10 @@
     "train_wells": "773",
     "hidden_test_wells_approx": "200",
     "discussion_topics_archived": "132",
-    "discussion_messages_archived": "981"
+    "discussion_messages_archived": "981",
+    "public_intelligence_last_checked": "2026-07-20T00:30:00+05:30",
+    "current_topic_count_observed": "134",
+    "discussion_archive_refresh_status": "delta recrawl pending; canonical 132/981 unchanged"
   },
   "sources": [
     {
@@ -86,6 +89,54 @@
       "confidence": "confirmed metadata",
       "last_checked": "2026-07-18",
       "notes": "Not an approved reproducible baseline."
+    },
+    {
+      "source_id": "S_HMM_EXACT",
+      "title": "ROGII exact second-order HMM smoother",
+      "kind": "public_notebook",
+      "url": "https://www.kaggle.com/code/amerhu/rogii-wellbore-geology-exact-hmm-smoother",
+      "local_path": "archive/competition/public_intelligence_2026-07-20.md",
+      "accessibility": "public source",
+      "license": "author copyright",
+      "confidence": "source-audited; sample evidence",
+      "last_checked": "2026-07-20",
+      "notes": "Exact joint position/rate forward-backward smoother; full validation pending."
+    },
+    {
+      "source_id": "S_PILKWANG_PUBLIC",
+      "title": "Pilkwang ROGII notebook corpus and published diagnostics",
+      "kind": "public_notebook_corpus",
+      "url": "https://www.kaggle.com/code/pilkwang/rogii-eda-target-free-alignment-for-tvt",
+      "local_path": "archive/competition/public_intelligence_2026-07-20.md",
+      "accessibility": "public source and outputs",
+      "license": "author copyright",
+      "confidence": "source-audited; published full-data diagnostics",
+      "last_checked": "2026-07-20",
+      "notes": "Oracle ladder, selector CV, heel localization, and dual-track architecture."
+    },
+    {
+      "source_id": "S_PUBLIC6979",
+      "title": "ROGII Verified Public 6.979 source audit",
+      "kind": "public_notebook",
+      "url": "https://www.kaggle.com/code/prvsiyan/rogii-verified-public-6-979-visuals",
+      "local_path": "archive/competition/public_intelligence_2026-07-20.md",
+      "accessibility": "public source",
+      "license": "mixed external artifacts",
+      "confidence": "source-audited composite",
+      "last_checked": "2026-07-20",
+      "notes": "Composite artifact/pretrained/overlap result; not clean generalization evidence."
+    },
+    {
+      "source_id": "S_PUBLIC_SCAN_20260720",
+      "title": "ROGII discussion and public-notebook delta scan",
+      "kind": "public_intelligence",
+      "url": "https://www.kaggle.com/competitions/rogii-wellbore-geology-prediction/discussion",
+      "local_path": "archive/competition/public_intelligence_2026-07-20.md",
+      "accessibility": "public",
+      "license": "participant/author copyright",
+      "confidence": "mixed; exact metadata and unverified claims",
+      "last_checked": "2026-07-20",
+      "notes": "Current topic count, new discussion claims, DateRun notebook scan, and Yusuke source audit."
     }
   ],
   "claims": [
@@ -247,6 +298,76 @@
       "confidence": "confirmed",
       "source_id": "S_LOCAL_EDA",
       "implication": "Add missingness-aware regimes and no-GR fallbacks.",
+      "status": "active"
+    },
+    {
+      "claim_id": "C017",
+      "category": "shape",
+      "claim": "Across all 773 training wells, hidden-label oracle constant and line paths score 9.0354 and 6.6972, while a robust smooth curve scores 3.1106.",
+      "evidence_class": "public_notebook_full_data_oracle",
+      "confidence": "strong diagnostic",
+      "source_id": "S_PILKWANG_PUBLIC",
+      "implication": "A gold-targeting legal bank must recover nonlinear whole-tail shape; datum-only and line-only optimization are insufficient.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C018",
+      "category": "selector",
+      "claim": "Pilkwang's fixed PF/beam selector scores 10.5831 pooled RMSE and its worst decile contributes 61.95% of SSE.",
+      "evidence_class": "public_notebook_full_data_diagnostic",
+      "confidence": "strong diagnostic",
+      "source_id": "S_PILKWANG_PUBLIC",
+      "implication": "Measure candidate oracle coverage separately from legal selector regret and catastrophe probability.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C019",
+      "category": "negative",
+      "claim": "Heel affine GR calibration worsened ±2 ft datum localization from 89.13% to 85.77% and p90 shift from 3.4 ft to 7.0 ft.",
+      "evidence_class": "public_notebook_full_data_diagnostic",
+      "confidence": "strong diagnostic",
+      "source_id": "S_PILKWANG_PUBLIC",
+      "implication": "Use affine parameters as mismatch diagnostics, not a default GR correction.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C020",
+      "category": "candidate",
+      "claim": "Amer's exact second-order HMM provides a deterministic posterior mean/std over joint TVT position and dip rate; its reported 4.57 PF-HMM blend is based on a small sample.",
+      "evidence_class": "source_audited_public_notebook",
+      "confidence": "mechanism confirmed; score preliminary",
+      "source_id": "S_HMM_EXACT",
+      "implication": "Add HMM outputs to a fresh candidate bank and validate on all frozen maps before promotion.",
+      "status": "active"
+    },
+    {
+      "claim_id": "C021",
+      "category": "provenance",
+      "claim": "The public 6.979 notebook and high-vote derivatives combine pretrained artifacts, model packages, overlap contacts, and fixed bias corrections.",
+      "evidence_class": "source_audited_public_notebooks",
+      "confidence": "confirmed composition",
+      "source_id": "S_PUBLIC6979",
+      "implication": "Treat their leaderboard scores as composite references, not clean unseen-well causal evidence.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C022",
+      "category": "discussion",
+      "claim": "Participants report grouped whole-well pooled CV in the 4.x range using complete-well models and test-time inputs.",
+      "evidence_class": "participant_claims",
+      "confidence": "unverified",
+      "source_id": "S_PUBLIC_SCAN_20260720",
+      "implication": "Prioritize whole-well nonlinear candidates, but require independent reproduction and frozen controls.",
+      "status": "hypothesis"
+    },
+    {
+      "claim_id": "C023",
+      "category": "archive",
+      "claim": "Kaggle currently lists 134 competition topics while the frozen archive contains 132.",
+      "evidence_class": "kaggle_metadata_delta",
+      "confidence": "confirmed count; incomplete delta",
+      "source_id": "S_PUBLIC_SCAN_20260720",
+      "implication": "Run a complete delta recrawl before changing canonical topic/message counts.",
       "status": "active"
     }
   ],

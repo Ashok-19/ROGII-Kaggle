@@ -1,14 +1,18 @@
 # ROGII Gold Medal Roadmap
 
-Updated: 2026-07-19  
+Updated: 2026-07-20  
 Final deadline: 2026-08-05 23:59 UTC / 2026-08-06 05:29 Asia/Kolkata  
-Time remaining at update: 18 days
+Time remaining at update: 17 days
 
 ## Objective and reality check
 
 The goal is a gold-medal-level final placement with an original, reproducible solution. A medal cannot be guaranteed. The current public leader is 4.859; archived score bands are 5.523 at rank 10, 6.199 at rank 25, 6.505 at rank 50, and 6.799 at rank 100. The account's best Kaggle-MCP-verified score is 7.119; the user-reported 6.888 score still needs a submission reference.
 
 The public board is not the final objective. Private-leaderboard robustness, legal provenance, and reproducibility determine whether a high public score is useful.
+
+## Standing public-intelligence loop
+
+At each session start and before major preregistration or promotion, inspect New/Recent discussions and newly run/high-vote notebooks since the timestamp in `tracking/seed.json`. Source-audit exact code, dependencies, outputs and hashes; archive material deltas by evidence class. Participant claims and notebook scores generate hypotheses only.
 
 ## Foundation status
 
@@ -41,7 +45,13 @@ A model with 7.623 grouped OOF scored 6.924 publicly, while an older 8.248 OOF m
 
 A 13.420 trellis improved a 7.762 ensemble to 7.699 because residual correlation was only 0.488. Conversely, an individually validated third correction damaged a strong stack to 7.446–7.515. Every component must be tested in final placement.
 
-### 5. Risk detection is not correction
+### 5. Nonlinear whole-tail shape is mandatory
+
+Pilkwang's published 773-well oracle ladder is 15.9099 last-known, 9.0354 for an oracle constant, 6.6972 for an oracle line, and 3.1106 for a robust smooth curve. Therefore the gold route cannot be another datum-only or line-only correction. The next experiment separates legal nonlinear **candidate coverage** from **visible-prefix selector regret**.
+
+Amer's exact second-order HMM adds a deterministic posterior candidate over TVT position and dip rate. It joins PF, beam, DTW, smooth-U and jump/fault candidates, but its reported small-sample 4.57 blend remains preliminary until full frozen validation.
+
+### 6. Risk detection is not correction
 
 E003 shows that risk and signed action are both learnable from legal evidence, but with separate models and separate gates. Forest risk reaches 0.5415 Spearman and 0.8125 worst-20% AUC; ridge datum-plus-trend achieves 88.39% material datum-sign accuracy and improves all five maps. A risk score still cannot authorize routing unless the routed action beats the fixed E003 action under repeated and shift validation.
 
@@ -78,8 +88,9 @@ Every candidate produces a full path and OOF predictions with the same IDs:
 5. Test-available typewell GR alignment candidates with explicit ambiguity scores.
 6. Horizontal pre-PS self-correlation candidate.
 7. Particle-filter state tracker over structural position and rate.
-8. Dynamic-programming/trellis whole-well posterior.
-9. Learned residual/correction candidates.
+8. Exact second-order HMM posterior mean/std over position and dip rate.
+9. Dynamic-programming/trellis, multiscale/stochastic DTW, constrained smooth-U and explicit jump/fault paths.
+10. Learned residual/correction candidates.
 
 A candidate may be weak alone and retained if its residuals are different.
 
@@ -119,7 +130,7 @@ Targets to compare:
 - Runtime target below 8 hours; hard competition limit 9 hours.
 - Local/Kaggle inference parity test.
 
-## Eighteen-day execution plan
+## Seventeen-day execution plan
 
 ### July 18 — Foundation
 
@@ -208,9 +219,9 @@ Measured E009 outcome:
 - The diagnostic 64-feature ridge reaches 14.6352733150, p90 20.8077, and 5/5 maps, but remains ineligible and still fails one spatial and three typewell groups.
 - Official and independent OOF artifacts are byte-identical at SHA-256 `3609b06e...052e`; runtime and memory pass. Statistical rejection prohibits packaging.
 
-Immediate deliverables shift to E010/H012: a fresh stability-regularized wide residual datum experiment. It may use only inner-training-fold feature selection/stability and fixed training-only blending. E009 observed subgroup outcomes are evaluation evidence, not legal routing inputs.
+Immediate deliverables shift to E010/H013: a fresh nonlinear candidate-coverage and visible-prefix selector-regret experiment. Freeze a legal whole-well bank containing E006, the wide-ridge comparator, exact HMM posterior mean/std, PF scales, beam/trellis, multiscale/stochastic DTW, constrained smooth-U curves, and a jump/fault candidate. First measure hidden-label bank-oracle coverage; then evaluate a selector using only multi-cut visible-prefix evidence and target-independent uncertainty. Oracle routing is diagnostic only. H012/T016 remain queued.
 
-Exit gate: at least four repeated maps and 17 cells, tail limits, positive every spatial/typewell group, shuffle/sign negative controls, exact E006 fallback, runtime, final placement, packaging, and parity.
+Exit gate: candidate-bank oracle below 5 before selector promotion; legal action at least four repeated maps and 17 cells, tail limits, positive every spatial/typewell group, shuffle/sign controls, exact E006 fallback, runtime, final placement, packaging, and parity.
 
 ### July 24–26 — Tabular residual and datum models
 
@@ -296,8 +307,9 @@ These defaults may be revised only through a recorded decision before seeing the
 7. **E007 — Horizontal self-correlation and candidate evidence stack — completed and rejected 2026-07-19.** Fixed 0.10 placement reaches 14.8305 with 5/5 maps, but fails p90 and spatial/typewell shift gates; no packaging or submission.
 8. **E008 — Cross-fitted legal residual-action model — completed and rejected 2026-07-19.** Datum-only ridge reaches 14.7951 with improved p90 and useful E007 evidence, but wins only 2/5 maps and 14/25 cells and fails spatial/typewell transfer; no packaging or submission.
 9. **E009 — Residual-model consensus abstention — completed and rejected 2026-07-19.** Majority consensus reaches 14.7935 and wins all maps but only 15/25 cells, repeats spatial/typewell failures, and fails the sign-flipped negative control; no package or submission.
-10. **E010 — Stability-regularized wide residual datum — next.** Pre-register the wide ridge comparator, inner-fold stable feature core, path/evidence branch, and training-only blend; require full repeated/shift/negative/deployment gates.
-11. **E011 — Final Kaggle offline parity.** Clean package, runtime, exact IDs, and finalist notebooks.
+10. **E010 — Nonlinear candidate coverage and selector regret — next.** Freeze the legal whole-well bank, measure bank-oracle RMSE/catastrophe coverage, then evaluate visible-prefix multi-cut candidate probabilities against oracle regret under all repeated/shift/control gates.
+11. **E011 — Learned whole-well selector and shape refinement.** Proceed only if E010 proves below-5 candidate coverage; compare calibrated path selection, learned cost maps/control points, and explicit smooth-versus-jump decoding.
+12. **E012 — Final Kaggle offline parity.** Clean package, runtime, exact IDs, and finalist notebooks.
 
 ## Explicitly rejected behavior
 
@@ -322,4 +334,4 @@ Foundation is complete only when:
 - legacy roadmap is preserved;
 - no training run is falsely presented as completed.
 
-The next action after foundation validation is E001, not another roadmap revision.
+Foundation is complete. The current exact next action is E010/H013 candidate-coverage and selector-regret preregistration, not another roadmap revision.

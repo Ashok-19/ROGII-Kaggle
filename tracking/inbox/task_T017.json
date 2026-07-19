@@ -1,0 +1,13 @@
+{
+  "type": "task",
+  "recorded_at": "2026-07-19T19:00:00Z",
+  "payload": {
+    "task_id": "T017",
+    "title": "Measure nonlinear candidate coverage and selector regret",
+    "status": "next",
+    "priority": 1,
+    "phase": "nonlinear_candidate_bank",
+    "depends_on": "T015",
+    "due_at": "2026-07-22"
+  }
+}

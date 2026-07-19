@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-19T19:00:00Z",
+  "payload": {
+    "decision_id": "D013",
+    "decided_at": "2026-07-20",
+    "title": "Prioritize nonlinear candidate coverage and selector regret",
+    "decision": "Supersede the unstarted E010 wide-datum priority with a fresh nonlinear whole-well candidate-bank experiment. Keep H012/T016 queued and preserve its 64-feature ridge only as a comparator. First measure hidden-label candidate-bank oracle coverage, then measure legal visible-prefix selector regret; never deploy oracle routing.",
+    "rationale": "The full 773-well oracle ladder is 9.0354 for a per-well constant, 6.6972 for a line, and 3.1106 for a smooth nonlinear curve. Datum/line work cannot by itself reach the gold target. Exact HMM, PF, beam, DTW, constrained smooth and jump candidates now provide a falsifiable route to separate generation failure from selection failure.",
+    "source_ids": "C017,C018,C020,archive/competition/public_intelligence_2026-07-20.md,experiments/E009/RESULT.md",
+    "revisit_trigger": "E010 shows the legal candidate-bank oracle remains above 5 or exact nonlinear candidates cannot meet runtime/control requirements."
+  }
+}

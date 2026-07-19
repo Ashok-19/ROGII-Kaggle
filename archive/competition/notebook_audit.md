@@ -28,3 +28,7 @@ The 58-cell notebook combines a ridge/artifact model, particle filters and beam 
 ## Dependency conclusion
 
 The notebook is an **idea catalogue and leaderboard reference**, not a reproducible experiment baseline. The first independent baseline must run from competition data plus locally generated artifacts whose lineage is fully recorded.
+
+## 2026-07-20 broader public-source refresh
+
+The exact HMM, Pilkwang corpus, verified 6.979 lineage, current discussion deltas, and newly surfaced high-vote derivatives are audited in `archive/competition/public_intelligence_2026-07-20.md`. Those findings supersede any assumption that the copied notebook alone represents the public method space.

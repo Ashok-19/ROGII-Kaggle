@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-07-19",
+  "updated_at": "2026-07-20",
   "title": "ROGII Competition Learning Lab",
   "subtitle": "A beginner-first visual guide to the data, geology, target, validation, and idea space.",
   "beginner_path": [
@@ -287,9 +287,32 @@
       "visual": "consensus_gate",
       "summary": "E009 trained six legal datum models and tested fixed plus nested consensus abstention. Majority consensus reached 14.7935 RMSE, won all 5 maps, and improved p90, but won only 15 of 25 repeated cells and repeated the spatial/typewell shift failures.",
       "why_it_matters": "Agreement was not reliable uncertainty: the three rule action sets overlapped at 0.984–0.996 Jaccard, and the sign-flipped negative control exceeded its cap. A diagnostic 64-feature ridge reached 14.6353 with 5/5 maps, so the next experiment targets inner-fold feature stability rather than more consensus threshold tuning."
+    },
+    {
+      "id": "B014",
+      "date": "2026-07-20",
+      "title": "The oracle ladder makes nonlinear shape mandatory",
+      "evidence": "source_audited_full_data_diagnostic",
+      "visual": "oracle_ladder",
+      "summary": "A published 773-well diagnostic scores 15.9099 for last-known, 9.0354 for the best per-well constant, 6.6972 for the best line, and 3.1106 for a robust smooth curve.",
+      "why_it_matters": "Even perfect datum and linear trend are not enough for a reliable sub-5 system. The next experiment must measure nonlinear candidate coverage before optimizing another datum-only correction."
+    },
+    {
+      "id": "B015",
+      "date": "2026-07-20",
+      "title": "Exact smoothing adds a probabilistic whole-well candidate",
+      "evidence": "source_audited_preliminary",
+      "visual": "posterior_paths",
+      "summary": "Amer's exact second-order HMM tracks joint TVT position and dip rate with forward-backward inference and returns posterior mean plus uncertainty. A small-sample PF/HMM blend is reported at 4.57 RMSE.",
+      "why_it_matters": "The mechanism is complementary and directly models nonlinear shape, but the score is not promotion evidence until reproduced on all frozen folds and shift groups. Its posterior uncertainty is a candidate selector feature, not an automatic gate."
     }
   ],
   "idea_questions": [
+    {
+      "signal": "candidate coverage",
+      "question": "Does a legal bank of HMM, PF, beam, DTW, smooth-U, jump and learned paths contain a below-5 trajectory for most wells, and how much does a visible-prefix selector lose relative to that oracle?",
+      "falsifier": "The bank oracle remains above 5, or legal multi-cut selection has large unstable regret and catastrophic shift-group failures."
+    },
     {
       "signal": "deployment",
       "question": "Can a candidate remain useful when every input is checked against the actual test schema and the same notebook runs without external artifacts?",
@@ -390,6 +413,11 @@
     {
       "title": "E009 rejected consensus-abstention result",
       "local_path": "experiments/E009/RESULT.md",
+      "url": ""
+    },
+    {
+      "title": "Public notebook and discussion intelligence refresh",
+      "local_path": "archive/competition/public_intelligence_2026-07-20.md",
       "url": ""
     }
   ]

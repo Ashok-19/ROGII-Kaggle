@@ -16,3 +16,6 @@ __pycache__/
 # Generated experiment artifacts
 artifacts/
 reports/generated/
+
+# Local session handoffs
+.chatgpt/handoffs/

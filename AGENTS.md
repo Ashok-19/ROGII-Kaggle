@@ -2,127 +2,77 @@
 
 ## Mission
 
-Build an original, reproducible, private-leaderboard-robust solution for the ROGII Wellbore Geology Prediction competition before the 2026-08-05 23:59 UTC deadline. Gold is the goal, but no score or medal is guaranteed. Every claimed improvement must be traceable to evidence, code, configuration, artifacts, and validation results.
+Build an original, reproducible, private-leaderboard-robust solution for the ROGII Wellbore Geology Prediction competition before 2026-08-05 23:59 UTC. Gold is the target; no score or medal is guaranteed. Evidence, legality, reproducibility, and private robustness outrank persuasive narratives or public-score chasing.
 
-## Required reading before work
+## Start every work session by reconciling state
 
-1. `MEMORY.md`
-2. `GOLD_ROADMAP.md`
-3. `PROJECT_WORKFLOW.md`
-4. `archive/writeups/synthesis.md`
-5. `archive/discussions/synthesis.md`
-6. `archive/competition/notebook_audit.md`
+Read, in order:
 
-## Evidence hierarchy
+1. `AGENTS.md`
+2. `MEMORY.md`
+3. `GOLD_ROADMAP.md`
+4. `PROJECT_WORKFLOW.md`
+5. the active hypothesis/task/decision records in `tracking/inbox/`
+6. relevant experiment manifests and `RESULT.md` files
 
-Use this order when claims conflict:
+Then verify `git status`, `HEAD`, upstream state, active workspace locks/claims, and `python tools/rogii.py state`. Do not continue a stale handoff or remembered plan blindly.
 
-1. Official competition pages and rules.
-2. Reproduced local measurements on competition data.
-3. Controlled experiments with exact code/configuration and OOF predictions.
-4. Winning-note experiments with explicit controls or score pairs.
-5. Public notebook results with reproducible provenance.
-6. Discussion claims and intuition.
+Before implementation, compare the proposed action with current evidence and the latest Kaggle state. When they conflict, stop, identify the stale assumption, record a new decision, and update the durable sources of truth before scoring. Never silently rewrite history, thresholds, folds, targets, or prior decisions.
 
-Discussion statements are leads, not facts. Record material claims in `archive/claims.csv` or the dashboard with a confidence class.
+## Public-intelligence loop
 
-## Non-negotiable validation rules
+At the start of each new session, and immediately before pre-registering or promoting a major experiment:
 
-- Never use random row splits. Split by whole well and simulate the hidden suffix.
-- Primary metric is pooled row-level RMSE. Also report median, p90, p95, maximum per-well RMSE, worst-5%/10% SSE share, mean-error SSE share, and residual correlation with candidate ensemble members.
-- Freeze fold maps before model comparison. Use repeated fold maps and at least one harsher split for promotion.
-- Every learned feature family must pass a known-positive control, no-op control, duplicate-feature control, and shuffled-evidence control where applicable.
-- Before promoting any feature or candidate, audit the actual train and test schemas and missingness contract. A train-only column may be used for oracle understanding or diagnostics only; it cannot be described as deployable evidence unless an equivalent test-time source is verified.
-- Candidate routing and uncertainty gates must prove signed action, not merely risk detection.
-- Evaluate components in their final pipeline placement. An isolated gain does not authorize stacking.
-- Preserve negative results and exact configurations.
-- Do not tune on the three visible test examples or use their train overlap as generalization evidence.
+- check the competition's New/Recent discussions and newly run/high-vote public notebooks;
+- compare against `public_intelligence_last_checked` in `tracking/seed.json` and inspect only material deltas;
+- source-audit exact notebook code, mounted inputs, executed outputs, provenance, license, and source hash before using a claim;
+- archive material findings with date and evidence class, then update claims/tasks if the research priority changes.
 
-## Data, artifacts, and competition compliance
+Discussion claims, notebook titles, votes, and leaderboard scores are leads, not promotion evidence. Do not copy opaque artifacts or infer causality from a public score. A full discussion recrawl is required before changing canonical archive counts.
 
-- Competition code or data must not be privately shared outside the official Kaggle team.
-- Internet must be disabled in the submission notebook; runtime must remain below 9 hours. Target an 8-hour maximum for safety.
-- External artifacts are quarantined until source, license, version, training data, target, folds, code, hash, and accessibility are recorded.
-- Never depend on an opaque/private mount for a final solution.
-- Unknown-license artifacts may be inspected for ideas but cannot enter a prize-targeting pipeline without resolution.
-- No target-derived feature may use hidden suffix labels at inference or validation time.
+## Evidence and validation
 
-## Experiment lifecycle
+Use this hierarchy: official rules; reproduced local measurements; controlled OOF experiments; source-audited public outputs; winning-note experiments; participant claims; intuition.
 
-Every experiment has `experiments/<experiment_id>/manifest.json`. The lifecycle is:
+Non-negotiable rules:
+
+- split by whole well and simulate the hidden suffix; never use random row splits;
+- score pooled row RMSE and report repeated maps, per-well tails, worst-5%/10% SSE share, shift groups, runtime/memory, and residual correlation;
+- keep `folds/v1.json` through `folds/v5.json`, metric semantics, and target construction immutable;
+- pre-register legal inputs, controls, thresholds, final placement, runtime, and artifacts before hidden-label scoring;
+- require positive, no-op, duplicate, shuffle/sign, leakage-sentinel, exact-fallback, and pipeline-placement controls where applicable;
+- validate candidate routing as signed action; uncertainty alone cannot authorize movement;
+- test every component in final placement and preserve negative results;
+- never treat the three visible overlap wells as hidden-test evidence.
+
+A candidate is promoted only if it passes its frozen repeated-map, tail, shift, control, deployment, and parity gates. Public leaderboard results update belief but never retroactively alter a gate.
+
+## Experiment and repository discipline
+
+Every experiment lives in `experiments/E###/manifest.json` and follows:
 
 `proposed -> designed -> smoke_passed -> cv_running -> evaluated -> promoted | rejected | blocked`
 
-Before implementation, the manifest must state:
+Canonical locations:
 
-- one falsifiable hypothesis;
-- baseline and expected mechanism;
-- exact legal inputs;
-- fold map and scored rows;
-- controls;
-- promotion and rejection thresholds;
-- expected runtime and artifacts.
+- code: `src/` and `tools/`;
+- immutable experiment evidence: `experiments/`;
+- generated predictions/models: `artifacts/`;
+- durable ledger inputs: `tracking/seed.json`, manifests, and `tracking/inbox/*.json`;
+- generated database: `tracking/rogii.sqlite`—regenerate it; never hand-edit it;
+- evidence archive: `archive/`;
+- temporary work: agent-specific `scratch/` only.
 
-After execution, append immutable run entries containing configuration path, git SHA, metrics, controls, and artifact paths. Run `python tools/rogii.py sync`; the dashboard also auto-syncs manifests whenever it serves API state.
+Use stable IDs (`H###`, `E###`, `R...`, `D###`, `T###`). Acquire a task claim for focused work and the official lock only for serialized durable writes. Stage explicit intended paths only. Never delete canonical artifacts referenced by manifests; remove scratch copies only after hash/provenance checks.
 
-## Promotion gate
+Update the dashboard Learning Lab in the same workstream when verified evidence changes the problem framing, next experiment, or an important failure mode; label public and oracle evidence explicitly.
 
-A candidate may be promoted only when all applicable conditions hold:
+## Compute, packaging, and submissions
 
-1. Metric implementation and positive control pass.
-2. No-op, duplicate, and shuffled controls behave as expected.
-3. Gain is present on most repeated fold maps, not one convenient split.
-4. Pooled RMSE improves by the pre-registered margin.
-5. Worst-well tails do not deteriorate beyond the registered limit.
-6. The gain survives a harsher split or has a documented reason it cannot.
-7. Residual correlation shows genuine complementarity for ensemble legs.
-8. Kaggle runtime parity and input provenance pass.
+Use Kaggle MCP for heavy runs after exact code/configuration is committed. Final notebooks must use approved portable inputs, internet disabled, deterministic inference, exact IDs/order, finite outputs, and runtime below the 8-hour target / 9-hour hard limit. Record notebook version, inputs, accelerator, runtime, and artifact hashes.
 
-Public leaderboard scores update belief; they do not retroactively change a hypothesis or promotion threshold.
+No Kaggle submission is created without explicit user authorization. Record every authorized submission immediately with its reference, run, score, and purpose.
 
-## Repository conventions
+## Finish every work session
 
-- Source code: `src/` or `tools/`.
-- Experiment definitions and immutable run manifests: `experiments/`.
-- Generated models/predictions: `artifacts/` and ignored runtime paths.
-- Project ledger: `tracking/rogii.sqlite`, generated from manifests and seeds.
-- Evidence archive: `archive/`.
-- Dashboard: `dashboard/`.
-- Temporary agent work: `scratch/`, never committed.
-
-Use stable IDs: `H###` hypotheses, `E###` experiments, `RYYYYMMDD-HHMM-<slug>` runs, `D###` decisions, `T###` tasks.
-
-## Compute execution policy
-
-- Keep lightweight deterministic validation, data-contract checks, report generation, and small smoke tests local.
-- Use Kaggle MCP notebook sessions for heavy workflows, accelerator-backed training, large OOF generation, expensive parameter sweeps, and full-scale performance testing when Kaggle compute materially shortens iteration time.
-- Commit the exact code and configuration before launching a Kaggle run. Record the Git SHA, Kaggle notebook reference/version, attached datasets, accelerator, seeds, runtime, and produced artifact hashes in the experiment manifest.
-- Repository code, manifests, and archived artifacts remain the source of truth; transient notebook state is not an experiment record.
-- Keep final notebook parity separate: internet disabled, approved portable inputs only, deterministic inference, and runtime below the competition limit.
-
-## Visual learning documentation
-
-- Treat `dashboard/learn.html` and `dashboard/learning_content.json` as durable project documentation and an idea-generation tool, not optional presentation polish.
-- When a promoted experiment, verified breakthrough, changed problem framing, newly understood feature, important failure mode, or useful negative result is not already explained visually, update the Learning Lab in the same workstream.
-- Write for a beginner who knows no geology or competition terminology: introduce the physical picture first, define every term, then connect it to features, candidate predictions, controls, and score consequences.
-- Prefer interactive diagrams, real-well examples, before/after paths, error decompositions, and simple controls over dense prose. Preserve an explicit boundary between educational simulations, hidden-label oracles, participant claims, and legal validated evidence.
-- Every breakthrough entry must include its date, evidence class, plain-language summary, why it matters, and a visual representation. Never present an unverified discussion claim or public-notebook result as established fact.
-- Validate the Learning Lab API, JavaScript syntax, page routes, real-well boundary handling, and mobile-safe static structure before committing dashboard updates.
-
-## Validation-first version control
-
-- Commit and push completed work only after the relevant validation suite passes and the Git diff has been reviewed.
-- Use small, cohesive, incremental commits so regressions can be isolated and reverted. Do not combine unrelated experiments, refactors, documentation, generated outputs, or fixes in one commit.
-- A large commit is permitted only for an unavoidable bootstrap, repository import, or indivisible migration; document the exception in the commit message or project memory.
-- Stage explicit paths only. Never include unrelated pre-existing modifications, local scratch data, generated databases, credentials, opaque artifacts, or unreviewed files.
-- Before each commit: sync project state, run scoped tests plus `python tools/rogii.py validate`, inspect status and diff, and confirm the staged path list exactly matches the intended change.
-- After a successful commit, push it to the configured upstream in the same work session unless the user explicitly requests a local-only commit. Verify that the remote branch contains the commit before reporting success.
-- If validation, commit, or push fails, preserve the working state, record the failure clearly, and do not claim the change was shipped.
-- Experiment and submission records must reference the exact committed Git SHA used to produce their artifacts.
-
-## End-of-session duties
-
-- Sync and validate: `python tools/rogii.py sync && python tools/rogii.py validate`.
-- Update `MEMORY.md` only with durable state, decisions, verified scores, blockers, and the exact next action.
-- Record submissions immediately, including Kaggle reference, run ID, score, and description.
-- Do not silently change folds, metric code, target construction, or selected final submissions.
+Run scoped tests, the full test suite when relevant, `python tools/rogii.py sync`, and `python tools/rogii.py validate`; check SQLite integrity, git diff/status, locks, claims, and push state. Update `MEMORY.md` with only durable state, decisions, blockers, public-intelligence timestamp, and one exact next action. Release locks/claims and report only verified outcomes.
