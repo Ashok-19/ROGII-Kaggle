@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E003",
+  "data_signature": "6ebe65b403f80fefd97dcd7bbfce7314252e779a1837c97364cf55761590fe77",
+  "expected_wells": 773,
+  "fold_files": [
+    "folds/v1.json",
+    "folds/v2.json",
+    "folds/v3.json",
+    "folds/v4.json",
+    "folds/v5.json"
+  ],
+  "feature_version": "e003_legal_v1",
+  "visible_slope_windows": [32, 128, 512],
+  "visible_backtest_fractions": [0.5, 0.7, 0.85],
+  "feature_screening": {
+    "maximum_features": 48,
+    "method": "training-fold maximum absolute correlation across standardized targets"
+  },
+  "ridge": {
+    "alpha": 25.0
+  },
+  "forest": {
+    "trees": 24,
+    "max_depth": 3,
+    "min_leaf": 24,
+    "row_fraction": 0.8,
+    "feature_subsample": 12,
+    "threshold_quantiles": [0.2, 0.4, 0.6, 0.8]
+  },
+  "targets": [
+    "datum_correction_ft",
+    "trend_correction_ft",
+    "u_slope_delta_ft_per_md",
+    "log1p_baseline_rmse"
+  ],
+  "no_evidence_candidates": [
+    "mean_datum",
+    "mean_datum_trend"
+  ],
+  "action_candidates": [
+    "ridge_datum",
+    "ridge_datum_trend",
+    "forest_datum",
+    "forest_datum_trend"
+  ],
+  "risk_fraction": 0.2,
+  "sign_materiality_ft": 5.0,
+  "reference_metrics": {
+    "baseline_rmse": 15.909852870734554,
+    "oracle_datum_rmse": 9.035409988099246,
+    "oracle_datum_trend_rmse": 6.6971947701210714
+  },
+  "spatial_stress_bins": 5,
+  "promotion": {
+    "minimum_action_rmse_gain": 0.15,
+    "minimum_feature_gain_over_mean_action": 0.05,
+    "minimum_action_map_wins": 4,
+    "maximum_p90_well_rmse_deterioration": 0.25,
+    "maximum_worst_5pct_sse_share_increase": 0.02,
+    "minimum_datum_correlation": 0.15,
+    "minimum_material_datum_sign_accuracy": 0.56,
+    "require_positive_spatial_action_gain": true,
+    "minimum_risk_spearman": 0.2,
+    "minimum_risk_auc": 0.62,
+    "minimum_risk_map_passes": 4,
+    "require_positive_spatial_risk_spearman": true,
+    "maximum_runtime_minutes": 20
+  },
+  "controls": {
+    "minimum_positive_control_correlation": 0.98,
+    "maximum_duplicate_prediction_delta": 1e-08,
+    "maximum_shuffled_abs_datum_correlation": 0.2,
+    "maximum_shuffled_action_gain": 0.05,
+    "oracle_datum_rmse_tolerance": 0.02,
+    "oracle_datum_trend_rmse_tolerance": 0.02
+  }
+}

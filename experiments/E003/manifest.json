@@ -1,0 +1,58 @@
+{
+  "experiment_id": "E003",
+  "title": "Datum, trend, and risk learnability",
+  "hypothesis": "Legal whole-well evidence can predict expensive baseline wells better than chance, while signed datum/trend actuation is authorized only if cross-fitted corrections improve pooled RMSE and survive spatial stress.",
+  "status": "designed",
+  "track": "oracle_and_predictability",
+  "priority": 1,
+  "owner": "NNMax",
+  "parent_id": "E002",
+  "created_at": "2026-07-19T05:20:00Z",
+  "updated_at": "2026-07-19T05:20:00Z",
+  "design": {
+    "baseline": "E001 last_known_tvt at pooled RMSE 15.9098528707",
+    "oracle_targets": [
+      "additive per-well datum correction to last-known TVT",
+      "centered end-to-end linear suffix correction",
+      "heel-to-toe U-slope delta",
+      "log baseline well RMSE for risk ranking"
+    ],
+    "legal_inputs": [
+      "visible TVT_input prefix only",
+      "MD, X, Y, and Z over the supplied whole well",
+      "horizontal-well GR values and missingness over the supplied whole well",
+      "ANCC, ASTNU, ASTNL, EGFDU, EGFDL, and BUDA supplied surfaces",
+      "paired typewell TVT/GR summary statistics",
+      "visible-prefix pseudo-holdout backtest errors",
+      "known hidden-suffix length and geometry",
+      "frozen whole-well fold assignments"
+    ],
+    "feature_policy": "All predictive features are computable from test-time inputs. Hidden TVT is used only to construct oracle analysis targets and evaluate cross-fitted predictions.",
+    "probe_models": [
+      "training-fold-only correlation screening to at most 48 legal features",
+      "fixed-alpha standardized multi-output ridge",
+      "fixed-size deterministic shallow multi-output regression forest"
+    ],
+    "no_evidence_baselines": [
+      "training-fold mean datum correction",
+      "training-fold mean datum plus trend correction"
+    ],
+    "fold_map": "frozen folds/v1.json through folds/v5.json",
+    "harsher_split": "five contiguous spatial X-midpoint blocks, held out one block at a time",
+    "separation_rule": "Risk ranking and signed action are evaluated independently. A useful risk model does not authorize a correction gate.",
+    "controls": [
+      "data and fold integrity",
+      "oracle algebra against E001 datum and datum-plus-trend floors",
+      "synthetic legal-feature positive control",
+      "zero/no-action baseline",
+      "regularization-preserving duplicate-feature control",
+      "deterministically shuffled target/evidence control",
+      "hidden-label leakage sentinel",
+      "byte-identical independent rerun"
+    ],
+    "promotion": "Authorize feature-based signed action only for at least 0.15 pooled RMSE gain, at least 0.05 gain over the best training-fold-mean action, wins on at least four repeated maps, bounded p90 and worst-5% tail changes, material datum sign accuracy at least 0.56, datum correlation at least 0.15, positive spatial-stress gain, and passing controls. Promote risk evidence separately only when risk Spearman is at least 0.20 and AUC at least 0.62 on at least four maps with positive spatial-stress Spearman.",
+    "runtime_budget_minutes": 20,
+    "config_path": "experiments/E003/config.json"
+  },
+  "runs": []
+}
