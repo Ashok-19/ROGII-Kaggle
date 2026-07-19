@@ -234,7 +234,7 @@ def _path_summary(features: dict[str, float | None], prefix: str, values: Sequen
     features[f"{prefix}_positive_fraction"] = sum(value > 0.0 for value in clean) / len(clean)
 
 
-def _read_e007_diagnostics(path: Path) -> dict[str, dict[str, float | str]]:
+def _read_e007_diagnostics(path: Path) -> dict[str, dict[str, float | str | None]]:
     required = {
         "well_id",
         "visible_gr_coverage",
@@ -249,7 +249,7 @@ def _read_e007_diagnostics(path: Path) -> dict[str, dict[str, float | str]]:
         "fallback_reason",
         "maximum_absolute_correction",
     }
-    output: dict[str, dict[str, float | str]] = {}
+    output: dict[str, dict[str, float | str | None]] = {}
     with path.open(newline="", encoding="utf-8") as handle:
         reader = csv.DictReader(handle)
         missing = required - set(reader.fieldnames or [])
@@ -259,12 +259,13 @@ def _read_e007_diagnostics(path: Path) -> dict[str, dict[str, float | str]]:
             well_id = str(row["well_id"])
             if well_id in output:
                 raise DataValidationError(f"{path}: duplicate E007 diagnostic {well_id}")
-            item: dict[str, float | str] = {"fallback_reason": str(row["fallback_reason"])}
+            item: dict[str, float | str | None] = {"fallback_reason": str(row["fallback_reason"])}
             for name in required - {"well_id", "fallback_reason"}:
-                value = float(row[name])
-                if not math.isfinite(value):
-                    raise DataValidationError(f"{path}: non-finite E007 diagnostic {well_id}/{name}")
-                item[name] = value
+                try:
+                    value = float(row[name])
+                except (TypeError, ValueError):
+                    value = math.nan
+                item[name] = value if math.isfinite(value) else None
             output[well_id] = item
     return output
 
@@ -385,7 +386,7 @@ def _extract_horizontal_features(
     train_dir: Path,
     well_id: str,
     path_features: Mapping[str, float],
-    diagnostic: Mapping[str, float | str],
+    diagnostic: Mapping[str, float | str | None],
     config: Mapping[str, Any],
 ) -> tuple[dict[str, float | None], tuple[float, float], int]:
     well = read_horizontal_selfcorr(train_dir / f"{well_id}__horizontal_well.csv")
@@ -474,7 +475,8 @@ def _extract_horizontal_features(
         "maximum_absolute_correction": "e007_maximum_absolute_correction",
     }
     for source, target in mapping.items():
-        features[target] = float(diagnostic[source])
+        raw = diagnostic[source]
+        features[target] = float(raw) if raw is not None and math.isfinite(float(raw)) else None
     features["e007_fallback_active"] = 1.0 if str(diagnostic["fallback_reason"]) else 0.0
     midpoint = (0.5 * (x[0] + x[-1]), 0.5 * (y[0] + y[-1]))
     return features, midpoint, hidden

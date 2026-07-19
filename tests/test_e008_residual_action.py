@@ -197,7 +197,7 @@ class E008ResidualActionTests(unittest.TestCase):
         selected_bad, _ = _select_scale(records, bad, ids, self.config)
         self.assertEqual(selected_bad, 0.0)
 
-    def test_diagnostic_reader_rejects_duplicate_and_nonfinite_rows(self):
+    def test_diagnostic_reader_rejects_duplicates_and_imputes_nonfinite_values(self):
         fields = [
             "well_id",
             "visible_gr_coverage",
@@ -239,12 +239,14 @@ class E008ResidualActionTests(unittest.TestCase):
                 _read_e007_diagnostics(path)
             row["well_id"] = "bbbbbbbb"
             row["pseudo_base_rmse"] = "nan"
+            row["median_best_fingerprint_distance"] = "inf"
             with path.open("w", newline="", encoding="utf-8") as handle:
                 writer = csv.DictWriter(handle, fieldnames=fields)
                 writer.writeheader()
                 writer.writerow(row)
-            with self.assertRaises(DataValidationError):
-                _read_e007_diagnostics(path)
+            parsed = _read_e007_diagnostics(path)
+            self.assertIsNone(parsed["bbbbbbbb"]["pseudo_base_rmse"])
+            self.assertIsNone(parsed["bbbbbbbb"]["median_best_fingerprint_distance"])
 
     @staticmethod
     def _write_gzip(path, fields, rows):
