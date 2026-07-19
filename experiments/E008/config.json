@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E008",
+  "data_signature": "6ebe65b403f80fefd97dcd7bbfce7314252e779a1837c97364cf55761590fe77",
+  "expected_wells": 773,
+  "fold_files": [
+    "folds/v1.json",
+    "folds/v2.json",
+    "folds/v3.json",
+    "folds/v4.json",
+    "folds/v5.json"
+  ],
+  "parents": {
+    "e006_oof": "artifacts/E006/oof_predictions.csv.gz",
+    "e006_oof_sha256": "9b9f26cd8ad82e32dbc0f9ba1466cb38424cd3bbf7001c1079a9867fb5a324b4",
+    "e006_expected_rmse": 14.933140787236884,
+    "e006_summary": "experiments/E006/results/summary.json",
+    "e006_model": "experiments/E006/results/model.json",
+    "e006_model_sha256": "bee16499c6361395d556dd5c4ff8555e95739c36f68444b3d0dfcf648d73cddf",
+    "e007_oof": "artifacts/E007/oof_predictions.csv.gz",
+    "e007_oof_sha256": "9b90d44797950f9c08fe873fe42438edae8cd92de16f49beadbe1584d3b826b7",
+    "e007_diagnostics": "experiments/E007/results/selfcorr_diagnostics.csv",
+    "e007_diagnostics_sha256": "4293c1707900b98afa71f7c7e04d57b567cc19726286bd32c90a4d71941e64ba",
+    "e007_summary": "experiments/E007/results/summary.json"
+  },
+  "feature_version": "e008_surface_free_residual_v1",
+  "feature_contract": {
+    "visible_slope_windows": [32, 128, 512],
+    "visible_backtest_fractions": [0.5, 0.7, 0.85],
+    "maximum_screened_features": 32,
+    "exclude_absolute_spatial_coordinates": true,
+    "exclude_direct_typewell_features": true,
+    "exclude_formation_surfaces": true,
+    "feature_families": [
+      "row counts and MD spans",
+      "relative trajectory geometry and hidden direction",
+      "visible TVT, visible U, visible Z, and hidden Z summaries",
+      "visible, hidden, and whole horizontal GR summaries and missingness",
+      "visible-prefix slope windows and pseudo-backtests",
+      "E006 path and correction summaries",
+      "E007 raw bounded correction summaries and diagnostics"
+    ]
+  },
+  "targets": {
+    "names": ["residual_datum_ft", "residual_trend_ft"],
+    "definition": "Fit target minus E006 as datum plus centered normalized hidden-index trend; trend is end-to-end coefficient on hidden_index/(rows-1)-0.5.",
+    "datum_soft_cap_ft": 30.0,
+    "trend_soft_cap_ft": 60.0
+  },
+  "ridge": {
+    "alpha": 25.0,
+    "feature_screening": "training-split maximum absolute correlation across standardized residual datum and trend targets",
+    "action_scales": [0.0, 0.25, 0.5, 0.75, 1.0]
+  },
+  "inner_selection": {
+    "minimum_gain_vs_e006": 0.01,
+    "maximum_p90_deterioration_vs_e006": 0.10,
+    "maximum_worst5_sse_share_increase_vs_e006": 0.005,
+    "near_best_rmse_tolerance": 0.01,
+    "tie_break": "smallest passing action scale"
+  },
+  "candidate_order": [
+    "last_known_tvt",
+    "e004_geometry_prefix",
+    "e006_nested_fusion",
+    "mean_residual_datum",
+    "mean_residual_datum_trend",
+    "ridge_residual_datum",
+    "ridge_residual_datum_trend",
+    "ridge_residual_conservative",
+    "ridge_no_e007_ablation",
+    "duplicate_feature_ridge",
+    "shuffled_target_ridge",
+    "oracle_residual_datum",
+    "oracle_residual_datum_trend"
+  ],
+  "eligible_candidates": [
+    "ridge_residual_datum",
+    "ridge_residual_datum_trend",
+    "ridge_residual_conservative"
+  ],
+  "stress": {
+    "spatial_bins": 5,
+    "typewell_clusters": 5,
+    "long_suffix_quantile": 0.80,
+    "high_missing_gr_quantile": 0.80,
+    "poor_pseudo_gain_quantile": 0.20,
+    "low_match_margin_quantile": 0.20
+  },
+  "controls": {
+    "parent_rmse_tolerance": 1e-09,
+    "zero_action_maximum_prediction_delta": 1e-12,
+    "duplicate_feature_maximum_prediction_delta": 1e-08,
+    "pooled_sse_relative_tolerance": 1e-12,
+    "maximum_shuffled_gain_vs_e006": 0.03,
+    "maximum_shuffled_abs_datum_correlation": 0.15,
+    "maximum_shuffled_abs_trend_correlation": 0.15,
+    "oracle_minimum_gain_vs_best_legal": 0.05,
+    "minimum_e007_feature_selection_maps": 3,
+    "maximum_e007_ablation_advantage_ft": 0.01,
+    "maximum_absolute_emitted_correction_ft": 60.0,
+    "minimum_nonzero_outer_cells": 15,
+    "minimum_maps_with_nonzero_median_scale": 4,
+    "maximum_outer_scale_range": 0.75
+  },
+  "promotion": {
+    "minimum_gain_vs_e006": 0.05,
+    "minimum_gain_vs_last_known": 0.50,
+    "minimum_map_wins": 4,
+    "minimum_map_gain": 0.01,
+    "minimum_outer_cell_wins": 17,
+    "maximum_p90_deterioration_vs_e006": 0.10,
+    "maximum_p90_deterioration_vs_last_known": 0.50,
+    "maximum_worst5_sse_share_increase_vs_e006": 0.005,
+    "maximum_worst5_sse_share_increase_vs_last_known": 0.01,
+    "require_positive_spatial_group_gain_vs_e006": true,
+    "require_positive_typewell_group_gain_vs_e006": true,
+    "maximum_special_slice_deterioration_vs_e006": 0.05,
+    "maximum_runtime_minutes": 30,
+    "maximum_rss_mb": 1536
+  },
+  "deployment": {
+    "maximum_package_mb": 100,
+    "require_exact_sample_ids_and_order": true,
+    "require_finite_predictions": true,
+    "require_exact_e006_fallback": true,
+    "require_local_notebook_byte_parity_if_promoted": true,
+    "require_private_internet_disabled_kaggle_parity_if_promoted": true,
+    "internet": false,
+    "external_artifacts": []
+  }
+}

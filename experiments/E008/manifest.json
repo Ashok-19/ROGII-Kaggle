@@ -1,0 +1,78 @@
+{
+  "experiment_id": "E008",
+  "title": "Cross-fitted surface-free residual datum/trend action",
+  "hypothesis": "A compact split-trained ridge model can use legal geometry, visible-prefix, E006, and E007 evidence to learn a bounded signed residual action that improves E006 without E007's fixed-placement shift failures.",
+  "status": "designed",
+  "track": "residual_modeling",
+  "priority": 1,
+  "owner": "NNMax",
+  "parent_id": "E007",
+  "created_at": "2026-07-19T15:31:00Z",
+  "updated_at": "2026-07-19T15:31:00Z",
+  "design": {
+    "task_id": "T014",
+    "hypothesis_id": "H010",
+    "baseline": "E006 nested_conservative_grid",
+    "model": "deterministic multi-output ridge residual datum/trend action",
+    "legal_inputs": [
+      "horizontal MD/X/Y/Z/GR",
+      "contiguous visible TVT_input prefix",
+      "frozen E006 prediction path",
+      "target-independent E007 self-correlation path and diagnostics"
+    ],
+    "forbidden_inputs": [
+      "hidden TVT at inference or outside the applicable training split",
+      "formation surfaces",
+      "direct typewell features or typewell identity",
+      "absolute spatial coordinates",
+      "typewell Geology",
+      "leaderboard-guided selection",
+      "external labels or opaque artifacts"
+    ],
+    "targets": ["residual datum around E006", "centered end-to-end residual trend around E006"],
+    "candidate_order": [
+      "last_known_tvt",
+      "e004_geometry_prefix",
+      "e006_nested_fusion",
+      "mean_residual_datum",
+      "mean_residual_datum_trend",
+      "ridge_residual_datum",
+      "ridge_residual_datum_trend",
+      "ridge_residual_conservative",
+      "ridge_no_e007_ablation",
+      "duplicate_feature_ridge",
+      "shuffled_target_ridge",
+      "oracle_residual_datum",
+      "oracle_residual_datum_trend"
+    ],
+    "controls": [
+      "parent hash and RMSE reproduction",
+      "feature leakage scan",
+      "zero-action E006 no-op",
+      "regularization-preserving duplicate feature",
+      "deterministic shuffled targets",
+      "pooled SSE consistency",
+      "oracle leakage sentinel",
+      "E007 feature-use and no-E007 ablation",
+      "correction bound",
+      "scale stability",
+      "independent artifact reproduction"
+    ],
+    "harsher_splits": [
+      "leave-spatial-group-out",
+      "leave-typewell-group-out for evaluation only",
+      "long suffix",
+      "high GR missingness",
+      "poor E007 visible pseudo-gain",
+      "low E007 fingerprint margin"
+    ],
+    "promotion": "A candidate must improve E006 by at least 0.05 RMSE, win at least four maps and 17 outer cells, satisfy tail and special-slice limits, improve every spatial/typewell evaluator group, pass all parent/leakage/shuffle/ablation/stability/runtime controls, and reproduce independently.",
+    "deployment": "Package and private offline Kaggle parity only after statistical promotion. No leaderboard submission is authorized.",
+    "runtime_budget_minutes": 30,
+    "maximum_rss_mb": 1536,
+    "maximum_package_mb": 100,
+    "config_path": "experiments/E008/config.json",
+    "pre_registration_path": "experiments/E008/PRE_REGISTRATION.md"
+  },
+  "runs": []
+}
