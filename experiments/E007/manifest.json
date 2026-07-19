@@ -1,0 +1,66 @@
+{
+  "experiment_id": "E007",
+  "title": "Horizontal GR self-correlation and controlled E006 placement",
+  "hypothesis": "Same-well visible-prefix GR fingerprints can identify local structural direction independently of typewell matching and add stable value to E006 after strictly cross-fitted placement.",
+  "status": "designed",
+  "track": "self_correlation_candidate",
+  "priority": 1,
+  "owner": "NNMax",
+  "parent_id": "E006",
+  "created_at": "2026-07-19T14:40:00Z",
+  "updated_at": "2026-07-19T14:40:00Z",
+  "design": {
+    "task_id": "T013",
+    "hypothesis_id": "H005",
+    "baseline": "last_known_tvt",
+    "deployment_comparator": "E006 nested_conservative_grid",
+    "independent_leg": "same-well horizontal GR self-correlation over visible-prefix structural slopes",
+    "legal_inputs": [
+      "horizontal MD/X/Y/Z/GR",
+      "contiguous visible TVT_input prefix",
+      "frozen E006 averaged OOF path as cross-fitted anchor"
+    ],
+    "forbidden_inputs": [
+      "actual hidden TVT in candidate construction or threshold selection",
+      "typewell GR/TVT in the self-correlation leg",
+      "training-only surfaces or typewell Geology",
+      "leaderboard-guided selection",
+      "external labels or opaque artifacts"
+    ],
+    "visible_only_design": "Absolute residual transfer was rejected. Five-neighbor local U-slope fingerprints and a 0.10 fixed reference were selected using only pseudo-boundaries inside the visible prefix at 0.65, 0.75, and 0.85.",
+    "candidate_bank": [
+      "visible_fixed_0p10",
+      "crossfit_conservative",
+      "crossfit_reliability_shrink",
+      "crossfit_positive_gate"
+    ],
+    "controls": [
+      "exact E006/E004/last-known parent reproduction",
+      "visible-only pseudo-boundary reproduction",
+      "zero-weight no-op",
+      "duplicate placement",
+      "deterministic shuffled correction templates",
+      "rowwise oracle leakage sentinel",
+      "pooled SSE consistency",
+      "raw residual diversity",
+      "weight stability",
+      "independent artifact reproduction"
+    ],
+    "harsher_splits": [
+      "leave-spatial-group-out",
+      "leave-typewell-group-out for evaluation only",
+      "long suffix",
+      "high GR missingness",
+      "poor visible pseudo-gain",
+      "low fingerprint margin"
+    ],
+    "promotion": "A legal placement must gain at least 0.03 RMSE over E006 and 0.45 over last-known, win at least four maps and 17 outer cells, satisfy tail and special-slice limits, improve every spatial/typewell evaluator group, prove independent residual structure, and pass all control, stability, runtime, memory, identity, and reproduction gates.",
+    "deployment": "Package and private Kaggle parity only after statistical promotion. No leaderboard submission is authorized.",
+    "runtime_budget_minutes": 30,
+    "maximum_rss_mb": 1536,
+    "maximum_package_mb": 100,
+    "config_path": "experiments/E007/config.json",
+    "pre_registration_path": "experiments/E007/PRE_REGISTRATION.md"
+  },
+  "runs": []
+}
