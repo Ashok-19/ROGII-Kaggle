@@ -1,0 +1,68 @@
+{
+  "experiment_id": "E006",
+  "title": "Nested PF-E004 fusion and disagreement evidence",
+  "hypothesis": "Strictly nested placement of the E005 PF correction around the deployment-ready E004 geometry-prefix path can retain complementary GR evidence while removing the standalone PF p90 and subgroup regressions.",
+  "status": "designed",
+  "track": "controlled_ensemble",
+  "priority": 1,
+  "owner": "NNMax",
+  "parent_id": "E005",
+  "created_at": "2026-07-19T11:03:37Z",
+  "updated_at": "2026-07-19T11:03:37Z",
+  "design": {
+    "task_id": "T012",
+    "hypothesis_id": "H009",
+    "baseline": "last_known_tvt",
+    "deployment_comparator": "E004 geometry_prefix",
+    "diverse_leg": "E005 pf_gr_path",
+    "legal_inputs": [
+      "horizontal MD/X/Y/Z/GR",
+      "contiguous visible TVT_input prefix",
+      "paired typewell TVT/GR",
+      "target-free E005 PF alignment diagnostics",
+      "inner-training hidden TVT used only to fit the inner fusion decision"
+    ],
+    "forbidden_inputs": [
+      "outer-validation hidden TVT in E004 fitting, weight fitting, routing, or reliability calibration",
+      "E005 observed 50/50 diagnostic result as a validated selector",
+      "training-only formation surfaces or typewell Geology",
+      "leaderboard-guided selection",
+      "external labels or opaque artifacts"
+    ],
+    "fold_maps": ["folds/v1.json", "folds/v2.json", "folds/v3.json", "folds/v4.json", "folds/v5.json"],
+    "nested_validation": "For each of 25 outer E001 cells, the held-out fold is absent from every E004 inner fit and from all weight/routing targets. The remaining four original fold labels form four inner OOF groups.",
+    "eligible_candidates": [
+      "nested_conservative_grid",
+      "nested_reliability_shrink",
+      "nested_disagreement_cap",
+      "nested_reliability_gate"
+    ],
+    "controls": [
+      "exact nested E004 comparator reproduction",
+      "exact PF recomputation",
+      "zero-weight no-op",
+      "duplicate fusion",
+      "deterministically shuffled PF correction",
+      "rowwise oracle leakage sentinel",
+      "outer/inner membership audit",
+      "pooled SSE consistency",
+      "weight stability",
+      "independent artifact reproduction"
+    ],
+    "harsher_splits": [
+      "nested leave-spatial-group-out",
+      "nested leave-typewell-cluster-out",
+      "long suffix",
+      "high GR missingness",
+      "ambiguous alignment"
+    ],
+    "promotion": "A legal nested candidate must gain at least 0.05 RMSE over E004 and 0.45 over last-known, win at least four of five maps and 17 of 25 outer cells, satisfy p90 and worst-5% limits, improve every nested spatial and typewell group, pass special-slice, shuffled-evidence, stability, runtime, memory, identity, and reproduction controls, and use nonzero PF contribution consistently.",
+    "deployment": "Packaging and private internet-disabled Kaggle parity are authorized only after all statistical gates pass. Promotion does not itself authorize a leaderboard submission.",
+    "runtime_budget_minutes": 45,
+    "maximum_rss_mb": 1536,
+    "maximum_package_mb": 100,
+    "config_path": "experiments/E006/config.json",
+    "pre_registration_path": "experiments/E006/PRE_REGISTRATION.md"
+  },
+  "runs": []
+}

@@ -1,0 +1,177 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E006",
+  "data_signature": "6ebe65b403f80fefd97dcd7bbfce7314252e779a1837c97364cf55761590fe77",
+  "expected_wells": 773,
+  "fold_files": [
+    "folds/v1.json",
+    "folds/v2.json",
+    "folds/v3.json",
+    "folds/v4.json",
+    "folds/v5.json"
+  ],
+  "legal_horizontal_inputs": ["MD", "X", "Y", "Z", "GR", "TVT_input"],
+  "legal_typewell_inputs": ["TVT", "GR"],
+  "legal_parent_evidence": [
+    "E004 geometry-prefix model specification and cross-fitted prediction algorithm",
+    "E005 deterministic PF algorithm and target-free alignment diagnostics"
+  ],
+  "forbidden_inputs": [
+    "outer-validation hidden TVT used for fitting a fusion weight or route",
+    "E005 observed 50/50 diagnostic score used to select an E006 weight",
+    "ANCC",
+    "ASTNU",
+    "ASTNL",
+    "EGFDU",
+    "EGFDL",
+    "BUDA",
+    "typewell Geology",
+    "visible test authoring examples used for generalization selection",
+    "public leaderboard feedback used for selection",
+    "external inferred labels or opaque artifacts"
+  ],
+  "parents": {
+    "e004_config": "experiments/E004/config.json",
+    "e004_model": "experiments/E004/results/model.json",
+    "e004_expected_rmse": 15.491306398267565,
+    "e004_submission_sha256": "62ae06575baa647a5e09686bc9369cbc7303ac391e5c028468593dd6b58d5279",
+    "e005_config": "experiments/E005/config.json",
+    "e005_expected_pf_rmse": 15.350204071523788,
+    "e005_oof_path": "artifacts/E005/oof_predictions.csv.gz",
+    "e005_oof_sha256": "5115f7ce80f70c827c6df6edc572657253495a44333a2bb35bc46a7547e13ae5"
+  },
+  "outer_validation": {
+    "repeated_maps": 5,
+    "outer_folds_per_map": 5,
+    "inner_folds_per_outer_cell": 4,
+    "inner_strategy": "Within each outer E001 cell, use the remaining four original fold labels as four inner validation groups. Fit E004 on the other three groups for each inner prediction. The outer fold is absent from all inner fits and weight selection.",
+    "average_outer_predictions_across_maps": true,
+    "spatial_groups": 5,
+    "typewell_groups": 5,
+    "stress_inner_fold_source": "folds/v1.json restricted to each stress-training set",
+    "special_slices": ["long_suffix", "high_gr_missingness", "ambiguous_alignment"]
+  },
+  "fusion": {
+    "weight_grid": [0.0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1.0],
+    "tie_break": "lower PF weight then candidate order",
+    "inner_minimum_gain_vs_e004": 0.02,
+    "inner_maximum_p90_deterioration": 0.25,
+    "inner_maximum_worst5_sse_share_increase": 0.01,
+    "conservative_rmse_slack": 0.02,
+    "fallback_weight": 0.0,
+    "path_formula": "prediction = e004 + effective_weight * (pf - e004)"
+  },
+  "reliability": {
+    "features": [
+      "hidden_gr_coverage",
+      "pf_effective_fraction",
+      "ambiguity_margin",
+      "pf_e004_disagreement_rms"
+    ],
+    "reference_population": "outer-training wells only",
+    "transform": "deterministic empirical percentile with well_id tie break; higher coverage, effective fraction, and margin are better, while lower disagreement is better",
+    "score_formula": "arithmetic mean of the four favorable percentiles, clipped to [0,1]",
+    "gate_minimum_score": 0.5,
+    "gate_maximum_disagreement_percentile": 0.9,
+    "disagreement_cap_percentile": 0.8,
+    "disagreement_cap_formula": "min(1, outer_train_p80_disagreement / max(disagreement, outer_train_p80_disagreement))"
+  },
+  "candidate_order": [
+    "last_known_tvt",
+    "e004_geometry_prefix",
+    "pf_gr_path",
+    "fixed_50_50_reference",
+    "nested_rmse_grid",
+    "nested_conservative_grid",
+    "nested_reliability_shrink",
+    "nested_disagreement_cap",
+    "nested_reliability_gate",
+    "duplicate_conservative",
+    "shuffled_pf_conservative",
+    "oracle_rowwise_best"
+  ],
+  "eligible_candidates": [
+    "nested_conservative_grid",
+    "nested_reliability_shrink",
+    "nested_disagreement_cap",
+    "nested_reliability_gate"
+  ],
+  "diagnostic_only_candidates": [
+    "fixed_50_50_reference",
+    "nested_rmse_grid",
+    "pf_gr_path",
+    "duplicate_conservative",
+    "shuffled_pf_conservative",
+    "oracle_rowwise_best"
+  ],
+  "controls": {
+    "e004_rmse_tolerance": 1e-9,
+    "pf_rmse_tolerance": 1e-9,
+    "zero_weight_maximum_prediction_delta": 1e-12,
+    "duplicate_maximum_prediction_delta": 1e-12,
+    "pooled_sse_relative_tolerance": 1e-12,
+    "shuffled_pf_minimum_loss_vs_unshuffled": 0.05,
+    "shuffled_pf_maximum_gain_vs_e004": 0.02,
+    "oracle_minimum_gain_vs_best_legal": 0.05,
+    "minimum_nonzero_outer_cells": 15,
+    "minimum_maps_with_nonzero_median_weight": 4,
+    "maximum_outer_weight_range": 0.75
+  },
+  "stress": {
+    "spatial_bins": 5,
+    "typewell_clusters": 5,
+    "long_suffix_quantile": 0.80,
+    "high_missing_gr_quantile": 0.80,
+    "ambiguity_margin_threshold": 0.02,
+    "maximum_special_slice_deterioration_vs_e004": 0.10
+  },
+  "promotion": {
+    "minimum_gain_vs_last_known": 0.45,
+    "minimum_gain_vs_e004": 0.05,
+    "minimum_map_wins": 4,
+    "minimum_outer_cell_wins": 17,
+    "minimum_map_gain": 0.02,
+    "maximum_p90_deterioration_vs_each_comparator": 0.50,
+    "maximum_worst5_sse_share_increase_vs_each_comparator": 0.01,
+    "require_positive_spatial_group_gain_vs_e004": true,
+    "require_positive_typewell_group_gain_vs_e004": true,
+    "maximum_runtime_minutes": 45,
+    "maximum_rss_mb": 1536
+  },
+  "selection": {
+    "rule": "Among eligible candidates passing every gate, select the lowest mean repeated-map RMSE; break ties by candidate_order. If none pass, reject E006 and retain E004.",
+    "no_post_score_candidate_additions": true,
+    "no_post_score_threshold_changes": true
+  },
+  "deployment": {
+    "maximum_package_mb": 100,
+    "require_exact_sample_ids_and_order": true,
+    "require_finite_predictions": true,
+    "require_e004_no_gr_fallback": true,
+    "require_local_notebook_byte_parity_if_promoted": true,
+    "require_private_internet_disabled_kaggle_parity_if_promoted": true,
+    "internet": false,
+    "external_artifacts": []
+  },
+  "edge_cases": [
+    "outer fold absent from every inner E004 fit and weight-selection target",
+    "inner fold with zero legal weight passing tail constraints",
+    "all candidate weights rejected and exact E004 fallback",
+    "all missing horizontal GR",
+    "PF abstention",
+    "zero or constant PF-E004 disagreement",
+    "extreme PF-E004 disagreement",
+    "equal empirical-percentile feature values",
+    "single hidden row",
+    "short and long hidden suffixes",
+    "nonuniform and duplicate MD",
+    "flat or short typewell",
+    "missing horizontal/typewell pair",
+    "noncontiguous TVT_input",
+    "shuffled correction with different source and recipient lengths",
+    "duplicate, missing, extra, wrong-order, visible-row, or non-finite sample predictions",
+    "non-finite weight, reliability, model coefficient, or output",
+    "malformed configuration arrays",
+    "selected candidate unavailable at deployment"
+  ]
+}
