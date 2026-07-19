@@ -1,0 +1,74 @@
+{
+  "experiment_id": "E004",
+  "title": "Surface-free E003 deployment candidate and feature-family ablations",
+  "hypothesis": "A test-deployable subset of E003 legal evidence can retain a material repeated-fold datum-plus-trend gain without the six training-only formation-surface columns, and can be packaged as a deterministic offline submission notebook.",
+  "status": "designed",
+  "track": "deployment_and_ablation",
+  "priority": 1,
+  "owner": "NNMax",
+  "parent_id": "E003",
+  "created_at": "2026-07-19T06:20:00Z",
+  "updated_at": "2026-07-19T06:20:00Z",
+  "design": {
+    "baseline": "E001 last-known TVT at pooled RMSE 15.9098528707",
+    "deployment_contract": "Test horizontal files provide MD, X, Y, Z, GR, and TVT_input. The six formation-surface columns exist in train but are absent from test and are therefore forbidden from E004 inference.",
+    "legal_inputs": [
+      "MD, X, Y, Z for the complete supplied well",
+      "visible TVT_input prefix only",
+      "horizontal-well GR values and missingness",
+      "paired typewell TVT and GR",
+      "visible-prefix pseudo-holdout diagnostics",
+      "whole-well row count, boundary, hidden length, and geometry"
+    ],
+    "forbidden_inputs": [
+      "ANCC, ASTNU, ASTNL, EGFDU, EGFDL, and BUDA at inference",
+      "hidden TVT labels",
+      "Geology annotations absent from test typewells",
+      "opaque or external model artifacts"
+    ],
+    "feature_families": ["geometry", "visible-prefix", "GR", "typewell", "absolute spatial context"],
+    "ablations": [
+      "full deployable evidence",
+      "leave spatial out",
+      "leave typewell out",
+      "leave GR out",
+      "leave visible-prefix diagnostics out",
+      "leave geometry out",
+      "geometry plus prefix core",
+      "geometry plus prefix plus GR core"
+    ],
+    "model": "fixed-alpha standardized multi-output ridge with training-fold-only correlation screening to 48 features",
+    "fold_map": "frozen folds/v1.json through folds/v5.json",
+    "harsher_split": "five contiguous spatial X-midpoint blocks",
+    "selection_rule": "Among candidates passing all registered action, tail, and spatial gates, select lowest mean repeated-map RMSE; break exact ties by fewer families then candidate ID.",
+    "edge_cases": [
+      "surface columns absent from test",
+      "typewell Geology absent",
+      "all-missing GR segments",
+      "unseen or duplicate typewell patterns",
+      "one-row hidden suffix",
+      "non-contiguous TVT_input rejection",
+      "non-increasing MD rejection",
+      "missing pair files",
+      "sample duplicate, missing, extra, visible-row, and order mismatches",
+      "non-finite model coefficients or predictions",
+      "same-well visible authoring examples must not be treated as generalization evidence"
+    ],
+    "controls": [
+      "frozen data and fold integrity",
+      "surface-unavailability sentinel",
+      "surface-free selected-feature audit",
+      "finite model artifact",
+      "repeated-map and spatial promotion gates",
+      "visible-test feature drift audit labeled authoring-only",
+      "exact sample ID and row reconstruction",
+      "byte-identical independent run",
+      "local notebook byte parity",
+      "remote Kaggle MCP parity required for deployment-ready status"
+    ],
+    "promotion": "A surface-free candidate must improve at least 0.15 RMSE on at least four repeated maps, satisfy p90 and worst-5% tail limits, retain positive spatial-block gain, pass signed datum gates and all local deployment controls. Deployment-ready additionally requires remote Kaggle MCP notebook parity.",
+    "runtime_budget_minutes": 25,
+    "config_path": "experiments/E004/config.json"
+  },
+  "runs": []
+}

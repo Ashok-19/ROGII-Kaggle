@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E004",
+  "data_signature": "6ebe65b403f80fefd97dcd7bbfce7314252e779a1837c97364cf55761590fe77",
+  "expected_wells": 773,
+  "fold_files": [
+    "folds/v1.json",
+    "folds/v2.json",
+    "folds/v3.json",
+    "folds/v4.json",
+    "folds/v5.json"
+  ],
+  "visible_slope_windows": [32, 128, 512],
+  "visible_backtest_fractions": [0.5, 0.7, 0.85],
+  "feature_screening": {
+    "maximum_features": 48,
+    "method": "training-fold maximum absolute correlation across the four frozen E003 targets"
+  },
+  "ridge": {
+    "alpha": 25.0
+  },
+  "feature_families": ["geometry", "prefix", "gr", "typewell", "spatial"],
+  "ablation_candidates": {
+    "full_deployable": ["geometry", "prefix", "gr", "typewell", "spatial"],
+    "no_spatial": ["geometry", "prefix", "gr", "typewell"],
+    "no_typewell": ["geometry", "prefix", "gr", "spatial"],
+    "no_gr": ["geometry", "prefix", "typewell", "spatial"],
+    "no_prefix": ["geometry", "gr", "typewell", "spatial"],
+    "no_geometry": ["prefix", "gr", "typewell", "spatial"],
+    "geometry_prefix": ["geometry", "prefix"],
+    "geometry_prefix_gr": ["geometry", "prefix", "gr"]
+  },
+  "sign_materiality_ft": 5.0,
+  "spatial_stress_bins": 5,
+  "reference_metrics": {
+    "baseline_rmse": 15.909852870734554,
+    "e003_full_feature_rmse": 10.92797409180751
+  },
+  "promotion": {
+    "minimum_rmse_gain": 0.15,
+    "minimum_map_wins": 4,
+    "maximum_p90_deterioration": 0.25,
+    "maximum_worst5_increase": 0.02,
+    "minimum_datum_correlation": 0.15,
+    "minimum_datum_sign_accuracy": 0.56,
+    "maximum_runtime_minutes": 25
+  },
+  "deployment": {
+    "maximum_visible_test_abs_z": 8.0,
+    "require_surface_free_features": true,
+    "require_exact_sample_ids": true,
+    "require_local_notebook_byte_parity": true,
+    "require_remote_kaggle_mcp_parity": true,
+    "internet": false,
+    "external_artifacts": []
+  }
+}
