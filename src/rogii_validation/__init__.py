@@ -14,6 +14,7 @@ from .gr_path import run_e005
 from .fusion import run_e006
 from .self_correlation import run_e007
 from .residual_action import run_e008
+from .consensus_abstention import run_e009
 
 __all__ = [
     "DEFAULT_FOLD_SEEDS",
@@ -28,5 +29,6 @@ __all__ = [
     "run_e006",
     "run_e007",
     "run_e008",
+    "run_e009",
     "scan_profiles",
 ]
