@@ -2,13 +2,13 @@
   "experiment_id": "E007",
   "title": "Horizontal GR self-correlation and controlled E006 placement",
   "hypothesis": "Same-well visible-prefix GR fingerprints can identify local structural direction independently of typewell matching and add stable value to E006 after strictly cross-fitted placement.",
-  "status": "designed",
+  "status": "rejected",
   "track": "self_correlation_candidate",
   "priority": 1,
   "owner": "NNMax",
   "parent_id": "E006",
   "created_at": "2026-07-19T14:40:00Z",
-  "updated_at": "2026-07-19T14:40:00Z",
+  "updated_at": "2026-07-19T15:15:59Z",
   "design": {
     "task_id": "T013",
     "hypothesis_id": "H005",
@@ -62,5 +62,273 @@
     "config_path": "experiments/E007/config.json",
     "pre_registration_path": "experiments/E007/PRE_REGISTRATION.md"
   },
-  "runs": []
+  "runs": [
+    {
+      "run_id": "R20260719-1502-e007-self-correlation",
+      "status": "rejected",
+      "started_at": "2026-07-19T15:02:21Z",
+      "ended_at": "2026-07-19T15:07:48Z",
+      "git_sha": "92a9496202d18d6437845e2ac36b5660907b4814",
+      "fold_map": "folds/v1.json,folds/v2.json,folds/v3.json,folds/v4.json,folds/v5.json",
+      "config_path": "experiments/E007/config.json",
+      "artifact_dir": "artifacts/E007",
+      "controls": {
+        "correction_soft_cap": true,
+        "data_integrity": true,
+        "duplicate_placement": true,
+        "memory": true,
+        "oof_identity": true,
+        "oracle_positive": true,
+        "parent_oof": true,
+        "placement_membership": true,
+        "pooled_sse_consistency": true,
+        "raw_residual_diversity": true,
+        "runtime": true,
+        "shuffled_selfcorr": true,
+        "visible_only_design": true,
+        "zero_weight_noop": true,
+        "independent_reproduction": true,
+        "static_artifact_reproduction": true,
+        "kaggle_parity_not_run_by_design": true
+      },
+      "metrics": [
+        {
+          "split": "cv",
+          "name": "rmse",
+          "value": 14.830478417885569,
+          "unit": "ft"
+        },
+        {
+          "split": "cv",
+          "name": "gain_vs_e006",
+          "value": 0.10266236935210316,
+          "unit": "ft"
+        },
+        {
+          "split": "cv",
+          "name": "gain_vs_last_known",
+          "value": 1.0793744528489952,
+          "unit": "ft"
+        },
+        {
+          "split": "cv",
+          "name": "median_well_rmse",
+          "value": 9.956843991681971,
+          "unit": "ft"
+        },
+        {
+          "split": "cv",
+          "name": "p90_well_rmse",
+          "value": 22.050395746330164,
+          "unit": "ft"
+        },
+        {
+          "split": "cv",
+          "name": "p95_well_rmse",
+          "value": 27.32103132779475,
+          "unit": "ft"
+        },
+        {
+          "split": "cv",
+          "name": "max_well_rmse",
+          "value": 61.39847655876747,
+          "unit": "ft"
+        },
+        {
+          "split": "cv",
+          "name": "worst_5pct_sse_share",
+          "value": 0.3567221936724792,
+          "unit": "share"
+        },
+        {
+          "split": "cv",
+          "name": "worst_10pct_sse_share",
+          "value": 0.5024794483057009,
+          "unit": "share"
+        },
+        {
+          "split": "stability",
+          "name": "map_wins",
+          "value": 5,
+          "unit": "of_5"
+        },
+        {
+          "split": "stability",
+          "name": "outer_cell_wins",
+          "value": 20,
+          "unit": "of_25"
+        },
+        {
+          "split": "diversity",
+          "name": "raw_residual_correlation_to_e006",
+          "value": 0.46757006420379865,
+          "unit": "correlation"
+        },
+        {
+          "split": "stress",
+          "name": "minimum_spatial_gain_vs_e006",
+          "value": -0.14545988460000103,
+          "unit": "ft"
+        },
+        {
+          "split": "stress",
+          "name": "minimum_typewell_gain_vs_e006",
+          "value": -0.09683250099999974,
+          "unit": "ft"
+        },
+        {
+          "split": "runtime",
+          "name": "wall_seconds",
+          "value": 326.68,
+          "unit": "seconds"
+        },
+        {
+          "split": "runtime",
+          "name": "max_rss_kb",
+          "value": 98844,
+          "unit": "kilobytes"
+        },
+        {
+          "split": "baseline",
+          "name": "e006_rmse",
+          "value": 14.933140787237672,
+          "unit": "ft"
+        },
+        {
+          "split": "baseline",
+          "name": "e004_rmse",
+          "value": 15.491306398264953,
+          "unit": "ft"
+        },
+        {
+          "split": "baseline",
+          "name": "last_known_rmse",
+          "value": 15.909852870734564,
+          "unit": "ft"
+        }
+      ],
+      "well_metrics_path": "experiments/E007/results/selected_well_metrics.csv",
+      "artifacts": [
+        {
+          "artifact_id": "E007-artifact-manifest",
+          "path": "experiments/E007/results/artifact_manifest.json",
+          "kind": "manifest",
+          "sha256": "81b79b346313f2c45375d5e9ea91143c2a43f5d6d962bcd826dc2190afb3c8b2",
+          "bytes": 3712
+        },
+        {
+          "artifact_id": "E007-candidate-metrics",
+          "path": "experiments/E007/results/candidate_metrics.csv",
+          "kind": "metrics",
+          "sha256": "7a5703e65a0723f6bb3150b4c698c40d7456e45433d3377ecbff08519d3c93d5",
+          "bytes": 2333
+        },
+        {
+          "artifact_id": "E007-control-metrics",
+          "path": "experiments/E007/results/control_metrics.csv",
+          "kind": "metrics",
+          "sha256": "a0ec9ed39d9c2988ed663e0be29a3b897b34f60d322a122fa3de631b4aa141e1",
+          "bytes": 1403
+        },
+        {
+          "artifact_id": "E007-inner-weight-grid",
+          "path": "experiments/E007/results/inner_weight_grid.csv",
+          "kind": "metrics",
+          "sha256": "c7e1f8072f3eb0ab68f865510ed36a705c931af8800a04161ff1a32f33a33347",
+          "bytes": 69722
+        },
+        {
+          "artifact_id": "E007-map-metrics",
+          "path": "experiments/E007/results/map_metrics.csv",
+          "kind": "metrics",
+          "sha256": "c88f8989f795347d1aedd761aedc230e9f24b5911903c70393b9d1ca16c5922e",
+          "bytes": 13612
+        },
+        {
+          "artifact_id": "E007-membership-audit",
+          "path": "experiments/E007/results/membership_audit.csv",
+          "kind": "metrics",
+          "sha256": "3433ba08faf4aad0b1bb407983b3e377ee6177ec01209b10ed7cf0ec524b2467",
+          "bytes": 1611
+        },
+        {
+          "artifact_id": "E007-outer-cell-metrics",
+          "path": "experiments/E007/results/outer_cell_metrics.csv",
+          "kind": "metrics",
+          "sha256": "76a855351a9dd672bec96e6fe56f553b9d70dfd4bbe79eeaaf9f8b57c2a2e5f0",
+          "bytes": 108613
+        },
+        {
+          "artifact_id": "E007-selected-well-metrics",
+          "path": "experiments/E007/results/selected_well_metrics.csv",
+          "kind": "metrics",
+          "sha256": "9f54d9c00ec6fcfbc1b387939a1ff70ad5a840232a3f99d438726518072a69fd",
+          "bytes": 136160
+        },
+        {
+          "artifact_id": "E007-selfcorr-diagnostics",
+          "path": "experiments/E007/results/selfcorr_diagnostics.csv",
+          "kind": "metrics",
+          "sha256": "4293c1707900b98afa71f7c7e04d57b567cc19726286bd32c90a4d71941e64ba",
+          "bytes": 105563
+        },
+        {
+          "artifact_id": "E007-special-slice-metrics",
+          "path": "experiments/E007/results/special_slice_metrics.csv",
+          "kind": "metrics",
+          "sha256": "0eabb75adecae1d76ca9975e14347bbbf0e61915cad22481645614bfa546f5cb",
+          "bytes": 11610
+        },
+        {
+          "artifact_id": "E007-stress-metrics",
+          "path": "experiments/E007/results/stress_metrics.csv",
+          "kind": "metrics",
+          "sha256": "f0fed7d8803642f00477d133fd6903e9ae195666e19cc3c12bcc7db6c77cd2fe",
+          "bytes": 27721
+        },
+        {
+          "artifact_id": "E007-summary",
+          "path": "experiments/E007/results/summary.json",
+          "kind": "summary",
+          "sha256": "e651f772e1b10e867ab22418733e9c57a6ebfcc9e28411917b08b76ff98a5f35",
+          "bytes": 18165
+        },
+        {
+          "artifact_id": "E007-visible-design-audit",
+          "path": "experiments/E007/results/visible_design_audit.csv",
+          "kind": "metrics",
+          "sha256": "42568acf153b25c7bb52247b3517a8a7410400a19431b13410e2e50d9781a067",
+          "bytes": 275
+        },
+        {
+          "artifact_id": "E007-weight-metrics",
+          "path": "experiments/E007/results/weight_metrics.csv",
+          "kind": "metrics",
+          "sha256": "9c7cc8ebaf443b2284fc683361dcd93499f50d5b50626f2c910f3b22de94ea81",
+          "bytes": 7497
+        },
+        {
+          "artifact_id": "E007-oof-predictions-csv",
+          "path": "artifacts/E007/oof_predictions.csv.gz",
+          "kind": "oof_predictions_gzip",
+          "sha256": "9b90d44797950f9c08fe873fe42438edae8cd92de16f49beadbe1584d3b826b7",
+          "bytes": 204668270,
+          "tracked": false
+        }
+      ],
+      "notes": "All controls and reproduction checks pass, and the fixed 0.10 path improves aggregate RMSE with low raw residual correlation. E007 is nevertheless rejected because no eligible placement passes both spatial and typewell stress; the fixed path also narrowly fails the p90 cap. No deployment package, Kaggle parity run, or submission was authorized.",
+      "updated_at": "2026-07-19T15:15:59Z"
+    }
+  ],
+  "conclusion": {
+    "selected_candidate": null,
+    "reported_candidate": "visible_fixed_0p10",
+    "decision": "Reject all E007 placements. Preserve only legal self-correlation diagnostics as evidence for a newly pre-registered residual model; retain E006 as the primary deployment-ready candidate.",
+    "statistically_promoted": false,
+    "deployment_authorized": false,
+    "kaggle_parity_run": false,
+    "submission_created": false,
+    "result_path": "experiments/E007/RESULT.md",
+    "verification_path": "experiments/E007/verification.json"
+  }
 }

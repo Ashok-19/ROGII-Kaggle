@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-19T15:14:47Z",
+  "payload": {
+    "decision_id": "D010",
+    "decided_at": "2026-07-19",
+    "title": "Reject fixed horizontal self-correlation placement",
+    "decision": "Reject every E007 self-correlation placement as a finalist and do not build a deployment package or submit it. Preserve the horizontal-only fingerprints, visible pseudo-holdout diagnostics, and bounded raw correction only as legal evidence for a newly pre-registered residual model; retain E006 as the primary deployment-ready comparator.",
+    "rationale": "The frozen fixed 0.10 placement improves E006 from 14.9331407872 to 14.8304784179 RMSE, wins all five maps and 20 of 25 repeated cells, and the raw correction has 0.46757 residual correlation to E006. It nevertheless exceeds the p90 deterioration cap and regresses registered spatial and typewell groups. Cross-fitted shrinkage reduces but does not eliminate those shift failures, so no eligible candidate passes all gates.",
+    "source_ids": "experiments/E007/RESULT.md,experiments/E007/verification.json,experiments/E007/results/summary.json",
+    "revisit_trigger": "A fresh cross-fitted model learns bounded signed use of the self-correlation evidence and passes every repeated-map, tail, spatial, typewell, shuffle, runtime, and deployment gate against E006."
+  }
+}

@@ -1,10 +1,10 @@
 {
   "type": "task",
-  "recorded_at": "2026-07-19T12:29:30Z",
+  "recorded_at": "2026-07-19T15:14:47Z",
   "payload": {
     "task_id": "T013",
     "title": "Build horizontal self-correlation candidate",
-    "status": "next",
+    "status": "done",
     "priority": 1,
     "phase": "candidate_bank",
     "depends_on": "T012",

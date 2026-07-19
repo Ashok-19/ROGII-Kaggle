@@ -261,6 +261,16 @@
       "summary": "E006 recomputed E004 and PF inside every untouched outer fold, selected a conservative fusion rule only from inner OOF evidence, and reached 14.9331 RMSE with 5 of 5 map wins and 25 of 25 outer-cell wins.",
       "why_it_matters": "PF was unsafe alone, but its complementary correction became useful when anchored to E004 and validated in final placement. P90 fell to 21.7856, every spatial and typewell group improved, and local plus private Kaggle outputs are byte-identical at SHA-256 e412864a...d81008."
     }
+,
+    {
+      "id": "B011",
+      "date": "2026-07-19",
+      "title": "Independent self-correlation signal still failed shift gates",
+      "evidence": "local_verified",
+      "visual": "selfcorr_gate",
+      "summary": "E007 matched hidden horizontal-GR fingerprints only to the same well's visible prefix and applied a bounded structural-slope correction around E006. A frozen 0.10 placement improved RMSE from 14.9331 to 14.8305, won all 5 maps and 20 of 25 repeated cells, while the raw correction had only 0.468 residual correlation to E006.",
+      "why_it_matters": "Low correlation and aggregate gain are not enough. P90 exceeded the frozen cap by about 0.015 RMSE, spatial groups 1 and 3 regressed, and typewell groups 2 and 4 regressed. E007 is rejected without deployment packaging; its diagnostics may inform a future residual model but the fixed correction cannot enter the finalist ensemble."
+    }
   ],
   "idea_questions": [
     {
@@ -296,7 +306,7 @@
     {
       "signal": "ensemble",
       "question": "Does a weak candidate reduce pooled RMSE when blended with the strongest OOF path because its residual correlation is low?",
-      "falsifier": "E006 passed this test: conservative nested fusion used nonzero PF weight in every outer cell and improved all five maps. Future additions must now beat E006 rather than reuse its result as an untuned blend."
+      "falsifier": "E007 shows the stricter standard: its fixed self-correlation leg improved aggregate RMSE and all five maps but still failed p90 and subgroup gates. Future additions must beat E006 without repeating those shift failures."
     }
   ],
   "sources": [
@@ -348,6 +358,12 @@
     {
       "title": "E006 promoted nested fusion result",
       "local_path": "experiments/E006/RESULT.md",
+      "url": ""
+    }
+,
+    {
+      "title": "E007 rejected horizontal self-correlation result",
+      "local_path": "experiments/E007/RESULT.md",
       "url": ""
     }
   ]

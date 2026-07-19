@@ -9,7 +9,7 @@ Last updated: 2026-07-19
 - Best Kaggle-MCP-verified submission for this account/team history: 7.119 on 2026-07-16, ref 54754431.
 - User-reported best: 6.888; submission reference not yet verified.
 - Current public top-100 cutoff in the archived snapshot: 6.799.
-- E001 is frozen, E002 is rejected, E003 is promoted as surface-assisted OOF understanding, E004 is the exact deployment fallback, E005 is rejected standalone, and E006 is promoted and Kaggle-verified as the primary deployment-ready surface-free fusion.
+- E001 is frozen, E002 is rejected, E003 is promoted as surface-assisted OOF understanding, E004 is the exact deployment fallback, E005 and E007 are rejected candidate families, and E006 remains the promoted Kaggle-verified primary deployment-ready surface-free fusion.
 
 ## Foundation completed
 
@@ -24,6 +24,7 @@ Last updated: 2026-07-19
 - E004 is completed: the actual test schema was audited, eight surface-free ablations were evaluated, and the deterministic offline notebook produced a byte-identical submission locally and in a private internet-disabled Kaggle Python 3.12 run.
 - E005 is completed: frozen affine, visible-calibrated, particle-filter, and trellis paths were evaluated from test-available inputs only; all controls passed, but the best standalone PF candidate failed the registered stability gates and was rejected without Kaggle packaging or submission.
 - E006 is completed and deployment-ready: strict nested PF-E004 fusion reaches 14.9331407872 RMSE, wins all 5 maps and 25 outer cells, improves every spatial/typewell group, passes final-code reproduction, and produces raw-byte-identical local and private Kaggle output.
+- E007 is completed and rejected: same-well horizontal GR self-correlation is independently useful but not robust enough. The fixed 0.10 placement reaches 14.8304784179 RMSE, wins 5/5 maps and 20/25 repeated cells, but fails the frozen p90, spatial, and typewell gates; no package or submission is authorized.
 - The dashboard Learning Lab provides a beginner-first visual guide, real-well playground, feature glossary, error demonstrations, idea prompts, and a breakthrough timeline.
 
 ## Durable understanding
@@ -45,6 +46,7 @@ Last updated: 2026-07-19
 - E005 particle filtering reaches 15.3502040715 RMSE, improving E004 by 0.1411023267 with residual correlation 0.897248, but p90 rises to 23.4851836927, only 3/5 maps pass, and the worst spatial/typewell-cluster gains are -0.754215/-0.185681; standalone promotion is rejected.
 - The pre-registered E005 diagnostic 50/50 blend was not promotion evidence. E006 independently validates the family through strict nesting: selected RMSE 14.9331407872, p90 21.7855500884, worst-5% share 0.3685061112, and positive gain in every registered spatial/typewell group.
 - E006 deployment weight independently refits to 0.5; direct, local-notebook, package-rebuild, and private Kaggle outputs are byte-identical at SHA-256 `e412864a...d81008`.
+- E007's raw bounded correction has residual correlation 0.4675700642 to E006, and deterministic template shuffle removes all gain. Fixed 0.10 placement improves E006 by 0.1026623694 RMSE and lowers worst-5% SSE share to 0.3567221937, but p90 rises by 0.2648456580, spatial groups 1/3 regress, typewell groups 2/4 regress, and long/high-missing/pseudo-poor slices are unsafe.
 
 ## Decisions
 
@@ -56,16 +58,18 @@ Last updated: 2026-07-19
 - E003's surface-assisted coefficient action remains a diagnostic/candidate-learning result, not a competition inference candidate.
 - Retain deployment-ready E004 geometry-prefix only as a weak packaged fallback and possible ensemble leg; do not submit it solely from 15.49 local CV.
 - Reject raw E005 affine, PF, and trellis paths as standalone finalists. Preserve E004 as exact no-GR fallback, and promote only the strictly nested E006 conservative fusion for surface-free deployment.
+- Reject every fixed or cross-fitted E007 self-correlation placement as a finalist. Preserve its horizontal-only fingerprints, visible pseudo-holdout diagnostics, and bounded raw correction only as evidence for a fresh cross-fitted residual model.
 
 ## Exact next action
 
-Pre-register E007/H005 before any new scoring: build a horizontal pre-boundary GR self-correlation/template path as an independent leg, with deterministic template-shuffle, no-GR fallback, immutable repeated folds, tail and spatial/typewell gates, runtime limits, and residual-correlation checks against E006. Treat E006 as the primary deployment-ready surface-free comparator and E004 as exact fallback.
+Pre-register E008/H010 before any new scoring: build a compact cross-fitted legal residual-action model over test-available geometry, visible-prefix evidence, E006 predictions, and E007 diagnostics. Fit every signed correction strictly inside training folds, preserve E006 as the zero-action fallback, and require repeated-map, tail, spatial/typewell, shuffle, runtime, and final-placement gates against E006.
 
 ## Open risks
 
 - Hidden test has about 200 wells and may differ strongly from local fold composition.
 - Public/local ordering can invert; E004's 0.42 gain is too small to justify an isolated submission.
 - GR has repeated motifs and substantial missingness; E005 confirms that aggregate PF gain can coexist with worse p90 and subgroup regressions.
+- E007 confirms that even a low-correlation horizontal-only signal with 5/5 aggregate map wins can fail long-horizon, high-missingness, spatial, and typewell transfer; a visible pseudo-gain score is not sufficient routing evidence.
 - E004 parity is closed, but every future finalist notebook still requires its own clean Kaggle runtime, exact-ID, and output-parity verification.
 - Runtime and artifact packaging must remain under the 9-hour offline notebook limit.
 

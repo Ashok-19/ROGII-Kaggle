@@ -1,14 +1,14 @@
 {
   "type": "hypothesis",
-  "recorded_at": "2026-07-19T12:29:30Z",
+  "recorded_at": "2026-07-19T15:14:47Z",
   "payload": {
     "hypothesis_id": "H005",
     "title": "Self-correlation candidate",
     "statement": "Horizontal pre-boundary GR self-correlation can provide a useful structural candidate independent of typewell matching for selected regimes.",
-    "status": "active",
+    "status": "rejected",
     "priority": 2,
-    "evidence_for": "Host material and competition discussions describe repeated horizontal-log motifs; E006 proves that a weaker GR-derived leg can add stable value when placed through strict nested validation.",
-    "evidence_against": "Repeated motifs, toe missingness, changing stratigraphy, and long horizons may make self-correlation ambiguous or redundant with E006 PF evidence.",
-    "next_test": "E007: pre-register a legal prefix-template/self-correlation path with deterministic template-shuffle, no-GR fallback, repeated-fold, tail, spatial/typewell stress, runtime, and residual-correlation controls against E006."
+    "evidence_for": "E007 visible-only pseudo-holdouts improve at all three frozen boundaries. The fixed 0.10 final placement improves E006 by 0.1026623694 RMSE, wins all five maps and 20 of 25 repeated cells, and the raw correction has 0.4675700642 residual correlation to E006.",
+    "evidence_against": "No eligible placement passes all frozen gates. The fixed path exceeds the p90 cap and regresses spatial groups 1 and 3 plus typewell groups 2 and 4; cross-fitted reliability shrink still regresses typewell group 2.",
+    "next_test": "Do not retune E007. E008/H010 may use its legal diagnostics only inside a newly pre-registered cross-fitted residual model with E006 as comparator and the same shift controls."
   }
 }

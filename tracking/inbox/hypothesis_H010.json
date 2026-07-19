@@ -1,0 +1,14 @@
+{
+  "type": "hypothesis",
+  "recorded_at": "2026-07-19T15:14:47Z",
+  "payload": {
+    "hypothesis_id": "H010",
+    "title": "Cross-fitted legal residual action",
+    "statement": "A small model trained only inside each fold can combine test-available geometry, visible-prefix evidence, E006 predictions, and E007 self-correlation diagnostics to learn a bounded signed residual correction that improves E006 without the fixed E007 shift failures.",
+    "status": "active",
+    "priority": 1,
+    "evidence_for": "E006 proves controlled fusion is useful, while E007 exposes an independent low-correlation GR signal whose fixed placement improves pooled RMSE but needs learned regime-sensitive actuation.",
+    "evidence_against": "E003 shows that risk detection is easier than signed action, and E007 visible pseudo-gain does not reliably protect long, missing-GR, spatial, or typewell regimes.",
+    "next_test": "E008: pre-register a compact cross-fitted datum/trend or bounded path-residual model, candidate/evidence feature contract, shuffle controls, repeated folds, spatial/typewell stress, tail gates, and final-placement comparison against E006."
+  }
+}

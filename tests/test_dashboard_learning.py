@@ -124,6 +124,7 @@ class LearningDashboardTests(unittest.TestCase):
         self.assertIsNone(state["e004"])
         self.assertIsNone(state["e005"])
         self.assertIsNone(state["e006"])
+        self.assertIsNone(state["e007"])
 
     def test_learning_well_preserves_visibility_boundary(self):
         payload = self.tracker.learning_well("aaaaaaaa", max_points=4)
@@ -183,12 +184,14 @@ class LearningDashboardTests(unittest.TestCase):
         self.assertTrue(any(item["id"] == "B008" for item in content["breakthroughs"]))
         self.assertTrue(any(item["id"] == "B009" for item in content["breakthroughs"]))
         self.assertTrue(any(item["id"] == "B010" for item in content["breakthroughs"]))
+        self.assertTrue(any(item["id"] == "B011" for item in content["breakthroughs"]))
         self.assertIn("trend_transfer", html)
         self.assertIn("risk_action", html)
         self.assertIn("deployment_gap", html)
         self.assertIn("remote_parity", html)
         self.assertIn("gr_path_gate", html)
         self.assertIn("nested_fusion", html)
+        self.assertIn("selfcorr_gate", html)
         for hook in ("/api/learning", "wellSelect", "geometryPlot", "targetPlot", "grPlot", "presetE003", "e003ScoreLadder", "e004ScoreLadder", "e004ContractCards", "presetOracle"):
             self.assertIn(hook, html)
         self.assertIn("Learning simulator", html)
@@ -250,6 +253,26 @@ class LearningDashboardTests(unittest.TestCase):
         self.assertTrue(state["e006"]["deployment"]["private_internet_disabled_kaggle_parity"])
         self.assertTrue(state["e006"]["deployment"]["deployment_ready"])
         self.assertFalse(state["e006"]["deployment"]["submission_made"])
+
+    def test_repository_e007_learning_payload_records_strict_rejection(self):
+        tracker = MODULE.Tracker(ROOT, ROOT / "tracking/rogii.sqlite")
+        state = tracker.learning_state()
+        self.assertIsNotNone(state["e007"])
+        self.assertEqual(state["e007"]["status"], "rejected")
+        self.assertIsNone(state["e007"]["selected_candidate"])
+        self.assertEqual(state["e007"]["reported_candidate"], "visible_fixed_0p10")
+        self.assertAlmostEqual(
+            state["e007"]["candidate_metrics"]["visible_fixed_0p10"]["rmse"],
+            14.830478417885569,
+        )
+        self.assertEqual(state["e007"]["map_wins"]["visible_fixed_0p10"], 5)
+        self.assertEqual(state["e007"]["outer_cell_wins"]["visible_fixed_0p10"], 20)
+        gates = state["e007"]["gates_by_candidate"]["visible_fixed_0p10"]
+        self.assertFalse(gates["p90_vs_e006"])
+        self.assertFalse(gates["spatial_stress"])
+        self.assertFalse(gates["typewell_stress"])
+        self.assertFalse(state["e007"]["deployment"]["statistically_authorized"])
+        self.assertFalse(state["e007"]["deployment"]["submission_made"])
 
 
 if __name__ == "__main__":

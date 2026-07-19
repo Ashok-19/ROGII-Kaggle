@@ -21,7 +21,7 @@ Completed before model development:
 - `AGENTS.md`, `MEMORY.md`, control-first workflow, SQLite ledger, auto-sync CLI, validation command, and dashboard created.
 - Previous roadmap preserved under `archive/legacy/`.
 
-E001 is promoted and frozen. E002 rejected every naive U continuation. E003 promoted a surface-assisted cross-fitted datum-plus-trend result at 10.9280 RMSE as OOF understanding. E004 then audited the actual test contract, proved those six surface columns are unavailable at inference, and packaged a weaker surface-free geometry-plus-prefix candidate at 15.4913 RMSE. Local and private Kaggle notebook outputs are byte-identical, so E004 is deployment-ready but remains only a fallback. E005 tested clean affine, PF, and trellis GR paths and rejected standalone PF despite aggregate gain. E006 then validated PF placement through strict nested fusion: `nested_conservative_grid` reaches 14.9331 RMSE, wins all 5 maps and 25 outer cells, improves every registered spatial/typewell group, and is deployment-ready after exact private Kaggle parity.
+E001 is promoted and frozen. E002 rejected every naive U continuation. E003 promoted a surface-assisted cross-fitted datum-plus-trend result at 10.9280 RMSE as OOF understanding. E004 then audited the actual test contract, proved those six surface columns are unavailable at inference, and packaged a weaker surface-free geometry-plus-prefix candidate at 15.4913 RMSE. Local and private Kaggle notebook outputs are byte-identical, so E004 is deployment-ready but remains only a fallback. E005 tested clean affine, PF, and trellis GR paths and rejected standalone PF despite aggregate gain. E006 then validated PF placement through strict nested fusion: `nested_conservative_grid` reaches 14.9331 RMSE, wins all 5 maps and 25 outer cells, improves every registered spatial/typewell group, and is deployment-ready after exact private Kaggle parity. E007 found an independent horizontal-only self-correlation signal and improved pooled RMSE to 14.8305, but failed p90 and spatial/typewell transfer gates and was rejected without packaging.
 
 ## What the evidence changes
 
@@ -177,9 +177,19 @@ Measured E006 outcome:
 - The full-fit weight independently recomputes to 0.5. Direct, local-notebook, deterministic package rebuild, and private internet-disabled Kaggle v3 outputs are byte-identical at `e412864a...d81008`.
 - E004 remains exact fallback; no leaderboard submission was made.
 
-Immediate deliverables now shift to E007/H005 horizontal self-correlation as an independently pre-registered candidate.
+E007 status: completed and rejected; no deployment package or leaderboard submission created.
 
-Exit gate: the self-correlation leg must survive template-shuffle, repeated-map, tail, subgroup, runtime, and residual-correlation controls against E006 before entering any ensemble.
+Measured E007 outcome:
+
+- The horizontal-only predictor matches hidden GR fingerprints to same-well visible-prefix fingerprints and transfers only bounded local `d(TVT+Z)` evidence; typewell data is excluded from prediction.
+- Visible-only pseudo-holdouts improve at all three frozen boundaries. The fixed 0.10 final placement reaches 14.8304784179 RMSE, a 0.1026623694 gain over E006, with 5/5 map wins and 20/25 repeated-cell wins.
+- The raw bounded correction is diverse at 0.4675700642 residual correlation to E006, and deterministic template shuffle returns exactly to E006.
+- Promotion is rejected because p90 rises from 21.7855500884 to 22.0503957463, narrowly exceeding the 0.25 cap, while spatial groups 1/3 and typewell groups 2/4 regress. Reliability shrink still regresses typewell group 2.
+- Long suffix, high-GR-missingness, and poor-visible-pseudo-gain slices expose the same instability. Runtime and memory pass comfortably, but packaging is prohibited after statistical rejection.
+
+Immediate deliverables now shift to E008/H010: a newly pre-registered compact cross-fitted residual-action model. E007 diagnostics may enter only as legal evidence; the failed fixed correction and observed weights are not promotion candidates.
+
+Exit gate: the residual model must learn signed bounded action strictly inside each fold, improve E006 on at least four repeated maps, pass p90/tail and every spatial/typewell group, lose gain when candidate evidence is shuffled, and preserve E006 as exact zero-action fallback.
 
 ### July 24–26 — Tabular residual and datum models
 
@@ -262,8 +272,8 @@ These defaults may be revised only through a recorded decision before seeing the
 4. **E004 — Surface-free deployment candidate and ablations — completed and deployment-ready 2026-07-19.** Geometry-plus-prefix scores 15.4913; local-direct, local-notebook, and private Kaggle outputs are byte-identical. Retain it as a fallback; no standalone submission was made.
 5. **E005 — Clean PF and trellis candidates — completed and rejected 2026-07-19.** PF reaches 15.3502 but fails p90, repeated-map, spatial, and typewell-cluster gates; no packaging or submission.
 6. **E006 — Controlled PF-E004 fusion and disagreement evidence — completed, promoted, and deployment-ready 2026-07-19.** Strict nesting selects 14.9331-RMSE conservative fusion; exact private Kaggle parity passes; no leaderboard submission.
-7. **E007 — Horizontal self-correlation and candidate evidence stack — next.** Pre-register H005 with template-shuffle and full E006-comparator controls before scoring.
-8. **E008 — Small sequence residual corrector.** Only after E007 freezes the feature/target frame.
+7. **E007 — Horizontal self-correlation and candidate evidence stack — completed and rejected 2026-07-19.** Fixed 0.10 placement reaches 14.8305 with 5/5 maps, but fails p90 and spatial/typewell shift gates; no packaging or submission.
+8. **E008 — Cross-fitted legal residual-action model — next.** Pre-register H010; learn bounded datum/trend or path residuals from legal E006/E007 evidence inside each fold, with E006 as exact zero-action fallback.
 9. **E009 — OOF diversity ensemble and uncertainty placement.** Cross-fit weights; risk cannot route without beating the fixed action.
 10. **E010 — Final Kaggle offline parity.** Clean package, runtime, exact IDs, and finalist notebooks.
 

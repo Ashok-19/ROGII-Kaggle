@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import csv
 import gzip
+import hashlib
 import json
 import math
 import tempfile
@@ -308,6 +309,46 @@ class E007SelfCorrelationTests(unittest.TestCase):
                 writer.writerow({"id": "aaaaaaaa_3", "well_id": "aaaaaaaa", "row_index": 3, "hidden_index": 1, "target": 1, "last_known_tvt": 0, "e004_geometry_prefix": 0.5, "nested_conservative_grid": 0.7})
             with self.assertRaises(DataValidationError):
                 list(_parent_wells(gap))
+
+    def test_official_rejected_result_artifacts_match_manifest(self) -> None:
+        experiment = ROOT / "experiments" / "E007"
+        manifest = json.loads((experiment / "manifest.json").read_text(encoding="utf-8"))
+        summary = json.loads((experiment / "results" / "summary.json").read_text(encoding="utf-8"))
+        verification = json.loads((experiment / "verification.json").read_text(encoding="utf-8"))
+        artifact_manifest = json.loads((experiment / "results" / "artifact_manifest.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["status"], "rejected")
+        self.assertEqual(summary["status"], "rejected")
+        self.assertIsNone(summary["selected_candidate"])
+        self.assertEqual(summary["reported_candidate"], "visible_fixed_0p10")
+        self.assertAlmostEqual(summary["candidate_metrics"]["visible_fixed_0p10"]["rmse"], 14.830478417885569, places=12)
+        self.assertAlmostEqual(summary["e006_metrics"]["rmse"], 14.933140787237672, places=12)
+        self.assertEqual(summary["map_wins"]["visible_fixed_0p10"], 5)
+        self.assertEqual(summary["outer_cell_wins"]["visible_fixed_0p10"], 20)
+        self.assertFalse(summary["gates_by_candidate"]["visible_fixed_0p10"]["p90_vs_e006"])
+        self.assertFalse(summary["gates_by_candidate"]["visible_fixed_0p10"]["spatial_stress"])
+        self.assertFalse(summary["gates_by_candidate"]["visible_fixed_0p10"]["typewell_stress"])
+        self.assertFalse(summary["deployment"]["statistically_authorized"])
+        self.assertFalse(summary["deployment"]["submission_made"])
+        self.assertEqual(verification["result_status"], "rejected")
+        self.assertTrue(verification["reproduction"]["oof_byte_identical"])
+        self.assertEqual(verification["reproduction"]["static_scored_csvs_byte_identical"], 11)
+        self.assertTrue(verification["resource_gates"]["runtime_passed"])
+        self.assertTrue(verification["resource_gates"]["memory_passed"])
+        self.assertEqual(
+            set(verification["failed_statistical_gates_by_candidate"]["visible_fixed_0p10"]),
+            {"p90_vs_e006", "spatial_stress", "typewell_stress"},
+        )
+        for item in artifact_manifest["files"]:
+            path = experiment / "results" / item["path"]
+            self.assertTrue(path.exists(), item["path"])
+            self.assertEqual(path.stat().st_size, item["bytes"], item["path"])
+            self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), item["sha256"], item["path"])
+        external = artifact_manifest["external_artifacts"][0]
+        self.assertEqual(external["sha256"], "9b90d44797950f9c08fe873fe42438edae8cd92de16f49beadbe1584d3b826b7")
+        oof = ROOT / external["path"]
+        if oof.exists():
+            self.assertEqual(oof.stat().st_size, external["bytes"])
+            self.assertEqual(hashlib.sha256(oof.read_bytes()).hexdigest(), external["sha256"])
 
 
 if __name__ == "__main__":
