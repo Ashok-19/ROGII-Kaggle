@@ -2,13 +2,13 @@
   "experiment_id": "E004",
   "title": "Surface-free E003 deployment candidate and feature-family ablations",
   "hypothesis": "A test-deployable subset of E003 legal evidence can retain a material repeated-fold datum-plus-trend gain without the six training-only formation-surface columns, and can be packaged as a deterministic offline submission notebook.",
-  "status": "designed",
+  "status": "blocked",
   "track": "deployment_and_ablation",
   "priority": 1,
   "owner": "NNMax",
   "parent_id": "E003",
   "created_at": "2026-07-19T06:20:00Z",
-  "updated_at": "2026-07-19T06:20:00Z",
+  "updated_at": "2026-07-19T06:45:00Z",
   "design": {
     "baseline": "E001 last-known TVT at pooled RMSE 15.9098528707",
     "deployment_contract": "Test horizontal files provide MD, X, Y, Z, GR, and TVT_input. The six formation-surface columns exist in train but are absent from test and are therefore forbidden from E004 inference.",
@@ -70,5 +70,80 @@
     "runtime_budget_minutes": 25,
     "config_path": "experiments/E004/config.json"
   },
-  "runs": []
+  "conclusion": {
+    "selected_candidate": "geometry_prefix",
+    "decision": "Retain the surface-free geometry-plus-prefix ridge only as a weak packaged fallback and candidate-bank leg. The full E003 surface-assisted result is not deployable under the competition test schema. Remote Kaggle MCP parity remains blocked because the required tool is unavailable.",
+    "local_model_ready": true,
+    "deployment_ready": false,
+    "result_path": "experiments/E004/RESULT.md",
+    "verification_path": "experiments/E004/verification.json"
+  },
+  "runs": [
+    {
+      "run_id": "R20260719-0636-e004-deployment",
+      "status": "blocked",
+      "started_at": "2026-07-19T06:36:58Z",
+      "ended_at": "2026-07-19T06:39:25Z",
+      "git_sha": "c728a9a267a89c92e5c0c6b018db1a1658874158",
+      "fold_map": "folds/v1.json,folds/v2.json,folds/v3.json,folds/v4.json,folds/v5.json",
+      "config_path": "experiments/E004/config.json",
+      "artifact_dir": "artifacts/E004",
+      "controls": {
+        "data_integrity": true,
+        "fold_integrity": true,
+        "surface_unavailability_detected": true,
+        "surface_features_excluded": true,
+        "finite_model": true,
+        "selected_candidate_eligible": true,
+        "visible_test_drift": true,
+        "exact_submission_contract": true,
+        "byte_identical_rerun": true,
+        "local_notebook_parity": true,
+        "remote_kaggle_mcp_parity": false
+      },
+      "metrics": [
+        {"split": "cv", "name": "rmse", "value": 15.491306398267565, "unit": "ft"},
+        {"split": "cv", "name": "gain_vs_baseline", "value": 0.4185464724669892, "unit": "ft"},
+        {"split": "cv", "name": "median_well_rmse", "value": 10.101629378732667, "unit": "ft"},
+        {"split": "cv", "name": "p90_well_rmse", "value": 22.463021099431828, "unit": "ft"},
+        {"split": "cv", "name": "p95_well_rmse", "value": 29.342125281158673, "unit": "ft"},
+        {"split": "cv", "name": "max_well_rmse", "value": 68.84700202959053, "unit": "ft"},
+        {"split": "cv", "name": "worst_5pct_sse_share", "value": 0.383094984613764, "unit": "share"},
+        {"split": "cv", "name": "worst_10pct_sse_share", "value": 0.521275338482999, "unit": "share"},
+        {"split": "stability", "name": "map_wins", "value": 5, "unit": "of_5"},
+        {"split": "spatial", "name": "rmse", "value": 15.576705410740159, "unit": "ft"},
+        {"split": "spatial", "name": "gain_vs_baseline", "value": 0.3331474599943949, "unit": "ft"},
+        {"split": "target", "name": "datum_pearson", "value": 0.269164373236, "unit": "correlation"},
+        {"split": "target", "name": "datum_sign_accuracy", "value": 0.632258064516, "unit": "share"},
+        {"split": "target", "name": "trend_pearson", "value": 0.0580427802802, "unit": "correlation"},
+        {"split": "target", "name": "trend_sign_accuracy", "value": 0.547368421053, "unit": "share"},
+        {"split": "baseline", "name": "rmse", "value": 15.909852870734554, "unit": "ft"},
+        {"split": "deployment", "name": "local_model_ready", "value": 1, "unit": "boolean"},
+        {"split": "deployment", "name": "local_notebook_parity", "value": 1, "unit": "boolean"},
+        {"split": "deployment", "name": "remote_kaggle_mcp_parity", "value": 0, "unit": "boolean"},
+        {"split": "deployment", "name": "deployment_ready", "value": 0, "unit": "boolean"},
+        {"split": "runtime", "name": "wall_seconds", "value": 147.08, "unit": "seconds"},
+        {"split": "runtime", "name": "max_rss_kb", "value": 48408, "unit": "kilobytes"}
+      ],
+      "artifacts": [
+        {"artifact_id": "E004-summary", "path": "experiments/E004/results/summary.json", "kind": "summary", "sha256": "5fc1f0897ce0275a9700e4ab7d5c966a4781b5161101d15ae773b7b79c5ecbda", "bytes": 12647},
+        {"artifact_id": "E004-model", "path": "experiments/E004/results/model.json", "kind": "model", "sha256": "90ca6eb6e2be6dfa4e655d150e64be6fc6c4eb164e0e73e7122f51b1eef675ac", "bytes": 13964},
+        {"artifact_id": "E004-candidates", "path": "experiments/E004/results/candidate_metrics.csv", "kind": "metrics", "sha256": "913775e5e6f7a7688ba28f29ca89e8e549e42d615944b3d51dc636ecee38b52d", "bytes": 2528},
+        {"artifact_id": "E004-maps", "path": "experiments/E004/results/map_metrics.csv", "kind": "metrics", "sha256": "b3efc33c44762dd95bba3f1399902ab10bcda2a5d5258b674ad3137f16788d9e", "bytes": 10506},
+        {"artifact_id": "E004-targets", "path": "experiments/E004/results/target_metrics.csv", "kind": "metrics", "sha256": "a91098b7550416f90e4f9f1f06d1d692bd2b738d433bb64741ae47a8620e885a", "bytes": 2413},
+        {"artifact_id": "E004-spatial", "path": "experiments/E004/results/spatial_metrics.csv", "kind": "metrics", "sha256": "3e405cafbd042dd26a676e6f58fce5189f99392249980a14295df99d58ffb65e", "bytes": 2300},
+        {"artifact_id": "E004-features", "path": "experiments/E004/results/selected_features.csv", "kind": "features", "sha256": "7bb24ee87c18cca4b7864d4635c4bb22bc11ec5e7bb9148d36cd58bde22593bb", "bytes": 2322},
+        {"artifact_id": "E004-fold-drift", "path": "experiments/E004/results/fold_drift_metrics.csv", "kind": "diagnostic", "sha256": "c38cc4a436718bcb579ac44286293e9381a214fe8cfb2eb2919fad9b3d59b18c", "bytes": 17444},
+        {"artifact_id": "E004-visible-drift", "path": "experiments/E004/results/visible_test_drift.csv", "kind": "diagnostic", "sha256": "3a8cd082407d29268acf07fa08c57f071df18f0289c15066f23d5232581507ed", "bytes": 3428},
+        {"artifact_id": "E004-visible-predictions", "path": "experiments/E004/results/visible_test_predictions.csv", "kind": "prediction_summary", "sha256": "26943b3941c61e387bf2bde671e06bc47733f50e19e564fd40ed022ef8ff58b5", "bytes": 206},
+        {"artifact_id": "E004-controls", "path": "experiments/E004/results/control_metrics.csv", "kind": "controls", "sha256": "554abba0f9315108193a6bf17d1556406a9b6bbf5f3a16b0ccc66a718956198a", "bytes": 1150},
+        {"artifact_id": "E004-result-manifest", "path": "experiments/E004/results/artifact_manifest.json", "kind": "manifest", "sha256": "e95521e8fd81374025e4f245041d52be804eca95bb615548112898e6330ade9c", "bytes": 3044},
+        {"artifact_id": "E004-notebook", "path": "notebooks/e004_deployment.ipynb", "kind": "notebook", "sha256": "f31b4260438b3d27958cd3ae933a9c5e348a058df4f80aed00935ce10fdbb9c2", "bytes": 44289},
+        {"artifact_id": "E004-submission", "path": "artifacts/E004/submission.csv", "kind": "submission", "sha256": "2add1d7e785491cdad1d6b238cde98826fc6605423ce250f2e9e94e914767887", "bytes": 437118},
+        {"artifact_id": "E004-notebook-submission", "path": "artifacts/E004/notebook_submission.csv", "kind": "submission", "sha256": "2add1d7e785491cdad1d6b238cde98826fc6605423ce250f2e9e94e914767887", "bytes": 437118}
+      ],
+      "notes": "All local controls and byte-parity checks passed. The selected surface-free geometry-plus-prefix candidate reaches 15.4913 RMSE. Remote Kaggle MCP parity could not be executed because no Kaggle MCP tool/plugin is available, so deployment-ready remains false.",
+      "updated_at": "2026-07-19T06:45:00Z"
+    }
+  ]
 }

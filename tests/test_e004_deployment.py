@@ -262,6 +262,55 @@ class E004DeploymentTests(unittest.TestCase):
             with self.assertRaises(DeploymentDataError):
                 write_submission(model, test, bad_sample, root / "bad.csv")
 
+    def test_official_blocked_result_artifacts_match_manifest(self) -> None:
+        experiment = ROOT / "experiments" / "E004"
+        manifest = json.loads((experiment / "manifest.json").read_text(encoding="utf-8"))
+        summary = json.loads((experiment / "results" / "summary.json").read_text(encoding="utf-8"))
+        model = json.loads((experiment / "results" / "model.json").read_text(encoding="utf-8"))
+        artifact_manifest = json.loads(
+            (experiment / "results" / "artifact_manifest.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(manifest["status"], "blocked")
+        self.assertEqual(summary["status"], "blocked")
+        self.assertEqual(summary["selected_candidate"], "geometry_prefix")
+        self.assertAlmostEqual(summary["selected_candidate_metrics"]["rmse"], 15.491306398267565, places=10)
+        self.assertTrue(summary["deployment"]["local_model_ready"])
+        self.assertTrue(summary["deployment"]["local_notebook_parity"])
+        self.assertFalse(summary["deployment"]["deployment_ready"])
+        self.assertEqual(
+            summary["controls"]["remote_kaggle_mcp_parity"]["status"],
+            "blocked_unavailable_tool",
+        )
+        self.assertFalse(model["surfaces_required"])
+        self.assertEqual(model["feature_families"], ["geometry", "prefix"])
+        self.assertTrue(
+            all(
+                not name.startswith(("ancc", "astn", "egfd", "buda"))
+                for name in model["selected_features"]
+            )
+        )
+        for item in artifact_manifest["files"]:
+            path = experiment / "results" / item["path"]
+            self.assertTrue(path.exists(), item["path"])
+            self.assertEqual(path.stat().st_size, item["bytes"], item["path"])
+            self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), item["sha256"], item["path"])
+        notebook = ROOT / artifact_manifest["notebook"]["path"]
+        self.assertTrue(notebook.exists())
+        self.assertEqual(notebook.stat().st_size, artifact_manifest["notebook"]["bytes"])
+        self.assertEqual(
+            hashlib.sha256(notebook.read_bytes()).hexdigest(),
+            artifact_manifest["notebook"]["sha256"],
+        )
+        for item in artifact_manifest["fold_files"]:
+            path = ROOT / item["path"]
+            self.assertEqual(path.stat().st_size, item["bytes"], item["path"])
+            self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), item["sha256"], item["path"])
+        for item in artifact_manifest["runtime_artifacts"]:
+            path = ROOT / item["path"]
+            if path.exists():
+                self.assertEqual(path.stat().st_size, item["bytes"], item["path"])
+                self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), item["sha256"], item["path"])
+
 
 if __name__ == "__main__":
     unittest.main()

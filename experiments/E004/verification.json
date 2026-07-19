@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E004",
+  "run_id": "R20260719-0636-e004-deployment",
+  "code_sha": "c728a9a267a89c92e5c0c6b018db1a1658874158",
+  "result_status": "blocked",
+  "selected_candidate": "geometry_prefix",
+  "selected_rmse": 15.491306398267565,
+  "official_run": {
+    "started_at": "2026-07-19T06:36:58Z",
+    "ended_at": "2026-07-19T06:39:25Z",
+    "wall_seconds": 147.08,
+    "max_rss_kb": 48408
+  },
+  "independent_clean_root_run": {
+    "wall_seconds": 149.76,
+    "max_rss_kb": 45948
+  },
+  "files_compared": 15,
+  "total_bytes_compared": 990477,
+  "all_files_byte_identical": true,
+  "local_notebook_parity": {
+    "passed": true,
+    "rows": 14151,
+    "direct_sha256": "2add1d7e785491cdad1d6b238cde98826fc6605423ce250f2e9e94e914767887",
+    "notebook_sha256": "2add1d7e785491cdad1d6b238cde98826fc6605423ce250f2e9e94e914767887"
+  },
+  "notebook": {
+    "path": "notebooks/e004_deployment.ipynb",
+    "bytes": 44289,
+    "sha256": "f31b4260438b3d27958cd3ae933a9c5e348a058df4f80aed00935ce10fdbb9c2"
+  },
+  "deployment": {
+    "local_model_ready": true,
+    "remote_kaggle_mcp_parity": false,
+    "remote_status": "blocked_unavailable_tool",
+    "deployment_ready": false
+  },
+  "controls_passed": 10,
+  "controls_blocked": 1,
+  "controls_failed": 0
+}
