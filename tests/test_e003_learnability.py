@@ -174,6 +174,30 @@ class E003LearnabilityTests(unittest.TestCase):
                     name,
                 )
 
+    def test_official_promoted_result_artifacts_match_manifest(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        experiment = root / "experiments" / "E003"
+        manifest = json.loads((experiment / "manifest.json").read_text(encoding="utf-8"))
+        summary = json.loads((experiment / "results" / "summary.json").read_text(encoding="utf-8"))
+        artifact_manifest = json.loads(
+            (experiment / "results" / "artifact_manifest.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(manifest["status"], "promoted")
+        self.assertEqual(summary["status"], "promoted")
+        self.assertTrue(summary["decision"]["signed_action_authorized"])
+        self.assertTrue(summary["decision"]["risk_detection_authorized"])
+        self.assertTrue(all(detail["pass"] for detail in summary["controls"].values()))
+        self.assertAlmostEqual(summary["selected_action_metrics"]["rmse"], 10.92797409180751, places=10)
+        for item in artifact_manifest["files"]:
+            path = experiment / "results" / item["path"]
+            self.assertTrue(path.exists(), item["path"])
+            self.assertEqual(path.stat().st_size, item["bytes"], item["path"])
+            self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), item["sha256"], item["path"])
+        for item in artifact_manifest["fold_files"]:
+            path = root / item["path"]
+            self.assertEqual(path.stat().st_size, item["bytes"], item["path"])
+            self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), item["sha256"], item["path"])
+
 
 if __name__ == "__main__":
     unittest.main()

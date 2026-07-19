@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E003",
+  "run_id": "R20260719-0535-e003-learnability",
+  "code_sha": "fed2541ca1f6a3ebd1879885575efad4713c14f5",
+  "official_run": {
+    "started_at": "2026-07-19T05:35:19Z",
+    "ended_at": "2026-07-19T05:38:12Z",
+    "wall_seconds": 173.14,
+    "max_rss_kb": 60608
+  },
+  "independent_verification_run": {
+    "wall_seconds": 175.65,
+    "max_rss_kb": 60396
+  },
+  "result_files_compared": 13,
+  "result_files_byte_identical": true,
+  "total_result_bytes": 2310084,
+  "independent_row_scorer": {
+    "rmse": 10.927974091808313,
+    "registered_rmse": 10.92797409180751,
+    "absolute_difference": 8.029132914089132e-13,
+    "pass": true
+  },
+  "legal_feature_provenance": {
+    "feature_columns": 146,
+    "hidden_target_or_oracle_columns": 0,
+    "visible_or_typewell_tvt_names_only": true,
+    "pass": true
+  },
+  "official_controls_passed": 9,
+  "official_controls_failed": 0,
+  "result_status": "promoted",
+  "signed_action_authorized": true,
+  "risk_detection_authorized": true,
+  "deployment_ready": false
+}

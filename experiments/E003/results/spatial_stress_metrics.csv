@@ -1,0 +1,9 @@
+kind,name,gain_vs_baseline,rmse,spearman,auc
+action,mean_datum,0.029970685574,15.8798821852,,
+action,mean_datum_trend,0.0280559508211,15.8817969199,,
+action,ridge_datum,3.52391593804,12.3859369327,,
+action,ridge_datum_trend,4.65571916403,11.2541337067,,
+action,forest_datum,2.90213474938,13.0077181214,,
+action,forest_datum_trend,3.68281857406,12.2270342967,,
+risk,ridge,,,0.237176364552,0.584267668859
+risk,forest,,,0.522376082916,0.80739116818

@@ -1,0 +1,10 @@
+control,status,detail_json
+data_integrity,pass,"{""data_signature"":""6ebe65b403f80fefd97dcd7bbfce7314252e779a1837c97364cf55761590fe77"",""features"":146,""wells"":773}"
+duplicate_feature,pass,"{""construction"":""replace one standardized feature by two copies scaled by 1/sqrt(2), preserving the ridge penalty"",""maximum_prediction_delta"":1.5631940186722204e-13}"
+fold_integrity,pass,"{""maps"":5}"
+leakage_sentinel,pass,"{""eligible_for_modeling"":false,""rmse"":6.697194770121073,""uses_hidden_target"":true}"
+noop,pass,"{""rmse"":15.909852870734554}"
+oracle_algebra,pass,"{""baseline_rmse"":15.909852870734554,""oracle_datum_rmse"":9.035409988099248,""oracle_datum_trend_rmse"":6.697194770121073}"
+runtime,pass,"{""budget_minutes"":20}"
+shuffled_evidence,pass,"{""action_rmse"":15.834278461188104,""datum_correlation"":0.04058386032408074,""gain_over_mean_action"":0.015932000581109662,""gain_over_zero_action"":0.07557440954644967,""mean_action_rmse"":15.850210461769214}"
+synthetic_positive,pass,"{""correlation"":0.998839354182376}"
