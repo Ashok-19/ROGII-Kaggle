@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E010",
+  "data_signature": "6ebe65b403f80fefd97dcd7bbfce7314252e779a1837c97364cf55761590fe77",
+  "expected_wells": 773,
+  "fold_files": ["folds/v1.json", "folds/v2.json", "folds/v3.json", "folds/v4.json", "folds/v5.json"],
+  "legal_horizontal_inputs": ["MD", "X", "Y", "Z", "GR", "TVT_input"],
+  "legal_typewell_inputs": ["TVT", "GR"],
+  "forbidden_inputs": [
+    "validation hidden TVT in candidate generation or selector inference",
+    "oracle candidate identity at inference",
+    "formation surfaces or typewell Geology",
+    "absolute spatial coordinates as selector predictors",
+    "visible test overlap used as generalization evidence",
+    "leaderboard feedback or opaque external artifacts",
+    "post-score mutation"
+  ],
+  "parents": {
+    "e005_oof": {"path": "artifacts/E005/oof_predictions.csv.gz", "sha256": "5115f7ce80f70c827c6df6edc572657253495a44333a2bb35bc46a7547e13ae5"},
+    "e006_oof": {"path": "artifacts/E006/oof_predictions.csv.gz", "sha256": "9b9f26cd8ad82e32dbc0f9ba1466cb38424cd3bbf7001c1079a9867fb5a324b4", "expected_rmse": 14.933140787237672},
+    "e009_oof": {"path": "artifacts/E009/oof_predictions.csv.gz", "sha256": "3609b06eb5c38ebbdecbd951e925e31b8633ba7c904d508230a8e5bc07c0052e"},
+    "legal_features": {"path": "experiments/E008/results/legal_features.csv", "sha256": "c4b332ccb62559609aee501eb6cd66237cf6a98fc370caa542d6be99b43f8853"},
+    "wide_actions": {"path": "experiments/E009/results/model_predictions.csv", "sha256": "3f4d4782555d255305fd6f08945f72cf09db47fc3f531fdefda44fb973f5e41f", "column": "ridge_all_a25_f64", "diagnostic_rmse": 14.635273314979647},
+    "residual_targets_audit": {"path": "experiments/E008/results/residual_targets.csv", "sha256": "bae9a5b11f63285d56d8b603c56d0d61579a43eb19a213d66c5b6b8a4eb4b439"}
+  },
+  "public_source_audit": {
+    "hmm_notebook": "amerhu/rogii-wellbore-geology-exact-hmm-smoother",
+    "source_sha256": "2321997c8bcbca442d7d7abfc5b9b7eeed251bac8c671b3554b54c9355c231dc",
+    "policy": "Mechanism only; implement independently. Five-well claims are preliminary."
+  },
+  "development_screen": {
+    "wells": 48,
+    "selection": "Hidden-row tercile x hidden-GR-missingness half; eight lowest SHA-256 keys per stratum, ties by well_id.",
+    "hmm_variants": [
+      {"name": "hmm_gauss_lam005", "grid_step_ft": 2.0, "position_span_ft": 80.0, "rate_states": 9, "rate_span": 0.08, "rate_sigma": 0.004, "position_sigma_ft": 0.5, "momentum": 0.998, "emission": "gaussian", "emission_weight": 0.05, "maximum_observations": 256},
+      {"name": "hmm_gauss_lam015", "grid_step_ft": 2.0, "position_span_ft": 80.0, "rate_states": 9, "rate_span": 0.10, "rate_sigma": 0.004, "position_sigma_ft": 0.5, "momentum": 0.998, "emission": "gaussian", "emission_weight": 0.15, "maximum_observations": 256},
+      {"name": "hmm_student_lam010", "grid_step_ft": 2.0, "position_span_ft": 100.0, "rate_states": 11, "rate_span": 0.10, "rate_sigma": 0.004, "position_sigma_ft": 0.75, "momentum": 0.998, "emission": "student_t", "degrees_freedom": 4.0, "emission_weight": 0.10, "maximum_observations": 256},
+      {"name": "hmm_tail_centered", "grid_step_ft": 2.0, "position_span_ft": 100.0, "rate_states": 11, "rate_span": 0.08, "rate_sigma": 0.003, "position_sigma_ft": 0.5, "momentum": 0.995, "emission": "student_t", "degrees_freedom": 4.0, "emission_weight": 0.05, "maximum_observations": 256, "rate_center": "visible_tail"}
+    ],
+    "dtw_variants": [
+      {"name": "dtw_raw_tight", "offset_min_ft": -60.0, "offset_max_ft": 60.0, "offset_step_ft": 2.0, "transition_steps": 2, "transition_penalty": 0.08, "smoothing_rows": 1, "derivative_weight": 0.0, "maximum_observations": 384},
+      {"name": "dtw_smooth5", "offset_min_ft": -80.0, "offset_max_ft": 80.0, "offset_step_ft": 2.0, "transition_steps": 3, "transition_penalty": 0.05, "smoothing_rows": 5, "derivative_weight": 0.0, "maximum_observations": 384},
+      {"name": "dtw_derivative", "offset_min_ft": -80.0, "offset_max_ft": 80.0, "offset_step_ft": 2.0, "transition_steps": 3, "transition_penalty": 0.05, "smoothing_rows": 5, "derivative_weight": 0.35, "maximum_observations": 384},
+      {"name": "dtw_multiscale", "offset_min_ft": -100.0, "offset_max_ft": 100.0, "offset_step_ft": 2.5, "transition_steps": 4, "transition_penalty": 0.035, "smoothing_rows": 11, "derivative_weight": 0.20, "maximum_observations": 384}
+    ],
+    "minimum_standalone_gain_vs_e006": 0.10,
+    "minimum_unique_oracle_gain": 0.05,
+    "maximum_projected_full_minutes": 45.0,
+    "screen_is_not_promotion_evidence": true
+  },
+  "candidate_bank": {
+    "raw_anchors": ["last_known_tvt", "e004_geometry_prefix", "align_visible_path", "pf_gr_path", "trellis_gr_path", "e006_nested_fusion", "wide64_anchor"],
+    "coefficient_grids": {
+      "datum_ft": {"minimum": -60.0, "maximum": 60.0, "step": 5.0},
+      "linear_ft": {"minimum": -120.0, "maximum": 120.0, "step": 10.0},
+      "shape_ft": {"minimum": -120.0, "maximum": 120.0, "step": 10.0}
+    },
+    "families": [
+      {"name": "e006_affine", "anchor": "e006_nested_fusion", "basis": "affine"},
+      {"name": "e006_quadratic", "anchor": "e006_nested_fusion", "basis": "quadratic"},
+      {"name": "wide64_quadratic", "anchor": "wide64_anchor", "basis": "quadratic"},
+      {"name": "pf_quadratic", "anchor": "pf_gr_path", "basis": "quadratic"},
+      {"name": "trellis_quadratic", "anchor": "trellis_gr_path", "basis": "quadratic"},
+      {"name": "e006_hinge_025", "anchor": "e006_nested_fusion", "basis": "hinge", "location": 0.25},
+      {"name": "e006_hinge_050", "anchor": "e006_nested_fusion", "basis": "hinge", "location": 0.50},
+      {"name": "e006_hinge_075", "anchor": "e006_nested_fusion", "basis": "hinge", "location": 0.75},
+      {"name": "e006_jump_025", "anchor": "e006_nested_fusion", "basis": "jump", "location": 0.25, "width": 0.05},
+      {"name": "e006_jump_050", "anchor": "e006_nested_fusion", "basis": "jump", "location": 0.50, "width": 0.05},
+      {"name": "e006_jump_075", "anchor": "e006_nested_fusion", "basis": "jump", "location": 0.75, "width": 0.05}
+    ],
+    "maximum_absolute_correction_ft": 160.0,
+    "oracle_scope": "One fixed whole trajectory per well; rowwise switching is forbidden.",
+    "coverage_gate_rmse": 5.0
+  },
+  "selector": {
+    "feature_source": "experiments/E008/results/legal_features.csv",
+    "required_multi_cut_prefixes": ["backtest_0p5_", "backtest_0p7_", "backtest_0p85_"],
+    "feature_selection": "Training-split-only median imputation, scaling, target-correlation ranking, and truncation.",
+    "branches": [
+      {"name": "ridge_all_f64", "model": "ridge", "selector": "all", "maximum_features": 64, "alpha": 25.0},
+      {"name": "ridge_path_f48", "model": "ridge", "selector": "path_and_multicut", "maximum_features": 48, "alpha": 25.0},
+      {"name": "extra_trees_all", "model": "extra_trees", "selector": "all", "maximum_features": 96, "n_estimators": 300, "min_samples_leaf": 5, "max_features": 0.7, "random_state": 1010, "n_jobs": 1},
+      {"name": "random_forest_all", "model": "random_forest", "selector": "all", "maximum_features": 96, "n_estimators": 300, "min_samples_leaf": 5, "max_features": 0.7, "random_state": 2010, "n_jobs": 1},
+      {"name": "hybrid_ridge_trees", "model": "fixed_average", "parents": ["ridge_all_f64", "extra_trees_all"], "weights": [0.5, 0.5]},
+      {"name": "hybrid_confidence_fallback", "model": "fixed_average_with_fallback", "parents": ["ridge_all_f64", "extra_trees_all"], "weights": [0.5, 0.5], "minimum_predicted_gain_vs_e006_ft": 0.25}
+    ],
+    "family_choice": "Minimum predicted log1p RMSE; ties by family order; coefficients clipped to frozen grid bounds.",
+    "outer_validation": "Five repeated five-fold maps plus leave-spatial-group-out and leave-typewell-group-out.",
+    "fallback": "Exact E006 path"
+  },
+  "stress": {"spatial_groups": 5, "typewell_groups": 5, "long_suffix_quantile": 0.80, "high_gr_missingness_quantile": 0.80, "catastrophe_rmse_ft": 12.0, "maximum_special_slice_deterioration_vs_e006": 0.10},
+  "controls": {
+    "candidate_noop_max_delta": 1e-12,
+    "duplicate_candidate_max_delta": 1e-12,
+    "basis_reconstruction_max_delta": 1e-10,
+    "pooled_sse_relative_tolerance": 1e-10,
+    "oracle_minimum_gain_vs_best_legal": 0.10,
+    "shuffled_target_maximum_gain_vs_e006": 0.03,
+    "sign_flipped_target_maximum_gain_vs_e006": 0.03,
+    "duplicate_selector_maximum_delta": 1e-12,
+    "exact_fallback_maximum_delta": 1e-12,
+    "minimum_candidate_count": 100000,
+    "minimum_families_with_unique_oracle_wins": 3,
+    "maximum_absolute_emitted_correction_ft": 160.0
+  },
+  "promotion": {
+    "minimum_gain_vs_e006": 0.15,
+    "minimum_gain_vs_last_known": 1.00,
+    "minimum_map_wins": 4,
+    "minimum_outer_cell_wins": 17,
+    "minimum_map_gain": 0.02,
+    "maximum_p90_deterioration_vs_e006": 0.25,
+    "maximum_worst5_sse_share_increase_vs_e006": 0.01,
+    "require_positive_every_spatial_group": true,
+    "require_positive_every_typewell_group": true,
+    "require_bank_oracle_below_5": true,
+    "maximum_runtime_minutes": 60,
+    "maximum_rss_mb": 3072
+  },
+  "selection": {"no_post_score_candidate_additions": true, "no_post_score_threshold_changes": true, "no_post_score_family_grid_changes": true},
+  "deployment": {"package_only_after_statistical_promotion": true, "require_exact_sample_ids_and_order": true, "require_finite_predictions": true, "require_exact_e006_fallback": true, "require_local_notebook_parity_if_promoted": true, "require_private_internet_disabled_kaggle_parity_if_promoted": true, "internet": false, "external_artifacts": []},
+  "edge_cases": [
+    "one-row two-row and long suffixes; singular bases; zero reconstruction; grid clipping; duplicate trajectories; non-finite values; equal-loss ties",
+    "short prefixes; missing GR; flat duplicate short or non-overlapping typewells; repeated motifs; invalid MD and TVT_input contracts",
+    "HMM underflow normalization rate degeneracy and downsampling endpoints; DTW flat costs monotonic bounds and ties",
+    "outer membership isolation; shuffled and sign-flipped negatives; malformed OOF IDs; runtime or memory failure; clean independent reproduction"
+  ]
+}
