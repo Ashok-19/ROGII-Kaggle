@@ -17,7 +17,7 @@
     {
       "step": 3,
       "title": "Read geological clues",
-      "text": "Gamma ray, the typewell reference, trajectory geometry, and named formation surfaces provide imperfect clues about geological position."
+      "text": "Gamma ray, the typewell reference, and trajectory geometry are available clues at test time. Named formation surfaces appear only in training and may be used for understanding, not final inference."
     },
     {
       "step": 4,
@@ -99,8 +99,8 @@
           "name": "ANCC / ASTNU / ASTNL / EGFDU / EGFDL / BUDA",
           "plain_name": "Formation-surface coordinates",
           "meaning": "Six competition-provided reference surfaces. Their relative spacing and movement can describe a shared geological frame.",
-          "use": "Surface-relative offsets, hidden-segment movement, dip proxies, candidate constraints, and whole-well context. E003 verified that surface movement is strongly useful for low-order datum/trend prediction.",
-          "watch_out": "They are legal supplied features, but selection frequency is not causal proof. Feature-family ablations and train-versus-test drift checks are still required."
+          "use": "Training-only diagnostics reveal how much shared structural context could help. E003 verified that their movement strongly predicts low-order datum/trend on held-out training wells.",
+          "watch_out": "E004 verified that all six columns are absent from test horizontal files. They cannot be used by the final competition notebook unless equivalent evidence is reconstructed from inputs that actually exist at test time."
         }
       ]
     },
@@ -127,7 +127,7 @@
           "plain_name": "Optional reference annotation",
           "meaning": "A typewell annotation column that may be sparse or blank.",
           "use": "Potential segmentation or regime context when present and legally available.",
-          "watch_out": "Missingness and inconsistent availability must be handled explicitly."
+          "watch_out": "E004 verified that this annotation is absent from test typewells. It is not a deployable inference feature."
         }
       ]
     }
@@ -143,7 +143,7 @@
       "id": "coordinate",
       "title": "TVT is a geological coordinate",
       "plain": "Think of TVT as the well's position inside a geological reference frame, not just how deep the drill bit is.",
-      "technical": "Trajectory, formation surfaces, and GR alignment jointly constrain the mapping from MD and Z to TVT."
+      "technical": "Training surfaces explain the missing structural context, but final inference must reconstruct position from test-available trajectory, visible TVT prefix, horizontal GR, and typewell GR."
     },
     {
       "id": "surface",
@@ -166,8 +166,8 @@
     {
       "id": "uncertainty",
       "title": "Knowing a well is risky is not enough",
-      "plain": "One model can estimate which wells are risky while a different model estimates how to move the path. These are separate questions.",
-      "technical": "E003 validates both outputs separately: forest risk reaches 0.8125 worst-20% AUC, while ridge datum-plus-trend reaches 10.9280 RMSE. The risk score still cannot authorize routing by itself."
+      "plain": "One model can estimate which wells are risky while a different model estimates how to move the path. Both can still fail deployment when an important training clue is missing from test.",
+      "technical": "E003 validates surface-assisted risk and action on training folds. E004 shows the surface-free deployable ridge falls to 15.4913 RMSE, so feature availability is a separate gate from cross-validation quality."
     }
   ],
   "breakthroughs": [
@@ -220,19 +220,28 @@
     {
       "id": "B006",
       "date": "2026-07-19",
-      "title": "Legal evidence predicts both low-order action and risk",
+      "title": "Surface-assisted evidence predicts low-order action and risk",
       "evidence": "local_verified",
       "visual": "risk_action",
       "summary": "E003 lowers pooled RMSE from 15.9099 to 10.9280 with a cross-fitted ridge datum-plus-trend action. A separate forest risk probe reaches 0.5415 Spearman and 0.8125 worst-20% AUC.",
-      "why_it_matters": "Supplied formation surfaces, hidden Z geometry, visible U stability, prefix backtests, GR summaries, and typewell context contain actionable signal. The result passes all five maps and contiguous spatial blocks, but still requires full-training and Kaggle parity before submission."
+      "why_it_matters": "The result proves the hidden structural context is highly informative, but E004 later shows the strongest formation-surface evidence is training-only. E003 is validated understanding, not a deployable final model."
+    },
+    {
+      "id": "B007",
+      "date": "2026-07-19",
+      "title": "A strong training clue can disappear at test time",
+      "evidence": "local_verified",
+      "visual": "deployment_gap",
+      "summary": "E004 verified that all six formation-surface columns are missing from test. Removing them raises the best coefficient model from E003's 10.9280 to 15.4913 RMSE; geometry plus visible-prefix evidence is the best surface-free package.",
+      "why_it_matters": "Cross-validation is not enough when the feature contract changes. The final solution must use only test-available MD, X, Y, Z, GR, TVT_input, and typewell TVT/GR, or legally reconstruct missing structural evidence from those inputs."
     }
 
   ],
   "idea_questions": [
     {
       "signal": "deployment",
-      "question": "Does the promoted E003 correction retain its advantage after each feature family is removed, one full-training model is fit, and train-versus-test drift is measured?",
-      "falsifier": "The gain depends on one unstable feature family, full-training predictions move outside OOF behavior, test features extrapolate strongly, or Kaggle parity fails."
+      "question": "Can a candidate remain useful when every input is checked against the actual test schema and the same notebook runs without external artifacts?",
+      "falsifier": "Its gain depends on train-only columns, exact sample reconstruction fails, local notebook output differs, or remote Kaggle parity fails."
     },
     {
       "signal": "geometry",
@@ -246,8 +255,8 @@
     },
     {
       "signal": "surfaces",
-      "question": "Do formation-relative offsets provide a stable shared frame beyond what Z and the visible TVT prefix already contain?",
-      "falsifier": "Duplicate/no-op controls match the gain or leave-spatial/typewell-out performance collapses."
+      "question": "Can test-available GR/typewell alignment reconstruct some of the structural context that training-only formation surfaces reveal?",
+      "falsifier": "Shuffled GR performs similarly, alignment ambiguity is unrelated to TVT error, or PF/trellis paths fail repeated and no-GR stress tests."
     },
     {
       "signal": "whole well",
@@ -300,6 +309,11 @@
     {
       "title": "E003 promoted learnability result",
       "local_path": "experiments/E003/RESULT.md",
+      "url": ""
+    },
+    {
+      "title": "E004 surface-free deployment result",
+      "local_path": "experiments/E004/RESULT.md",
       "url": ""
     }
 

@@ -1,14 +1,14 @@
 {
   "type": "hypothesis",
-  "recorded_at": "2026-07-19T05:38:12Z",
+  "recorded_at": "2026-07-19T06:48:00Z",
   "payload": {
     "hypothesis_id": "H007",
     "title": "Deployable legal coefficient candidate",
-    "statement": "The E003 legal datum-plus-trend formulation will retain a material advantage after feature-family ablation, full-training fitting, test-distribution audit, and offline Kaggle inference parity.",
-    "status": "active",
-    "priority": 1,
-    "evidence_for": "E003 scores 10.9280 OOF, wins all five maps, and scores 11.2541 on contiguous spatial blocks with complete controls.",
-    "evidence_against": "Full-training predictions may shift from averaged OOF models, hidden test distribution may differ, and local CV can invert on the leaderboard.",
-    "next_test": "E004: frozen feature-family ablations, full-training artifact, train-versus-test drift report, exact submission reconstruction, and Kaggle MCP parity notebook."
+    "statement": "A surface-free E003-style datum-plus-trend model can retain a material advantage, pass local packaging and exact reconstruction, and become deployment-ready after remote Kaggle parity.",
+    "status": "blocked",
+    "priority": 2,
+    "evidence_for": "E004 geometry-plus-prefix reaches 15.4913 RMSE, improves all five maps, retains 0.3331 gain under spatial blocks, and has byte-identical direct/notebook submissions.",
+    "evidence_against": "The six surface columns driving E003 are absent from test. Surface-free gain shrinks from 4.9819 to 0.4185 RMSE, and remote Kaggle MCP parity is unavailable in the current tool environment.",
+    "next_test": "Execute notebooks/e004_deployment.ipynb through Kaggle MCP when available; do not submit the candidate solely from local 15.49 CV."
   }
 }

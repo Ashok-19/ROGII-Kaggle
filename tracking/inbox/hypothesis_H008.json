@@ -1,0 +1,14 @@
+{
+  "type": "hypothesis",
+  "recorded_at": "2026-07-19T06:48:00Z",
+  "payload": {
+    "hypothesis_id": "H008",
+    "title": "Reconstruct structural evidence from test-available logs",
+    "statement": "Explicit typewell/horizontal GR alignment, particle filtering, and whole-well trellis inference can recover part of the missing structural-position signal using only MD, X, Y, Z, GR, TVT_input, and typewell TVT/GR.",
+    "status": "active",
+    "priority": 1,
+    "evidence_for": "E004 shows summary GR/typewell features are insufficient but does not test path alignment. Winning-note evidence reports useful PF/trellis diversity, and the strongest unavailable E003 signal is structural context.",
+    "evidence_against": "Repeated GR motifs, missing toe GR, long horizons, and path-search ambiguity may make the signal too weak or unstable.",
+    "next_test": "E005: independent PF and trellis OOF paths with shuffled-GR, no-GR fallback, repeated-fold, tail, runtime, and residual-correlation controls."
+  }
+}

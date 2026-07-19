@@ -21,13 +21,13 @@ Completed before model development:
 - `AGENTS.md`, `MEMORY.md`, control-first workflow, SQLite ledger, auto-sync CLI, validation command, and dashboard created.
 - Previous roadmap preserved under `archive/legacy/`.
 
-E001 is promoted and frozen. E002 rejected every naive U continuation. E003 then promoted a legal cross-fitted ridge datum-plus-trend action at 10.9280 RMSE and a separate forest risk probe, while explicitly withholding deployment status.
+E001 is promoted and frozen. E002 rejected every naive U continuation. E003 promoted a surface-assisted cross-fitted datum-plus-trend result at 10.9280 RMSE as OOF understanding. E004 then audited the actual test contract, proved those six surface columns are unavailable at inference, and packaged a weaker surface-free geometry-plus-prefix candidate at 15.4913 RMSE. Local notebook parity passes; remote Kaggle MCP parity remains blocked.
 
 ## What the evidence changes
 
 ### 1. The target is structural position
 
-Let `U = TVT + Z`. E002 verifies that U is smoother but unsafe to extrapolate directly. E003 resolves the apparent contradiction: predict a legal low-order correction to last-known TVT from supplied geometry, formation surfaces, visible-prefix stability, GR summaries, and typewell context. Cross-fitted ridge datum-plus-trend reaches 10.9280 RMSE, while hidden-label oracle datum-plus-trend remains 6.6972. The remaining work is feature-family validation, deployment parity, richer path shape, and independent candidates—not raw U continuation.
+Let `U = TVT + Z`. E002 verifies that U is smoother but unsafe to extrapolate directly. E003 shows that low-order datum/trend is highly predictable when training-only formation surfaces are included, reaching 10.9280 RMSE. E004 establishes the deployment boundary: those surfaces are absent from test, and the best surface-free geometry-plus-prefix ridge reaches only 15.4913. The remaining route is not to pretend train-only context exists, but to reconstruct structural evidence from test-available geometry, visible prefix, horizontal GR, and typewell GR through explicit alignment and state/path models.
 
 ### 2. The error is concentrated
 
@@ -74,8 +74,8 @@ Every candidate produces a full path and OOF predictions with the same IDs:
 1. Last-known-TVT baseline.
 2. Constant `U` continuation.
 3. Robust linear/quadratic/spline `U` trend.
-4. Physics/contact candidates from legal surface columns.
-5. Typewell GR alignment candidates with explicit ambiguity scores.
+4. Training-only formation-surface diagnostics, never direct final-inference inputs.
+5. Test-available typewell GR alignment candidates with explicit ambiguity scores.
 6. Horizontal pre-PS self-correlation candidate.
 7. Particle-filter state tracker over structural position and rate.
 8. Dynamic-programming/trellis whole-well posterior.
@@ -92,7 +92,7 @@ Tree and sequence models should primarily consume legal, interpretable evidence:
 - typewell/horizontal alignment scores, margin between modes, stretch, offset and gain calibration;
 - candidate path values, slopes, curvature and disagreement;
 - GR availability and missing-run structure;
-- legal formation/contact consistency;
+- reconstructed contact/alignment consistency derived only from test-available inputs;
 - uncertainty and regime indicators.
 
 Targets to compare:
@@ -143,18 +143,26 @@ Exit gate: identical reruns reproduce metrics; pooled and direct RMSE agree; no 
 
 Measured outcome: E002 retained last-known TVT at 15.9099 RMSE. Robust-linear U was the least-bad challenger at 39.6546, won 0/25 fold cells, and degraded long-hidden RMSE to 48.5525. The candidate matrix is retained only for diagnostics and future disagreement features.
 
-### July 19–22 — E003 packaging and candidate-bank reconstruction
+### July 19–22 — Deployment contract and test-available candidate reconstruction
 
-Immediate deliverables:
+E004 status: completed locally, remote parity blocked.
 
-- Package the promoted E003 ridge datum-plus-trend action as a full-training candidate with exact row reconstruction.
-- Freeze legal feature-family ablations: geometry/Z, surfaces, visible-prefix backtests, GR, typewell, and spatial context.
-- Audit train-versus-test feature missingness, range, and extrapolation.
-- Build a Kaggle MCP offline parity notebook for this lightweight candidate before considering submission.
-- Then add clean physics/contact, typewell alignment, self-correlation, PF, and trellis interfaces using identical OOF IDs.
-- Produce candidate OOF matrix, residual correlations, and regime/fold performance.
+Measured E004 outcome:
 
-Exit gate: E003 retains a material ablated and full-training-safe advantage, or an independent candidate materially improves/diversifies it. No submission before exact parity and provenance checks.
+- Train horizontal wells contain six formation surfaces; test horizontal wells do not.
+- E003's 10.9280 surface-assisted result is not deployable as implemented.
+- Eight surface-free ablations were evaluated under all five maps and spatial stress.
+- Geometry plus visible-prefix evidence is best at 15.4913 RMSE, a 0.4185 gain; removing prefix leaves only 0.0883 gain and 0/5 wins.
+- Direct and self-contained notebook submissions are byte-identical; the notebook uses no external artifact or third-party package.
+- Remote Kaggle MCP parity is still required before deployment-ready status and is blocked by unavailable tooling.
+
+Immediate deliverables now shift to E005:
+
+- Clean typewell/horizontal GR alignment, PF, and trellis candidates using only test-available columns.
+- No-GR fallbacks, repeated-motif ambiguity measures, and shuffled-GR controls.
+- OOF paths with identical IDs, tail metrics, runtime, and residual correlations against last-known TVT and E004 geometry-prefix.
+
+Exit gate: at least one test-available path candidate materially improves 15.4913 or provides validated low residual correlation for a controlled blend.
 
 ### July 24–26 — Tabular residual and datum models
 
@@ -234,8 +242,8 @@ These defaults may be revised only through a recorded decision before seeing the
 1. **E001 — Metric and fold harness — completed 2026-07-18.** Evaluator, five fold maps, leakage controls, reports, and hashes are frozen.
 2. **E002 — Structural baseline ladder — completed and rejected 2026-07-19.** Sign verified; last-known TVT retained; naive U continuation rejected after 0/25 fold-cell wins.
 3. **E003 — Datum/trend and risk learnability — completed and promoted 2026-07-19.** Ridge datum-plus-trend scores 10.9280; forest risk scores 0.5415 Spearman / 0.8125 AUC; both pass repeated and spatial gates.
-4. **E004 — E003 deployment candidate and feature-family ablations — next.** Full-training fit, ablations, test-drift audit, exact reconstruction, and Kaggle MCP parity.
-5. **E005 — Clean PF and trellis candidates.** Independent implementations with OOF paths and residual correlations against E003.
+4. **E004 — Surface-free deployment candidate and ablations — completed, locally ready, remotely blocked 2026-07-19.** Geometry-plus-prefix scores 15.4913; local notebook parity passes; remote Kaggle MCP parity is unavailable.
+5. **E005 — Clean PF and trellis candidates — next.** Independent test-available implementations with OOF paths and residual correlations against last-known TVT and E004.
 6. **E006 — Horizontal self-correlation candidate.** Template-shuffle control.
 7. **E007 — Candidate evidence tree stack.** Extend E003 with independent candidate evidence and strict controls.
 8. **E008 — Small sequence residual corrector.** Only after E007 freezes the feature/target frame.
@@ -248,6 +256,7 @@ These defaults may be revised only through a recorded decision before seeing the
 - Treating visible test overlap as hidden-test evidence.
 - Reusing opaque/private artifacts or unknown-license inputs.
 - Large neural architecture sweeps before target/fold controls are proven.
+- Treating train-only formation surfaces as final inference features.
 - Per-well oracle routing used as evidence that a legal selector exists.
 - Submitting undocumented blends or tuning many tiny public-LB changes.
 - Replacing negative results with vague summaries that allow the same experiment to be repeated.

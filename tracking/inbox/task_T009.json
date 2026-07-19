@@ -1,10 +1,10 @@
 {
   "type": "task",
-  "recorded_at": "2026-07-19T05:38:12Z",
+  "recorded_at": "2026-07-19T06:48:00Z",
   "payload": {
     "task_id": "T009",
     "title": "Package E003 candidate and run feature-family ablations",
-    "status": "next",
+    "status": "done",
     "priority": 1,
     "phase": "candidate_bank",
     "depends_on": "T004",

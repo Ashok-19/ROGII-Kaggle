@@ -121,6 +121,7 @@ class LearningDashboardTests(unittest.TestCase):
         self.assertEqual(state["recommended_wells"][0]["well_id"], "aaaaaaaa")
         self.assertEqual(state["e001"]["data"]["hidden_rows"], 3)
         self.assertIsNone(state["e003"])
+        self.assertIsNone(state["e004"])
 
     def test_learning_well_preserves_visibility_boundary(self):
         payload = self.tracker.learning_well("aaaaaaaa", max_points=4)
@@ -176,9 +177,11 @@ class LearningDashboardTests(unittest.TestCase):
         self.assertEqual(content["updated_at"], "2026-07-19")
         self.assertTrue(any(item["id"] == "B005" for item in content["breakthroughs"]))
         self.assertTrue(any(item["id"] == "B006" for item in content["breakthroughs"]))
+        self.assertTrue(any(item["id"] == "B007" for item in content["breakthroughs"]))
         self.assertIn("trend_transfer", html)
         self.assertIn("risk_action", html)
-        for hook in ("/api/learning", "wellSelect", "geometryPlot", "targetPlot", "grPlot", "presetE003", "e003ScoreLadder", "presetOracle"):
+        self.assertIn("deployment_gap", html)
+        for hook in ("/api/learning", "wellSelect", "geometryPlot", "targetPlot", "grPlot", "presetE003", "e003ScoreLadder", "e004ScoreLadder", "e004ContractCards", "presetOracle"):
             self.assertIn(hook, html)
         self.assertIn("Learning simulator", html)
         self.assertIn("Illegal truth-fit demo", html)
@@ -193,6 +196,18 @@ class LearningDashboardTests(unittest.TestCase):
         payload = tracker.learning_well(well_id)
         self.assertEqual(payload["e003_metrics"]["evidence_label"], "cross_fitted_oof")
         self.assertFalse(payload["e003_metrics"]["deployment_ready"])
+
+    def test_repository_e004_learning_payload_is_local_ready_but_remote_blocked(self):
+        tracker = MODULE.Tracker(ROOT, ROOT / "tracking/rogii.sqlite")
+        state = tracker.learning_state()
+        self.assertIsNotNone(state["e004"])
+        self.assertEqual(state["e004"]["status"], "blocked")
+        self.assertEqual(state["e004"]["selected_candidate"], "geometry_prefix")
+        self.assertAlmostEqual(state["e004"]["selected_candidate_metrics"]["rmse"], 15.491306398267565)
+        self.assertTrue(state["e004"]["deployment"]["local_model_ready"])
+        self.assertTrue(state["e004"]["deployment"]["local_notebook_parity"])
+        self.assertFalse(state["e004"]["deployment"]["remote_kaggle_mcp_parity"])
+        self.assertFalse(state["e004"]["deployment"]["deployment_ready"])
 
 
 if __name__ == "__main__":

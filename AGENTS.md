@@ -32,6 +32,7 @@ Discussion statements are leads, not facts. Record material claims in `archive/c
 - Primary metric is pooled row-level RMSE. Also report median, p90, p95, maximum per-well RMSE, worst-5%/10% SSE share, mean-error SSE share, and residual correlation with candidate ensemble members.
 - Freeze fold maps before model comparison. Use repeated fold maps and at least one harsher split for promotion.
 - Every learned feature family must pass a known-positive control, no-op control, duplicate-feature control, and shuffled-evidence control where applicable.
+- Before promoting any feature or candidate, audit the actual train and test schemas and missingness contract. A train-only column may be used for oracle understanding or diagnostics only; it cannot be described as deployable evidence unless an equivalent test-time source is verified.
 - Candidate routing and uncertainty gates must prove signed action, not merely risk detection.
 - Evaluate components in their final pipeline placement. An isolated gain does not authorize stacking.
 - Preserve negative results and exact configurations.

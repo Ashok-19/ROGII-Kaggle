@@ -1,6 +1,6 @@
 # ROGII Project Memory
 
-Last updated: 2026-07-18
+Last updated: 2026-07-19
 
 ## Mission state
 
@@ -9,7 +9,7 @@ Last updated: 2026-07-18
 - Best Kaggle-MCP-verified submission for this account/team history: 7.119 on 2026-07-16, ref 54754431.
 - User-reported best: 6.888; submission reference not yet verified.
 - Current public top-100 cutoff in the archived snapshot: 6.799.
-- E001 validation infrastructure is complete. E002 is rejected. E003 is promoted as OOF coefficient-action and risk evidence, but no E003 deployment notebook or Kaggle submission exists yet.
+- E001 is frozen, E002 is rejected, E003 is promoted as surface-assisted OOF understanding, and E004 is completed with a locally ready but remotely blocked surface-free deployment package.
 
 ## Foundation completed
 
@@ -19,55 +19,50 @@ Last updated: 2026-07-18
 - Copied notebook audited: seven named external datasets plus one opaque mount; three named datasets have unknown licenses.
 - SQLite experiment ledger, auto-sync CLI, dashboard, manifests, validation protocol, and roadmap are installed.
 - E001 is promoted: five deterministic whole-well fold maps, one shared evaluator, controls, reports, and hashes are frozen.
-- E002 is rejected: the transform sign is verified, but every naive low-order structural continuation lost to last-known TVT on all 25 frozen fold cells.
-- E003 is promoted: a legal cross-fitted ridge datum-plus-trend action scores 10.9279740918 RMSE, and a separate forest risk probe reaches 0.5415 Spearman / 0.8125 worst-20% AUC.
-- The dashboard Learning Lab provides a beginner-first visual guide, real-well interactive playground, feature glossary, error demonstrations, idea prompts, and a breakthrough timeline.
+- E002 is rejected: the transform sign is verified, but every naive low-order structural continuation lost to last-known TVT.
+- E003 is promoted as analysis: surface-assisted cross-fitted ridge datum-plus-trend scores 10.9279740918 RMSE, and a separate forest risk probe reaches 0.5415 Spearman / 0.8125 worst-20% AUC.
+- E004 is completed: the actual test schema was audited, eight surface-free ablations were evaluated, a deterministic model and offline notebook were packaged, and direct/notebook submissions match byte-for-byte.
+- The dashboard Learning Lab provides a beginner-first visual guide, real-well playground, feature glossary, error demonstrations, idea prompts, and a breakthrough timeline.
 
 ## Durable understanding
 
-- Score is pooled row-level RMSE on hidden suffix rows.
-- Use whole-well suffix CV; random rows are invalid.
-- The visible three test wells are authoring examples derived from training data.
-- `U = TVT + Z` separates known trajectory wiggle from the difficult smooth structural level/trend.
-- Per-well datum/mean error and a small number of expensive wells dominate SSE.
-- Aggregate CV may invert against the public leaderboard.
-- Risk detection does not prove signed correction direction.
-- Weak but decorrelated models may improve an ensemble; stacking individually good corrections may still fail.
-- E001 reproduced last-known-TVT RMSE 15.9098528707 on 3,783,989 hidden rows.
-- Baseline SSE decomposes into 67.75% per-well mean/datum, 14.53% linear trend, and 17.72% remaining shape.
-- Worst 5% and 10% of wells contribute 38.99% and 52.48% of baseline SSE.
-- E002 verified that visible `U = TVT + Z` row changes are much smoother than `TVT - Z` (RMS ratio 0.158), but smoothness does not make heel trend safely extrapolatable.
-- Robust-linear U was the best structural challenger at 39.6546 RMSE versus 15.9099 for last-known TVT; it won 0/25 frozen fold cells.
-- Oracle-only diagnostics show visible and hidden U slopes correlate 0.928 with 97.93% sign agreement, yet the median absolute slope error is 0.00819 ft/row and compounds across long suffixes.
-- Median hidden U slope nearly equals hidden Z slope, leaving median hidden TVT slope near zero; last-known TVT captures this cancellation better than naive U continuation.
-- E003 legal features predict datum correction at 0.7909 Pearson with 88.39% material sign accuracy and trend correction at 0.8668 Pearson with 89.47% sign accuracy.
-- Ridge datum-plus-trend improves all five frozen maps, lowers p90 well RMSE from 22.97 to 15.92, and retains 11.2541 RMSE under contiguous spatial-X blocks.
-- The best no-evidence fold-mean action scores 15.8444; E003's feature-based gain is therefore not explained by global calibration.
-- E003 risk evidence is useful, but remains separate from signed action and cannot authorize routing by itself.
+- Score is pooled row-level RMSE on hidden suffix rows; use whole-well suffix CV.
+- The visible three test wells are train-derived authoring examples, not hidden-test evidence.
+- `U = TVT + Z` separates known trajectory wiggle from difficult structural level/trend, but naive U continuation is unsafe.
+- Baseline last-known-TVT RMSE is 15.9098528707 over 3,783,989 hidden rows.
+- Baseline SSE is 67.75% datum, 14.53% linear trend, and 17.72% remaining shape; the worst 5% and 10% of wells contribute 38.99% and 52.48% of SSE.
+- E002 shows a median U-slope error of only 0.00819 ft/row can compound to roughly 41 ft over 5,000 rows.
+- E003 proves strong signed action is learnable when supplied formation surfaces are included: datum Pearson 0.7909, trend Pearson 0.8668, and 10.9280 RMSE.
+- The six formation-surface columns `ANCC`, `ASTNU`, `ASTNL`, `EGFDU`, `EGFDL`, and `BUDA` exist in train but are absent from test horizontal files. Test typewells also omit `Geology`.
+- Therefore E003's 10.9280 result is valid OOF understanding but is not deployable as implemented.
+- E004's best test-deployable ridge uses only geometry plus visible-prefix evidence and scores 15.4913063983 RMSE, a 0.4185464725 gain over last-known TVT.
+- E004 improves all five maps and retains 15.5767054107 RMSE under contiguous spatial blocks, but trend Pearson falls to 0.0580 and datum Pearson to 0.2692 without surfaces.
+- Prefix evidence is essential: removing it leaves only 0.0883 gain and 0/5 registered map wins.
+- GR, typewell summaries, and absolute spatial context do not improve the frozen geometry-prefix ridge. This does not test explicit GR alignment, PF, or trellis paths.
+- E004 local direct and notebook submissions are byte-identical over 14,151 authoring-example rows; remote Kaggle MCP parity remains unavailable and deployment-ready is false.
 
 ## Decisions
 
-- The copied notebook is an idea catalogue, not an approved baseline.
-- No private/opaque or unknown-license artifact enters the final solution.
+- The copied notebook is an idea catalogue, not an approved baseline; no private/opaque or unknown-license artifact enters the final solution.
 - No model is promoted from a single aggregate CV number.
-- One final slot should represent a public-proven family; the other should be a decorrelated, control-validated private-expectation family.
 - `folds/v1.json` through `folds/v5.json`, data signature `6ebe65b4...fe77`, and E001 metric/control semantics are immutable.
 - Heavy training, large OOF generation, and accelerator workflows should use Kaggle MCP notebook sessions after committing exact code/configuration.
-- Material breakthroughs and newly understood failure modes must also be added to the Learning Lab in evidence-labeled visual form.
-- Naive constant/heel-linear/quadratic/spline U continuation is rejected. U remains useful only as a representation, diagnostic, and evidence space until signed future-trend change is legally predictable.
-- E003 authorizes the fixed legal ridge datum-plus-trend action and forest risk score as candidate-bank components. It does not authorize a Kaggle submission until full-training fitting, feature-family ablation, test-distribution audit, exact reconstruction, and offline parity pass.
+- Material breakthroughs and failure modes must be added to the Learning Lab in evidence-labeled visual form.
+- E003's surface-assisted coefficient action remains a diagnostic/candidate-learning result, not a competition inference candidate.
+- Retain E004 geometry-prefix only as a weak packaged fallback and possible ensemble leg; do not submit it solely from 15.49 local CV.
+- Primary modeling now shifts to candidates using inputs genuinely available at test time: explicit typewell/horizontal GR alignment, particle filtering, trellis/dynamic programming, and candidate disagreement.
 
 ## Exact next action
 
-Run E004: package the E003 coefficient candidate for full-training inference, freeze feature-family ablations, audit train-versus-test feature drift, reconstruct exact test rows, and validate a Kaggle MCP offline parity notebook before any submission.
+Run E005: build independent PF and trellis OOF paths from only MD, X, Y, Z, GR, TVT_input, and typewell TVT/GR. Include no-GR fallbacks, shuffled-GR controls, repeated folds, tail metrics, runtime bounds, and residual correlations against last-known TVT and E004 geometry-prefix.
 
 ## Open risks
 
-- Public leaderboard is a small/noisy ranking sample and may reward the wrong family.
 - Hidden test has about 200 wells and may differ strongly from local fold composition.
-- E003 signed correction is strong locally, but full-training predictions and the hidden-test feature distribution may differ from averaged OOF behavior.
+- Public/local ordering can invert; E004's 0.42 gain is too small to justify an isolated submission.
+- GR has repeated motifs and substantial missingness; alignment quality may not identify the correct path.
+- Remote Kaggle MCP parity for `notebooks/e004_deployment.ipynb` is blocked because no Kaggle MCP tool/plugin is available in the current environment.
 - Runtime and artifact packaging must remain under the 9-hour offline notebook limit.
-- A Kaggle bearer credential appeared in a local application log during discovery and should be rotated; it is not stored in this repository.
 
 ## Memory update rule
 

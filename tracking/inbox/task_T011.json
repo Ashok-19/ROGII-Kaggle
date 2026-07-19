@@ -1,0 +1,13 @@
+{
+  "type": "task",
+  "recorded_at": "2026-07-19T06:48:00Z",
+  "payload": {
+    "task_id": "T011",
+    "title": "Run E004 notebook through Kaggle MCP",
+    "status": "blocked",
+    "priority": 2,
+    "phase": "deployment",
+    "depends_on": "T009",
+    "due_at": "2026-07-23"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-19T06:48:00Z",
+  "payload": {
+    "decision_id": "D006",
+    "decided_at": "2026-07-19",
+    "title": "Separate train-only structural diagnostics from deployable evidence",
+    "decision": "Treat E003's 10.9280 surface-assisted result as validated OOF understanding but not a competition-deployable candidate. Retain E004 geometry-plus-prefix only as a weak packaged fallback and move the primary queue to test-available GR/typewell PF and trellis paths.",
+    "rationale": "All six formation-surface columns are absent from test horizontal files. Removing them reduces the best coefficient model to 15.4913 RMSE. GR/typewell summary ablations do not improve the geometry-prefix core, so explicit alignment/state candidates are the next falsifiable route.",
+    "source_ids": "experiments/E003/RESULT.md,experiments/E004/RESULT.md",
+    "revisit_trigger": "The official test schema changes, the missing surfaces are legally supplied through a verified competition input, or an explicit test-available model reconstructs equivalent evidence."
+  }
+}
