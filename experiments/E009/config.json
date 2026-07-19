@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E009",
+  "data_signature": "6ebe65b403f80fefd97dcd7bbfce7314252e779a1837c97364cf55761590fe77",
+  "expected_wells": 773,
+  "fold_files": [
+    "folds/v1.json",
+    "folds/v2.json",
+    "folds/v3.json",
+    "folds/v4.json",
+    "folds/v5.json"
+  ],
+  "parents": {
+    "e008_legal_features": "experiments/E008/results/legal_features.csv",
+    "e008_legal_features_sha256": "c4b332ccb62559609aee501eb6cd66237cf6a98fc370caa542d6be99b43f8853",
+    "e008_residual_targets": "experiments/E008/results/residual_targets.csv",
+    "e008_residual_targets_sha256": "bae9a5b11f63285d56d8b603c56d0d61579a43eb19a213d66c5b6b8a4eb4b439",
+    "e008_oof": "artifacts/E008/oof_predictions.csv.gz",
+    "e008_oof_sha256": "fe1f05f6dd6dc91e94a07658637d318c2b311b7f470bae24cc86f51c9cc9d94d",
+    "e008_summary": "experiments/E008/results/summary.json",
+    "e008_summary_sha256": "be0c0d247079f70ebd8165188a2251351b230b4ccce6ac17ac154985e33e6625",
+    "e006_expected_rmse": 14.933140787236884,
+    "last_known_expected_rmse": 15.909852870734554
+  },
+  "target": {
+    "name": "residual_datum_ft",
+    "datum_soft_cap_ft": 30.0
+  },
+  "feature_contract": {
+    "exclude_absolute_spatial_coordinates": true,
+    "exclude_direct_typewell_features": true,
+    "exclude_formation_surfaces": true
+  },
+  "models": [
+    {
+      "name": "ridge_all_a25_f32",
+      "alpha": 25.0,
+      "maximum_features": 32,
+      "selector": "all"
+    },
+    {
+      "name": "ridge_all_a100_f32",
+      "alpha": 100.0,
+      "maximum_features": 32,
+      "selector": "all"
+    },
+    {
+      "name": "ridge_all_a25_f64",
+      "alpha": 25.0,
+      "maximum_features": 64,
+      "selector": "all"
+    },
+    {
+      "name": "ridge_no_e007_a25_f32",
+      "alpha": 25.0,
+      "maximum_features": 32,
+      "selector": "no_e007"
+    },
+    {
+      "name": "ridge_path_evidence_a25_f24",
+      "alpha": 25.0,
+      "maximum_features": 24,
+      "selector": "path_evidence"
+    },
+    {
+      "name": "ridge_visible_geometry_a25_f32",
+      "alpha": 25.0,
+      "maximum_features": 32,
+      "selector": "visible_geometry"
+    }
+  ],
+  "rules": [
+    {
+      "name": "consensus_majority",
+      "aggregate": "median",
+      "minimum_sign_fraction": 0.6666666666666666,
+      "maximum_relative_mad": 1.0,
+      "maximum_absolute_mad_ft": 999.0,
+      "minimum_absolute_action_ft": 1.0
+    },
+    {
+      "name": "consensus_strict",
+      "aggregate": "median",
+      "minimum_sign_fraction": 0.8,
+      "maximum_relative_mad": 0.75,
+      "maximum_absolute_mad_ft": 999.0,
+      "minimum_absolute_action_ft": 1.0
+    },
+    {
+      "name": "consensus_tight_absolute",
+      "aggregate": "median",
+      "minimum_sign_fraction": 0.8,
+      "maximum_relative_mad": 999.0,
+      "maximum_absolute_mad_ft": 3.0,
+      "minimum_absolute_action_ft": 1.0
+    }
+  ],
+  "candidate_order": [
+    "last_known_tvt",
+    "e006_nested_fusion",
+    "mean_all_models",
+    "median_all_models",
+    "consensus_majority",
+    "consensus_strict",
+    "consensus_tight_absolute",
+    "nested_consensus",
+    "shuffled_model_consensus",
+    "sign_flipped_consensus",
+    "oracle_residual_datum"
+  ],
+  "eligible_candidates": [
+    "consensus_majority",
+    "consensus_strict",
+    "consensus_tight_absolute",
+    "nested_consensus"
+  ],
+  "inner_selection": {
+    "minimum_gain_vs_e006": 0.01,
+    "maximum_p90_deterioration_vs_e006": 0.1,
+    "maximum_worst5_sse_share_increase_vs_e006": 0.005,
+    "minimum_action_fraction": 0.1,
+    "near_best_rmse_tolerance": 0.01,
+    "tie_break": "candidate_order"
+  },
+  "stress": {
+    "spatial_bins": 5,
+    "typewell_clusters": 5,
+    "long_suffix_quantile": 0.8,
+    "high_missing_gr_quantile": 0.8,
+    "low_consensus_margin_quantile": 0.2,
+    "high_dispersion_quantile": 0.8
+  },
+  "controls": {
+    "parent_rmse_tolerance": 1e-09,
+    "zero_action_maximum_prediction_delta": 1e-12,
+    "duplicate_model_maximum_prediction_delta": 1e-10,
+    "pooled_sse_relative_tolerance": 1e-12,
+    "maximum_shuffled_gain_vs_e006": 0.03,
+    "maximum_sign_flipped_gain_vs_e006": 0.03,
+    "oracle_minimum_gain_vs_best_legal": 0.05,
+    "maximum_absolute_emitted_correction_ft": 30.0,
+    "minimum_nested_action_fraction": 0.1,
+    "maximum_nested_action_fraction": 0.9
+  },
+  "promotion": {
+    "minimum_gain_vs_e006": 0.05,
+    "minimum_gain_vs_last_known": 0.5,
+    "minimum_map_wins": 4,
+    "minimum_map_gain": 0.01,
+    "minimum_outer_cell_wins": 17,
+    "maximum_p90_deterioration_vs_e006": 0.1,
+    "maximum_p90_deterioration_vs_last_known": 0.5,
+    "maximum_worst5_sse_share_increase_vs_e006": 0.005,
+    "maximum_worst5_sse_share_increase_vs_last_known": 0.01,
+    "require_positive_spatial_group_gain_vs_e006": true,
+    "require_positive_typewell_group_gain_vs_e006": true,
+    "maximum_special_slice_deterioration_vs_e006": 0.05,
+    "maximum_runtime_minutes": 30,
+    "maximum_rss_mb": 1536
+  },
+  "deployment": {
+    "maximum_package_mb": 100,
+    "require_exact_sample_ids_and_order": true,
+    "require_finite_predictions": true,
+    "require_exact_e006_fallback": true,
+    "require_local_notebook_byte_parity_if_promoted": true,
+    "require_private_internet_disabled_kaggle_parity_if_promoted": true,
+    "internet": false,
+    "external_artifacts": []
+  }
+}
