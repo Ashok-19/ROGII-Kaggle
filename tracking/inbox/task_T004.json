@@ -1,10 +1,10 @@
 {
   "type": "task",
-  "recorded_at": "2026-07-18T19:20:58Z",
+  "recorded_at": "2026-07-19T05:38:12Z",
   "payload": {
     "task_id": "T004",
     "title": "Quantify and predict heel-to-toe trend change",
-    "status": "next",
+    "status": "done",
     "priority": 1,
     "phase": "oracle_and_predictability",
     "depends_on": "T003",

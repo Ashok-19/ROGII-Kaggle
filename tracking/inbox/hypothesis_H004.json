@@ -1,0 +1,14 @@
+{
+  "type": "hypothesis",
+  "recorded_at": "2026-07-19T05:38:12Z",
+  "payload": {
+    "hypothesis_id": "H004",
+    "title": "Risk without actuation",
+    "statement": "Uncertainty features can identify expensive wells but cannot safely choose correction sign.",
+    "status": "rejected",
+    "priority": 2,
+    "evidence_for": "E003 forest risk prediction is useful: Spearman 0.5415 and worst-20% AUC 0.8125.",
+    "evidence_against": "A separate legal ridge action predicts material datum sign at 88.39% and trend sign at 89.47%, improving pooled RMSE to 10.9280 with positive spatial stress.",
+    "next_test": "Keep risk and action as separate outputs, package the signed action for full-training inference, and reject any risk-based router that does not beat the fixed action."
+  }
+}

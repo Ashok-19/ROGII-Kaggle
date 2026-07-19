@@ -1,6 +1,6 @@
 # ROGII Gold Medal Roadmap
 
-Updated: 2026-07-18  
+Updated: 2026-07-19  
 Final deadline: 2026-08-05 23:59 UTC / 2026-08-06 05:29 Asia/Kolkata  
 Time remaining at update: 18 days
 
@@ -21,13 +21,13 @@ Completed before model development:
 - `AGENTS.md`, `MEMORY.md`, control-first workflow, SQLite ledger, auto-sync CLI, validation command, and dashboard created.
 - Previous roadmap preserved under `archive/legacy/`.
 
-E001 is promoted and frozen. E002 completed the independent structural ladder and rejected every naive U continuation; last-known TVT remains the retained baseline.
+E001 is promoted and frozen. E002 rejected every naive U continuation. E003 then promoted a legal cross-fitted ridge datum-plus-trend action at 10.9280 RMSE and a separate forest risk probe, while explicitly withholding deployment status.
 
 ## What the evidence changes
 
 ### 1. The target is structural position
 
-Let `U = TVT + Z`. E002 verifies that U is the smoother and correctly signed structural coordinate, but also shows that smoothness is not enough for long-horizon extrapolation. Constant, heel-linear, quadratic, and damped-spline U continuations scored 39.65–115.84 RMSE versus 15.91 for last-known TVT. Hidden U generally moves almost with Z, leaving TVT nearly flat; the next target is the small heel-to-toe U-slope change or hidden TVT drift, not raw U continuation.
+Let `U = TVT + Z`. E002 verifies that U is smoother but unsafe to extrapolate directly. E003 resolves the apparent contradiction: predict a legal low-order correction to last-known TVT from supplied geometry, formation surfaces, visible-prefix stability, GR summaries, and typewell context. Cross-fitted ridge datum-plus-trend reaches 10.9280 RMSE, while hidden-label oracle datum-plus-trend remains 6.6972. The remaining work is feature-family validation, deployment parity, richer path shape, and independent candidates—not raw U continuation.
 
 ### 2. The error is concentrated
 
@@ -43,7 +43,7 @@ A 13.420 trellis improved a 7.762 ensemble to 7.699 because residual correlation
 
 ### 5. Risk detection is not correction
 
-Uncertainty and disagreement can locate expensive wells, but signed datum direction may remain unavailable. Gates need evidence that they choose the right action, not only the right wells.
+E003 shows that risk and signed action are both learnable from legal evidence, but with separate models and separate gates. Forest risk reaches 0.5415 Spearman and 0.8125 worst-20% AUC; ridge datum-plus-trend achieves 88.39% material datum-sign accuracy and improves all five maps. A risk score still cannot authorize routing unless the routed action beats the fixed E003 action under repeated and shift validation.
 
 ## Score objectives
 
@@ -143,16 +143,18 @@ Exit gate: identical reruns reproduce metrics; pooled and direct RMSE agree; no 
 
 Measured outcome: E002 retained last-known TVT at 15.9099 RMSE. Robust-linear U was the least-bad challenger at 39.6546, won 0/25 fold cells, and degraded long-hidden RMSE to 48.5525. The candidate matrix is retained only for diagnostics and future disagreement features.
 
-### July 21–23 — Candidate-bank reconstruction
+### July 19–22 — E003 packaging and candidate-bank reconstruction
 
-Deliverables:
+Immediate deliverables:
 
-- Clean interfaces for physics/contact, typewell alignment, self-correlation, PF, and trellis candidates.
-- No copied pretrained models.
-- Candidate OOF matrix and residual-correlation matrix.
-- Candidate performance by regime and fold.
+- Package the promoted E003 ridge datum-plus-trend action as a full-training candidate with exact row reconstruction.
+- Freeze legal feature-family ablations: geometry/Z, surfaces, visible-prefix backtests, GR, typewell, and spatial context.
+- Audit train-versus-test feature missingness, range, and extrapolation.
+- Build a Kaggle MCP offline parity notebook for this lightweight candidate before considering submission.
+- Then add clean physics/contact, typewell alignment, self-correlation, PF, and trellis interfaces using identical OOF IDs.
+- Produce candidate OOF matrix, residual correlations, and regime/fold performance.
 
-Exit gate: at least two candidates show genuine complementarity or one candidate materially improves the best independent baseline.
+Exit gate: E003 retains a material ablated and full-training-safe advantage, or an independent candidate materially improves/diversifies it. No submission before exact parity and provenance checks.
 
 ### July 24–26 — Tabular residual and datum models
 
@@ -231,14 +233,14 @@ These defaults may be revised only through a recorded decision before seeing the
 
 1. **E001 — Metric and fold harness — completed 2026-07-18.** Evaluator, five fold maps, leakage controls, reports, and hashes are frozen.
 2. **E002 — Structural baseline ladder — completed and rejected 2026-07-19.** Sign verified; last-known TVT retained; naive U continuation rejected after 0/25 fold-cell wins.
-3. **E003 — Datum/trend oracle and transfer predictability — next.** Quantify oracle headroom and test legal prediction of heel-to-toe U-slope delta, hidden TVT drift, risk magnitude, and signed action separately.
-4. **E004 — Clean PF and trellis candidates.** Independent implementations with OOF paths.
-5. **E005 — Candidate evidence tree stack.** Positive/no-op/duplicate/shuffle controls.
+3. **E003 — Datum/trend and risk learnability — completed and promoted 2026-07-19.** Ridge datum-plus-trend scores 10.9280; forest risk scores 0.5415 Spearman / 0.8125 AUC; both pass repeated and spatial gates.
+4. **E004 — E003 deployment candidate and feature-family ablations — next.** Full-training fit, ablations, test-drift audit, exact reconstruction, and Kaggle MCP parity.
+5. **E005 — Clean PF and trellis candidates.** Independent implementations with OOF paths and residual correlations against E003.
 6. **E006 — Horizontal self-correlation candidate.** Template-shuffle control.
-7. **E007 — Small sequence residual corrector.** Only after E005 establishes the feature/target frame.
-8. **E008 — OOF diversity ensemble.** Cross-fit fixed weights and placement tests.
-9. **E009 — Uncertainty detection versus signed action.** No actuation unless sign evidence passes.
-10. **E010 — Kaggle offline parity.** Clean package, runtime and exact IDs.
+7. **E007 — Candidate evidence tree stack.** Extend E003 with independent candidate evidence and strict controls.
+8. **E008 — Small sequence residual corrector.** Only after E007 freezes the feature/target frame.
+9. **E009 — OOF diversity ensemble and uncertainty placement.** Cross-fit weights; risk cannot route without beating the fixed action.
+10. **E010 — Final Kaggle offline parity.** Clean package, runtime, exact IDs, and finalist notebooks.
 
 ## Explicitly rejected behavior
 

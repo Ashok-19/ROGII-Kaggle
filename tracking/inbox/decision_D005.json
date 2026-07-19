@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-19T05:38:12Z",
+  "payload": {
+    "decision_id": "D005",
+    "decided_at": "2026-07-19",
+    "title": "Promote legal datum-trend action and risk evidence",
+    "decision": "Promote E003's legal feature representation, ridge datum-plus-trend action, and forest risk score into the candidate bank, while withholding deployment and submission status until full-training packaging and Kaggle parity pass.",
+    "rationale": "The action improved pooled RMSE from 15.9099 to 10.9280 on all five maps, retained a 4.6557 gain under contiguous spatial blocks, improved all tail metrics, passed controls, reproduced byte-for-byte, and was independently rescored from raw rows. Risk evidence also passed repeated and spatial gates.",
+    "source_ids": "experiments/E003/RESULT.md",
+    "revisit_trigger": "A feature-provenance defect, failed full-training/test-distribution audit, failed Kaggle parity, or contradictory leaderboard evidence."
+  }
+}

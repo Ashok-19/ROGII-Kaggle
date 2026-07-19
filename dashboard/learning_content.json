@@ -99,8 +99,8 @@
           "name": "ANCC / ASTNU / ASTNL / EGFDU / EGFDL / BUDA",
           "plain_name": "Formation-surface coordinates",
           "meaning": "Six competition-provided reference surfaces. Their relative spacing and movement can describe a shared geological frame.",
-          "use": "Surface-relative offsets, dip proxies, candidate constraints, and whole-well context.",
-          "watch_out": "Do not assume they are independent 3D ground truth. Their construction and relation to the typewell require controlled tests."
+          "use": "Surface-relative offsets, hidden-segment movement, dip proxies, candidate constraints, and whole-well context. E003 verified that surface movement is strongly useful for low-order datum/trend prediction.",
+          "watch_out": "They are legal supplied features, but selection frequency is not causal proof. Feature-family ablations and train-versus-test drift checks are still required."
         }
       ]
     },
@@ -166,8 +166,8 @@
     {
       "id": "uncertainty",
       "title": "Knowing a well is risky is not enough",
-      "plain": "A model may identify difficult wells without knowing whether to move the prediction upward or downward.",
-      "technical": "Risk detection and signed correction are evaluated separately; routing requires evidence that the chosen action has the correct direction."
+      "plain": "One model can estimate which wells are risky while a different model estimates how to move the path. These are separate questions.",
+      "technical": "E003 validates both outputs separately: forest risk reaches 0.8125 worst-20% AUC, while ridge datum-plus-trend reaches 10.9280 RMSE. The risk score still cannot authorize routing by itself."
     }
   ],
   "breakthroughs": [
@@ -216,13 +216,23 @@
       "visual": "trend_transfer",
       "summary": "E002 verified the U sign but rejected every naive structural continuation. Robust-linear U scored 39.6546 versus 15.9099 for last-known TVT and won 0 of 25 frozen fold cells.",
       "why_it_matters": "Visible and hidden U slopes correlate 0.928, yet a median slope error of 0.00819 ft per row compounds to roughly 41 ft over 5,000 rows. Model the future slope change or TVT drift instead of extending the heel trend unchanged."
+    },
+    {
+      "id": "B006",
+      "date": "2026-07-19",
+      "title": "Legal evidence predicts both low-order action and risk",
+      "evidence": "local_verified",
+      "visual": "risk_action",
+      "summary": "E003 lowers pooled RMSE from 15.9099 to 10.9280 with a cross-fitted ridge datum-plus-trend action. A separate forest risk probe reaches 0.5415 Spearman and 0.8125 worst-20% AUC.",
+      "why_it_matters": "Supplied formation surfaces, hidden Z geometry, visible U stability, prefix backtests, GR summaries, and typewell context contain actionable signal. The result passes all five maps and contiguous spatial blocks, but still requires full-training and Kaggle parity before submission."
     }
+
   ],
   "idea_questions": [
     {
-      "signal": "trend transfer",
-      "question": "Can legal visible-prefix and whole-well evidence predict the small difference between heel U slope and toe U slope without using hidden labels at inference?",
-      "falsifier": "Signed slope-delta correlation disappears on repeated folds, or an uncertainty model detects large errors but cannot choose the correction direction."
+      "signal": "deployment",
+      "question": "Does the promoted E003 correction retain its advantage after each feature family is removed, one full-training model is fit, and train-versus-test drift is measured?",
+      "falsifier": "The gain depends on one unstable feature family, full-training predictions move outside OOF behavior, test features extrapolate strongly, or Kaggle parity fails."
     },
     {
       "signal": "geometry",
@@ -246,8 +256,8 @@
     },
     {
       "signal": "uncertainty",
-      "question": "Can disagreement predict both risk magnitude and the correct signed action?",
-      "falsifier": "Risk ranking is useful but signed correction correlation remains near zero."
+      "question": "Can E003 risk improve a fixed candidate or blend without replacing the independently validated signed action?",
+      "falsifier": "A risk-routed policy fails to beat the fixed E003 action on repeated folds or spatial stress."
     },
     {
       "signal": "ensemble",
@@ -286,6 +296,12 @@
       "title": "E002 rejected structural ladder",
       "local_path": "experiments/E002/RESULT.md",
       "url": ""
+    },
+    {
+      "title": "E003 promoted learnability result",
+      "local_path": "experiments/E003/RESULT.md",
+      "url": ""
     }
+
   ]
 }

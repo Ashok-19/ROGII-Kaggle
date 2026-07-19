@@ -120,6 +120,7 @@ class LearningDashboardTests(unittest.TestCase):
         self.assertAlmostEqual(item["trend_share"], 0.25)
         self.assertEqual(state["recommended_wells"][0]["well_id"], "aaaaaaaa")
         self.assertEqual(state["e001"]["data"]["hidden_rows"], 3)
+        self.assertIsNone(state["e003"])
 
     def test_learning_well_preserves_visibility_boundary(self):
         payload = self.tracker.learning_well("aaaaaaaa", max_points=4)
@@ -132,6 +133,7 @@ class LearningDashboardTests(unittest.TestCase):
         self.assertIsNone(sampled[3])
         self.assertEqual(payload["metadata"]["formation_names"], ["ANCC"])
         self.assertEqual(payload["e001_metrics"]["regime"], "short_hidden")
+        self.assertEqual(payload["e003_metrics"], {})
 
     def test_learning_well_rejects_invalid_ids(self):
         with self.assertRaises(ValueError):
@@ -173,11 +175,24 @@ class LearningDashboardTests(unittest.TestCase):
         self.assertGreaterEqual(len(content["breakthroughs"]), 4)
         self.assertEqual(content["updated_at"], "2026-07-19")
         self.assertTrue(any(item["id"] == "B005" for item in content["breakthroughs"]))
+        self.assertTrue(any(item["id"] == "B006" for item in content["breakthroughs"]))
         self.assertIn("trend_transfer", html)
-        for hook in ("/api/learning", "wellSelect", "geometryPlot", "targetPlot", "grPlot", "presetOracle"):
+        self.assertIn("risk_action", html)
+        for hook in ("/api/learning", "wellSelect", "geometryPlot", "targetPlot", "grPlot", "presetE003", "e003ScoreLadder", "presetOracle"):
             self.assertIn(hook, html)
         self.assertIn("Learning simulator", html)
         self.assertIn("Illegal truth-fit demo", html)
+
+    def test_repository_e003_learning_payload_is_promoted_but_not_deployed(self):
+        tracker = MODULE.Tracker(ROOT, ROOT / "tracking/rogii.sqlite")
+        state = tracker.learning_state()
+        self.assertIsNotNone(state["e003"])
+        self.assertEqual(state["e003"]["status"], "promoted")
+        self.assertTrue(state["e003"]["decision"]["signed_action_authorized"])
+        well_id = state["well_catalog"][0]["well_id"]
+        payload = tracker.learning_well(well_id)
+        self.assertEqual(payload["e003_metrics"]["evidence_label"], "cross_fitted_oof")
+        self.assertFalse(payload["e003_metrics"]["deployment_ready"])
 
 
 if __name__ == "__main__":

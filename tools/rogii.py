@@ -409,11 +409,13 @@ class Tracker:
         profile_path = self.root / "experiments" / "E001" / "results" / "data_profile.csv"
         metrics_path = self.root / "experiments" / "E001" / "results" / "well_metrics.csv"
         summary_path = self.root / "experiments" / "E001" / "results" / "summary.json"
+        e003_summary_path = self.root / "experiments" / "E003" / "results" / "summary.json"
         for path in (content_path, profile_path, metrics_path, summary_path):
             if not path.exists():
                 raise FileNotFoundError(path)
         content = read_json(content_path)
         summary = read_json(summary_path)
+        e003_summary = read_json(e003_summary_path) if e003_summary_path.exists() else None
         with profile_path.open(newline="", encoding="utf-8") as handle:
             profiles = {row["well_id"]: row for row in csv.DictReader(handle)}
         catalog: list[dict[str, Any]] = []
@@ -466,6 +468,7 @@ class Tracker:
                 "data": summary["data"],
                 "controls": summary["controls"],
             },
+            "e003": e003_summary,
             "recommended_wells": recommended,
             "well_catalog": sorted(catalog, key=lambda x: x["well_id"]),
         }
@@ -532,6 +535,24 @@ class Tracker:
                             "regime": row.get("regime") or "unknown",
                         }
                         break
+        e003_metrics: dict[str, Any] = {}
+        e003_path = self.root / "experiments" / "E003" / "results" / "selected_well_metrics.csv"
+        if e003_path.exists():
+            with e003_path.open(newline="", encoding="utf-8") as handle:
+                for row in csv.DictReader(handle):
+                    if row.get("well_id") == well_id:
+                        e003_metrics = {
+                            "candidate": row.get("candidate"),
+                            "predicted_datum": float_or_none(row.get("predicted_datum")),
+                            "predicted_trend": float_or_none(row.get("predicted_trend")),
+                            "actual_datum_oracle": float_or_none(row.get("actual_datum")),
+                            "actual_trend_oracle": float_or_none(row.get("actual_trend")),
+                            "baseline_rmse": float_or_none(row.get("baseline_rmse")),
+                            "corrected_rmse": float_or_none(row.get("corrected_rmse")),
+                            "evidence_label": "cross_fitted_oof",
+                            "deployment_ready": False,
+                        }
+                        break
         last_visible = rows[hidden_start - 1]
         payload = {
             "well_id": well_id,
@@ -551,6 +572,7 @@ class Tracker:
             "series": series,
             "typewell": typewell,
             "e001_metrics": metrics,
+            "e003_metrics": e003_metrics,
         }
         if len(self._learning_well_cache) >= 32:
             oldest_key = next(iter(self._learning_well_cache))
