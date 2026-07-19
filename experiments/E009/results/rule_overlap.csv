@@ -1,0 +1,7 @@
+rule_a,rule_b,action_a,action_b,intersection,jaccard
+consensus_majority,consensus_majority,757,757,757,1
+consensus_majority,consensus_strict,757,745,745,0.984147952444
+consensus_majority,consensus_tight_absolute,757,748,748,0.988110964333
+consensus_strict,consensus_strict,745,745,745,1
+consensus_strict,consensus_tight_absolute,745,748,745,0.995989304813
+consensus_tight_absolute,consensus_tight_absolute,748,748,748,1

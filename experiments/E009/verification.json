@@ -1,0 +1,348 @@
+{
+  "artifacts": [
+    {
+      "bytes": 13621,
+      "kind": "result",
+      "path": "experiments/E009/results/action_metrics.csv",
+      "sha256": "fccf51a97042e98c2fdaa3a8c780555170ebd07642bd7b865025d3f73fef6e43"
+    },
+    {
+      "bytes": 5406,
+      "kind": "manifest",
+      "path": "experiments/E009/results/artifact_manifest.json",
+      "sha256": "cd142f73cb542901a157c1c47b921618bdb3fb0b1455f207a937cefab739cdb7"
+    },
+    {
+      "bytes": 6964,
+      "kind": "result",
+      "path": "experiments/E009/results/branch_map_metrics.csv",
+      "sha256": "b4bc9f75f64158539a8e5c3ded5b16cef4325c6ecfdd0073579b201a3e956bc6"
+    },
+    {
+      "bytes": 1569,
+      "kind": "result",
+      "path": "experiments/E009/results/branch_metrics.csv",
+      "sha256": "e461d43d4dda4fd1ec748e91f3e6b71f5cbdcb1762ee9b45d119cf16bb699e45"
+    },
+    {
+      "bytes": 52268,
+      "kind": "result",
+      "path": "experiments/E009/results/branch_outer_metrics.csv",
+      "sha256": "886dddaa83b1b6d229c75d9159880d58213baaeac1d23d9ef8e254ef362c70a5"
+    },
+    {
+      "bytes": 699,
+      "kind": "result",
+      "path": "experiments/E009/results/branch_target_metrics.csv",
+      "sha256": "c5a14bd9d1faafa6cdf8d55cae63e14587c04b204eb21c69ccb412c801b88b97"
+    },
+    {
+      "bytes": 2865,
+      "kind": "result",
+      "path": "experiments/E009/results/candidate_metrics.csv",
+      "sha256": "0217229804a3ef16298922999a8d1b8e12ac6a8dda8518a53f353702c18a63d7"
+    },
+    {
+      "bytes": 2001,
+      "kind": "result",
+      "path": "experiments/E009/results/control_metrics.csv",
+      "sha256": "6f5d43a91b2cfb6e21eab5c7645a2ba236282a024cb11da5cf1fcd93eaca93e4"
+    },
+    {
+      "bytes": 12389,
+      "kind": "result",
+      "path": "experiments/E009/results/map_metrics.csv",
+      "sha256": "8f42158e6c95fd7e264c6795cc283ebfd2fabbc058e121ef5142118605edb6a5"
+    },
+    {
+      "bytes": 1611,
+      "kind": "result",
+      "path": "experiments/E009/results/membership_audit.csv",
+      "sha256": "3433ba08faf4aad0b1bb407983b3e377ee6177ec01209b10ed7cf0ec524b2467"
+    },
+    {
+      "bytes": 8186,
+      "kind": "result",
+      "path": "experiments/E009/results/model.json",
+      "sha256": "78f7e838ddb423b225adc96b57146316993ecf0e2c130969b27f7e7b54824527"
+    },
+    {
+      "bytes": 22156,
+      "kind": "result",
+      "path": "experiments/E009/results/model_coefficients.csv",
+      "sha256": "2ae6cb75e425ab555bcafc91cce7d53aabe4b0991bfb769e44b694edc4283a66"
+    },
+    {
+      "bytes": 1483,
+      "kind": "result",
+      "path": "experiments/E009/results/model_correlations.csv",
+      "sha256": "57329f7f11f3c2c1895a61911b052489cc7a0de637415df02a31c8704d930b15"
+    },
+    {
+      "bytes": 179250,
+      "kind": "result",
+      "path": "experiments/E009/results/model_predictions.csv",
+      "sha256": "3f4d4782555d255305fd6f08945f72cf09db47fc3f531fdefda44fb973f5e41f"
+    },
+    {
+      "bytes": 37734,
+      "kind": "result",
+      "path": "experiments/E009/results/nested_selection_metrics.csv",
+      "sha256": "741b8c8c57f09e49f5d596a3365be877bc2060a0f81d460b8c57ca6451cec81c"
+    },
+    {
+      "bytes": 100793,
+      "kind": "result",
+      "path": "experiments/E009/results/outer_cell_metrics.csv",
+      "sha256": "009e9b608c76e589d8822701b86e007d4d8a27a2c55004439ea7b0d0459c40be"
+    },
+    {
+      "bytes": 420,
+      "kind": "result",
+      "path": "experiments/E009/results/rule_overlap.csv",
+      "sha256": "fcfbd63f21263c8570fa9ebf18e1d2e8720bd013a285d116ce6854c9133d6b1d"
+    },
+    {
+      "bytes": 29376,
+      "kind": "result",
+      "path": "experiments/E009/results/selected_feature_frequency.csv",
+      "sha256": "aceb3be7b92e48c950f821b7c7edc696ad3d6fb2648807f63aaced40648401ab"
+    },
+    {
+      "bytes": 194021,
+      "kind": "result",
+      "path": "experiments/E009/results/selected_well_metrics.csv",
+      "sha256": "b288d87551f652992a5457dc58691cf49e20c1c3b1881234911c04a3d3472c20"
+    },
+    {
+      "bytes": 10616,
+      "kind": "result",
+      "path": "experiments/E009/results/special_slice_metrics.csv",
+      "sha256": "985726ee83052ec63b741040cbb92b7f784f8b2f5478df86b7f041edf1aef1b4"
+    },
+    {
+      "bytes": 29205,
+      "kind": "result",
+      "path": "experiments/E009/results/stress_metrics.csv",
+      "sha256": "fbc6f1c54f7e9b77ed6079d6d1ce7b5ddec5541f087372ce59b2e8bceedfd56a"
+    },
+    {
+      "bytes": 21358,
+      "kind": "result",
+      "path": "experiments/E009/results/summary.json",
+      "sha256": "5339fd3d957b3c309b7e028ab244835d1ab1d2b9714894e03452545c8277ae2c"
+    },
+    {
+      "bytes": 887,
+      "kind": "result",
+      "path": "experiments/E009/results/target_metrics.csv",
+      "sha256": "1522fc4f13367baf472e758ba81180b6c1e976b28a89c04d592592f5a00ddf6b"
+    },
+    {
+      "bytes": 182723863,
+      "kind": "oof_predictions_gzip",
+      "path": "artifacts/E009/oof_predictions.csv.gz",
+      "sha256": "3609b06eb5c38ebbdecbd951e925e31b8633ba7c904d508230a8e5bc07c0052e",
+      "tracked": false
+    }
+  ],
+  "branch_evidence": {
+    "best_diagnostic_branch": "ridge_all_a25_f64",
+    "best_diagnostic_rmse": 14.635273314979647,
+    "eligible_for_e009_promotion": false,
+    "gain_vs_e006": 0.2978674722580248,
+    "map_wins": 5,
+    "outer_cell_wins": 15,
+    "worst_spatial_gain": -0.1176817962,
+    "worst_typewell_gain": -0.4363660342
+  },
+  "code_sha": "ed3a8a1c7c4e09a01fc3bf3d0e316228de55fade",
+  "completed_at": "2026-07-19T17:32:32Z",
+  "controls_failed": 1,
+  "controls_passed": 15,
+  "deployment": {
+    "deployment_ready": false,
+    "local_notebook_parity": false,
+    "local_package_built": false,
+    "private_internet_disabled_kaggle_parity": false,
+    "reason": "No E009 candidate passed every frozen gate; retain E006.",
+    "statistically_authorized": false,
+    "submission_created": false,
+    "submission_made": false
+  },
+  "design_commit": "9818888f5527f57856b31bf6af63f3a9bf7313d8",
+  "experiment_id": "E009",
+  "failed_controls": [
+    "sign_flipped"
+  ],
+  "failed_statistical_gates_by_candidate": {
+    "consensus_majority": [
+      "controls",
+      "outer_cells",
+      "spatial_stress",
+      "typewell_stress"
+    ],
+    "consensus_strict": [
+      "controls",
+      "outer_cells",
+      "repeated_maps",
+      "spatial_stress",
+      "typewell_stress"
+    ],
+    "consensus_tight_absolute": [
+      "controls",
+      "outer_cells",
+      "repeated_maps",
+      "spatial_stress",
+      "typewell_stress"
+    ],
+    "nested_consensus": [
+      "controls",
+      "gain_vs_e006",
+      "outer_cells",
+      "p90_vs_e006",
+      "repeated_maps",
+      "spatial_stress",
+      "typewell_stress"
+    ]
+  },
+  "implementation_commit": "ed3a8a1c7c4e09a01fc3bf3d0e316228de55fade",
+  "independent_clean_output_run": {
+    "ended_at": "2026-07-19T17:20:26.466Z",
+    "exit_status": 0,
+    "max_rss_kb_external": 725340,
+    "max_rss_kb_internal": 724188,
+    "started_at": "2026-07-19T17:14:50.764Z",
+    "stderr_bytes": 0,
+    "wall_seconds_external": 335.69,
+    "wall_seconds_internal": 334.6478628890036,
+    "wall_seconds_runner": 335.60562673199456
+  },
+  "official_run": {
+    "ended_at": "2026-07-19T17:11:43.830Z",
+    "exit_status": 0,
+    "max_rss_kb_external": 725808,
+    "max_rss_kb_internal": 723760,
+    "started_at": "2026-07-19T17:06:16.780Z",
+    "stderr_bytes": 0,
+    "wall_seconds_external": 327.04,
+    "wall_seconds_internal": 325.8496336709941,
+    "wall_seconds_runner": 326.96432717899734
+  },
+  "reported_candidate": "consensus_majority",
+  "reported_rmse": 14.793453219822904,
+  "repository_validation": {
+    "api": {
+      "e009_rejected_visible": true,
+      "health": 200,
+      "learning": 200,
+      "state": 200,
+      "well_catalog": 773
+    },
+    "artifact_manifest_hashes": {
+      "artifacts": 24,
+      "passed": true
+    },
+    "browser": {
+      "console_javascript_errors": 0,
+      "desktop": {
+        "index_dom_rendered": true,
+        "index_screenshot_bytes": 268173,
+        "learn_dom_rendered": true,
+        "learn_screenshot_bytes": 357715,
+        "viewport": "1440x900"
+      },
+      "engine": "installed Google Chrome headless",
+      "environment_warning": "Host DBus and VAAPI warnings only; GPU disabled and rendered status was Local evidence loaded.",
+      "mobile": {
+        "index_dom_rendered": true,
+        "index_screenshot_bytes": 120077,
+        "learn_dom_rendered": true,
+        "learn_screenshot_bytes": 112775,
+        "viewport": "390x844"
+      }
+    },
+    "completed_at": "2026-07-19T17:32:32Z",
+    "e009_edge_suite": {
+      "python_3_10": {
+        "failed": 0,
+        "passed": 12
+      },
+      "python_3_12": {
+        "failed": 0,
+        "passed": 12
+      },
+      "python_3_13": {
+        "failed": 0,
+        "passed": 12
+      }
+    },
+    "full_repository_suite": {
+      "failed": 0,
+      "passed": 103
+    },
+    "git_diff_check": true,
+    "independent_oof_recomputation": {
+      "finite": true,
+      "maximum_rmse_delta": 1.3701395573662012e-10,
+      "ordered": true,
+      "rows": 3783989,
+      "unique_ids": 3783989,
+      "wells": 773
+    },
+    "javascript": {
+      "dashboard_learning_node_check": true
+    },
+    "random_consensus_property_cases": 5000,
+    "random_duplicate_action_maximum_delta": 0.0,
+    "random_sufficient_statistic_maximum_rmse_delta": 1.5987211554602254e-14,
+    "sqlite": {
+      "artifacts": 106,
+      "decisions": 12,
+      "experiments": 9,
+      "hypotheses": 12,
+      "integrity": "ok",
+      "metrics": 147,
+      "runs": 9,
+      "sync_events": 1493,
+      "tasks": 16
+    },
+    "targeted_e009_dashboard_suite": {
+      "failed": 0,
+      "passed": 24
+    },
+    "tracker_sync": {
+      "events": 31,
+      "manifests": 9,
+      "runs": 9,
+      "status": "ok"
+    },
+    "tracker_validate": {
+      "errors": [],
+      "status": "ok",
+      "warnings": [
+        "unknown-license notebook inputs remain quarantined: phongnguyn23021656/koolbox-offline, nina2025/rogii-03, needless090/rogii-tabicl-mirror"
+      ]
+    }
+  },
+  "reproduction": {
+    "artifact_manifest_semantically_identical_after_path_runtime_normalization": true,
+    "controls_semantically_identical_after_runtime_normalization": true,
+    "independent_row_rmse_maximum_delta": 1.3701395573662012e-10,
+    "membership_contexts": 35,
+    "oof_byte_identical": true,
+    "oof_bytes": 182723863,
+    "oof_sha256": "3609b06eb5c38ebbdecbd951e925e31b8633ba7c904d508230a8e5bc07c0052e",
+    "static_result_files_byte_identical": 20,
+    "summary_semantically_identical_after_runtime_normalization": true
+  },
+  "resource_gates": {
+    "maximum_rss_mb": 1536,
+    "memory_pass": true,
+    "runtime_budget_minutes": 30,
+    "runtime_pass": true
+  },
+  "result_status": "rejected",
+  "schema_version": 1,
+  "selected_candidate": null
+}

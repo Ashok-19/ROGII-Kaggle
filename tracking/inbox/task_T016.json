@@ -1,0 +1,13 @@
+{
+  "type": "task",
+  "recorded_at": "2026-07-19T17:25:00Z",
+  "payload": {
+    "task_id": "T016",
+    "title": "Test stable wide residual model",
+    "status": "next",
+    "priority": 1,
+    "phase": "robust_residual_modeling",
+    "depends_on": "T015",
+    "due_at": "2026-07-29"
+  }
+}

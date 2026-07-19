@@ -126,6 +126,7 @@ class LearningDashboardTests(unittest.TestCase):
         self.assertIsNone(state["e006"])
         self.assertIsNone(state["e007"])
         self.assertIsNone(state["e008"])
+        self.assertIsNone(state["e009"])
 
     def test_learning_well_preserves_visibility_boundary(self):
         payload = self.tracker.learning_well("aaaaaaaa", max_points=4)
@@ -187,6 +188,7 @@ class LearningDashboardTests(unittest.TestCase):
         self.assertTrue(any(item["id"] == "B010" for item in content["breakthroughs"]))
         self.assertTrue(any(item["id"] == "B011" for item in content["breakthroughs"]))
         self.assertTrue(any(item["id"] == "B012" for item in content["breakthroughs"]))
+        self.assertTrue(any(item["id"] == "B013" for item in content["breakthroughs"]))
         self.assertIn("trend_transfer", html)
         self.assertIn("risk_action", html)
         self.assertIn("deployment_gap", html)
@@ -195,6 +197,7 @@ class LearningDashboardTests(unittest.TestCase):
         self.assertIn("nested_fusion", html)
         self.assertIn("selfcorr_gate", html)
         self.assertIn("residual_action_gate", html)
+        self.assertIn("consensus_gate", html)
         for hook in ("/api/learning", "wellSelect", "geometryPlot", "targetPlot", "grPlot", "presetE003", "e003ScoreLadder", "e004ScoreLadder", "e004ContractCards", "presetOracle"):
             self.assertIn(hook, html)
         self.assertIn("Learning simulator", html)
@@ -298,6 +301,33 @@ class LearningDashboardTests(unittest.TestCase):
         self.assertFalse(gates["typewell_stress"])
         self.assertFalse(state["e008"]["deployment"]["statistically_authorized"])
         self.assertFalse(state["e008"]["deployment"]["submission_made"])
+
+
+    def test_repository_e009_learning_payload_records_strict_rejection(self):
+        tracker = MODULE.Tracker(ROOT, ROOT / "tracking/rogii.sqlite")
+        state = tracker.learning_state()
+        self.assertIsNotNone(state["e009"])
+        self.assertEqual(state["e009"]["status"], "rejected")
+        self.assertIsNone(state["e009"]["selected_candidate"])
+        self.assertEqual(state["e009"]["reported_candidate"], "consensus_majority")
+        self.assertAlmostEqual(
+            state["e009"]["candidate_metrics"]["consensus_majority"]["rmse"],
+            14.793453219822904,
+        )
+        self.assertEqual(state["e009"]["map_wins"]["consensus_majority"], 5)
+        self.assertEqual(state["e009"]["outer_cell_wins"]["consensus_majority"], 15)
+        gates = state["e009"]["gates_by_candidate"]["consensus_majority"]
+        self.assertFalse(gates["outer_cells"])
+        self.assertFalse(gates["spatial_stress"])
+        self.assertFalse(gates["typewell_stress"])
+        self.assertFalse(gates["controls"])
+        self.assertFalse(state["e009"]["controls"]["sign_flipped"]["pass"])
+        self.assertAlmostEqual(
+            state["e009"]["branch_metrics"]["ridge_all_a25_f64"]["rmse"],
+            14.635273314979647,
+        )
+        self.assertFalse(state["e009"]["deployment"]["statistically_authorized"])
+        self.assertFalse(state["e009"]["deployment"]["submission_made"])
 
 
 if __name__ == "__main__":

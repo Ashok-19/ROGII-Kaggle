@@ -2,13 +2,13 @@
   "experiment_id": "E009",
   "title": "Residual-model consensus abstention",
   "hypothesis": "Target-independent disagreement and sign consensus across independently trained legal datum models can abstain from unstable E008-like action and preserve transferable gain over E006.",
-  "status": "designed",
+  "status": "rejected",
   "track": "robust_residual_modeling",
   "priority": 1,
   "owner": "NNMax",
   "parent_id": "E008",
   "created_at": "2026-07-19T16:45:00Z",
-  "updated_at": "2026-07-19T16:45:00Z",
+  "updated_at": "2026-07-19T17:30:30Z",
   "design": {
     "task_id": "T015",
     "hypothesis_id": "H011",
@@ -71,5 +71,38 @@
     "config_path": "experiments/E009/config.json",
     "pre_registration_path": "experiments/E009/PRE_REGISTRATION.md"
   },
-  "runs": []
+  "runs": [
+    {
+      "run_id": "R20260719-1706-e009-consensus-abstention",
+      "started_at": "2026-07-19T17:06:16.780Z",
+      "ended_at": "2026-07-19T17:11:43.830Z",
+      "code_sha": "ed3a8a1c7c4e09a01fc3bf3d0e316228de55fade",
+      "status": "rejected",
+      "selected_candidate": null,
+      "reported_candidate": "consensus_majority",
+      "reported_rmse": 14.793453219822904,
+      "e006_rmse": 14.933140787237672,
+      "artifact_manifest": "experiments/E009/results/artifact_manifest.json",
+      "oof_predictions": "artifacts/E009/oof_predictions.csv.gz",
+      "result": "experiments/E009/RESULT.md",
+      "verification": "experiments/E009/verification.json"
+    }
+  ],
+  "result": {
+    "decision": "reject",
+    "selected_candidate": null,
+    "reported_candidate": "consensus_majority",
+    "reported_rmse": 14.793453219822904,
+    "gain_vs_e006": 0.13968756741476795,
+    "map_wins": 5,
+    "outer_cell_wins": 15,
+    "failed_controls": [
+      "sign_flipped"
+    ],
+    "best_diagnostic_branch": "ridge_all_a25_f64",
+    "best_diagnostic_branch_rmse": 14.635273314979647,
+    "deployment_ready": false,
+    "submission_made": false
+  },
+  "conclusion": "Model consensus improved aggregate and map stability but did not identify safe shift transfer. The rules acted on nearly identical wells, majority won only 15/25 cells, spatial/typewell failures persisted, and the sign-flipped negative control failed. Retain E006; test the wide-ridge signal only in a fresh stability-regularized experiment."
 }

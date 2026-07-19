@@ -260,8 +260,7 @@
       "visual": "nested_fusion",
       "summary": "E006 recomputed E004 and PF inside every untouched outer fold, selected a conservative fusion rule only from inner OOF evidence, and reached 14.9331 RMSE with 5 of 5 map wins and 25 of 25 outer-cell wins.",
       "why_it_matters": "PF was unsafe alone, but its complementary correction became useful when anchored to E004 and validated in final placement. P90 fell to 21.7856, every spatial and typewell group improved, and local plus private Kaggle outputs are byte-identical at SHA-256 e412864a...d81008."
-    }
-,
+    },
     {
       "id": "B011",
       "date": "2026-07-19",
@@ -279,6 +278,15 @@
       "visual": "residual_action_gate",
       "summary": "E008 trained a surface-free ridge residual action strictly inside each fold using E006 paths and E007 evidence. Datum-only action improved pooled RMSE from 14.9331 to 14.7951, reduced p90 to 21.4080, and beat the no-E007 ablation by 0.0953 RMSE.",
       "why_it_matters": "The action still won only 2 of 5 maps and 14 of 25 repeated cells, while spatial groups 0 and 1 and typewell groups 2 and 4 regressed. Aggregate improvement, better tails, and useful evidence do not establish stable signed transfer. A future experiment must use independently pre-registered model-consensus uncertainty and exact E006 abstention rather than reuse E008 outcomes as routing thresholds."
+    },
+    {
+      "id": "B013",
+      "date": "2026-07-19",
+      "title": "Model agreement repeated shared bias",
+      "evidence": "local_verified",
+      "visual": "consensus_gate",
+      "summary": "E009 trained six legal datum models and tested fixed plus nested consensus abstention. Majority consensus reached 14.7935 RMSE, won all 5 maps, and improved p90, but won only 15 of 25 repeated cells and repeated the spatial/typewell shift failures.",
+      "why_it_matters": "Agreement was not reliable uncertainty: the three rule action sets overlapped at 0.984–0.996 Jaccard, and the sign-flipped negative control exceeded its cap. A diagnostic 64-feature ridge reached 14.6353 with 5/5 maps, so the next experiment targets inner-fold feature stability rather than more consensus threshold tuning."
     }
   ],
   "idea_questions": [
@@ -309,8 +317,8 @@
     },
     {
       "signal": "uncertainty",
-      "question": "Can E003 risk improve a fixed candidate or blend without replacing the independently validated signed action?",
-      "falsifier": "E008 predicts residual datum weakly but fails repeated and shift transfer. Future uncertainty must be derived from independently trained model consensus and must improve E006 under every frozen stress group."
+      "question": "Can target-independent uncertainty actually isolate unsafe signed action rather than merely report shared model confidence?",
+      "falsifier": "E009 triggers the falsifier: consensus rules select nearly the same wells, retain spatial/typewell failures, and a sign-flipped model bank still gains above the frozen cap. Do not retune consensus thresholds."
     },
     {
       "signal": "ensemble",
@@ -368,8 +376,7 @@
       "title": "E006 promoted nested fusion result",
       "local_path": "experiments/E006/RESULT.md",
       "url": ""
-    }
-,
+    },
     {
       "title": "E007 rejected horizontal self-correlation result",
       "local_path": "experiments/E007/RESULT.md",
@@ -378,6 +385,11 @@
     {
       "title": "E008 rejected residual-action result",
       "local_path": "experiments/E008/RESULT.md",
+      "url": ""
+    },
+    {
+      "title": "E009 rejected consensus-abstention result",
+      "local_path": "experiments/E009/RESULT.md",
       "url": ""
     }
   ]

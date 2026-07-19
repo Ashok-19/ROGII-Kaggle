@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-19T17:25:00Z",
+  "payload": {
+    "decision_id": "D012",
+    "decided_at": "2026-07-19",
+    "title": "Reject residual-model consensus abstention",
+    "decision": "Reject every E009 consensus and nested-abstention candidate as a finalist and do not package or submit it. Retain E006 as primary. Preserve the independently strong 64-feature legal datum branch only as evidence for a fresh stability-regularized experiment; do not relabel its E009 diagnostic score as promotion evidence.",
+    "rationale": "Majority consensus reaches 14.7934532198 RMSE, wins 5/5 maps, improves p90 and all special slices, but wins only 15/25 outer cells and regresses spatial groups 0/1 and typewell groups 2/4. Fixed rule action sets have 0.984\u20130.996 Jaccard overlap, nested abstention retains only 0.0367 gain, and the sign-flipped negative control improves by 0.03884 above its 0.03 cap. The diagnostic 64-feature ridge reaches 14.6352733150 and wins all maps but still fails one spatial and three typewell groups.",
+    "source_ids": "experiments/E009/RESULT.md,experiments/E009/results/summary.json,experiments/E009/verification.json",
+    "revisit_trigger": "A fresh split-local feature-stability or robust wide-residual model passes at least 4/5 maps, 17/25 cells, every spatial/typewell group, tail and negative controls, and deployment parity without using E009 observed subgroup outcomes as routing rules."
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "hypothesis",
+  "recorded_at": "2026-07-19T17:25:00Z",
+  "payload": {
+    "hypothesis_id": "H012",
+    "title": "Stability-regularized wide residual datum model",
+    "statement": "The large improvement of the legal 64-feature datum ridge reflects useful distributed evidence, and selecting a stable feature core or training-only blend across inner folds can retain that gain while reducing shift failures without subgroup routing.",
+    "status": "active",
+    "priority": 1,
+    "evidence_for": "E009 ridge_all_a25_f64 reaches 14.6352733150 RMSE, gains 0.2978674723 over E006, wins all five maps, lowers p90 to 20.8077, and outperforms every consensus candidate. The path/evidence-only branch reaches 14.7464 and wins four maps, showing a second useful formulation.",
+    "evidence_against": "The wide ridge wins only 15/25 outer cells and regresses spatial group 1 plus typewell groups 2/3/4. The path/evidence branch wins 13/25 cells. Wider feature selection may amplify shared bias rather than improve transfer.",
+    "next_test": "E010: pre-register a split-local wide-ridge comparator, inner-fold feature-stability selector, path/evidence branch, and training-only fixed blend. No E009 subgroup threshold may enter inference. Require repeated-map, 17/25 cell, tail, every spatial/typewell group, shuffle/sign controls, runtime, final placement, packaging, and parity gates."
+  }
+}

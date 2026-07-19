@@ -1,14 +1,14 @@
 {
   "type": "hypothesis",
-  "recorded_at": "2026-07-19T16:17:00Z",
+  "recorded_at": "2026-07-19T17:25:00Z",
   "payload": {
     "hypothesis_id": "H011",
     "title": "Residual-model consensus abstention",
     "statement": "Disagreement and sign consensus across independently trained surface-free datum models can identify when E008-like signed residual action is transferable, allowing exact abstention to E006 in unstable regimes without using hidden outcomes at inference.",
-    "status": "active",
+    "status": "rejected",
     "priority": 1,
-    "evidence_for": "E008 datum action has meaningful pooled and tail gain, E007 features add measurable value, and performance varies sharply across immutable fold models and shift groups. This creates target-independent ensemble disagreement that is available at inference.",
-    "evidence_against": "Prior risk and visible pseudo-gain signals did not reliably authorize signed action. Model consensus may merely reflect shared bias, and any observed E008 subgroup threshold is ineligible for reuse.",
-    "next_test": "E009: pre-register a datum-only multi-model ensemble and nested consensus/abstention rule before scoring. Train every model inside legal folds, derive uncertainty only from prediction dispersion/sign agreement, use exact E006 fallback, and require all repeated, tail, spatial/typewell, shuffle, runtime, final-placement, packaging, and parity gates."
+    "evidence_for": "E009 majority consensus improved E006 by 0.1396875674 RMSE, won all five maps, improved p90 and every registered special slice, and exact abstention worked operationally.",
+    "evidence_against": "The three fixed rules selected nearly identical wells, majority won only 15/25 outer cells, spatial groups 0/1 and typewell groups 2/4 regressed, nested abstention retained only 0.0367 gain, and the sign-flipped negative control exceeded its frozen cap.",
+    "next_test": "Do not retune consensus. Test a fresh stability-regularized wide residual model using only training-fold feature stability, with E006 fallback and full repeated/shift/negative controls."
   }
 }

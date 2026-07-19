@@ -415,6 +415,7 @@ class Tracker:
         e006_summary_path = self.root / "experiments" / "E006" / "results" / "summary.json"
         e007_summary_path = self.root / "experiments" / "E007" / "results" / "summary.json"
         e008_summary_path = self.root / "experiments" / "E008" / "results" / "summary.json"
+        e009_summary_path = self.root / "experiments" / "E009" / "results" / "summary.json"
         for path in (content_path, profile_path, metrics_path, summary_path):
             if not path.exists():
                 raise FileNotFoundError(path)
@@ -426,6 +427,7 @@ class Tracker:
         e006_summary = read_json(e006_summary_path) if e006_summary_path.exists() else None
         e007_summary = read_json(e007_summary_path) if e007_summary_path.exists() else None
         e008_summary = read_json(e008_summary_path) if e008_summary_path.exists() else None
+        e009_summary = read_json(e009_summary_path) if e009_summary_path.exists() else None
         with profile_path.open(newline="", encoding="utf-8") as handle:
             profiles = {row["well_id"]: row for row in csv.DictReader(handle)}
         catalog: list[dict[str, Any]] = []
@@ -484,6 +486,7 @@ class Tracker:
             "e006": e006_summary,
             "e007": e007_summary,
             "e008": e008_summary,
+            "e009": e009_summary,
             "recommended_wells": recommended,
             "well_catalog": sorted(catalog, key=lambda x: x["well_id"]),
         }
