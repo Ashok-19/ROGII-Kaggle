@@ -36,7 +36,7 @@
     "e004_expected_rmse": 15.491306398267565,
     "e004_submission_sha256": "62ae06575baa647a5e09686bc9369cbc7303ac391e5c028468593dd6b58d5279",
     "e005_config": "experiments/E005/config.json",
-    "e005_expected_pf_rmse": 15.350204071523788,
+    "e005_expected_pf_rmse_for_parent_audit_only": 15.350204071523788,
     "e005_oof_path": "artifacts/E005/oof_predictions.csv.gz",
     "e005_oof_sha256": "5115f7ce80f70c827c6df6edc572657253495a44333a2bb35bc46a7547e13ae5"
   },
@@ -45,6 +45,7 @@
     "outer_folds_per_map": 5,
     "inner_folds_per_outer_cell": 4,
     "inner_strategy": "Within each outer E001 cell, use the remaining four original fold labels as four inner validation groups. Fit E004 on the other three groups for each inner prediction. The outer fold is absent from all inner fits and weight selection.",
+    "nested_pf_anchor": "Recompute the frozen PF algorithm around the matching cell-specific E004 path for every inner and outer prediction. Never reuse E005 PF rows anchored to the five-map averaged E004 path.",
     "average_outer_predictions_across_maps": true,
     "spatial_groups": 5,
     "typewell_groups": 5,
@@ -106,7 +107,7 @@
   ],
   "controls": {
     "e004_rmse_tolerance": 1e-9,
-    "pf_rmse_tolerance": 1e-9,
+    "parent_pf_audit_rmse_tolerance": 1e-9,
     "zero_weight_maximum_prediction_delta": 1e-12,
     "duplicate_maximum_prediction_delta": 1e-12,
     "pooled_sse_relative_tolerance": 1e-12,

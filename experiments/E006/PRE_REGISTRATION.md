@@ -22,6 +22,8 @@ For each immutable E001 map and each of its five outer folds:
 
 Every well therefore receives one untouched outer prediction per map. Five-map predictions are averaged for the full OOF summary, while every map and outer cell is also scored separately.
 
+The PF algorithm is recomputed around the E004 path produced for the same inner or outer cell. E005 PF rows were anchored to a five-map averaged E004 path and are never reused as nested predictions. E005's 15.3502040715 PF score is reproduced only in a separate parent-algorithm audit, not as an E006 outer-validation comparator.
+
 Nested leave-spatial-group-out and leave-typewell-cluster-out runs use the same process: the stress group is the outer test set, E004 never trains on it, and inner folds come from frozen `v1` labels restricted to the remaining wells.
 
 ## Frozen candidate bank
@@ -48,7 +50,7 @@ Weights are limited to `[0, 1]`. All ties prefer the lower PF weight and then th
 
 ## Controls
 
-E004 must reproduce 15.491306398267565 RMSE within `1e-9`, and PF must reproduce 15.350204071523788 within `1e-9`. Zero weight must reproduce E004 within `1e-12`. The duplicate candidate must be identical within `1e-12`. Direct and well-aggregated SSE must agree within `1e-12` relative error.
+The averaged nested E004 comparator must reproduce 15.491306398267565 RMSE within `1e-9`. A separate parent audit must reproduce E005 PF at 15.350204071523788 within `1e-9`, but those audit predictions cannot enter E006 nested scoring. Zero weight must reproduce E004 within `1e-12`. The duplicate candidate must be identical within `1e-12`. Direct and well-aggregated SSE must agree within `1e-12` relative error.
 
 The shuffled control circularly permutes whole-well PF-minus-E004 correction paths in a SHA-256 well order, linearly resamples each source correction to the recipient hidden length, and adds it to the recipient E004 path. This preserves correction shape and scale but destroys well-specific GR evidence. It must be at least 0.05 RMSE worse than the corresponding unshuffled candidate and may not improve E004 by more than 0.02.
 

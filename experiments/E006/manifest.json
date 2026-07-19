@@ -30,7 +30,7 @@
       "external labels or opaque artifacts"
     ],
     "fold_maps": ["folds/v1.json", "folds/v2.json", "folds/v3.json", "folds/v4.json", "folds/v5.json"],
-    "nested_validation": "For each of 25 outer E001 cells, the held-out fold is absent from every E004 inner fit and from all weight/routing targets. The remaining four original fold labels form four inner OOF groups.",
+    "nested_validation": "For each of 25 outer E001 cells, the held-out fold is absent from every E004 inner fit and from all weight/routing targets. The remaining four original fold labels form four inner OOF groups. The frozen PF algorithm is recomputed around each matching cell-specific E004 path; E005 PF rows anchored to the five-map averaged E004 path are audit-only and cannot enter nested scoring.",
     "eligible_candidates": [
       "nested_conservative_grid",
       "nested_reliability_shrink",
