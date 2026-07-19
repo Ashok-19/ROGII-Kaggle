@@ -66,11 +66,11 @@
     "features": [
       "hidden_gr_coverage",
       "pf_effective_fraction",
-      "ambiguity_margin",
+      "cell_visible_alignment_margin",
       "pf_e004_disagreement_rms"
     ],
     "reference_population": "outer-training wells only",
-    "transform": "deterministic empirical percentile with well_id tie break; higher coverage, effective fraction, and margin are better, while lower disagreement is better",
+    "transform": "deterministic empirical percentile with well_id tie break; higher coverage, effective fraction, and the cell-specific visible-calibrated grid margin are better, while lower disagreement is better",
     "score_formula": "arithmetic mean of the four favorable percentiles, clipped to [0,1]",
     "gate_minimum_score": 0.5,
     "gate_maximum_disagreement_percentile": 0.9,
@@ -124,6 +124,7 @@
     "long_suffix_quantile": 0.80,
     "high_missing_gr_quantile": 0.80,
     "ambiguity_margin_threshold": 0.02,
+    "ambiguous_slice_source": "experiments/E005/results/alignment_diagnostics.csv using the frozen E005 ambiguity_margin",
     "maximum_special_slice_deterioration_vs_e004": 0.10
   },
   "promotion": {

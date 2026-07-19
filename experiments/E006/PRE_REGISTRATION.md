@@ -26,6 +26,8 @@ The PF algorithm is recomputed around the E004 path produced for the same inner 
 
 Nested leave-spatial-group-out and leave-typewell-cluster-out runs use the same process: the stress group is the outer test set, E004 never trains on it, and inner folds come from frozen `v1` labels restricted to the remaining wells.
 
+The candidate reliability margin is the cell-specific visible-calibrated affine-grid margin. The special `ambiguous_alignment` reporting slice remains defined by the frozen E005 `alignment_diagnostics.csv` margin at the registered 0.02 threshold, so its membership does not change during E006.
+
 ## Frozen candidate bank
 
 Comparators and diagnostics:
@@ -42,7 +44,7 @@ Comparators and diagnostics:
 Promotion-eligible candidates:
 
 1. `nested_conservative_grid`: choose from the frozen convex grid using inner pooled RMSE, requiring at least 0.02 inner gain, no more than 0.25 p90 deterioration, and no more than 0.01 worst-5% SSE-share increase. Choose the smallest weight within 0.02 RMSE of the best passing weight. Fall back to zero.
-2. `nested_reliability_shrink`: multiply the conservative base weight by the arithmetic mean of four favorable outer-training empirical percentiles: GR coverage, PF effective fraction, ambiguity margin, and reversed PF–E004 disagreement.
+2. `nested_reliability_shrink`: multiply the conservative base weight by the arithmetic mean of four favorable outer-training empirical percentiles: GR coverage, PF effective fraction, the cell-specific visible-calibrated grid ambiguity margin, and reversed PF–E004 disagreement.
 3. `nested_disagreement_cap`: multiply the conservative base weight by one until outer-test disagreement exceeds the outer-training 80th percentile, then shrink inversely with disagreement.
 4. `nested_reliability_gate`: apply the conservative base weight only when reliability is at least 0.5 and disagreement is no higher than the outer-training 90th percentile; otherwise use E004 exactly.
 
