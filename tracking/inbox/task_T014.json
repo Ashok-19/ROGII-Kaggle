@@ -1,10 +1,10 @@
 {
   "type": "task",
-  "recorded_at": "2026-07-19T15:14:47Z",
+  "recorded_at": "2026-07-19T16:17:00Z",
   "payload": {
     "task_id": "T014",
     "title": "Build cross-fitted legal residual model",
-    "status": "next",
+    "status": "done",
     "priority": 1,
     "phase": "residual_modeling",
     "depends_on": "T013",

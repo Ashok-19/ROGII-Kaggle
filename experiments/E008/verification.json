@@ -1,0 +1,297 @@
+{
+  "artifacts": [
+    {
+      "bytes": 3372,
+      "kind": "result",
+      "path": "experiments/E008/results/candidate_metrics.csv",
+      "sha256": "6ced1992d63d623e502ace663823ee20bf506de8901bf7bee371dd7ff7da99be"
+    },
+    {
+      "bytes": 2048,
+      "kind": "result",
+      "path": "experiments/E008/results/control_metrics.csv",
+      "sha256": "4589ef612852b93ac6dc4ebfc21cf7c424cb83975c7943bfc1f8a9360a8eb0d5"
+    },
+    {
+      "bytes": 1380027,
+      "kind": "result",
+      "path": "experiments/E008/results/legal_features.csv",
+      "sha256": "c4b332ccb62559609aee501eb6cd66237cf6a98fc370caa542d6be99b43f8853"
+    },
+    {
+      "bytes": 14783,
+      "kind": "result",
+      "path": "experiments/E008/results/map_metrics.csv",
+      "sha256": "3f67101024f268abb7cdb4b2856c88f3abf81d534e884ca7997d1b385dc01caf"
+    },
+    {
+      "bytes": 1611,
+      "kind": "result",
+      "path": "experiments/E008/results/membership_audit.csv",
+      "sha256": "3433ba08faf4aad0b1bb407983b3e377ee6177ec01209b10ed7cf0ec524b2467"
+    },
+    {
+      "bytes": 1483,
+      "kind": "result",
+      "path": "experiments/E008/results/model.json",
+      "sha256": "a42c0e6533e29279a39d52f6904d8c7bdc6732efd0dbf74a0b027ebe1dba303e"
+    },
+    {
+      "bytes": 4317,
+      "kind": "result",
+      "path": "experiments/E008/results/model_coefficients.csv",
+      "sha256": "cbcf3fb88db6c40e0b8be7494141f886fb06c89347c37145a145ffbfbf1fc08f"
+    },
+    {
+      "bytes": 114565,
+      "kind": "result",
+      "path": "experiments/E008/results/outer_cell_metrics.csv",
+      "sha256": "e849aeecb4390e43bbb48cee11c481882285b007be29750a7b34e496e049e134"
+    },
+    {
+      "bytes": 29325,
+      "kind": "result",
+      "path": "experiments/E008/results/residual_targets.csv",
+      "sha256": "bae9a5b11f63285d56d8b603c56d0d61579a43eb19a213d66c5b6b8a4eb4b439"
+    },
+    {
+      "bytes": 42467,
+      "kind": "result",
+      "path": "experiments/E008/results/scale_metrics.csv",
+      "sha256": "db821ae3005f6dcd866d116a7fe9fc343179a564a1a732cc225c9357e6ef9691"
+    },
+    {
+      "bytes": 15050,
+      "kind": "result",
+      "path": "experiments/E008/results/selected_feature_frequency.csv",
+      "sha256": "bf4b23f9cfa037fee2adf451c5d2f740c906dbf6f546e7e2ff59e745584e81dd"
+    },
+    {
+      "bytes": 140567,
+      "kind": "result",
+      "path": "experiments/E008/results/selected_well_metrics.csv",
+      "sha256": "2fc4dc0c6139d8028d103a825084bd1eccff380ef3e05781c8e158bb4681a7d5"
+    },
+    {
+      "bytes": 12613,
+      "kind": "result",
+      "path": "experiments/E008/results/special_slice_metrics.csv",
+      "sha256": "ccb064bf7c325f0598a48f3e94eb50647223facb92e790168a8bae9639358e20"
+    },
+    {
+      "bytes": 33093,
+      "kind": "result",
+      "path": "experiments/E008/results/stress_metrics.csv",
+      "sha256": "b8c0723e1a1c5a71b3b463a72e40eb1d0521c243c4e3e3f05f9b1050c67540d7"
+    },
+    {
+      "bytes": 19111,
+      "kind": "result",
+      "path": "experiments/E008/results/summary.json",
+      "sha256": "be0c0d247079f70ebd8165188a2251351b230b4ccce6ac17ac154985e33e6625"
+    },
+    {
+      "bytes": 1109,
+      "kind": "result",
+      "path": "experiments/E008/results/target_metrics.csv",
+      "sha256": "6578e58e7f6656a34df57ee79a5e8a2bd91de656ccb36b3102fe99415666d93c"
+    },
+    {
+      "bytes": 4827,
+      "kind": "manifest",
+      "path": "experiments/E008/results/artifact_manifest.json",
+      "sha256": "c61b2f4c114eef24cb11a7951040496302112d57430000def8e1c9b3a66ffd15"
+    },
+    {
+      "bytes": 263014805,
+      "kind": "oof_predictions_gzip",
+      "path": "artifacts/E008/oof_predictions.csv.gz",
+      "sha256": "fe1f05f6dd6dc91e94a07658637d318c2b311b7f470bae24cc86f51c9cc9d94d",
+      "tracked": false
+    }
+  ],
+  "code_sha": "ac2acc15c94afb16b2cb5da79c6e19b66e9e52f1",
+  "completed_at": "2026-07-19T16:28:35Z",
+  "controls_failed": 0,
+  "controls_passed": 15,
+  "deployment": {
+    "deployment_ready": false,
+    "local_notebook_parity": false,
+    "local_package_built": false,
+    "private_internet_disabled_kaggle_parity": false,
+    "reason": "No E008 candidate passed every frozen gate; retain E006.",
+    "statistically_authorized": false,
+    "submission_created": false,
+    "submission_made": false
+  },
+  "design_commit": "60a217a96b4c692ff715e037eb10973eabb8f90d",
+  "experiment_id": "E008",
+  "failed_statistical_gates_by_candidate": {
+    "ridge_residual_conservative": [
+      "outer_cells",
+      "p90_vs_e006",
+      "repeated_maps",
+      "spatial_stress",
+      "typewell_stress"
+    ],
+    "ridge_residual_datum": [
+      "outer_cells",
+      "repeated_maps",
+      "spatial_stress",
+      "typewell_stress"
+    ],
+    "ridge_residual_datum_trend": [
+      "outer_cells",
+      "repeated_maps",
+      "spatial_stress",
+      "special_slices",
+      "typewell_stress"
+    ]
+  },
+  "implementation_commit": "4f693e68e059d3a6bbd098f7352e3f639f1b536a",
+  "independent_clean_output_run": {
+    "ended_at": "2026-07-19T16:21:27.538Z",
+    "exit_status": 0,
+    "max_rss_kb_external": 96796,
+    "max_rss_kb_internal": 92616,
+    "started_at": "2026-07-19T16:14:41.307Z",
+    "stderr_bytes": 0,
+    "wall_seconds_external": 406.22,
+    "wall_seconds_internal": 405.52714285900583,
+    "wall_seconds_runner": 406.13497094299237
+  },
+  "official_run": {
+    "ended_at": "2026-07-19T16:12:07.109Z",
+    "exit_status": 0,
+    "max_rss_kb_external": 96948,
+    "max_rss_kb_internal": 92720,
+    "started_at": "2026-07-19T16:05:29.868Z",
+    "stderr_bytes": 0,
+    "wall_seconds_external": 397.23,
+    "wall_seconds_internal": 396.599926660012,
+    "wall_seconds_runner": 397.1632831760071
+  },
+  "pre_score_failed_attempt": {
+    "code_sha": "4f693e68e059d3a6bbd098f7352e3f639f1b536a",
+    "exit_status": 1,
+    "max_rss_kb_external": 74040,
+    "reason": "A legitimate E007 abstention distance serialized as inf was rejected instead of represented as a missing feature. The frozen E008 contract already required split-local median imputation. Commit ac2acc15 implements that contract and is the only scored implementation.",
+    "result_files_written": 0,
+    "scoring_completed": false,
+    "wall_seconds_external": 54.8
+  },
+  "reported_candidate": "ridge_residual_datum",
+  "reported_rmse": 14.795138041468634,
+  "repository_validation": {
+    "api": {
+      "e008_rejected_visible": true,
+      "health": 200,
+      "learning": 200,
+      "state": 200,
+      "well_catalog": 773
+    },
+    "artifact_manifest_hashes": {
+      "artifacts": 17,
+      "passed": true
+    },
+    "browser": {
+      "console_javascript_errors": 0,
+      "desktop": {
+        "index_dom_rendered": true,
+        "index_screenshot_bytes": 267838,
+        "learn_dom_rendered": true,
+        "learn_screenshot_bytes": 359557,
+        "viewport": "1440x900"
+      },
+      "engine": "installed Google Chrome headless",
+      "environment_warning": "Host DBus/font-cache and VAAPI warnings were non-JavaScript environment warnings; GPU was disabled and page rendering passed.",
+      "mobile": {
+        "index_dom_rendered": true,
+        "index_screenshot_bytes": 119827,
+        "learn_dom_rendered": true,
+        "learn_screenshot_bytes": 112873,
+        "viewport": "390x844"
+      }
+    },
+    "completed_at": "2026-07-19T16:28:35Z",
+    "e008_edge_suite": {
+      "python_3_10": {
+        "failed": 0,
+        "passed": 13
+      },
+      "python_3_12": {
+        "failed": 0,
+        "passed": 13
+      },
+      "python_3_13": {
+        "failed": 0,
+        "passed": 13
+      }
+    },
+    "full_repository_suite": {
+      "failed": 0,
+      "passed": 90
+    },
+    "git_diff_check": true,
+    "independent_oof_recomputation": {
+      "finite": true,
+      "maximum_rmse_delta": 2.1e-10,
+      "ordered": true,
+      "rows": 3783989,
+      "unique_ids": 3783989,
+      "wells": 773
+    },
+    "javascript": {
+      "dashboard_learning_node_check": true
+    },
+    "random_sufficient_statistic_maximum_rmse_delta": 3.552713678800501e-14,
+    "random_sufficient_statistic_property_cases": 1000,
+    "sqlite": {
+      "artifacts": 106,
+      "decisions": 11,
+      "experiments": 8,
+      "hypotheses": 11,
+      "integrity": "ok",
+      "metrics": 147,
+      "runs": 8,
+      "tasks": 15
+    },
+    "targeted_e008_dashboard_suite": {
+      "failed": 0,
+      "passed": 24
+    },
+    "tracker_sync": {
+      "events": 28,
+      "manifests": 8,
+      "runs": 8,
+      "status": "ok"
+    },
+    "tracker_validate": {
+      "errors": [],
+      "status": "ok",
+      "warnings": [
+        "unknown-license notebook inputs remain quarantined: phongnguyn23021656/koolbox-offline, nina2025/rogii-03, needless090/rogii-tabicl-mirror"
+      ]
+    }
+  },
+  "reproduction": {
+    "artifact_manifest_semantically_identical_after_path_runtime_normalization": true,
+    "controls_semantically_identical_after_runtime_normalization": true,
+    "independent_row_rmse_maximum_delta": 2.1e-10,
+    "membership_contexts": 35,
+    "oof_byte_identical": true,
+    "oof_bytes": 263014805,
+    "oof_sha256": "fe1f05f6dd6dc91e94a07658637d318c2b311b7f470bae24cc86f51c9cc9d94d",
+    "static_result_files_byte_identical": 14,
+    "summary_semantically_identical_after_runtime_normalization": true
+  },
+  "resource_gates": {
+    "maximum_rss_mb": 1536,
+    "memory_pass": true,
+    "runtime_budget_minutes": 30,
+    "runtime_pass": true
+  },
+  "result_status": "rejected",
+  "schema_version": 1,
+  "selected_candidate": null
+}

@@ -1,0 +1,13 @@
+{
+  "type": "task",
+  "recorded_at": "2026-07-19T16:17:00Z",
+  "payload": {
+    "task_id": "T015",
+    "title": "Test residual consensus abstention",
+    "status": "next",
+    "priority": 1,
+    "phase": "robust_residual_modeling",
+    "depends_on": "T014",
+    "due_at": "2026-07-28"
+  }
+}

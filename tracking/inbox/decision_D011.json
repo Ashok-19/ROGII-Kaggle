@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-19T16:17:00Z",
+  "payload": {
+    "decision_id": "D011",
+    "decided_at": "2026-07-19",
+    "title": "Reject direct residual action around E006",
+    "decision": "Reject every E008 direct or conservative residual-action candidate as a finalist and do not build a deployment package or submit it. Preserve the datum-only ridge signal, E007 feature contribution, fold-model predictions, and model-disagreement evidence only for a fresh pre-registered consensus-abstention experiment; retain E006 as the primary deployment-ready candidate.",
+    "rationale": "The frozen datum-only ridge improves pooled RMSE from 14.9331407872 to 14.7951380415, reduces p90 to 21.4079596409, improves every registered special slice, and beats the no-E007 ablation by 0.0953021558 RMSE. It nevertheless wins only two of five repeated maps and 14 of 25 repeated cells and regresses spatial groups 0 and 1 plus typewell groups 2 and 4. Conservative scaling improves five maps nominally but only three by the registered margin, wins 11 cells, and still fails spatial/typewell gates.",
+    "source_ids": "experiments/E008/RESULT.md,experiments/E008/verification.json,experiments/E008/results/summary.json",
+    "revisit_trigger": "A fresh nested model-consensus or abstention rule uses only target-independent disagreement available at inference and passes every E006-comparator repeated-map, tail, spatial, typewell, shuffle, runtime, and deployment gate."
+  }
+}

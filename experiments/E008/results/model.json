@@ -1,0 +1,57 @@
+{
+  "code_sha": "ac2acc15c94afb16b2cb5da79c6e19b66e9e52f1",
+  "datum_soft_cap_ft": 30.0,
+  "diagnostic_only_until_promoted": true,
+  "experiment_id": "E008",
+  "feature_version": "e008_surface_free_residual_v1",
+  "full_oof_conservative_scale": 0.5,
+  "ridge_alpha": 25.0,
+  "schema_version": 1,
+  "selected_features": [
+    "hidden_gr_std",
+    "e006_minus_e004_last",
+    "selfcorr_raw_minus_e006_positive_fraction",
+    "whole_gr_std",
+    "e006_minus_e004_mean",
+    "selfcorr_raw_minus_e006_mean",
+    "hidden_gr_range",
+    "e004_minus_last_positive_fraction",
+    "e006_minus_e004_slope_per_row",
+    "e004_minus_last_last",
+    "e006_minus_e004_first",
+    "visible_gr_std",
+    "e006_minus_e004_positive_fraction",
+    "e006_minus_last_max_abs",
+    "e006_minus_last_range",
+    "e006_path_range",
+    "e006_minus_last_std",
+    "e006_path_std",
+    "e006_minus_last_mean_abs",
+    "whole_gr_delta",
+    "e004_minus_last_mean",
+    "hidden_gr_slope",
+    "e004_minus_last_max_abs",
+    "e004_minus_last_range",
+    "e004_minus_last_std",
+    "e004_minus_last_slope_per_row",
+    "whole_gr_range",
+    "e007_query_anchors",
+    "visible_gr_mean",
+    "e004_minus_last_mean_abs",
+    "whole_gr_mean",
+    "visible_gr_range"
+  ],
+  "target_means": [
+    0.5154290228116442,
+    0.6111456102517192
+  ],
+  "target_names": [
+    "residual_datum_ft",
+    "residual_trend_ft"
+  ],
+  "target_scales": [
+    11.681259144125386,
+    20.8677583273664
+  ],
+  "trend_soft_cap_ft": 60.0
+}

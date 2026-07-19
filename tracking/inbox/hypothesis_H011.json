@@ -1,0 +1,14 @@
+{
+  "type": "hypothesis",
+  "recorded_at": "2026-07-19T16:17:00Z",
+  "payload": {
+    "hypothesis_id": "H011",
+    "title": "Residual-model consensus abstention",
+    "statement": "Disagreement and sign consensus across independently trained surface-free datum models can identify when E008-like signed residual action is transferable, allowing exact abstention to E006 in unstable regimes without using hidden outcomes at inference.",
+    "status": "active",
+    "priority": 1,
+    "evidence_for": "E008 datum action has meaningful pooled and tail gain, E007 features add measurable value, and performance varies sharply across immutable fold models and shift groups. This creates target-independent ensemble disagreement that is available at inference.",
+    "evidence_against": "Prior risk and visible pseudo-gain signals did not reliably authorize signed action. Model consensus may merely reflect shared bias, and any observed E008 subgroup threshold is ineligible for reuse.",
+    "next_test": "E009: pre-register a datum-only multi-model ensemble and nested consensus/abstention rule before scoring. Train every model inside legal folds, derive uncertainty only from prediction dispersion/sign agreement, use exact E006 fallback, and require all repeated, tail, spatial/typewell, shuffle, runtime, final-placement, packaging, and parity gates."
+  }
+}

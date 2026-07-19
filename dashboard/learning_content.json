@@ -270,6 +270,15 @@
       "visual": "selfcorr_gate",
       "summary": "E007 matched hidden horizontal-GR fingerprints only to the same well's visible prefix and applied a bounded structural-slope correction around E006. A frozen 0.10 placement improved RMSE from 14.9331 to 14.8305, won all 5 maps and 20 of 25 repeated cells, while the raw correction had only 0.468 residual correlation to E006.",
       "why_it_matters": "Low correlation and aggregate gain are not enough. P90 exceeded the frozen cap by about 0.015 RMSE, spatial groups 1 and 3 regressed, and typewell groups 2 and 4 regressed. E007 is rejected without deployment packaging; its diagnostics may inform a future residual model but the fixed correction cannot enter the finalist ensemble."
+    },
+    {
+      "id": "B012",
+      "date": "2026-07-19",
+      "title": "Residual datum signal improved tails but did not transfer",
+      "evidence": "local_verified",
+      "visual": "residual_action_gate",
+      "summary": "E008 trained a surface-free ridge residual action strictly inside each fold using E006 paths and E007 evidence. Datum-only action improved pooled RMSE from 14.9331 to 14.7951, reduced p90 to 21.4080, and beat the no-E007 ablation by 0.0953 RMSE.",
+      "why_it_matters": "The action still won only 2 of 5 maps and 14 of 25 repeated cells, while spatial groups 0 and 1 and typewell groups 2 and 4 regressed. Aggregate improvement, better tails, and useful evidence do not establish stable signed transfer. A future experiment must use independently pre-registered model-consensus uncertainty and exact E006 abstention rather than reuse E008 outcomes as routing thresholds."
     }
   ],
   "idea_questions": [
@@ -301,7 +310,7 @@
     {
       "signal": "uncertainty",
       "question": "Can E003 risk improve a fixed candidate or blend without replacing the independently validated signed action?",
-      "falsifier": "A risk-routed policy fails to beat the fixed E003 action on repeated folds or spatial stress."
+      "falsifier": "E008 predicts residual datum weakly but fails repeated and shift transfer. Future uncertainty must be derived from independently trained model consensus and must improve E006 under every frozen stress group."
     },
     {
       "signal": "ensemble",
@@ -364,6 +373,11 @@
     {
       "title": "E007 rejected horizontal self-correlation result",
       "local_path": "experiments/E007/RESULT.md",
+      "url": ""
+    },
+    {
+      "title": "E008 rejected residual-action result",
+      "local_path": "experiments/E008/RESULT.md",
       "url": ""
     }
   ]

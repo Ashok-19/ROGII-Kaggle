@@ -21,7 +21,7 @@ Completed before model development:
 - `AGENTS.md`, `MEMORY.md`, control-first workflow, SQLite ledger, auto-sync CLI, validation command, and dashboard created.
 - Previous roadmap preserved under `archive/legacy/`.
 
-E001 is promoted and frozen. E002 rejected every naive U continuation. E003 promoted a surface-assisted cross-fitted datum-plus-trend result at 10.9280 RMSE as OOF understanding. E004 then audited the actual test contract, proved those six surface columns are unavailable at inference, and packaged a weaker surface-free geometry-plus-prefix candidate at 15.4913 RMSE. Local and private Kaggle notebook outputs are byte-identical, so E004 is deployment-ready but remains only a fallback. E005 tested clean affine, PF, and trellis GR paths and rejected standalone PF despite aggregate gain. E006 then validated PF placement through strict nested fusion: `nested_conservative_grid` reaches 14.9331 RMSE, wins all 5 maps and 25 outer cells, improves every registered spatial/typewell group, and is deployment-ready after exact private Kaggle parity. E007 found an independent horizontal-only self-correlation signal and improved pooled RMSE to 14.8305, but failed p90 and spatial/typewell transfer gates and was rejected without packaging.
+E001 is promoted and frozen. E002 rejected every naive U continuation. E003 promoted a surface-assisted cross-fitted datum-plus-trend result at 10.9280 RMSE as OOF understanding. E004 then audited the actual test contract, proved those six surface columns are unavailable at inference, and packaged a weaker surface-free geometry-plus-prefix candidate at 15.4913 RMSE. Local and private Kaggle notebook outputs are byte-identical, so E004 is deployment-ready but remains only a fallback. E005 tested clean affine, PF, and trellis GR paths and rejected standalone PF despite aggregate gain. E006 then validated PF placement through strict nested fusion: `nested_conservative_grid` reaches 14.9331 RMSE, wins all 5 maps and 25 outer cells, improves every registered spatial/typewell group, and is deployment-ready after exact private Kaggle parity. E007 found an independent horizontal-only self-correlation signal and improved pooled RMSE to 14.8305, but failed p90 and spatial/typewell transfer gates. E008 then learned split-local residual datum/trend action from E006 plus E007 evidence, reaching 14.7951 and better p90, but failed repeated-map, outer-cell, spatial, and typewell transfer gates. Both are rejected without packaging.
 
 ## What the evidence changes
 
@@ -187,9 +187,19 @@ Measured E007 outcome:
 - Promotion is rejected because p90 rises from 21.7855500884 to 22.0503957463, narrowly exceeding the 0.25 cap, while spatial groups 1/3 and typewell groups 2/4 regress. Reliability shrink still regresses typewell group 2.
 - Long suffix, high-GR-missingness, and poor-visible-pseudo-gain slices expose the same instability. Runtime and memory pass comfortably, but packaging is prohibited after statistical rejection.
 
-Immediate deliverables now shift to E008/H010: a newly pre-registered compact cross-fitted residual-action model. E007 diagnostics may enter only as legal evidence; the failed fixed correction and observed weights are not promotion candidates.
+E008 status: completed and rejected; no deployment package or leaderboard submission created.
 
-Exit gate: the residual model must learn signed bounded action strictly inside each fold, improve E006 on at least four repeated maps, pass p90/tail and every spatial/typewell group, lose gain when candidate evidence is shuffled, and preserve E006 as exact zero-action fallback.
+Measured E008 outcome:
+
+- The surface-free split-local datum-only ridge reaches 14.7951380415 RMSE, gaining 0.1380027458 over E006, lowering p90 to 21.4079596409, and lowering worst-5% SSE share to 0.3548957222.
+- E007 evidence is selected in all five maps and improves the full datum+trend model by 0.0953021558 RMSE versus the no-E007 ablation. Shuffled targets lose 0.0792 RMSE versus E006 and have near-zero target correlation.
+- Datum prediction is weak but real at Pearson 0.1759 and 60.76% material sign accuracy. Trend prediction is weaker and degrades several special slices.
+- Datum action wins only 2/5 maps and 14/25 repeated cells and regresses spatial groups 0/1 and typewell groups 2/4. Conservative scaling is nonzero in 18/25 cells but wins only 3 maps by the registered margin and 11 cells, still failing spatial/typewell gates.
+- Runtime, memory, parent hashes, leakage, duplicate, shuffle, oracle, E007 ablation, exact fallback, correction-bound, OOF identity, and SSE controls pass. Statistical rejection prohibits packaging.
+
+Immediate deliverables now shift to E009/H011: a newly pre-registered datum-model consensus and abstention experiment. It may use only target-independent disagreement and sign consensus across independently trained legal models, with exact E006 fallback. E008 subgroup outcomes, observed scales, and post-score thresholds are not eligible inputs to the rule.
+
+Exit gate: consensus abstention must retain a material share of the datum-only gain, improve at least four repeated maps and 17 cells, pass p90/tail and every spatial/typewell group, lose gain under shuffled models/evidence, and preserve E006 exactly whenever consensus is insufficient.
 
 ### July 24–26 — Tabular residual and datum models
 
@@ -273,8 +283,8 @@ These defaults may be revised only through a recorded decision before seeing the
 5. **E005 — Clean PF and trellis candidates — completed and rejected 2026-07-19.** PF reaches 15.3502 but fails p90, repeated-map, spatial, and typewell-cluster gates; no packaging or submission.
 6. **E006 — Controlled PF-E004 fusion and disagreement evidence — completed, promoted, and deployment-ready 2026-07-19.** Strict nesting selects 14.9331-RMSE conservative fusion; exact private Kaggle parity passes; no leaderboard submission.
 7. **E007 — Horizontal self-correlation and candidate evidence stack — completed and rejected 2026-07-19.** Fixed 0.10 placement reaches 14.8305 with 5/5 maps, but fails p90 and spatial/typewell shift gates; no packaging or submission.
-8. **E008 — Cross-fitted legal residual-action model — next.** Pre-register H010; learn bounded datum/trend or path residuals from legal E006/E007 evidence inside each fold, with E006 as exact zero-action fallback.
-9. **E009 — OOF diversity ensemble and uncertainty placement.** Cross-fit weights; risk cannot route without beating the fixed action.
+8. **E008 — Cross-fitted legal residual-action model — completed and rejected 2026-07-19.** Datum-only ridge reaches 14.7951 with improved p90 and useful E007 evidence, but wins only 2/5 maps and 14/25 cells and fails spatial/typewell transfer; no packaging or submission.
+9. **E009 — Residual-model consensus abstention — next.** Pre-register H011; train multiple legal datum models, derive uncertainty only from model dispersion/sign agreement, and return exactly to E006 when consensus is weak.
 10. **E010 — Final Kaggle offline parity.** Clean package, runtime, exact IDs, and finalist notebooks.
 
 ## Explicitly rejected behavior

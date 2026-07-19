@@ -2,13 +2,13 @@
   "experiment_id": "E008",
   "title": "Cross-fitted surface-free residual datum/trend action",
   "hypothesis": "A compact split-trained ridge model can use legal geometry, visible-prefix, E006, and E007 evidence to learn a bounded signed residual action that improves E006 without E007's fixed-placement shift failures.",
-  "status": "designed",
+  "status": "rejected",
   "track": "residual_modeling",
   "priority": 1,
   "owner": "NNMax",
   "parent_id": "E007",
   "created_at": "2026-07-19T15:31:00Z",
-  "updated_at": "2026-07-19T15:31:00Z",
+  "updated_at": "2026-07-19T16:12:07.107902Z",
   "design": {
     "task_id": "T014",
     "hypothesis_id": "H010",
@@ -29,7 +29,10 @@
       "leaderboard-guided selection",
       "external labels or opaque artifacts"
     ],
-    "targets": ["residual datum around E006", "centered end-to-end residual trend around E006"],
+    "targets": [
+      "residual datum around E006",
+      "centered end-to-end residual trend around E006"
+    ],
     "candidate_order": [
       "last_known_tvt",
       "e004_geometry_prefix",
@@ -74,5 +77,255 @@
     "config_path": "experiments/E008/config.json",
     "pre_registration_path": "experiments/E008/PRE_REGISTRATION.md"
   },
-  "runs": []
+  "runs": [
+    {
+      "run_id": "R20260719-e008-residual-action",
+      "status": "rejected",
+      "started_at": "2026-07-19T16:05:29.877902Z",
+      "ended_at": "2026-07-19T16:12:07.107902Z",
+      "git_sha": "ac2acc15c94afb16b2cb5da79c6e19b66e9e52f1",
+      "fold_map": "folds/v1.json,folds/v2.json,folds/v3.json,folds/v4.json,folds/v5.json",
+      "config_path": "experiments/E008/config.json",
+      "artifact_dir": "artifacts/E008",
+      "controls": {
+        "correction_bound": true,
+        "data_integrity": true,
+        "duplicate_feature": true,
+        "e007_evidence": true,
+        "feature_leakage": true,
+        "memory": true,
+        "oof_identity": true,
+        "oracle_positive": true,
+        "parent_artifacts": true,
+        "placement_membership": true,
+        "pooled_sse_consistency": true,
+        "runtime": true,
+        "scale_stability": true,
+        "shuffled_target": true,
+        "zero_action": true
+      },
+      "metrics": [
+        {
+          "split": "cv",
+          "name": "rmse",
+          "value": 14.795138041468634,
+          "unit": "ft"
+        },
+        {
+          "split": "cv",
+          "name": "gain_vs_e006",
+          "value": 0.13800274576903782,
+          "unit": "ft"
+        },
+        {
+          "split": "cv",
+          "name": "gain_vs_last_known",
+          "value": 1.11471482926593,
+          "unit": "ft"
+        },
+        {
+          "split": "cv",
+          "name": "median_well_rmse",
+          "value": 10.010906302906264,
+          "unit": "ft"
+        },
+        {
+          "split": "cv",
+          "name": "p90_well_rmse",
+          "value": 21.407959640904966,
+          "unit": "ft"
+        },
+        {
+          "split": "cv",
+          "name": "p95_well_rmse",
+          "value": 27.930860499812052,
+          "unit": "ft"
+        },
+        {
+          "split": "cv",
+          "name": "max_well_rmse",
+          "value": 59.83830492683016,
+          "unit": "ft"
+        },
+        {
+          "split": "cv",
+          "name": "worst_5pct_sse_share",
+          "value": 0.3548957221728695,
+          "unit": "share"
+        },
+        {
+          "split": "cv",
+          "name": "worst_10pct_sse_share",
+          "value": 0.4959101359207543,
+          "unit": "share"
+        },
+        {
+          "split": "stability",
+          "name": "map_wins",
+          "value": 2,
+          "unit": "of_5"
+        },
+        {
+          "split": "stability",
+          "name": "outer_cell_wins",
+          "value": 14,
+          "unit": "of_25"
+        },
+        {
+          "split": "diagnostic",
+          "name": "e007_ablation_gain",
+          "value": 0.09530215575173884,
+          "unit": "ft"
+        },
+        {
+          "split": "runtime",
+          "name": "wall_seconds",
+          "value": 397.23,
+          "unit": "seconds"
+        },
+        {
+          "split": "runtime",
+          "name": "max_rss_kb",
+          "value": 96948,
+          "unit": "kilobytes"
+        },
+        {
+          "split": "baseline",
+          "name": "e006_rmse",
+          "value": 14.933140787237672,
+          "unit": "ft"
+        },
+        {
+          "split": "baseline",
+          "name": "last_known_rmse",
+          "value": 15.909852870734564,
+          "unit": "ft"
+        }
+      ],
+      "well_metrics_path": "experiments/E008/results/selected_well_metrics.csv",
+      "artifacts": [
+        {
+          "path": "experiments/E008/results/artifact_manifest.json",
+          "kind": "manifest",
+          "sha256": "c61b2f4c114eef24cb11a7951040496302112d57430000def8e1c9b3a66ffd15",
+          "bytes": 4827
+        },
+        {
+          "path": "experiments/E008/results/candidate_metrics.csv",
+          "kind": "metrics",
+          "sha256": "6ced1992d63d623e502ace663823ee20bf506de8901bf7bee371dd7ff7da99be",
+          "bytes": 3372
+        },
+        {
+          "path": "experiments/E008/results/control_metrics.csv",
+          "kind": "metrics",
+          "sha256": "4589ef612852b93ac6dc4ebfc21cf7c424cb83975c7943bfc1f8a9360a8eb0d5",
+          "bytes": 2048
+        },
+        {
+          "path": "experiments/E008/results/legal_features.csv",
+          "kind": "metrics",
+          "sha256": "c4b332ccb62559609aee501eb6cd66237cf6a98fc370caa542d6be99b43f8853",
+          "bytes": 1380027
+        },
+        {
+          "path": "experiments/E008/results/map_metrics.csv",
+          "kind": "metrics",
+          "sha256": "3f67101024f268abb7cdb4b2856c88f3abf81d534e884ca7997d1b385dc01caf",
+          "bytes": 14783
+        },
+        {
+          "path": "experiments/E008/results/membership_audit.csv",
+          "kind": "metrics",
+          "sha256": "3433ba08faf4aad0b1bb407983b3e377ee6177ec01209b10ed7cf0ec524b2467",
+          "bytes": 1611
+        },
+        {
+          "path": "experiments/E008/results/model.json",
+          "kind": "model",
+          "sha256": "a42c0e6533e29279a39d52f6904d8c7bdc6732efd0dbf74a0b027ebe1dba303e",
+          "bytes": 1483
+        },
+        {
+          "path": "experiments/E008/results/model_coefficients.csv",
+          "kind": "metrics",
+          "sha256": "cbcf3fb88db6c40e0b8be7494141f886fb06c89347c37145a145ffbfbf1fc08f",
+          "bytes": 4317
+        },
+        {
+          "path": "experiments/E008/results/outer_cell_metrics.csv",
+          "kind": "metrics",
+          "sha256": "e849aeecb4390e43bbb48cee11c481882285b007be29750a7b34e496e049e134",
+          "bytes": 114565
+        },
+        {
+          "path": "experiments/E008/results/residual_targets.csv",
+          "kind": "metrics",
+          "sha256": "bae9a5b11f63285d56d8b603c56d0d61579a43eb19a213d66c5b6b8a4eb4b439",
+          "bytes": 29325
+        },
+        {
+          "path": "experiments/E008/results/scale_metrics.csv",
+          "kind": "metrics",
+          "sha256": "db821ae3005f6dcd866d116a7fe9fc343179a564a1a732cc225c9357e6ef9691",
+          "bytes": 42467
+        },
+        {
+          "path": "experiments/E008/results/selected_feature_frequency.csv",
+          "kind": "metrics",
+          "sha256": "bf4b23f9cfa037fee2adf451c5d2f740c906dbf6f546e7e2ff59e745584e81dd",
+          "bytes": 15050
+        },
+        {
+          "path": "experiments/E008/results/selected_well_metrics.csv",
+          "kind": "metrics",
+          "sha256": "2fc4dc0c6139d8028d103a825084bd1eccff380ef3e05781c8e158bb4681a7d5",
+          "bytes": 140567
+        },
+        {
+          "path": "experiments/E008/results/special_slice_metrics.csv",
+          "kind": "metrics",
+          "sha256": "ccb064bf7c325f0598a48f3e94eb50647223facb92e790168a8bae9639358e20",
+          "bytes": 12613
+        },
+        {
+          "path": "experiments/E008/results/stress_metrics.csv",
+          "kind": "metrics",
+          "sha256": "b8c0723e1a1c5a71b3b463a72e40eb1d0521c243c4e3e3f05f9b1050c67540d7",
+          "bytes": 33093
+        },
+        {
+          "path": "experiments/E008/results/summary.json",
+          "kind": "summary",
+          "sha256": "be0c0d247079f70ebd8165188a2251351b230b4ccce6ac17ac154985e33e6625",
+          "bytes": 19111
+        },
+        {
+          "path": "experiments/E008/results/target_metrics.csv",
+          "kind": "metrics",
+          "sha256": "6578e58e7f6656a34df57ee79a5e8a2bd91de656ccb36b3102fe99415666d93c",
+          "bytes": 1109
+        },
+        {
+          "path": "artifacts/E008/oof_predictions.csv.gz",
+          "kind": "oof_predictions_gzip",
+          "sha256": "fe1f05f6dd6dc91e94a07658637d318c2b311b7f470bae24cc86f51c9cc9d94d",
+          "bytes": 263014805,
+          "tracked": false
+        }
+      ],
+      "notes": "Datum-only ridge improves pooled RMSE and p90 and uses E007 evidence, but fails repeated-map, outer-cell, spatial, and typewell gates. No deployment package, Kaggle parity run, or submission was authorized. Independent reproduction is byte-identical for OOF and all static artifacts."
+    }
+  ],
+  "conclusion": {
+    "selected_candidate": null,
+    "reported_candidate": "ridge_residual_datum",
+    "decision": "Strictly reject all E008 residual-action candidates. Preserve datum-only model predictions and target-independent fold-model disagreement only as evidence for a fresh E009 consensus-abstention experiment; retain E006 as the deployment-ready primary candidate.",
+    "statistically_promoted": false,
+    "deployment_authorized": false,
+    "kaggle_parity_run": false,
+    "submission_created": false,
+    "result_path": "experiments/E008/RESULT.md",
+    "verification_path": "experiments/E008/verification.json"
+  }
 }
