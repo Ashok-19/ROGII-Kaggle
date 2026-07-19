@@ -1,10 +1,10 @@
 {
   "type": "task",
-  "recorded_at": "2026-07-19T06:48:00Z",
+  "recorded_at": "2026-07-19T10:33:06Z",
   "payload": {
     "task_id": "T010",
     "title": "Build clean PF and trellis candidates",
-    "status": "next",
+    "status": "done",
     "priority": 1,
     "phase": "candidate_bank",
     "depends_on": "T009",

@@ -2,13 +2,13 @@
   "experiment_id": "E005",
   "title": "Clean typewell-horizontal GR candidate bank",
   "hypothesis": "Test-available horizontal and typewell GR can identify a bounded TVT path correction that improves both last-known TVT and the exact E004 geometry-prefix comparator under repeated whole-well suffix validation without increasing tail risk.",
-  "status": "designed",
+  "status": "rejected",
   "track": "sequence_alignment",
   "priority": 1,
   "owner": "NNMax",
   "parent_id": "E004",
   "created_at": "2026-07-19T12:00:00Z",
-  "updated_at": "2026-07-19T12:00:00Z",
+  "updated_at": "2026-07-19T10:37:28Z",
   "design": {
     "task_id": "T010",
     "hypothesis_id": "H008",
@@ -26,7 +26,13 @@
       "leaderboard-guided selection",
       "external inferred labels or opaque artifacts"
     ],
-    "fold_maps": ["folds/v1.json", "folds/v2.json", "folds/v3.json", "folds/v4.json", "folds/v5.json"],
+    "fold_maps": [
+      "folds/v1.json",
+      "folds/v2.json",
+      "folds/v3.json",
+      "folds/v4.json",
+      "folds/v5.json"
+    ],
     "candidate_order": [
       "last_known_tvt",
       "e004_geometry_prefix",
@@ -51,7 +57,13 @@
       "pooled SSE consistency",
       "independent artifact reproduction"
     ],
-    "harsher_splits": ["spatial blocks", "typewell clusters", "long suffix", "high GR missingness", "ambiguous alignment"],
+    "harsher_splits": [
+      "spatial blocks",
+      "typewell clusters",
+      "long suffix",
+      "high GR missingness",
+      "ambiguous alignment"
+    ],
     "promotion": "An eligible candidate must improve pooled RMSE by at least 0.35 versus last-known and 0.10 versus E004, win at least four of five repeated maps, deteriorate p90 by no more than 0.50 ft and worst-5% SSE share by no more than 0.01 versus either comparator, retain positive gains under both spatial and typewell-cluster stress, pass shuffled/duplicate/no-GR/runtime/memory controls, and satisfy the pre-registered diversity condition.",
     "deployment": "Kaggle packaging and private internet-disabled parity are authorized only after all statistical promotion gates pass. A deployment-ready candidate must also reconstruct exact sample IDs/order with finite values and preserve no-GR fallback behavior.",
     "runtime_budget_minutes": 45,
@@ -60,5 +72,235 @@
     "config_path": "experiments/E005/config.json",
     "pre_registration_path": "experiments/E005/PRE_REGISTRATION.md"
   },
-  "runs": []
+  "runs": [
+    {
+      "run_id": "R20260719-1018-e005-gr-path",
+      "status": "rejected",
+      "started_at": "2026-07-19T10:18:37Z",
+      "ended_at": "2026-07-19T10:25:50Z",
+      "git_sha": "8077526a6eab514ff08247cec5b19d41c9592317",
+      "fold_map": "folds/v1.json,folds/v2.json,folds/v3.json,folds/v4.json,folds/v5.json",
+      "config_path": "experiments/E005/config.json",
+      "artifact_dir": "artifacts/E005",
+      "controls": {
+        "axis_confusion": true,
+        "data_integrity": true,
+        "duplicate_alignment": true,
+        "e004_exact_comparator": true,
+        "no_gr_fallback": true,
+        "oof_identity": true,
+        "oracle_leakage_sentinel": true,
+        "pooled_sse_consistency": true,
+        "shuffled_typewell_gr": true,
+        "runtime": true,
+        "memory": true,
+        "independent_reproduction": true,
+        "canonical_manifest_reproduction": true,
+        "kaggle_parity_not_run_by_design": true
+      },
+      "metrics": [
+        {
+          "split": "cv",
+          "name": "rmse",
+          "value": 15.350204071523788,
+          "unit": "ft"
+        },
+        {
+          "split": "cv",
+          "name": "gain_vs_last_known",
+          "value": 0.5596487992107662,
+          "unit": "ft"
+        },
+        {
+          "split": "cv",
+          "name": "gain_vs_e004",
+          "value": 0.14110232674374323,
+          "unit": "ft"
+        },
+        {
+          "split": "cv",
+          "name": "median_well_rmse",
+          "value": 10.748384003174344,
+          "unit": "ft"
+        },
+        {
+          "split": "cv",
+          "name": "p90_well_rmse",
+          "value": 23.485183692736197,
+          "unit": "ft"
+        },
+        {
+          "split": "cv",
+          "name": "p95_well_rmse",
+          "value": 28.088540732415318,
+          "unit": "ft"
+        },
+        {
+          "split": "cv",
+          "name": "max_well_rmse",
+          "value": 59.77537578433237,
+          "unit": "ft"
+        },
+        {
+          "split": "cv",
+          "name": "worst_5pct_sse_share",
+          "value": 0.3331989190137342,
+          "unit": "share"
+        },
+        {
+          "split": "cv",
+          "name": "worst_10pct_sse_share",
+          "value": 0.4779625586151951,
+          "unit": "share"
+        },
+        {
+          "split": "stability",
+          "name": "map_wins",
+          "value": 3,
+          "unit": "of_5"
+        },
+        {
+          "split": "stability",
+          "name": "residual_correlation_to_e004",
+          "value": 0.8972483902407833,
+          "unit": "correlation"
+        },
+        {
+          "split": "stress",
+          "name": "minimum_spatial_gain_vs_e004",
+          "value": -0.7542149375215885,
+          "unit": "ft"
+        },
+        {
+          "split": "stress",
+          "name": "minimum_typewell_cluster_gain_vs_e004",
+          "value": -0.18568130711478226,
+          "unit": "ft"
+        },
+        {
+          "split": "diagnostic",
+          "name": "fixed_blend_50pct_rmse",
+          "value": 15.01311716509111,
+          "unit": "ft"
+        },
+        {
+          "split": "runtime",
+          "name": "wall_seconds",
+          "value": 432.38,
+          "unit": "seconds"
+        },
+        {
+          "split": "runtime",
+          "name": "max_rss_kb",
+          "value": 316400,
+          "unit": "kilobytes"
+        },
+        {
+          "split": "baseline",
+          "name": "last_known_rmse",
+          "value": 15.909852870734554,
+          "unit": "ft"
+        },
+        {
+          "split": "baseline",
+          "name": "e004_rmse",
+          "value": 15.49130639826753,
+          "unit": "ft"
+        }
+      ],
+      "well_metrics_path": "experiments/E005/results/selected_well_metrics.csv",
+      "artifacts": [
+        {
+          "artifact_id": "E005-alignment-diagnostics",
+          "path": "experiments/E005/results/alignment_diagnostics.csv",
+          "kind": "metrics",
+          "sha256": "8c2bad7e3e7bae547260a5f7ed8581042a949897fd4e8b907fa9be3c687ae467",
+          "bytes": 176929
+        },
+        {
+          "artifact_id": "E005-artifact-manifest",
+          "path": "experiments/E005/results/artifact_manifest.json",
+          "kind": "manifest",
+          "sha256": "011363023c3f8cf958b0154b9ced8d798c1c2e4c5aab81ce81802b8e373c9fb8",
+          "bytes": 2664
+        },
+        {
+          "artifact_id": "E005-candidate-metrics",
+          "path": "experiments/E005/results/candidate_metrics.csv",
+          "kind": "metrics",
+          "sha256": "a549598e50aec9d9362dddf107b85c7744e0641d7b4f288a9724eb532b277864",
+          "bytes": 2565
+        },
+        {
+          "artifact_id": "E005-control-metrics",
+          "path": "experiments/E005/results/control_metrics.csv",
+          "kind": "metrics",
+          "sha256": "8418c0a31783662d8574b9324d37ea3a9823c7634e09b33f6dea104aa554bc99",
+          "bytes": 741
+        },
+        {
+          "artifact_id": "E005-diagnostic-blends",
+          "path": "experiments/E005/results/diagnostic_blends.csv",
+          "kind": "metrics",
+          "sha256": "4b7c57b3c7b1a4ff0f8627568a2c232400daf868bfbeabbed680288f8e221596",
+          "bytes": 2857
+        },
+        {
+          "artifact_id": "E005-fold-metrics",
+          "path": "experiments/E005/results/fold_metrics.csv",
+          "kind": "metrics",
+          "sha256": "c862ac376bdd8786ecf288499a907a74d107d51fd50a620020a16e953ac8c71e",
+          "bytes": 17678
+        },
+        {
+          "artifact_id": "E005-residual-correlations",
+          "path": "experiments/E005/results/residual_correlations.csv",
+          "kind": "metrics",
+          "sha256": "c8615ceb283286e5d35bd2f0eeb18af79ab03ef6a3be328af95877b6afacfcac",
+          "bytes": 303
+        },
+        {
+          "artifact_id": "E005-selected-well-metrics",
+          "path": "experiments/E005/results/selected_well_metrics.csv",
+          "kind": "metrics",
+          "sha256": "93aae700d7d0bb34ea6eac205568593efb87cba2d31c877f58d0a7670765a8e0",
+          "bytes": 119537
+        },
+        {
+          "artifact_id": "E005-stress-metrics",
+          "path": "experiments/E005/results/stress_metrics.csv",
+          "kind": "metrics",
+          "sha256": "58503003afa8e9abd9ea0d1933f82d185b6a0a8a6bbbb6e7c6e9debd182cd45d",
+          "bytes": 34323
+        },
+        {
+          "artifact_id": "E005-summary",
+          "path": "experiments/E005/results/summary.json",
+          "kind": "summary",
+          "sha256": "f7c6cdf3d7cccf7419395464627a1c5c440d85e4220bf375891fa534a795976a",
+          "bytes": 22753
+        },
+        {
+          "artifact_id": "E005-oof-predictions",
+          "path": "artifacts/E005/oof_predictions.csv.gz",
+          "kind": "oof_predictions_gzip",
+          "sha256": "5115f7ce80f70c827c6df6edc572657253495a44333a2bb35bc46a7547e13ae5",
+          "bytes": 163956757,
+          "tracked": false
+        }
+      ],
+      "notes": "All frozen predictor and negative controls passed. PF achieved 15.3502040715 RMSE but failed p90 versus both comparators, 4-of-5 repeated maps, spatial stress, and typewell-cluster stress. The diagnostic 50/50 blend is hypothesis-generating only. No deployment package, Kaggle parity run, or submission was authorized.",
+      "updated_at": "2026-07-19T10:37:28Z"
+    }
+  ],
+  "conclusion": {
+    "selected_candidate": "pf_gr_path",
+    "decision": "Strictly reject every standalone E005 GR path. PF improves aggregate RMSE and tail concentration but fails p90, repeated-map, spatial, and typewell-cluster gates. Preserve its OOF path only for a newly pre-registered fusion experiment; retain E004 as the deployment fallback.",
+    "statistically_promoted": false,
+    "deployment_authorized": false,
+    "kaggle_parity_run": false,
+    "submission_created": false,
+    "result_path": "experiments/E005/RESULT.md",
+    "verification_path": "experiments/E005/verification.json"
+  }
 }

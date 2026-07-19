@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import csv
+import hashlib
 import json
 import math
 import tempfile
@@ -228,6 +229,41 @@ class E005SyntheticCase(unittest.TestCase):
             duplicate.write_text("id,tvt\na_4,0\na_4,0\n", encoding="utf-8")
             with self.assertRaises(DataValidationError):
                 validate_submission_ids(duplicate, {"a_4": 1.0})
+
+    def test_official_rejected_result_artifacts_match_manifest(self) -> None:
+        experiment = ROOT / "experiments" / "E005"
+        manifest = json.loads((experiment / "manifest.json").read_text(encoding="utf-8"))
+        summary = json.loads((experiment / "results" / "summary.json").read_text(encoding="utf-8"))
+        verification = json.loads((experiment / "verification.json").read_text(encoding="utf-8"))
+        artifact_manifest = json.loads((experiment / "results" / "artifact_manifest.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["status"], "rejected")
+        self.assertEqual(summary["status"], "rejected")
+        self.assertEqual(summary["selected_candidate"], "pf_gr_path")
+        self.assertAlmostEqual(summary["selected_candidate_metrics"]["rmse"], 15.350204071523788, places=12)
+        self.assertAlmostEqual(summary["e004_metrics"]["rmse"], 15.49130639826753, places=12)
+        self.assertFalse(summary["promotion"]["promoted"])
+        self.assertFalse(summary["deployment"]["statistically_authorized"])
+        self.assertFalse(summary["deployment"]["submission_made"])
+        self.assertEqual(verification["result_status"], "rejected")
+        self.assertTrue(verification["reproduction"]["all_scored_artifacts_byte_identical"])
+        self.assertTrue(verification["reproduction"]["path_sensitive_manifest"]["canonical_relative_layout_byte_identical"])
+        self.assertTrue(verification["resource_gates"]["runtime_passed"])
+        self.assertTrue(verification["resource_gates"]["memory_passed"])
+        self.assertEqual(
+            set(verification["failed_statistical_gates"]),
+            {"p90_vs_e004", "p90_vs_last_known", "repeated_maps", "spatial_stress", "typewell_cluster_stress"},
+        )
+        for item in artifact_manifest["files"]:
+            path = experiment / "results" / item["path"]
+            self.assertTrue(path.exists(), item["path"])
+            self.assertEqual(path.stat().st_size, item["bytes"], item["path"])
+            self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), item["sha256"], item["path"])
+        external = artifact_manifest["external_artifacts"][0]
+        self.assertEqual(external["sha256"], "5115f7ce80f70c827c6df6edc572657253495a44333a2bb35bc46a7547e13ae5")
+        oof = ROOT / external["path"]
+        if oof.exists():
+            self.assertEqual(oof.stat().st_size, external["bytes"])
+            self.assertEqual(hashlib.sha256(oof.read_bytes()).hexdigest(), external["sha256"])
 
 
 if __name__ == "__main__":

@@ -1,14 +1,14 @@
 {
   "type": "hypothesis",
-  "recorded_at": "2026-07-19T06:48:00Z",
+  "recorded_at": "2026-07-19T10:33:06Z",
   "payload": {
     "hypothesis_id": "H008",
     "title": "Reconstruct structural evidence from test-available logs",
     "statement": "Explicit typewell/horizontal GR alignment, particle filtering, and whole-well trellis inference can recover part of the missing structural-position signal using only MD, X, Y, Z, GR, TVT_input, and typewell TVT/GR.",
-    "status": "active",
+    "status": "rejected",
     "priority": 1,
-    "evidence_for": "E004 shows summary GR/typewell features are insufficient but does not test path alignment. Winning-note evidence reports useful PF/trellis diversity, and the strongest unavailable E003 signal is structural context.",
-    "evidence_against": "Repeated GR motifs, missing toe GR, long horizons, and path-search ambiguity may make the signal too weak or unstable.",
-    "next_test": "E005: independent PF and trellis OOF paths with shuffled-GR, no-GR fallback, repeated-fold, tail, runtime, and residual-correlation controls."
+    "evidence_for": "Frozen E005 particle filtering improved pooled RMSE from E004 15.4913063983 to 15.3502040715, reduced maximum well RMSE to 59.7754 and worst-5% SSE share to 0.3332, and had residual correlation 0.897248 to E004.",
+    "evidence_against": "The raw PF path raised p90 to 23.4851836927, won only 3 of 5 repeated maps, and regressed the worst spatial and typewell-cluster groups by 0.754215 and 0.185681 RMSE. Affine and trellis candidates did not beat E004.",
+    "next_test": "Do not promote or package raw E005 paths. Pre-register H009/E006 to test PF-E004 fusion and disagreement evidence with fresh nested or cross-fit placement and the same tail and shift gates."
   }
 }

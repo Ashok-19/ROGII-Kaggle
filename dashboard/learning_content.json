@@ -206,8 +206,7 @@
       "visual": "cv_lb_split",
       "summary": "A lower grouped-CV score has scored worse publicly than an older model in documented competition experiments.",
       "why_it_matters": "Repeated folds, controls, shift tests, and a decorrelated final family are mandatory."
-    }
-,
+    },
     {
       "id": "B005",
       "date": "2026-07-19",
@@ -243,8 +242,16 @@
       "visual": "remote_parity",
       "summary": "The exact E004 notebook ran privately on Kaggle Python 3.12 with internet disabled. Local direct, local notebook, and Kaggle outputs are byte-identical over 14,151 rows at SHA-256 62ae0657...5279.",
       "why_it_matters": "Operational parity closes the deployment gate, but it does not strengthen the 15.4913 CV score. E004 is a reliable fallback and candidate-bank leg, not a justified standalone leaderboard submission."
+    },
+    {
+      "id": "B009",
+      "date": "2026-07-19",
+      "title": "Raw GR path gains failed stability gates",
+      "evidence": "local_verified",
+      "visual": "gr_path_gate",
+      "summary": "E005 particle filtering improved pooled RMSE from E004's 15.4913 to 15.3502 and reduced worst-5% SSE share, but p90 rose to 23.4852, only 3 of 5 repeated maps passed, and the worst spatial and typewell-cluster groups regressed.",
+      "why_it_matters": "Aggregate GR alignment contains useful, decorrelated evidence, but a raw PF path is not safe enough to deploy. A pre-registered 50/50 diagnostic blend reached 15.0131, so the next experiment must validate fusion with fresh cross-fit placement rather than promote this observed blend."
     }
-
   ],
   "idea_questions": [
     {
@@ -265,7 +272,7 @@
     {
       "signal": "surfaces",
       "question": "Can test-available GR/typewell alignment reconstruct some of the structural context that training-only formation surfaces reveal?",
-      "falsifier": "Shuffled GR performs similarly, alignment ambiguity is unrelated to TVT error, or PF/trellis paths fail repeated and no-GR stress tests."
+      "falsifier": "E005 triggered the standalone-path falsifier: PF improved pooled RMSE but failed repeated-map, p90, spatial, and typewell-cluster gates. Only a fresh controlled fusion experiment may reuse its evidence."
     },
     {
       "signal": "whole well",
@@ -308,8 +315,7 @@
       "title": "E001 validated results",
       "local_path": "experiments/E001/RESULT.md",
       "url": ""
-    }
-,
+    },
     {
       "title": "E002 rejected structural ladder",
       "local_path": "experiments/E002/RESULT.md",
@@ -324,7 +330,11 @@
       "title": "E004 surface-free deployment result",
       "local_path": "experiments/E004/RESULT.md",
       "url": ""
+    },
+    {
+      "title": "E005 rejected GR path result",
+      "local_path": "experiments/E005/RESULT.md",
+      "url": ""
     }
-
   ]
 }

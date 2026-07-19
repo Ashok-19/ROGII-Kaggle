@@ -1,0 +1,13 @@
+{
+  "type": "task",
+  "recorded_at": "2026-07-19T10:33:06Z",
+  "payload": {
+    "task_id": "T012",
+    "title": "Pre-register controlled PF-E004 fusion",
+    "status": "next",
+    "priority": 1,
+    "phase": "ensemble",
+    "depends_on": "T010",
+    "due_at": "2026-07-23"
+  }
+}

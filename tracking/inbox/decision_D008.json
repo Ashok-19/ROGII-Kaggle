@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-19T10:33:06Z",
+  "payload": {
+    "decision_id": "D008",
+    "decided_at": "2026-07-19",
+    "title": "Reject standalone E005 GR paths",
+    "decision": "Reject affine, particle-filter, and trellis E005 candidates as standalone finalists; retain the PF OOF path and ambiguity/disagreement diagnostics only as evidence for a newly pre-registered fusion experiment. Keep E004 geometry-prefix as the deployment-ready fallback. Do not build an E005 Kaggle package or submit it.",
+    "rationale": "PF improved aggregate pooled RMSE by 0.1411023267 versus E004 and passed controls/diversity/worst-tail gates, but failed both p90 gates, the 4-of-5 repeated-map gate, spatial stress, and typewell-cluster stress. The observed 50/50 diagnostic blend at 15.0131171651 was pre-registered as diagnostic only and cannot be promoted after inspection.",
+    "source_ids": "experiments/E005/RESULT.md,experiments/E005/results/summary.json,experiments/E005/verification.json",
+    "revisit_trigger": "A fresh nested or cross-fit fusion experiment passes every frozen repeated-map, p90, worst-tail, spatial, typewell-cluster, control, runtime, and deployment gate."
+  }
+}

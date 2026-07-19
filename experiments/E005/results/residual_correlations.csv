@@ -1,0 +1,6 @@
+candidate,comparator,residual_correlation
+align_affine,e004_geometry_prefix,0.627401546944
+align_visible_path,e004_geometry_prefix,0.739842620545
+pf_gr_path,e004_geometry_prefix,0.897248390241
+shuffled_typewell_gr,e004_geometry_prefix,0.0892678072009
+trellis_gr_path,e004_geometry_prefix,0.969492083825

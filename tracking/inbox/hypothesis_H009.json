@@ -1,0 +1,14 @@
+{
+  "type": "hypothesis",
+  "recorded_at": "2026-07-19T10:33:06Z",
+  "payload": {
+    "hypothesis_id": "H009",
+    "title": "Controlled PF-E004 fusion",
+    "statement": "Cross-fitted placement of PF path evidence with the deployment-ready E004 geometry-prefix candidate can retain PF diversity and tail reduction while avoiding the standalone PF subgroup and p90 regressions.",
+    "status": "active",
+    "priority": 1,
+    "evidence_for": "E005 PF residual correlation to E004 is 0.8972483902. Frozen diagnostic blends at 25%, 50%, and 75% PF all improve E004 aggregate RMSE; the 50/50 diagnostic reaches 15.0131171651 with p90 21.7769037293.",
+    "evidence_against": "The blend weights were inspected after E005 scoring and have no promotion status. Standalone PF fails repeated-map and distribution-shift gates, so naive global blending may still overfit fold composition.",
+    "next_test": "Pre-register E006 with nested or cross-fit weights/routing, immutable E001 folds, exact E004/PF OOF identities, and unchanged tail, subgroup, shuffled-evidence, runtime, and deployment gates."
+  }
+}

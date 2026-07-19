@@ -122,6 +122,7 @@ class LearningDashboardTests(unittest.TestCase):
         self.assertEqual(state["e001"]["data"]["hidden_rows"], 3)
         self.assertIsNone(state["e003"])
         self.assertIsNone(state["e004"])
+        self.assertIsNone(state["e005"])
 
     def test_learning_well_preserves_visibility_boundary(self):
         payload = self.tracker.learning_well("aaaaaaaa", max_points=4)
@@ -179,10 +180,12 @@ class LearningDashboardTests(unittest.TestCase):
         self.assertTrue(any(item["id"] == "B006" for item in content["breakthroughs"]))
         self.assertTrue(any(item["id"] == "B007" for item in content["breakthroughs"]))
         self.assertTrue(any(item["id"] == "B008" for item in content["breakthroughs"]))
+        self.assertTrue(any(item["id"] == "B009" for item in content["breakthroughs"]))
         self.assertIn("trend_transfer", html)
         self.assertIn("risk_action", html)
         self.assertIn("deployment_gap", html)
         self.assertIn("remote_parity", html)
+        self.assertIn("gr_path_gate", html)
         for hook in ("/api/learning", "wellSelect", "geometryPlot", "targetPlot", "grPlot", "presetE003", "e003ScoreLadder", "e004ScoreLadder", "e004ContractCards", "presetOracle"):
             self.assertIn(hook, html)
         self.assertIn("Learning simulator", html)
@@ -214,6 +217,19 @@ class LearningDashboardTests(unittest.TestCase):
             state["e004"]["controls"]["remote_kaggle_mcp_parity"]["status"],
             "passed_byte_identical",
         )
+
+    def test_repository_e005_learning_payload_records_strict_rejection(self):
+        tracker = MODULE.Tracker(ROOT, ROOT / "tracking/rogii.sqlite")
+        state = tracker.learning_state()
+        self.assertIsNotNone(state["e005"])
+        self.assertEqual(state["e005"]["status"], "rejected")
+        self.assertEqual(state["e005"]["selected_candidate"], "pf_gr_path")
+        self.assertAlmostEqual(state["e005"]["selected_candidate_metrics"]["rmse"], 15.350204071523788)
+        self.assertFalse(state["e005"]["promotion"]["promoted"])
+        self.assertFalse(state["e005"]["promotion"]["gates"]["p90_vs_e004"])
+        self.assertFalse(state["e005"]["promotion"]["gates"]["repeated_maps"])
+        self.assertFalse(state["e005"]["deployment"]["statistically_authorized"])
+        self.assertFalse(state["e005"]["deployment"]["submission_made"])
 
 
 if __name__ == "__main__":

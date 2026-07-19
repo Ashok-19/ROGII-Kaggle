@@ -1,0 +1,206 @@
+{
+  "artifacts": [
+    {
+      "bytes": 176929,
+      "kind": "metrics",
+      "path": "experiments/E005/results/alignment_diagnostics.csv",
+      "sha256": "8c2bad7e3e7bae547260a5f7ed8581042a949897fd4e8b907fa9be3c687ae467"
+    },
+    {
+      "bytes": 2664,
+      "kind": "manifest",
+      "path": "experiments/E005/results/artifact_manifest.json",
+      "sha256": "011363023c3f8cf958b0154b9ced8d798c1c2e4c5aab81ce81802b8e373c9fb8"
+    },
+    {
+      "bytes": 2565,
+      "kind": "metrics",
+      "path": "experiments/E005/results/candidate_metrics.csv",
+      "sha256": "a549598e50aec9d9362dddf107b85c7744e0641d7b4f288a9724eb532b277864"
+    },
+    {
+      "bytes": 741,
+      "kind": "metrics",
+      "path": "experiments/E005/results/control_metrics.csv",
+      "sha256": "8418c0a31783662d8574b9324d37ea3a9823c7634e09b33f6dea104aa554bc99"
+    },
+    {
+      "bytes": 2857,
+      "kind": "metrics",
+      "path": "experiments/E005/results/diagnostic_blends.csv",
+      "sha256": "4b7c57b3c7b1a4ff0f8627568a2c232400daf868bfbeabbed680288f8e221596"
+    },
+    {
+      "bytes": 17678,
+      "kind": "metrics",
+      "path": "experiments/E005/results/fold_metrics.csv",
+      "sha256": "c862ac376bdd8786ecf288499a907a74d107d51fd50a620020a16e953ac8c71e"
+    },
+    {
+      "bytes": 303,
+      "kind": "metrics",
+      "path": "experiments/E005/results/residual_correlations.csv",
+      "sha256": "c8615ceb283286e5d35bd2f0eeb18af79ab03ef6a3be328af95877b6afacfcac"
+    },
+    {
+      "bytes": 119537,
+      "kind": "metrics",
+      "path": "experiments/E005/results/selected_well_metrics.csv",
+      "sha256": "93aae700d7d0bb34ea6eac205568593efb87cba2d31c877f58d0a7670765a8e0"
+    },
+    {
+      "bytes": 34323,
+      "kind": "metrics",
+      "path": "experiments/E005/results/stress_metrics.csv",
+      "sha256": "58503003afa8e9abd9ea0d1933f82d185b6a0a8a6bbbb6e7c6e9debd182cd45d"
+    },
+    {
+      "bytes": 22753,
+      "kind": "summary",
+      "path": "experiments/E005/results/summary.json",
+      "sha256": "f7c6cdf3d7cccf7419395464627a1c5c440d85e4220bf375891fa534a795976a"
+    },
+    {
+      "bytes": 163956757,
+      "kind": "oof_predictions_gzip",
+      "path": "artifacts/E005/oof_predictions.csv.gz",
+      "sha256": "5115f7ce80f70c827c6df6edc572657253495a44333a2bb35bc46a7547e13ae5",
+      "tracked": false
+    }
+  ],
+  "code_sha": "8077526a6eab514ff08247cec5b19d41c9592317",
+  "completed_at": "2026-07-19T10:37:28Z",
+  "controls_failed": 0,
+  "controls_passed": 9,
+  "deployment": {
+    "deployment_ready": false,
+    "local_notebook_parity": false,
+    "local_package_built": false,
+    "private_internet_disabled_kaggle_parity": false,
+    "reason": "Statistical promotion gates failed; Kaggle parity and submission are not authorized.",
+    "statistically_authorized": false,
+    "submission_created": false,
+    "submission_made": false
+  },
+  "design_commit": "b55bfd542391a5e308ba6e5d02923e2a1d372b1f",
+  "experiment_id": "E005",
+  "failed_statistical_gates": [
+    "p90_vs_e004",
+    "p90_vs_last_known",
+    "repeated_maps",
+    "spatial_stress",
+    "typewell_cluster_stress"
+  ],
+  "independent_clean_output_run": {
+    "ended_at": "2026-07-19T10:33:48Z",
+    "exit_status": 0,
+    "max_rss_kb": 316080,
+    "started_at": "2026-07-19T10:26:58Z",
+    "wall_seconds": 409.97
+  },
+  "official_run": {
+    "ended_at": "2026-07-19T10:25:50Z",
+    "exit_status": 0,
+    "max_rss_kb": 316400,
+    "started_at": "2026-07-19T10:18:37Z",
+    "wall_seconds": 432.38
+  },
+  "repository_validation": {
+    "api": {
+      "e005_rejected_visible": true,
+      "health": 200,
+      "learning": 200,
+      "state": 200
+    },
+    "browser": {
+      "desktop": {
+        "console_errors": 0,
+        "dom_rendered": true,
+        "screenshot_bytes": 366360,
+        "viewport": "1440x900"
+      },
+      "engine": "installed Google Chrome headless",
+      "environment_warning": "Host VAAPI version is older than Chrome minimum; GPU acceleration was disabled and page rendering/console checks passed.",
+      "mobile": {
+        "console_errors": 0,
+        "dom_rendered": true,
+        "screenshot_bytes": 114660,
+        "viewport": "390x844"
+      }
+    },
+    "completed_at": "2026-07-19T10:40:19Z",
+    "git_diff_check": true,
+    "javascript": {
+      "dashboard_index_node_check": true,
+      "dashboard_learning_node_check": true
+    },
+    "sqlite_integrity": "ok",
+    "tracker_sync": {
+      "events": 19,
+      "manifests": 5,
+      "runs": 5,
+      "status": "ok"
+    },
+    "tracker_validate": {
+      "errors": [],
+      "status": "ok",
+      "warnings": [
+        "unknown-license notebook inputs remain quarantined: phongnguyn23021656/koolbox-offline, nina2025/rogii-03, needless090/rogii-tabicl-mirror"
+      ]
+    },
+    "unit_tests": {
+      "command": "python3 -m unittest discover -s tests -v",
+      "failed": 0,
+      "passed": 40
+    }
+  },
+  "reproduction": {
+    "all_scored_artifacts_byte_identical": true,
+    "files_compared": 11,
+    "oof_predictions": {
+      "byte_identical": true,
+      "bytes": 163956757,
+      "rows": 3783989,
+      "sha256": "5115f7ce80f70c827c6df6edc572657253495a44333a2bb35bc46a7547e13ae5"
+    },
+    "path_sensitive_manifest": {
+      "canonical_relative_layout_byte_identical": true,
+      "difference": "external_artifact relative path only",
+      "first_output_root_byte_identical": false,
+      "semantic_equal_after_path_normalization": true,
+      "sha256": "011363023c3f8cf958b0154b9ced8d798c1c2e4c5aab81ce81802b8e373c9fb8"
+    },
+    "total_bytes_compared": 164337107
+  },
+  "resource_gates": {
+    "maximum_rss_mb": 1536,
+    "memory_passed": true,
+    "observed_max_rss_mb": 308.984375,
+    "observed_minutes": 7.206333333333333,
+    "runtime_budget_minutes": 45,
+    "runtime_passed": true
+  },
+  "result_status": "rejected",
+  "run_id": "R20260719-1018-e005-gr-path",
+  "schema_version": 1,
+  "selected_candidate": "pf_gr_path",
+  "statistical_gates": {
+    "controls": true,
+    "diversity": true,
+    "gain_vs_e004": true,
+    "gain_vs_last_known": true,
+    "p90_vs_e004": false,
+    "p90_vs_last_known": false,
+    "repeated_maps": false,
+    "spatial_stress": false,
+    "typewell_cluster_stress": false,
+    "worst5_vs_e004": true,
+    "worst5_vs_last_known": true
+  },
+  "submission": {
+    "created": false,
+    "public_score": null,
+    "reason": "Statistical promotion failed; packaging, private Kaggle parity, and leaderboard submission were not authorized.",
+    "submitted": false
+  }
+}

@@ -1,0 +1,10 @@
+control,status,detail_json
+axis_confusion,pass,"{""rmse"":187.47850088871118}"
+data_integrity,pass,"{""data_signature"":""6ebe65b403f80fefd97dcd7bbfce7314252e779a1837c97364cf55761590fe77"",""wells"":773}"
+duplicate_alignment,pass,"{""maximum_prediction_delta"":0.0}"
+e004_exact_comparator,pass,"{""expected_rmse"":15.491306398267565,""observed_rmse"":15.49130639826753}"
+no_gr_fallback,pass,"{""fallback_wells"":0,""maximum_fallback_delta"":0.0}"
+oof_identity,pass,"{""rows"":3783989}"
+oracle_leakage_sentinel,pass,"{""eligible"":false,""rmse"":0.0}"
+pooled_sse_consistency,pass,"{""maximum_relative_difference"":1.186098640791615e-13}"
+shuffled_typewell_gr,pass,"{""shuffled_rmse"":179.91247532706328,""unshuffled_rmse"":19.6484954348777}"
