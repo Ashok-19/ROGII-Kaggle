@@ -69,7 +69,13 @@ Update the dashboard Learning Lab in the same workstream when verified evidence 
 
 ## Compute, packaging, and submissions
 
-Use Kaggle MCP for heavy runs after exact code/configuration is committed. Final notebooks must use approved portable inputs, internet disabled, deterministic inference, exact IDs/order, finite outputs, and runtime below the 8-hour target / 9-hour hard limit. Record notebook version, inputs, accelerator, runtime, and artifact hashes.
+Follow `KAGGLE_NOTEBOOK_RUNBOOK.md`.
+
+The local machine is limited to at most two CPU threads for project workflows. Keep source edits, metadata inspection, deterministic bundle construction, unit/contract tests, tiny smokes, packaging, and output verification local. Send workflows expected to take more than roughly 15 minutes, consume substantial memory/I/O, or require more compute to a bounded private Kaggle notebook instead of stressing the local system.
+
+Use Kaggle only after exact code/configuration is committed and a hash-sealed private input bundle is prepared. Maintain one canonical notebook per heavy workflow; it must import the exact bundled `src/` package, cap all native/BLAS/tree-model thread pools at two, fail closed on identity/control errors, keep internet disabled, and write a run receipt plus downloadable output manifest/archive under `/kaggle/working`. Automatic dataset attachment is not trusted: the user manually attaches the exact prepared private dataset version and competition data.
+
+A Kaggle status of `COMPLETE` is not evidence. Require every expected output filename in the notebook file listing, download the exact versioned outputs, verify bytes/hashes/schema/source identity, and independently review the result before changing any gate. Final deployment notebooks must also preserve exact IDs/order, finite outputs, deterministic inference, and runtime below the 8-hour target / 9-hour hard limit.
 
 No Kaggle submission is created without explicit user authorization. Record every authorized submission immediately with its reference, run, score, and purpose.
 

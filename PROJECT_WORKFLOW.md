@@ -20,6 +20,10 @@ Build the smallest version that can falsify the hypothesis. Keep metric, folds, 
 
 Use a fixed small well set only to find crashes, leakage, ID/order errors, NaNs, nondeterminism, and runtime problems. Smoke scores are never evidence.
 
+## 4A. Place compute deliberately
+
+Keep local execution to at most two CPU threads. Run only source checks, unit/contract tests, deterministic packaging, and tiny smokes locally. Prepare a bounded private Kaggle notebook for workflows expected to exceed roughly 15 minutes or materially stress local memory/I/O. Follow `KAGGLE_NOTEBOOK_RUNBOOK.md`: exact committed SHA, hash-sealed input dataset version, manual exact attachment, internet disabled, fail-closed preflight, fixed output filenames, and independent downloaded-output verification.
+
 ## 5. Run controls
 
 Use applicable known-positive, no-op, exact-fallback, duplicate, shuffled/reversed/sign-flipped evidence, leakage-sentinel, deterministic rerun, and final-placement controls. A failed control invalidates the run.
@@ -40,7 +44,7 @@ Never relabel a failed run, route by observed validation subgroups, or alter his
 
 ## 8. Package and parity-test
 
-Build an offline notebook from approved inputs only. Verify no internet, exact sample IDs/order, finite predictions, artifact hashes, deterministic inference, runtime below the 8-hour target / 9-hour hard limit, and local/Kaggle parity.
+Build one canonical offline notebook from approved hash-sealed inputs only. Verify no internet, at most two CPU threads unless a separately approved accelerator workflow requires otherwise, exact sample IDs/order, finite predictions, artifact hashes, deterministic inference, runtime below the 8-hour target / 9-hour hard limit, and local/Kaggle parity. A `COMPLETE` notebook is not accepted until expected outputs are listed, downloaded, hashed, parsed, and independently checked.
 
 ## 9. Submit deliberately
 

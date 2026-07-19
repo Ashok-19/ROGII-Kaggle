@@ -2,13 +2,13 @@
   "experiment_id": "E010",
   "title": "Nonlinear candidate coverage and visible-prefix selector regret",
   "hypothesis": "A legal bank of genuinely different whole-well nonlinear paths can achieve candidate-oracle RMSE below 5, and multi-cut visible-prefix evidence plus calibrated uncertainty can retain enough of that coverage without hidden-label routing.",
-  "status": "designed",
+  "status": "smoke_passed",
   "track": "nonlinear_candidate_bank",
   "priority": 1,
   "owner": "NNMax",
   "parent_id": "E006",
   "created_at": "2026-07-19T19:25:22Z",
-  "updated_at": "2026-07-19T19:25:22Z",
+  "updated_at": "2026-07-19T20:31:05Z",
   "design": {
     "task_id": "T017",
     "hypothesis_id": "H013",
@@ -37,9 +37,14 @@
     "runtime_budget_minutes": 60,
     "maximum_rss_mb": 3072,
     "config_path": "experiments/E010/config.json",
-    "pre_registration_path": "experiments/E010/PRE_REGISTRATION.md"
+    "pre_registration_path": "experiments/E010/PRE_REGISTRATION.md",
+    "kaggle_runbook": "KAGGLE_NOTEBOOK_RUNBOOK.md",
+    "kaggle_notebook": "notebooks/training_and_submission/e010_candidate_selector_kaggle.ipynb",
+    "kaggle_input_record": "experiments/E010/KAGGLE_INPUT_V1.json",
+    "local_maximum_threads": 2,
+    "full_validation_platform": "private Kaggle CPU notebook, internet disabled"
   },
   "runs": [],
   "result": null,
-  "conclusion": "Pending execution."
+  "conclusion": "Implementation, 28 E010 scientific tests, full repository regression tests, deterministic bundle checks, and private Kaggle input/notebook preparation passed. Full hidden-label validation has not run; E010 remains pending the canonical private Kaggle CPU execution and independent output review."
 }
