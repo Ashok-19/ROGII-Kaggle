@@ -10,6 +10,7 @@ from .harness import (
 from .structural import huber_line, run_e002
 from .learnability import run_e003
 from .deployment import run_e004
+from .gr_path import run_e005
 
 __all__ = [
     "DEFAULT_FOLD_SEEDS",
@@ -20,5 +21,6 @@ __all__ = [
     "run_e002",
     "run_e003",
     "run_e004",
+    "run_e005",
     "scan_profiles",
 ]
