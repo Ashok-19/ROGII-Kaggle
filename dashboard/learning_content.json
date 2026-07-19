@@ -251,6 +251,15 @@
       "visual": "gr_path_gate",
       "summary": "E005 particle filtering improved pooled RMSE from E004's 15.4913 to 15.3502 and reduced worst-5% SSE share, but p90 rose to 23.4852, only 3 of 5 repeated maps passed, and the worst spatial and typewell-cluster groups regressed.",
       "why_it_matters": "Aggregate GR alignment contains useful, decorrelated evidence, but a raw PF path is not safe enough to deploy. A pre-registered 50/50 diagnostic blend reached 15.0131, so the next experiment must validate fusion with fresh cross-fit placement rather than promote this observed blend."
+    },
+    {
+      "id": "B010",
+      "date": "2026-07-19",
+      "title": "Strict nesting turned weak PF evidence into a stable candidate",
+      "evidence": "kaggle_verified",
+      "visual": "nested_fusion",
+      "summary": "E006 recomputed E004 and PF inside every untouched outer fold, selected a conservative fusion rule only from inner OOF evidence, and reached 14.9331 RMSE with 5 of 5 map wins and 25 of 25 outer-cell wins.",
+      "why_it_matters": "PF was unsafe alone, but its complementary correction became useful when anchored to E004 and validated in final placement. P90 fell to 21.7856, every spatial and typewell group improved, and local plus private Kaggle outputs are byte-identical at SHA-256 e412864a...d81008."
     }
   ],
   "idea_questions": [
@@ -287,7 +296,7 @@
     {
       "signal": "ensemble",
       "question": "Does a weak candidate reduce pooled RMSE when blended with the strongest OOF path because its residual correlation is low?",
-      "falsifier": "Cross-fit blend weight collapses to zero or the gain appears on only one fold map."
+      "falsifier": "E006 passed this test: conservative nested fusion used nonzero PF weight in every outer cell and improved all five maps. Future additions must now beat E006 rather than reuse its result as an untuned blend."
     }
   ],
   "sources": [
@@ -334,6 +343,11 @@
     {
       "title": "E005 rejected GR path result",
       "local_path": "experiments/E005/RESULT.md",
+      "url": ""
+    },
+    {
+      "title": "E006 promoted nested fusion result",
+      "local_path": "experiments/E006/RESULT.md",
       "url": ""
     }
   ]

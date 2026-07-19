@@ -1,0 +1,319 @@
+{
+  "artifacts": [
+    {
+      "bytes": 8401,
+      "kind": "result",
+      "path": "experiments/E006/RESULT.md",
+      "sha256": "cc99fd87875e6d886c32ce39007f9b4c47a41526289cdad4d618573991d9705f"
+    },
+    {
+      "bytes": 18762,
+      "kind": "summary",
+      "path": "experiments/E006/results/summary.json",
+      "sha256": "68f02bd9e6440a825c84269e68e8e36aca683b78bdf800b2c515bef8126e20d5"
+    },
+    {
+      "bytes": 2310,
+      "kind": "metrics",
+      "path": "experiments/E006/results/candidate_metrics.csv",
+      "sha256": "280eeec633df59afaab96d879afeffada17f33a9639de8f12e3d03231c00e108"
+    },
+    {
+      "bytes": 1187,
+      "kind": "controls",
+      "path": "experiments/E006/results/control_metrics.csv",
+      "sha256": "f0308df3b37d969b8840e8a185eab156f18aa44f4eac3a70b7b1485b686fa1de"
+    },
+    {
+      "bytes": 78351,
+      "kind": "metrics",
+      "path": "experiments/E006/results/inner_weight_grid.csv",
+      "sha256": "635e3a2e3c4a6c9633f1c7dbcdc47cfc97830abd9d8ea4e1f7b61720750a158f"
+    },
+    {
+      "bytes": 13559,
+      "kind": "metrics",
+      "path": "experiments/E006/results/map_metrics.csv",
+      "sha256": "47c1efebf1e78361fec3e699240e289bdeb5c889e85aae81af5e3def6588e910"
+    },
+    {
+      "bytes": 14869,
+      "kind": "audit",
+      "path": "experiments/E006/results/membership_audit.csv",
+      "sha256": "36399fa1333c4a6026f538cdeed3b23c3aa5f2277323233ed3cb014fdda1309f"
+    },
+    {
+      "bytes": 110076,
+      "kind": "metrics",
+      "path": "experiments/E006/results/outer_cell_metrics.csv",
+      "sha256": "da29420beda756b93f8c41360562673ef6541ee848f0b4b0a33c967fb8ad8504"
+    },
+    {
+      "bytes": 123407,
+      "kind": "metrics",
+      "path": "experiments/E006/results/selected_well_metrics.csv",
+      "sha256": "de18d34b28ede90f8b901b5adad3044e772b5c7934c83aa5032fb8b9597ef4da"
+    },
+    {
+      "bytes": 8748,
+      "kind": "metrics",
+      "path": "experiments/E006/results/special_slice_metrics.csv",
+      "sha256": "e9eb202bcee52e6df68db930049cabb301cbd96765609c93b09a2ec1d1faa4d3"
+    },
+    {
+      "bytes": 27679,
+      "kind": "metrics",
+      "path": "experiments/E006/results/stress_metrics.csv",
+      "sha256": "c10a545f0aeae431a3cb68a5a98fc4b122d594f9983202990991f75ca4fe2415"
+    },
+    {
+      "bytes": 8163,
+      "kind": "metrics",
+      "path": "experiments/E006/results/weight_metrics.csv",
+      "sha256": "a92fe73ab60873842b6a3c2fb95e34ac9da54c568e4d531d8ce45f0be2767331"
+    },
+    {
+      "bytes": 16910,
+      "kind": "model",
+      "path": "experiments/E006/results/model.json",
+      "sha256": "bee16499c6361395d556dd5c4ff8555e95739c36f68444b3d0dfcf648d73cddf"
+    },
+    {
+      "bytes": 3680,
+      "kind": "verification",
+      "path": "experiments/E006/results/remote_parity.json",
+      "sha256": "344c2dacea4f65b613084b16ec2449c396736f55503bc8bd9a79f1ab9d6b08db"
+    },
+    {
+      "bytes": 4527,
+      "kind": "manifest",
+      "path": "experiments/E006/results/artifact_manifest.json",
+      "sha256": "06cc6d1d2e8752a331aca20dc52d2384f8cbf8270b1a611970fe707ab4836675"
+    },
+    {
+      "bytes": 75250,
+      "kind": "notebook",
+      "path": "notebooks/e006_deployment.ipynb",
+      "sha256": "6425de71ecceb9c5819fcc1a9ed6ec4c702ed176232b3be0326226f91d9e5750"
+    },
+    {
+      "bytes": 200145240,
+      "kind": "oof_predictions_gzip",
+      "path": "artifacts/E006/oof_predictions.csv.gz",
+      "sha256": "9b9f26cd8ad82e32dbc0f9ba1466cb38424cd3bbf7001c1079a9867fb5a324b4"
+    },
+    {
+      "bytes": 367933,
+      "kind": "submission",
+      "path": "artifacts/E006/submission.csv",
+      "sha256": "e412864a6721ab4e13575355f37188aa9ddf19223bd46fe33224a8b536d81008"
+    },
+    {
+      "bytes": 367933,
+      "kind": "submission",
+      "path": "artifacts/E006/notebook_submission.csv",
+      "sha256": "e412864a6721ab4e13575355f37188aa9ddf19223bd46fe33224a8b536d81008"
+    }
+  ],
+  "audit_commits": [
+    "a44146d7389b296b0cded821a94fb5a67923deed",
+    "7bd1633310a13d3c19af556eb1b6e131b18c2bf3"
+  ],
+  "audit_findings_corrected": [
+    "parent PF RMSE pass could be overwritten by hash-only pass metadata",
+    "candidate pass flags were recorded before runtime and memory gates were appended",
+    "deployment model and path settings lacked complete fail-fast validation",
+    "Learning Lab nested_fusion visual hook was missing",
+    "canonical E006 records and hashes remained in pre-deployment state"
+  ],
+  "completed_at": "2026-07-19T14:18:00Z",
+  "controls_failed": 0,
+  "controls_passed": 16,
+  "deployment": {
+    "deployment_ready": true,
+    "full_fit_weight_independently_recomputed": true,
+    "fusion_weight": 0.5,
+    "leaderboard_submission_created": false,
+    "local_direct_local_notebook_remote_byte_identical": true,
+    "local_model_ready": true,
+    "local_notebook_parity": true,
+    "model_sha256": "bee16499c6361395d556dd5c4ff8555e95739c36f68444b3d0dfcf648d73cddf",
+    "notebook_sha256": "6425de71ecceb9c5819fcc1a9ed6ec4c702ed176232b3be0326226f91d9e5750",
+    "package_bytes": 92160,
+    "package_limit_bytes": 104857600,
+    "private_internet_disabled_kaggle_parity": true,
+    "remote_internet_enabled": false,
+    "remote_kernel": "ashok205/e006-nested-fusion-remote-parity",
+    "remote_kernel_version": 3,
+    "remote_official_competition_source_only": true,
+    "remote_private": true,
+    "remote_python": "3.12",
+    "submission_bytes": 367933,
+    "submission_made": false,
+    "submission_rows": 14151,
+    "submission_sha256": "e412864a6721ab4e13575355f37188aa9ddf19223bd46fe33224a8b536d81008"
+  },
+  "deployment_commit": "779d38067cec2beb12ecb55de8ae73f47a2cbaa5",
+  "design_commit": "3735efbaec45e4e17679a9e354cade516b8d1425",
+  "edge_and_property_tests": {
+    "coverage_note": "The installed coverage launcher points to missing /usr/bin/python and the Python module is unavailable; explicit regression and property tests were used instead of a coverage percentage.",
+    "e006_unittest_cases": 20,
+    "maximum_training_deployment_pf_delta": 0.0,
+    "python_3_10_passed": true,
+    "python_3_12_passed": true,
+    "python_3_13_passed": true,
+    "random_blend_cases": 1000,
+    "real_pf_parity_wells": 20,
+    "template_lengths": 72
+  },
+  "experiment_id": "E006",
+  "final_audited_code_replay": {
+    "code_sha": "7bd1633310a13d3c19af556eb1b6e131b18c2bf3",
+    "elapsed_wall_seconds": 2682.73,
+    "exit_status": 0,
+    "internal_wall_seconds": 2682.2795771790115,
+    "max_rss_kb": 228548,
+    "memory_budget_mb": 1536,
+    "memory_passed": true,
+    "runtime_budget_seconds": 2700,
+    "runtime_passed": true,
+    "stderr_bytes": 0
+  },
+  "gain_vs_e004": 0.558165611030672,
+  "gain_vs_last_known": 0.97671208349767,
+  "independent_clean_output_run": {
+    "code_sha": "a78ebc5783e67a37a5b801af58ad2bd6376c3f00",
+    "elapsed_wall_seconds": 2569.31,
+    "exit_status": 0,
+    "internal_wall_seconds": 2569.2341422030004,
+    "max_rss_kb": 228128
+  },
+  "official_run": {
+    "code_sha": "a78ebc5783e67a37a5b801af58ad2bd6376c3f00",
+    "elapsed_wall_seconds": 2575.97,
+    "ended_at": "2026-07-19T12:09:34Z",
+    "exit_status": 0,
+    "internal_wall_seconds": 2575.512452029012,
+    "max_rss_kb": 228668,
+    "started_at": "2026-07-19T11:26:38Z"
+  },
+  "repository_validation": {
+    "api": {
+      "e006_deployment_ready_visible": true,
+      "health": 200,
+      "index": 200,
+      "learn": 200,
+      "learning": 200,
+      "state": 200
+    },
+    "browser": {
+      "engine": "installed Google Chrome headless",
+      "index_desktop": {
+        "dom_bytes": 66110,
+        "screenshot_bytes": 267839,
+        "viewport": "1440x900"
+      },
+      "index_mobile": {
+        "dom_bytes": 66110,
+        "screenshot_bytes": 119405,
+        "viewport": "390x844"
+      },
+      "javascript_error_lines": 0,
+      "learn_desktop": {
+        "dom_bytes": 408487,
+        "screenshot_bytes": 363856,
+        "viewport": "1440x900"
+      },
+      "learn_mobile": {
+        "dom_bytes": 408487,
+        "screenshot_bytes": 114016,
+        "viewport": "390x844"
+      }
+    },
+    "javascript": {
+      "index_inline_node_check": true,
+      "learning_inline_node_check": true
+    },
+    "python_compile": true,
+    "sqlite_integrity": "ok",
+    "stale_dashboard_note": "A pre-existing dashboard process occupied port 8765 and served an older worktree. Final live validation used isolated port 8877; the pre-existing user process was not modified.",
+    "tracker_sync": {
+      "events": 22,
+      "manifests": 6,
+      "runs": 6,
+      "status": "ok"
+    },
+    "tracker_validate": {
+      "errors": [],
+      "status": "ok",
+      "warnings": [
+        "unknown-license notebook inputs remain quarantined: phongnguyn23021656/koolbox-offline, nina2025/rogii-03, needless090/rogii-tabicl-mirror"
+      ]
+    },
+    "unit_tests": {
+      "command": "python3 -m unittest discover -s tests -v",
+      "failed": 0,
+      "passed": 61
+    }
+  },
+  "reproduction": {
+    "all_candidate_metrics_identical": true,
+    "independent_row_audit": {
+      "all_finite": true,
+      "all_map_gains_positive": true,
+      "all_spatial_gains_positive": true,
+      "all_typewell_gains_positive": true,
+      "duplicate_control_maximum_delta": 0.0,
+      "duplicate_ids": 0,
+      "maximum_candidate_rmse_delta": 4.1e-12,
+      "unique_ids": 3783989,
+      "wells": 773
+    },
+    "oof_predictions": {
+      "byte_identical": true,
+      "bytes": 200145240,
+      "rows": 3783989,
+      "sha256": "9b9f26cd8ad82e32dbc0f9ba1466cb38424cd3bbf7001c1079a9867fb5a324b4"
+    },
+    "resource_control_difference": "control_metrics.csv differs only in observed runtime and maximum RSS; all statuses and non-resource details are semantically identical.",
+    "selected_candidate_identical": true,
+    "selected_rmse_identical": true,
+    "static_scored_csvs_byte_identical": [
+      "candidate_metrics.csv",
+      "inner_weight_grid.csv",
+      "map_metrics.csv",
+      "membership_audit.csv",
+      "outer_cell_metrics.csv",
+      "selected_well_metrics.csv",
+      "special_slice_metrics.csv",
+      "stress_metrics.csv",
+      "weight_metrics.csv"
+    ],
+    "summary_semantic_equal_after_normalizing_code_runtime_deployment": true
+  },
+  "result_status": "deployment_ready",
+  "run_id": "R20260719-1126-e006-nested-fusion",
+  "schema_version": 1,
+  "scoring_code_commit": "a78ebc5783e67a37a5b801af58ad2bd6376c3f00",
+  "selected_candidate": "nested_conservative_grid",
+  "selected_rmse": 14.933140787236884,
+  "statistical_gates": {
+    "controls": true,
+    "gain_vs_e004": true,
+    "gain_vs_last_known": true,
+    "memory": true,
+    "nonzero_maps": true,
+    "nonzero_outer_cells": true,
+    "outer_cells": true,
+    "p90_vs_e004": true,
+    "p90_vs_last_known": true,
+    "repeated_maps": true,
+    "runtime": true,
+    "spatial_stress": true,
+    "special_slices": true,
+    "typewell_stress": true,
+    "weight_range": true,
+    "worst5_vs_e004": true,
+    "worst5_vs_last_known": true
+  }
+}

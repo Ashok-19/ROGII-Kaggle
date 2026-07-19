@@ -21,7 +21,7 @@ Completed before model development:
 - `AGENTS.md`, `MEMORY.md`, control-first workflow, SQLite ledger, auto-sync CLI, validation command, and dashboard created.
 - Previous roadmap preserved under `archive/legacy/`.
 
-E001 is promoted and frozen. E002 rejected every naive U continuation. E003 promoted a surface-assisted cross-fitted datum-plus-trend result at 10.9280 RMSE as OOF understanding. E004 then audited the actual test contract, proved those six surface columns are unavailable at inference, and packaged a weaker surface-free geometry-plus-prefix candidate at 15.4913 RMSE. Local and private Kaggle notebook outputs are byte-identical, so E004 is deployment-ready but remains only a fallback. E005 has now tested clean affine, PF, and trellis GR paths: PF improved pooled RMSE to 15.3502 but failed p90, repeated-map, spatial, and typewell-cluster gates, so no standalone E005 candidate was promoted or packaged.
+E001 is promoted and frozen. E002 rejected every naive U continuation. E003 promoted a surface-assisted cross-fitted datum-plus-trend result at 10.9280 RMSE as OOF understanding. E004 then audited the actual test contract, proved those six surface columns are unavailable at inference, and packaged a weaker surface-free geometry-plus-prefix candidate at 15.4913 RMSE. Local and private Kaggle notebook outputs are byte-identical, so E004 is deployment-ready but remains only a fallback. E005 tested clean affine, PF, and trellis GR paths and rejected standalone PF despite aggregate gain. E006 then validated PF placement through strict nested fusion: `nested_conservative_grid` reaches 14.9331 RMSE, wins all 5 maps and 25 outer cells, improves every registered spatial/typewell group, and is deployment-ready after exact private Kaggle parity.
 
 ## What the evidence changes
 
@@ -167,13 +167,19 @@ Measured E005 outcome:
 - The registered decision is rejection. No deployment package, private Kaggle parity run, or leaderboard submission was authorized.
 - A pre-registered diagnostic 50/50 PF-E004 blend scores 15.0131171651 with p90 21.7769. It is hypothesis-generating only and must be re-tested with fresh nested/cross-fit placement.
 
-Immediate deliverables now shift to E006/H009:
+E006 status: completed, promoted, and deployment-ready; no leaderboard submission created.
 
-- Freeze a controlled PF-E004 fusion and disagreement-evidence experiment before any new scoring.
-- Estimate placement/weights without selecting on E005's observed diagnostic blend.
-- Repeat all map, p90, worst-tail, spatial, typewell-cluster, shuffled-evidence, runtime, and exact-ID controls.
+Measured E006 outcome:
 
-Exit gate: a fusion rule must pass every frozen stability gate and show that PF evidence adds repeatable value beyond E004, not merely a better aggregate average.
+- Strict nested `nested_conservative_grid` scores 14.9331407872 RMSE, gaining 0.5581656110 over E004 and 0.9767120835 over last-known TVT.
+- It wins 5/5 repeated maps and 25/25 outer cells, lowers p90 to 21.7856, and improves every nested spatial/typewell group and every special slice.
+- Final audited replay completes in 44:42.73 under the 45-minute gate with 228,548 KB maximum RSS.
+- The full-fit weight independently recomputes to 0.5. Direct, local-notebook, deterministic package rebuild, and private internet-disabled Kaggle v3 outputs are byte-identical at `e412864a...d81008`.
+- E004 remains exact fallback; no leaderboard submission was made.
+
+Immediate deliverables now shift to E007/H005 horizontal self-correlation as an independently pre-registered candidate.
+
+Exit gate: the self-correlation leg must survive template-shuffle, repeated-map, tail, subgroup, runtime, and residual-correlation controls against E006 before entering any ensemble.
 
 ### July 24–26 — Tabular residual and datum models
 
@@ -255,8 +261,8 @@ These defaults may be revised only through a recorded decision before seeing the
 3. **E003 — Datum/trend and risk learnability — completed and promoted 2026-07-19.** Ridge datum-plus-trend scores 10.9280; forest risk scores 0.5415 Spearman / 0.8125 AUC; both pass repeated and spatial gates.
 4. **E004 — Surface-free deployment candidate and ablations — completed and deployment-ready 2026-07-19.** Geometry-plus-prefix scores 15.4913; local-direct, local-notebook, and private Kaggle outputs are byte-identical. Retain it as a fallback; no standalone submission was made.
 5. **E005 — Clean PF and trellis candidates — completed and rejected 2026-07-19.** PF reaches 15.3502 but fails p90, repeated-map, spatial, and typewell-cluster gates; no packaging or submission.
-6. **E006 — Controlled PF-E004 fusion and disagreement evidence — next.** Fresh nested/cross-fit placement; the observed 15.0131 diagnostic blend is not promotion evidence.
-7. **E007 — Horizontal self-correlation and candidate evidence stack.** Add the H005 template-shuffle leg only after independent validation.
+6. **E006 — Controlled PF-E004 fusion and disagreement evidence — completed, promoted, and deployment-ready 2026-07-19.** Strict nesting selects 14.9331-RMSE conservative fusion; exact private Kaggle parity passes; no leaderboard submission.
+7. **E007 — Horizontal self-correlation and candidate evidence stack — next.** Pre-register H005 with template-shuffle and full E006-comparator controls before scoring.
 8. **E008 — Small sequence residual corrector.** Only after E007 freezes the feature/target frame.
 9. **E009 — OOF diversity ensemble and uncertainty placement.** Cross-fit weights; risk cannot route without beating the fixed action.
 10. **E010 — Final Kaggle offline parity.** Clean package, runtime, exact IDs, and finalist notebooks.

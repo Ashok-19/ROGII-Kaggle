@@ -1,0 +1,106 @@
+{
+  "completed_at": "2026-07-19T13:12:38Z",
+  "exact_notebook": {
+    "bytes": 75250,
+    "deterministic_cell_ids": [
+      "e006-intro",
+      "e006-e004-runtime",
+      "e006-fusion-runtime",
+      "e006-model",
+      "e006-launch"
+    ],
+    "path": "notebooks/e006_deployment.ipynb",
+    "sha256": "6425de71ecceb9c5819fcc1a9ed6ec4c702ed176232b3be0326226f91d9e5750",
+    "source_cells_match_local_exactly": true
+  },
+  "experiment_id": "E006",
+  "kernel": {
+    "competition_source": "rogii-wellbore-geology-prediction",
+    "dataset_sources": [],
+    "execution_output_time_seconds": 15.251813748,
+    "gpu_enabled": false,
+    "internet_enabled": false,
+    "kernel_id": 127883988,
+    "kernel_sources": [],
+    "model_sources": [],
+    "owner": "ashok205",
+    "private": true,
+    "python_runtime": "3.12",
+    "slug": "e006-nested-fusion-remote-parity",
+    "tpu_enabled": false,
+    "version": 3,
+    "worker_status": "COMPLETE"
+  },
+  "leaderboard_submission_created": false,
+  "model": {
+    "bytes": 16910,
+    "full_fit_rule_independently_recomputed": true,
+    "fusion_weight": 0.5,
+    "path": "experiments/E006/results/model.json",
+    "sha256": "bee16499c6361395d556dd5c4ff8555e95739c36f68444b3d0dfcf648d73cddf"
+  },
+  "official_fixture_byte_verification": {
+    "files": [
+      {
+        "bytes": 254725,
+        "path": "sample_submission.csv",
+        "sha256": "7498f19ba1be281328c31a39044d4ba5f84e71c8f4115c613b5531f42aaff85a"
+      },
+      {
+        "bytes": 278656,
+        "path": "test/000d7d20__horizontal_well.csv",
+        "sha256": "706bcbbc4c44aa96e6d1e0f9c0bf4d18fa340d6bbe82008b7edd2d7707e4e595"
+      },
+      {
+        "bytes": 23141,
+        "path": "test/000d7d20__typewell.csv",
+        "sha256": "87dfaba4569d96cde1e427a27077f5b1e70038f61170eb785d52da5485a73e3f"
+      },
+      {
+        "bytes": 378010,
+        "path": "test/00e12e8b__horizontal_well.csv",
+        "sha256": "dba74df5aa634408a7ddd15ef9e408b5fd2d3086152a73d9a8a9ee12b678821c"
+      },
+      {
+        "bytes": 45861,
+        "path": "test/00e12e8b__typewell.csv",
+        "sha256": "2477a23ec6e7a9057b1363af438f2996d82d3809af252cbe31c08a939627c5b1"
+      },
+      {
+        "bytes": 440311,
+        "path": "test/00bbac68__horizontal_well.csv",
+        "sha256": "e2ba824ee1fb578f503dff93ea33bd89b12d4941bf4e40c7cfc1cc983e9affa1"
+      },
+      {
+        "bytes": 35317,
+        "path": "test/00bbac68__typewell.csv",
+        "sha256": "cbc9c7aa3880e0ab3e707c7bf78dfc091a0c5b1c7c2dad27ec5eb8fa68517f52"
+      }
+    ],
+    "pass": true,
+    "source": "Kaggle competition file download endpoints recorded by E004"
+  },
+  "parity_level": "raw_byte_identical",
+  "runtime": {
+    "e004_path": "src/rogii_validation/e004_inference.py",
+    "e004_sha256": "52c2c5d6be93f4fde41257bdc7b30f4da36de1807e4a5c4dfd95a90411c4a2a5",
+    "e006_path": "src/rogii_validation/e006_inference.py",
+    "e006_sha256": "9a41411d827f224da352aa6e0f25e709646b6ce398cd97082934c9316791139c",
+    "external_artifacts_required": false,
+    "standard_library_only": true
+  },
+  "schema_version": 1,
+  "status": "pass",
+  "submission": {
+    "bytes": 367933,
+    "local_direct_equals_local_notebook": true,
+    "local_direct_equals_remote_kaggle": true,
+    "local_direct_sha256": "e412864a6721ab4e13575355f37188aa9ddf19223bd46fe33224a8b536d81008",
+    "local_notebook_sha256": "e412864a6721ab4e13575355f37188aa9ddf19223bd46fe33224a8b536d81008",
+    "remote_kaggle_sha256": "e412864a6721ab4e13575355f37188aa9ddf19223bd46fe33224a8b536d81008",
+    "rows": 14151,
+    "serialization_decimal_places": 5,
+    "sha256": "e412864a6721ab4e13575355f37188aa9ddf19223bd46fe33224a8b536d81008",
+    "wells": 3
+  }
+}

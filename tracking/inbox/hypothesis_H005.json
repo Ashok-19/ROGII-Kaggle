@@ -1,0 +1,14 @@
+{
+  "type": "hypothesis",
+  "recorded_at": "2026-07-19T12:29:30Z",
+  "payload": {
+    "hypothesis_id": "H005",
+    "title": "Self-correlation candidate",
+    "statement": "Horizontal pre-boundary GR self-correlation can provide a useful structural candidate independent of typewell matching for selected regimes.",
+    "status": "active",
+    "priority": 2,
+    "evidence_for": "Host material and competition discussions describe repeated horizontal-log motifs; E006 proves that a weaker GR-derived leg can add stable value when placed through strict nested validation.",
+    "evidence_against": "Repeated motifs, toe missingness, changing stratigraphy, and long horizons may make self-correlation ambiguous or redundant with E006 PF evidence.",
+    "next_test": "E007: pre-register a legal prefix-template/self-correlation path with deterministic template-shuffle, no-GR fallback, repeated-fold, tail, spatial/typewell stress, runtime, and residual-correlation controls against E006."
+  }
+}

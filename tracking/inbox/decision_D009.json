@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-19T12:29:30Z",
+  "payload": {
+    "decision_id": "D009",
+    "decided_at": "2026-07-19",
+    "title": "Promote nested PF-E004 fusion",
+    "decision": "Promote E006 nested_conservative_grid as the primary deployment-ready surface-free candidate, retain E004 as its exact no-GR fallback, and do not create a leaderboard submission without a separate discriminating submission decision.",
+    "rationale": "The rule was frozen before scoring, excludes every outer fold from inner fitting, improves all five maps and all 25 outer cells, passes every registered tail and distribution-shift gate, reproduces independently, and produces raw-byte-identical local and private internet-disabled Kaggle output.",
+    "source_ids": "experiments/E006/RESULT.md,experiments/E006/verification.json,experiments/E006/results/remote_parity.json",
+    "revisit_trigger": "A separately validated candidate or ensemble materially improves E006, hidden-test/public evidence contradicts its expected ordering, or a future runtime invalidates exact offline parity."
+  }
+}

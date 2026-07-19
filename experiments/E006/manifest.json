@@ -1,42 +1,18 @@
 {
-  "experiment_id": "E006",
-  "title": "Nested PF-E004 fusion and disagreement evidence",
-  "hypothesis": "Strictly nested placement of the E005 PF correction around the deployment-ready E004 geometry-prefix path can retain complementary GR evidence while removing the standalone PF p90 and subgroup regressions.",
-  "status": "designed",
-  "track": "controlled_ensemble",
-  "priority": 1,
-  "owner": "NNMax",
-  "parent_id": "E005",
+  "conclusion": {
+    "decision": "Promote the strictly nested conservative PF-E004 fusion as the primary deployment-ready surface-free candidate. Retain E004 as exact fallback and make no leaderboard submission without a separate discriminating decision.",
+    "deployment_ready": true,
+    "leaderboard_submission_created": false,
+    "remote_parity_path": "experiments/E006/results/remote_parity.json",
+    "result_path": "experiments/E006/RESULT.md",
+    "selected_candidate": "nested_conservative_grid",
+    "statistically_promoted": true,
+    "verification_path": "experiments/E006/verification.json"
+  },
   "created_at": "2026-07-19T11:03:37Z",
-  "updated_at": "2026-07-19T11:03:37Z",
   "design": {
-    "task_id": "T012",
-    "hypothesis_id": "H009",
     "baseline": "last_known_tvt",
-    "deployment_comparator": "E004 geometry_prefix",
-    "diverse_leg": "E005 pf_gr_path",
-    "legal_inputs": [
-      "horizontal MD/X/Y/Z/GR",
-      "contiguous visible TVT_input prefix",
-      "paired typewell TVT/GR",
-      "target-free E005 PF alignment diagnostics",
-      "inner-training hidden TVT used only to fit the inner fusion decision"
-    ],
-    "forbidden_inputs": [
-      "outer-validation hidden TVT in E004 fitting, weight fitting, routing, or reliability calibration",
-      "E005 observed 50/50 diagnostic result as a validated selector",
-      "training-only formation surfaces or typewell Geology",
-      "leaderboard-guided selection",
-      "external labels or opaque artifacts"
-    ],
-    "fold_maps": ["folds/v1.json", "folds/v2.json", "folds/v3.json", "folds/v4.json", "folds/v5.json"],
-    "nested_validation": "For each of 25 outer E001 cells, the held-out fold is absent from every E004 inner fit and from all weight/routing targets. The remaining four original fold labels form four inner OOF groups. The frozen PF algorithm is recomputed around each matching cell-specific E004 path; E005 PF rows anchored to the five-map averaged E004 path are audit-only and cannot enter nested scoring.",
-    "eligible_candidates": [
-      "nested_conservative_grid",
-      "nested_reliability_shrink",
-      "nested_disagreement_cap",
-      "nested_reliability_gate"
-    ],
+    "config_path": "experiments/E006/config.json",
     "controls": [
       "exact nested E004 comparator reproduction",
       "exact PF recomputation",
@@ -49,6 +25,29 @@
       "weight stability",
       "independent artifact reproduction"
     ],
+    "deployment": "Packaging and private internet-disabled Kaggle parity are authorized only after all statistical gates pass. Promotion does not itself authorize a leaderboard submission.",
+    "deployment_comparator": "E004 geometry_prefix",
+    "diverse_leg": "E005 pf_gr_path",
+    "eligible_candidates": [
+      "nested_conservative_grid",
+      "nested_reliability_shrink",
+      "nested_disagreement_cap",
+      "nested_reliability_gate"
+    ],
+    "fold_maps": [
+      "folds/v1.json",
+      "folds/v2.json",
+      "folds/v3.json",
+      "folds/v4.json",
+      "folds/v5.json"
+    ],
+    "forbidden_inputs": [
+      "outer-validation hidden TVT in E004 fitting, weight fitting, routing, or reliability calibration",
+      "E005 observed 50/50 diagnostic result as a validated selector",
+      "training-only formation surfaces or typewell Geology",
+      "leaderboard-guided selection",
+      "external labels or opaque artifacts"
+    ],
     "harsher_splits": [
       "nested leave-spatial-group-out",
       "nested leave-typewell-cluster-out",
@@ -56,13 +55,181 @@
       "high GR missingness",
       "ambiguous alignment"
     ],
-    "promotion": "A legal nested candidate must gain at least 0.05 RMSE over E004 and 0.45 over last-known, win at least four of five maps and 17 of 25 outer cells, satisfy p90 and worst-5% limits, improve every nested spatial and typewell group, pass special-slice, shuffled-evidence, stability, runtime, memory, identity, and reproduction controls, and use nonzero PF contribution consistently.",
-    "deployment": "Packaging and private internet-disabled Kaggle parity are authorized only after all statistical gates pass. Promotion does not itself authorize a leaderboard submission.",
-    "runtime_budget_minutes": 45,
-    "maximum_rss_mb": 1536,
+    "hypothesis_id": "H009",
+    "legal_inputs": [
+      "horizontal MD/X/Y/Z/GR",
+      "contiguous visible TVT_input prefix",
+      "paired typewell TVT/GR",
+      "target-free E005 PF alignment diagnostics",
+      "inner-training hidden TVT used only to fit the inner fusion decision"
+    ],
     "maximum_package_mb": 100,
-    "config_path": "experiments/E006/config.json",
-    "pre_registration_path": "experiments/E006/PRE_REGISTRATION.md"
+    "maximum_rss_mb": 1536,
+    "nested_validation": "For each of 25 outer E001 cells, the held-out fold is absent from every E004 inner fit and from all weight/routing targets. The remaining four original fold labels form four inner OOF groups. The frozen PF algorithm is recomputed around each matching cell-specific E004 path; E005 PF rows anchored to the five-map averaged E004 path are audit-only and cannot enter nested scoring.",
+    "pre_registration_path": "experiments/E006/PRE_REGISTRATION.md",
+    "promotion": "A legal nested candidate must gain at least 0.05 RMSE over E004 and 0.45 over last-known, win at least four of five maps and 17 of 25 outer cells, satisfy p90 and worst-5% limits, improve every nested spatial and typewell group, pass special-slice, shuffled-evidence, stability, runtime, memory, identity, and reproduction controls, and use nonzero PF contribution consistently.",
+    "runtime_budget_minutes": 45,
+    "task_id": "T012"
   },
-  "runs": []
+  "experiment_id": "E006",
+  "hypothesis": "Strictly nested placement of the E005 PF correction around the deployment-ready E004 geometry-prefix path can retain complementary GR evidence while removing the standalone PF p90 and subgroup regressions.",
+  "owner": "NNMax",
+  "parent_id": "E005",
+  "priority": 1,
+  "runs": [
+    {
+      "artifact_dir": "artifacts/E006",
+      "artifacts": [
+        {
+          "bytes": 8401,
+          "kind": "result",
+          "path": "experiments/E006/RESULT.md",
+          "sha256": "cc99fd87875e6d886c32ce39007f9b4c47a41526289cdad4d618573991d9705f"
+        },
+        {
+          "bytes": 10916,
+          "kind": "verification",
+          "path": "experiments/E006/verification.json",
+          "sha256": "e7f7fbcd3f515c9bd06f2c973e5d6dab1ae16e25aa5fbdc98c584d16b0425efa"
+        },
+        {
+          "bytes": 18762,
+          "kind": "summary",
+          "path": "experiments/E006/results/summary.json",
+          "sha256": "68f02bd9e6440a825c84269e68e8e36aca683b78bdf800b2c515bef8126e20d5"
+        },
+        {
+          "bytes": 16910,
+          "kind": "model",
+          "path": "experiments/E006/results/model.json",
+          "sha256": "bee16499c6361395d556dd5c4ff8555e95739c36f68444b3d0dfcf648d73cddf"
+        },
+        {
+          "bytes": 3680,
+          "kind": "verification",
+          "path": "experiments/E006/results/remote_parity.json",
+          "sha256": "344c2dacea4f65b613084b16ec2449c396736f55503bc8bd9a79f1ab9d6b08db"
+        },
+        {
+          "bytes": 4527,
+          "kind": "manifest",
+          "path": "experiments/E006/results/artifact_manifest.json",
+          "sha256": "06cc6d1d2e8752a331aca20dc52d2384f8cbf8270b1a611970fe707ab4836675"
+        },
+        {
+          "bytes": 75250,
+          "kind": "notebook",
+          "path": "notebooks/e006_deployment.ipynb",
+          "sha256": "6425de71ecceb9c5819fcc1a9ed6ec4c702ed176232b3be0326226f91d9e5750"
+        },
+        {
+          "bytes": 200145240,
+          "kind": "oof_predictions_gzip",
+          "path": "artifacts/E006/oof_predictions.csv.gz",
+          "sha256": "9b9f26cd8ad82e32dbc0f9ba1466cb38424cd3bbf7001c1079a9867fb5a324b4"
+        },
+        {
+          "bytes": 367933,
+          "kind": "submission",
+          "path": "artifacts/E006/submission.csv",
+          "sha256": "e412864a6721ab4e13575355f37188aa9ddf19223bd46fe33224a8b536d81008"
+        }
+      ],
+      "config_path": "experiments/E006/config.json",
+      "controls": {
+        "data_integrity": true,
+        "duplicate_fusion": true,
+        "e004_exact_comparator": true,
+        "exact_submission_contract": true,
+        "local_notebook_parity": true,
+        "memory": true,
+        "nested_membership": true,
+        "oof_identity": true,
+        "oracle_positive": true,
+        "package_size": true,
+        "parent_pf_audit": true,
+        "pooled_sse_consistency": true,
+        "remote_kaggle_mcp_parity": true,
+        "runtime": true,
+        "shuffled_pf": true,
+        "zero_weight_noop": true
+      },
+      "ended_at": "2026-07-19T12:09:34Z",
+      "final_audit_sha": "7bd1633310a13d3c19af556eb1b6e131b18c2bf3",
+      "fold_map": "folds/v1.json,folds/v2.json,folds/v3.json,folds/v4.json,folds/v5.json",
+      "git_sha": "a78ebc5783e67a37a5b801af58ad2bd6376c3f00",
+      "metrics": [
+        {
+          "name": "rmse",
+          "split": "cv",
+          "unit": "ft",
+          "value": 14.933140787236884
+        },
+        {
+          "name": "gain_vs_last_known",
+          "split": "cv",
+          "unit": "ft",
+          "value": 0.9767120834976701
+        },
+        {
+          "name": "gain_vs_e004",
+          "split": "cv",
+          "unit": "ft",
+          "value": 0.5581656110306721
+        },
+        {
+          "name": "p90_well_rmse",
+          "split": "cv",
+          "unit": "ft",
+          "value": 21.785550088398203
+        },
+        {
+          "name": "worst_5pct_sse_share",
+          "split": "cv",
+          "unit": "share",
+          "value": 0.36850611119004584
+        },
+        {
+          "name": "map_wins",
+          "split": "stability",
+          "unit": "of_5",
+          "value": 5
+        },
+        {
+          "name": "outer_cell_wins",
+          "split": "stability",
+          "unit": "of_25",
+          "value": 25
+        },
+        {
+          "name": "fusion_weight",
+          "split": "deployment",
+          "unit": "weight",
+          "value": 0.5
+        },
+        {
+          "name": "final_audit_wall_seconds",
+          "split": "runtime",
+          "unit": "seconds",
+          "value": 2682.73
+        },
+        {
+          "name": "final_audit_max_rss_kb",
+          "split": "runtime",
+          "unit": "kilobytes",
+          "value": 228548
+        }
+      ],
+      "notes": "All frozen statistical gates, final-code reproduction, expanded edge tests, package determinism, local notebook parity, and private internet-disabled Kaggle raw-byte parity passed. No leaderboard submission was made.",
+      "run_id": "R20260719-1126-e006-nested-fusion",
+      "started_at": "2026-07-19T11:26:38Z",
+      "status": "promoted",
+      "updated_at": "2026-07-19T14:09:27Z",
+      "well_metrics_path": "experiments/E006/results/selected_well_metrics.csv"
+    }
+  ],
+  "status": "promoted",
+  "title": "Nested PF-E004 fusion and disagreement evidence",
+  "track": "controlled_ensemble",
+  "updated_at": "2026-07-19T14:09:27Z"
 }

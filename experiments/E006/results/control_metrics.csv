@@ -1,0 +1,13 @@
+control,status,detail_json
+data_integrity,pass,"{""data_signature"":""6ebe65b403f80fefd97dcd7bbfce7314252e779a1837c97364cf55761590fe77"",""wells"":773}"
+duplicate_fusion,pass,"{""maximum_prediction_delta"":0.0}"
+e004_exact_comparator,pass,"{""expected_rmse"":15.491306398267565,""observed_rmse"":15.491306398267556}"
+memory,pass,"{""budget_mb"":1536,""max_rss_kb"":228548}"
+nested_membership,pass,"{""contexts"":35}"
+oof_identity,pass,"{""rows"":3783989}"
+oracle_positive,pass,"{""best_legal_rmse"":14.933140787236884,""eligible"":false,""oracle_rmse"":13.272691536357474}"
+parent_pf_audit,pass,"{""e004_rmse"":15.491306398264982,""expected_sha256"":""5115f7ce80f70c827c6df6edc572657253495a44333a2bb35bc46a7547e13ae5"",""pf_rmse"":15.350204071524828,""rows"":3783989,""sha256"":""5115f7ce80f70c827c6df6edc572657253495a44333a2bb35bc46a7547e13ae5""}"
+pooled_sse_consistency,pass,"{""maximum_relative_difference"":1.186098640791615e-13}"
+runtime,pass,"{""budget_minutes"":45,""wall_seconds"":2682.2795771790115}"
+shuffled_pf,pass,"{""gain_vs_e004"":0.0,""shuffled_rmse"":15.491306398267556,""unshuffled_rmse"":14.933140787236884}"
+zero_weight_noop,pass,"{""maximum_prediction_delta"":0.0}"
