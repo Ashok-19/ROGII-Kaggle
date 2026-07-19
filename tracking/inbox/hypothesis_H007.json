@@ -1,14 +1,14 @@
 {
   "type": "hypothesis",
-  "recorded_at": "2026-07-19T06:48:00Z",
+  "recorded_at": "2026-07-19T08:49:40Z",
   "payload": {
     "hypothesis_id": "H007",
     "title": "Deployable legal coefficient candidate",
     "statement": "A surface-free E003-style datum-plus-trend model can retain a material advantage, pass local packaging and exact reconstruction, and become deployment-ready after remote Kaggle parity.",
-    "status": "blocked",
+    "status": "validated",
     "priority": 2,
-    "evidence_for": "E004 geometry-plus-prefix reaches 15.4913 RMSE, improves all five maps, retains 0.3331 gain under spatial blocks, and has byte-identical direct/notebook submissions.",
-    "evidence_against": "The six surface columns driving E003 are absent from test. Surface-free gain shrinks from 4.9819 to 0.4185 RMSE, and remote Kaggle MCP parity is unavailable in the current tool environment.",
-    "next_test": "Execute notebooks/e004_deployment.ipynb through Kaggle MCP when available; do not submit the candidate solely from local 15.49 CV."
+    "evidence_for": "E004 geometry-plus-prefix reaches 15.4913 RMSE, improves all five maps, retains 0.3331 gain under spatial blocks, and now produces byte-identical local-direct, local-notebook, and private Kaggle outputs at SHA 62ae06575baa647a5e09686bc9369cbc7303ac391e5c028468593dd6b58d5279.",
+    "evidence_against": "The six surface columns driving E003 are absent from test and the deployable gain shrinks to only 0.4185 RMSE, so deployment readiness does not imply standalone submission value.",
+    "next_test": "Use E004 as a deterministic fallback/candidate-bank leg while E005 tests explicit test-available GR/typewell PF and trellis paths."
   }
 }

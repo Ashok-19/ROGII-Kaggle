@@ -1,6 +1,6 @@
 # E004 Result — Surface-Free Deployment Candidate and Ablations
 
-Status: **completed; locally packaged; remote parity blocked**  
+Status: **completed; deployment-ready; no leaderboard submission**  
 Run: `R20260719-0636-e004-deployment`  
 Code SHA: `c728a9a267a89c92e5c0c6b018db1a1658874158`
 
@@ -12,7 +12,7 @@ The full E003 score of **10.9279740918 RMSE** is therefore not a deployable comp
 
 The best deployable local candidate is `geometry_prefix` at **15.4913063983 RMSE**, improving last-known TVT by **0.4185464725**. It passes repeated folds, tail limits, and contiguous spatial stress, but is far weaker than the surface-assisted E003 diagnostic result.
 
-All available local deployment gates pass. The experiment remains `blocked`, rather than `promoted`, because a Kaggle MCP notebook execution tool is unavailable in the current environment and remote hidden-runtime parity is a pre-registered mandatory gate.
+All deployment gates now pass. The exact notebook bytes recorded in this repository completed in a private Kaggle CPU kernel with internet disabled and the official competition source attached. Local direct inference, local notebook inference, and Kaggle inference produced a byte-identical 14,151-row submission.
 
 ## Actual competition input contract
 
@@ -116,10 +116,30 @@ Artifacts:
 - Notebook: `notebooks/e004_deployment.ipynb`.
 - Local direct submission: `artifacts/E004/submission.csv`.
 - Local notebook submission: `artifacts/E004/notebook_submission.csv`.
-- Submission SHA-256: `2add1d7e785491cdad1d6b238cde98826fc6605423ce250f2e9e94e914767887`.
-- Notebook SHA-256: `f31b4260438b3d27958cd3ae933a9c5e348a058df4f80aed00935ce10fdbb9c2`.
+- Submission SHA-256: `62ae06575baa647a5e09686bc9369cbc7303ac391e5c028468593dd6b58d5279`.
+- Notebook SHA-256: `28e41432422d078628c4bd41688c641e9b97c54a591a998384e638c4c0d81dd7`.
+- Remote parity evidence: `experiments/E004/results/remote_parity.json`.
 
 The notebook dynamically locates `sample_submission.csv` under the Kaggle input mount and reconstructs predictions in the exact sample order.
+
+## Remote Kaggle parity
+
+The exact self-contained notebook was executed as private Kaggle kernel `ashok205/e004-deployment-remote-parity-exact`, version 4:
+
+- Worker status: **COMPLETE**.
+- Runtime: Kaggle Python 3.12 CPU image.
+- Internet: **disabled**.
+- Competition source: official `rogii-wellbore-geology-prediction` mount.
+- Notebook bytes: **44,774**.
+- Output rows: **14,151** across **3** authoring wells.
+- Output bytes: **367,933**.
+- Local direct, local notebook, and remote Kaggle SHA-256: `62ae06575baa647a5e09686bc9369cbc7303ac391e5c028468593dd6b58d5279`.
+- Raw byte parity: **passed**.
+- Leaderboard submission created: **no**.
+
+The first successful remote run revealed a cross-runtime serialization edge case: 190 rows differed only in the last printed digit, with maximum absolute numerical difference `1.000444171950221e-10` ft and prediction-delta RMSE `1.1590274320318884e-11` ft. The model and equations were unchanged; submission serialization was frozen at five decimal places, retaining `0.00001` ft resolution. This produced exact byte parity across local and Kaggle runtimes. Deterministic notebook cell IDs were also added, eliminating a future `nbformat` compatibility warning.
+
+All seven local authoring-fixture files were independently downloaded from Kaggle competition endpoints and verified byte-identical before the final remote run.
 
 ## Edge cases and controls
 
@@ -137,6 +157,8 @@ Verified behavior includes:
 - Inconsistent model arrays and non-finite coefficients are rejected.
 - All predictions and model values are finite.
 - The three visible authoring wells are explicitly excluded from generalization claims.
+- Cross-runtime CSV serialization is fixed to five decimal places and byte-identical on local Python and Kaggle Python 3.12.
+- Every generated notebook cell has a deterministic ID, avoiding future `nbformat` hard failures.
 
 ## Reproducibility
 
@@ -145,11 +167,13 @@ Verified behavior includes:
 - Fifteen result, notebook, and submission files were byte-identical.
 - Total compared bytes: **990,477**.
 - Direct and notebook submissions are byte-identical over **14,151 rows**.
+- The exact private Kaggle output is also byte-identical to both local outputs.
+- Final submission bytes: **367,933**; SHA-256: `62ae06575baa647a5e09686bc9369cbc7303ac391e5c028468593dd6b58d5279`.
 - Visible-test selected-feature maximum absolute standardized value: **2.5019**.
 - Visible-test selected features outside the training range: **0 cells**.
 
 ## Decision
 
-Retain `geometry_prefix` only as a weak, fully local-packaged fallback and candidate-bank leg. Do not submit it solely on the basis of 15.49 local CV. Do not describe the E003 10.93 surface-assisted score as deployable.
+Retain `geometry_prefix` as a weak but fully deployment-ready deterministic fallback and candidate-bank leg. Do not submit it solely on the basis of 15.49 local CV. Do not describe the E003 10.93 surface-assisted score as deployable.
 
-The next modeling work should reconstruct useful structural evidence from inputs that genuinely exist at test time: explicit typewell/horizontal GR alignment, particle filtering, trellis/dynamic programming, and candidate-path disagreement. Remote Kaggle MCP notebook parity remains the final unresolved E004 deployment gate.
+The next modeling work should reconstruct useful structural evidence from inputs that genuinely exist at test time: explicit typewell/horizontal GR alignment, particle filtering, trellis/dynamic programming, and candidate-path disagreement. E004 has no remaining deployment gate.

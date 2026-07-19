@@ -1,0 +1,79 @@
+{
+  "completed_at": "2026-07-19T08:49:40Z",
+  "exact_notebook": {
+    "bytes": 44774,
+    "deterministic_cell_ids": [
+      "e004-intro",
+      "e004-runtime",
+      "e004-model",
+      "e004-launch"
+    ],
+    "missing_cell_id_warning": false,
+    "path": "notebooks/e004_deployment.ipynb",
+    "sha256": "28e41432422d078628c4bd41688c641e9b97c54a591a998384e638c4c0d81dd7"
+  },
+  "experiment_id": "E004",
+  "kernel": {
+    "competition_source": "rogii-wellbore-geology-prediction",
+    "docker_image": "gcr.io/kaggle-images/python@sha256:dafd4ce5668bbf1ad422e4c109e0f18c9623c3a7c7f48b0235f13142755c40b9",
+    "gpu_enabled": false,
+    "internet_enabled": false,
+    "kernel_id": 127863688,
+    "owner": "ashok205",
+    "private": true,
+    "python_runtime": "3.12",
+    "slug": "e004-deployment-remote-parity-exact",
+    "tpu_enabled": false,
+    "url": "https://www.kaggle.com/code/ashok205/e004-deployment-remote-parity-exact",
+    "version": 4,
+    "worker_status": "COMPLETE"
+  },
+  "leaderboard_submission_created": false,
+  "model": {
+    "path": "experiments/E004/results/model.json",
+    "sha256": "90ca6eb6e2be6dfa4e655d150e64be6fc6c4eb164e0e73e7122f51b1eef675ac"
+  },
+  "official_fixture_byte_verification": {
+    "files": [
+      {"bytes": 254725, "path": "sample_submission.csv", "sha256": "7498f19ba1be281328c31a39044d4ba5f84e71c8f4115c613b5531f42aaff85a"},
+      {"bytes": 278656, "path": "test/000d7d20__horizontal_well.csv", "sha256": "706bcbbc4c44aa96e6d1e0f9c0bf4d18fa340d6bbe82008b7edd2d7707e4e595"},
+      {"bytes": 23141, "path": "test/000d7d20__typewell.csv", "sha256": "87dfaba4569d96cde1e427a27077f5b1e70038f61170eb785d52da5485a73e3f"},
+      {"bytes": 378010, "path": "test/00e12e8b__horizontal_well.csv", "sha256": "dba74df5aa634408a7ddd15ef9e408b5fd2d3086152a73d9a8a9ee12b678821c"},
+      {"bytes": 45861, "path": "test/00e12e8b__typewell.csv", "sha256": "2477a23ec6e7a9057b1363af438f2996d82d3809af252cbe31c08a939627c5b1"},
+      {"bytes": 440311, "path": "test/00bbac68__horizontal_well.csv", "sha256": "e2ba824ee1fb578f503dff93ea33bd89b12d4941bf4e40c7cfc1cc983e9affa1"},
+      {"bytes": 35317, "path": "test/00bbac68__typewell.csv", "sha256": "cbc9c7aa3880e0ab3e707c7bf78dfc091a0c5b1c7c2dad27ec5eb8fa68517f52"}
+    ],
+    "pass": true,
+    "source": "Kaggle competition file download endpoints"
+  },
+  "parity_level": "raw_byte_identical",
+  "runtime": {
+    "path": "src/rogii_validation/e004_inference.py",
+    "sha256": "52c2c5d6be93f4fde41257bdc7b30f4da36de1807e4a5c4dfd95a90411c4a2a5"
+  },
+  "schema_version": 1,
+  "serialization_edge_case": {
+    "cause": "Python-runtime final-digit floating-point serialization",
+    "changed_rows": 190,
+    "final_raw_byte_parity": true,
+    "initial_exact_notebook_run_completed": true,
+    "initial_local_sha256": "2add1d7e785491cdad1d6b238cde98826fc6605423ce250f2e9e94e914767887",
+    "initial_remote_sha256": "1062e72c98d4b4e96ed79222b6749b1da31d497ba4d31316a0936a8919611c5b",
+    "maximum_absolute_prediction_delta": 1.000444171950221e-10,
+    "prediction_delta_rmse": 1.1590274320318884e-11,
+    "resolution": "fixed-point CSV serialization at five decimal places; frozen model and prediction equations unchanged"
+  },
+  "status": "pass",
+  "submission": {
+    "bytes": 367933,
+    "local_direct_equals_local_notebook": true,
+    "local_direct_equals_remote_kaggle": true,
+    "local_direct_sha256": "62ae06575baa647a5e09686bc9369cbc7303ac391e5c028468593dd6b58d5279",
+    "local_notebook_sha256": "62ae06575baa647a5e09686bc9369cbc7303ac391e5c028468593dd6b58d5279",
+    "remote_kaggle_sha256": "62ae06575baa647a5e09686bc9369cbc7303ac391e5c028468593dd6b58d5279",
+    "rows": 14151,
+    "serialization_decimal_places": 5,
+    "sha256": "62ae06575baa647a5e09686bc9369cbc7303ac391e5c028468593dd6b58d5279",
+    "wells": 3
+  }
+}

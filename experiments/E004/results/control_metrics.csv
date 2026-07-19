@@ -1,10 +1,10 @@
 control,status,detail_json
 data_integrity,pass,{}
-exact_submission_contract,pass,"{""bytes"":437118,""maximum_prediction"":12226.615545647595,""minimum_prediction"":11609.597210683942,""rows"":14151,""sha256"":""2add1d7e785491cdad1d6b238cde98826fc6605423ce250f2e9e94e914767887"",""wells"":3}"
+exact_submission_contract,pass,"{""bytes"":367933,""maximum_prediction"":12226.615545647595,""minimum_prediction"":11609.597210683942,""rows"":14151,""serialization_decimal_places"":5,""sha256"":""62ae06575baa647a5e09686bc9369cbc7303ac391e5c028468593dd6b58d5279"",""wells"":3}"
 finite_model,pass,{}
 fold_integrity,pass,{}
-local_notebook_parity,pass,"{""direct_sha256"":""2add1d7e785491cdad1d6b238cde98826fc6605423ce250f2e9e94e914767887"",""notebook_sha256"":""2add1d7e785491cdad1d6b238cde98826fc6605423ce250f2e9e94e914767887"",""rows_byte_identical"":true}"
-remote_kaggle_mcp_parity,blocked,"{""required_for_deployment_ready"":true,""status"":""blocked_unavailable_tool""}"
+local_notebook_parity,pass,"{""direct_sha256"":""62ae06575baa647a5e09686bc9369cbc7303ac391e5c028468593dd6b58d5279"",""notebook_sha256"":""62ae06575baa647a5e09686bc9369cbc7303ac391e5c028468593dd6b58d5279"",""rows_byte_identical"":true}"
+remote_kaggle_mcp_parity,pass,"{""internet_enabled"":false,""kernel_slug"":""ashok205/e004-deployment-remote-parity-exact"",""kernel_version"":4,""notebook_sha256"":""28e41432422d078628c4bd41688c641e9b97c54a591a998384e638c4c0d81dd7"",""required_for_deployment_ready"":true,""rows_byte_identical"":true,""status"":""passed_byte_identical"",""submission_sha256"":""62ae06575baa647a5e09686bc9369cbc7303ac391e5c028468593dd6b58d5279""}"
 runtime,pass,"{""budget_minutes"":25}"
 selected_candidate_eligible,pass,"{""eligible_candidates"":[""full_deployable"",""no_spatial"",""no_typewell"",""no_gr"",""no_geometry"",""geometry_prefix"",""geometry_prefix_gr""]}"
 surface_features_excluded,pass,{}

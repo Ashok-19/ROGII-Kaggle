@@ -33,6 +33,7 @@ def build_notebook(root: Path, model_path: Path, notebook_path: Path) -> dict[st
         "cells": [
             {
                 "cell_type": "markdown",
+                "id": "e004-intro",
                 "metadata": {},
                 "source": [
                     "# E004 surface-free deployment candidate\n",
@@ -41,6 +42,7 @@ def build_notebook(root: Path, model_path: Path, notebook_path: Path) -> dict[st
                 ],
             },
             {
+                "id": "e004-runtime",
                 "cell_type": "code",
                 "execution_count": None,
                 "metadata": {},
@@ -48,6 +50,7 @@ def build_notebook(root: Path, model_path: Path, notebook_path: Path) -> dict[st
                 "source": source.splitlines(keepends=True),
             },
             {
+                "id": "e004-model",
                 "cell_type": "code",
                 "execution_count": None,
                 "metadata": {},
@@ -55,6 +58,7 @@ def build_notebook(root: Path, model_path: Path, notebook_path: Path) -> dict[st
                 "source": ["MODEL = json.loads(r'''", model_text, "''')\n"],
             },
             {
+                "id": "e004-launch",
                 "cell_type": "code",
                 "execution_count": None,
                 "metadata": {},

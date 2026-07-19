@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-19T08:49:40Z",
+  "payload": {
+    "decision_id": "D007",
+    "decided_at": "2026-07-19",
+    "title": "Close E004 deployment gate without leaderboard submission",
+    "decision": "Mark E004 deployment-ready after exact private Kaggle parity, retain geometry-prefix as a deterministic fallback and candidate-bank leg, and do not spend a leaderboard submission on its isolated 0.4185-RMSE CV gain.",
+    "rationale": "The notebook is operationally valid and byte-stable across local Python and Kaggle Python 3.12, but the gain is small and prior evidence shows CV/leaderboard ordering can invert.",
+    "source_ids": "experiments/E004/RESULT.md,experiments/E004/results/remote_parity.json",
+    "revisit_trigger": "A stronger test-available candidate or controlled blend proves that E004 adds no fallback or diversity value, or a future Kaggle runtime invalidates the portable inference contract."
+  }
+}

@@ -12,6 +12,7 @@ from pathlib import Path
 from src.rogii_validation.deployment import run_e004
 from src.rogii_validation.e004_inference import (
     DeploymentDataError,
+    SUBMISSION_DECIMAL_PLACES,
     build_prediction_map,
     extract_well_features,
     predict_coefficients,
@@ -241,6 +242,21 @@ class E004DeploymentTests(unittest.TestCase):
         with self.assertRaises(DeploymentDataError):
             predict_coefficients(nonfinite, {"x": 1.0})
 
+    def test_submission_serialization_is_fixed_point(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            config, train, test, sample = self._make_fixture(root)
+            output, artifact = root / "out", root / "art"
+            run_e004(root=root, train_dir=train, test_dir=test, sample_submission=sample, output_dir=output, artifact_dir=artifact, config=config, code_sha="c" * 40)
+            model = json.loads((output / "model.json").read_text(encoding="utf-8"))
+            serialized = root / "fixed.csv"
+            write_submission(model, test, sample, serialized)
+            with serialized.open(newline="", encoding="utf-8") as handle:
+                values = [row["tvt"] for row in csv.DictReader(handle)]
+            self.assertTrue(values)
+            self.assertTrue(all(value.count(".") == 1 for value in values))
+            self.assertTrue(all(len(value.rsplit(".", 1)[1]) == SUBMISSION_DECIMAL_PLACES for value in values))
+
     def test_missing_typewell_and_bad_sample_ids_are_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -262,7 +278,7 @@ class E004DeploymentTests(unittest.TestCase):
             with self.assertRaises(DeploymentDataError):
                 write_submission(model, test, bad_sample, root / "bad.csv")
 
-    def test_official_blocked_result_artifacts_match_manifest(self) -> None:
+    def test_official_deployment_ready_result_artifacts_match_manifest(self) -> None:
         experiment = ROOT / "experiments" / "E004"
         manifest = json.loads((experiment / "manifest.json").read_text(encoding="utf-8"))
         summary = json.loads((experiment / "results" / "summary.json").read_text(encoding="utf-8"))
@@ -270,16 +286,21 @@ class E004DeploymentTests(unittest.TestCase):
         artifact_manifest = json.loads(
             (experiment / "results" / "artifact_manifest.json").read_text(encoding="utf-8")
         )
-        self.assertEqual(manifest["status"], "blocked")
-        self.assertEqual(summary["status"], "blocked")
+        self.assertEqual(manifest["status"], "promoted")
+        self.assertEqual(summary["status"], "deployment_ready")
         self.assertEqual(summary["selected_candidate"], "geometry_prefix")
         self.assertAlmostEqual(summary["selected_candidate_metrics"]["rmse"], 15.491306398267565, places=10)
         self.assertTrue(summary["deployment"]["local_model_ready"])
         self.assertTrue(summary["deployment"]["local_notebook_parity"])
-        self.assertFalse(summary["deployment"]["deployment_ready"])
+        self.assertTrue(summary["deployment"]["remote_kaggle_mcp_parity"])
+        self.assertTrue(summary["deployment"]["deployment_ready"])
         self.assertEqual(
             summary["controls"]["remote_kaggle_mcp_parity"]["status"],
-            "blocked_unavailable_tool",
+            "passed_byte_identical",
+        )
+        self.assertEqual(
+            summary["deployment"]["submission_sha256"],
+            "62ae06575baa647a5e09686bc9369cbc7303ac391e5c028468593dd6b58d5279",
         )
         self.assertFalse(model["surfaces_required"])
         self.assertEqual(model["feature_families"], ["geometry", "prefix"])
@@ -301,6 +322,37 @@ class E004DeploymentTests(unittest.TestCase):
             hashlib.sha256(notebook.read_bytes()).hexdigest(),
             artifact_manifest["notebook"]["sha256"],
         )
+        notebook_payload = json.loads(notebook.read_text(encoding="utf-8"))
+        self.assertEqual(
+            [cell["id"] for cell in notebook_payload["cells"]],
+            ["e004-intro", "e004-runtime", "e004-model", "e004-launch"],
+        )
+        remote_parity = json.loads(
+            (experiment / "results" / "remote_parity.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(remote_parity["status"], "pass")
+        self.assertTrue(remote_parity["submission"]["local_direct_equals_remote_kaggle"])
+        self.assertEqual(
+            remote_parity["submission"]["sha256"],
+            summary["deployment"]["submission_sha256"],
+        )
+        self.assertEqual(remote_parity["kernel"]["kernel_id"], 127863688)
+        self.assertEqual(remote_parity["kernel"]["version"], 4)
+        self.assertFalse(remote_parity["kernel"]["internet_enabled"])
+        self.assertTrue(
+            remote_parity["kernel"]["docker_image"].startswith(
+                "gcr.io/kaggle-images/python@sha256:"
+            )
+        )
+        for item in remote_parity["official_fixture_byte_verification"]["files"]:
+            path = ROOT / "data" / item["path"]
+            self.assertTrue(path.exists(), item["path"])
+            self.assertEqual(path.stat().st_size, item["bytes"], item["path"])
+            self.assertEqual(
+                hashlib.sha256(path.read_bytes()).hexdigest(),
+                item["sha256"],
+                item["path"],
+            )
         for item in artifact_manifest["fold_files"]:
             path = ROOT / item["path"]
             self.assertEqual(path.stat().st_size, item["bytes"], item["path"])

@@ -234,6 +234,15 @@
       "visual": "deployment_gap",
       "summary": "E004 verified that all six formation-surface columns are missing from test. Removing them raises the best coefficient model from E003's 10.9280 to 15.4913 RMSE; geometry plus visible-prefix evidence is the best surface-free package.",
       "why_it_matters": "Cross-validation is not enough when the feature contract changes. The final solution must use only test-available MD, X, Y, Z, GR, TVT_input, and typewell TVT/GR, or legally reconstruct missing structural evidence from those inputs."
+    },
+    {
+      "id": "B008",
+      "date": "2026-07-19",
+      "title": "Deployment-ready is not submission-worthy",
+      "evidence": "kaggle_verified",
+      "visual": "remote_parity",
+      "summary": "The exact E004 notebook ran privately on Kaggle Python 3.12 with internet disabled. Local direct, local notebook, and Kaggle outputs are byte-identical over 14,151 rows at SHA-256 62ae0657...5279.",
+      "why_it_matters": "Operational parity closes the deployment gate, but it does not strengthen the 15.4913 CV score. E004 is a reliable fallback and candidate-bank leg, not a justified standalone leaderboard submission."
     }
 
   ],

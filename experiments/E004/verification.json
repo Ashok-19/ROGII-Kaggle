@@ -1,42 +1,60 @@
 {
-  "schema_version": 1,
-  "experiment_id": "E004",
-  "run_id": "R20260719-0636-e004-deployment",
-  "code_sha": "c728a9a267a89c92e5c0c6b018db1a1658874158",
-  "result_status": "blocked",
-  "selected_candidate": "geometry_prefix",
-  "selected_rmse": 15.491306398267565,
-  "official_run": {
-    "started_at": "2026-07-19T06:36:58Z",
-    "ended_at": "2026-07-19T06:39:25Z",
-    "wall_seconds": 147.08,
-    "max_rss_kb": 48408
-  },
-  "independent_clean_root_run": {
-    "wall_seconds": 149.76,
-    "max_rss_kb": 45948
-  },
-  "files_compared": 15,
-  "total_bytes_compared": 990477,
   "all_files_byte_identical": true,
+  "code_sha": "c728a9a267a89c92e5c0c6b018db1a1658874158",
+  "controls_blocked": 0,
+  "controls_failed": 0,
+  "controls_passed": 11,
+  "deployment": {
+    "deployment_ready": true,
+    "local_model_ready": true,
+    "remote_kaggle_mcp_parity": true,
+    "remote_status": "passed_byte_identical"
+  },
+  "experiment_id": "E004",
+  "files_compared": 15,
+  "independent_clean_root_run": {
+    "max_rss_kb": 45948,
+    "wall_seconds": 149.76
+  },
   "local_notebook_parity": {
+    "bytes": 367933,
+    "direct_sha256": "62ae06575baa647a5e09686bc9369cbc7303ac391e5c028468593dd6b58d5279",
+    "notebook_sha256": "62ae06575baa647a5e09686bc9369cbc7303ac391e5c028468593dd6b58d5279",
     "passed": true,
-    "rows": 14151,
-    "direct_sha256": "2add1d7e785491cdad1d6b238cde98826fc6605423ce250f2e9e94e914767887",
-    "notebook_sha256": "2add1d7e785491cdad1d6b238cde98826fc6605423ce250f2e9e94e914767887"
+    "rows": 14151
   },
   "notebook": {
+    "bytes": 44774,
+    "cell_ids_present": true,
     "path": "notebooks/e004_deployment.ipynb",
-    "bytes": 44289,
-    "sha256": "f31b4260438b3d27958cd3ae933a9c5e348a058df4f80aed00935ce10fdbb9c2"
+    "sha256": "28e41432422d078628c4bd41688c641e9b97c54a591a998384e638c4c0d81dd7"
   },
-  "deployment": {
-    "local_model_ready": true,
-    "remote_kaggle_mcp_parity": false,
-    "remote_status": "blocked_unavailable_tool",
-    "deployment_ready": false
+  "official_run": {
+    "ended_at": "2026-07-19T06:39:25Z",
+    "max_rss_kb": 48408,
+    "started_at": "2026-07-19T06:36:58Z",
+    "wall_seconds": 147.08
   },
-  "controls_passed": 10,
-  "controls_blocked": 1,
-  "controls_failed": 0
+  "packaging_refresh": {
+    "completed_at": "2026-07-19T08:49:40Z",
+    "direct_local_notebook_remote_byte_identical": true,
+    "serialization_decimal_places": 5,
+    "submission_sha256": "62ae06575baa647a5e09686bc9369cbc7303ac391e5c028468593dd6b58d5279"
+  },
+  "remote_kaggle_parity": {
+    "evidence_path": "experiments/E004/results/remote_parity.json",
+    "internet_enabled": false,
+    "kernel": "ashok205/e004-deployment-remote-parity-exact",
+    "passed": true,
+    "python_runtime": "3.12",
+    "raw_byte_identical": true,
+    "submission_sha256": "62ae06575baa647a5e09686bc9369cbc7303ac391e5c028468593dd6b58d5279",
+    "version": 4
+  },
+  "result_status": "deployment_ready",
+  "run_id": "R20260719-0636-e004-deployment",
+  "schema_version": 1,
+  "selected_candidate": "geometry_prefix",
+  "selected_rmse": 15.491306398267565,
+  "total_bytes_compared": 990477
 }

@@ -22,6 +22,9 @@ class DeploymentDataError(ValueError):
     """Raised when inference inputs violate the frozen deployment contract."""
 
 
+SUBMISSION_DECIMAL_PLACES = 5
+
+
 def optional_float(raw: str | None) -> float | None:
     if raw is None or raw.strip() in MISSING_VALUES:
         return None
@@ -444,7 +447,12 @@ def write_submission(model: Mapping[str, Any], test_dir: Path, sample_submission
         writer = csv.DictWriter(handle, fieldnames=["id", "tvt"], lineterminator="\n")
         writer.writeheader()
         for key in sample_ids:
-            writer.writerow({"id": key, "tvt": format(prediction_map[key], ".15g")})
+            # Fixed-point serialization prevents Python-version-dependent final-digit
+            # changes while retaining precision far beyond the competition metric.
+            writer.writerow({
+                "id": key,
+                "tvt": format(prediction_map[key], f".{SUBMISSION_DECIMAL_PLACES}f"),
+            })
     return {
         "rows": len(sample_ids),
         "wells": len(well_rows),

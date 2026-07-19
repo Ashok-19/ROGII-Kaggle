@@ -6,9 +6,9 @@
       "sha256": "913775e5e6f7a7688ba28f29ca89e8e549e42d615944b3d51dc636ecee38b52d"
     },
     {
-      "bytes": 1150,
+      "bytes": 1501,
       "path": "control_metrics.csv",
-      "sha256": "554abba0f9315108193a6bf17d1556406a9b6bbf5f3a16b0ccc66a718956198a"
+      "sha256": "b4e706db65789a0c7f2add2cf98b467a381d275beee63ae21f153158c9ec3791"
     },
     {
       "bytes": 17444,
@@ -26,6 +26,11 @@
       "sha256": "90ca6eb6e2be6dfa4e655d150e64be6fc6c4eb164e0e73e7122f51b1eef675ac"
     },
     {
+      "bytes": 3800,
+      "path": "remote_parity.json",
+      "sha256": "798f61a10bc171449180ef3b8faf8aa370615e0d1596041fc6457f944d098d7c"
+    },
+    {
       "bytes": 2322,
       "path": "selected_features.csv",
       "sha256": "7bb24ee87c18cca4b7864d4635c4bb22bc11ec5e7bb9148d36cd58bde22593bb"
@@ -36,9 +41,9 @@
       "sha256": "3e405cafbd042dd26a676e6f58fce5189f99392249980a14295df99d58ffb65e"
     },
     {
-      "bytes": 12647,
+      "bytes": 13217,
       "path": "summary.json",
-      "sha256": "5fc1f0897ce0275a9700e4ab7d5c966a4781b5161101d15ae773b7b79c5ecbda"
+      "sha256": "117e195fa5d98fa66182ecc7d5c342f2a6fb20fbc7cc656cb9b21ec5e4b4875d"
     },
     {
       "bytes": 2413,
@@ -84,20 +89,20 @@
     }
   ],
   "notebook": {
-    "bytes": 44289,
+    "bytes": 44774,
     "path": "notebooks/e004_deployment.ipynb",
-    "sha256": "f31b4260438b3d27958cd3ae933a9c5e348a058df4f80aed00935ce10fdbb9c2"
+    "sha256": "28e41432422d078628c4bd41688c641e9b97c54a591a998384e638c4c0d81dd7"
   },
   "runtime_artifacts": [
     {
-      "bytes": 437118,
+      "bytes": 367933,
       "path": "artifacts/E004/submission.csv",
-      "sha256": "2add1d7e785491cdad1d6b238cde98826fc6605423ce250f2e9e94e914767887"
+      "sha256": "62ae06575baa647a5e09686bc9369cbc7303ac391e5c028468593dd6b58d5279"
     },
     {
-      "bytes": 437118,
+      "bytes": 367933,
       "path": "artifacts/E004/notebook_submission.csv",
-      "sha256": "2add1d7e785491cdad1d6b238cde98826fc6605423ce250f2e9e94e914767887"
+      "sha256": "62ae06575baa647a5e09686bc9369cbc7303ac391e5c028468593dd6b58d5279"
     }
   ],
   "schema_version": 1

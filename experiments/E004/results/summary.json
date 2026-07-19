@@ -215,12 +215,13 @@
       "pass": true
     },
     "exact_submission_contract": {
-      "bytes": 437118,
+      "bytes": 367933,
       "maximum_prediction": 12226.615545647595,
       "minimum_prediction": 11609.597210683942,
       "pass": true,
       "rows": 14151,
-      "sha256": "2add1d7e785491cdad1d6b238cde98826fc6605423ce250f2e9e94e914767887",
+      "serialization_decimal_places": 5,
+      "sha256": "62ae06575baa647a5e09686bc9369cbc7303ac391e5c028468593dd6b58d5279",
       "wells": 3
     },
     "finite_model": {
@@ -230,15 +231,21 @@
       "pass": true
     },
     "local_notebook_parity": {
-      "direct_sha256": "2add1d7e785491cdad1d6b238cde98826fc6605423ce250f2e9e94e914767887",
-      "notebook_sha256": "2add1d7e785491cdad1d6b238cde98826fc6605423ce250f2e9e94e914767887",
+      "direct_sha256": "62ae06575baa647a5e09686bc9369cbc7303ac391e5c028468593dd6b58d5279",
+      "notebook_sha256": "62ae06575baa647a5e09686bc9369cbc7303ac391e5c028468593dd6b58d5279",
       "pass": true,
       "rows_byte_identical": true
     },
     "remote_kaggle_mcp_parity": {
-      "pass": false,
+      "internet_enabled": false,
+      "kernel_slug": "ashok205/e004-deployment-remote-parity-exact",
+      "kernel_version": 4,
+      "notebook_sha256": "28e41432422d078628c4bd41688c641e9b97c54a591a998384e638c4c0d81dd7",
+      "pass": true,
       "required_for_deployment_ready": true,
-      "status": "blocked_unavailable_tool"
+      "rows_byte_identical": true,
+      "status": "passed_byte_identical",
+      "submission_sha256": "62ae06575baa647a5e09686bc9369cbc7303ac391e5c028468593dd6b58d5279"
     },
     "runtime": {
       "budget_minutes": 25,
@@ -281,14 +288,17 @@
     "well_count": 773
   },
   "deployment": {
-    "deployment_ready": false,
+    "deployment_ready": true,
     "local_model_ready": true,
     "local_notebook_parity": true,
     "model_path": "experiments/E004/results/model.json",
     "notebook_path": "notebooks/e004_deployment.ipynb",
-    "remote_kaggle_mcp_parity": false,
+    "remote_kaggle_mcp_parity": true,
+    "remote_kernel": "ashok205/e004-deployment-remote-parity-exact",
+    "remote_kernel_version": 4,
+    "remote_parity_path": "experiments/E004/results/remote_parity.json",
     "submission_path": "artifacts/E004/submission.csv",
-    "submission_sha256": "2add1d7e785491cdad1d6b238cde98826fc6605423ce250f2e9e94e914767887"
+    "submission_sha256": "62ae06575baa647a5e09686bc9369cbc7303ac391e5c028468593dd6b58d5279"
   },
   "eligible_candidates": [
     "full_deployable",
@@ -350,7 +360,7 @@
     "worst_10pct_sse_share": 0.5239288314795979,
     "worst_5pct_sse_share": 0.38368389317645557
   },
-  "status": "blocked",
+  "status": "deployment_ready",
   "surface_contract": {
     "surface_features_deployable": false,
     "test_has_surfaces": false,

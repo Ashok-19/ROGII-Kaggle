@@ -21,7 +21,7 @@ Completed before model development:
 - `AGENTS.md`, `MEMORY.md`, control-first workflow, SQLite ledger, auto-sync CLI, validation command, and dashboard created.
 - Previous roadmap preserved under `archive/legacy/`.
 
-E001 is promoted and frozen. E002 rejected every naive U continuation. E003 promoted a surface-assisted cross-fitted datum-plus-trend result at 10.9280 RMSE as OOF understanding. E004 then audited the actual test contract, proved those six surface columns are unavailable at inference, and packaged a weaker surface-free geometry-plus-prefix candidate at 15.4913 RMSE. Local notebook parity passes; remote Kaggle MCP parity remains blocked.
+E001 is promoted and frozen. E002 rejected every naive U continuation. E003 promoted a surface-assisted cross-fitted datum-plus-trend result at 10.9280 RMSE as OOF understanding. E004 then audited the actual test contract, proved those six surface columns are unavailable at inference, and packaged a weaker surface-free geometry-plus-prefix candidate at 15.4913 RMSE. Local and private Kaggle notebook outputs are byte-identical, so E004 is deployment-ready but remains only a fallback.
 
 ## What the evidence changes
 
@@ -145,7 +145,7 @@ Measured outcome: E002 retained last-known TVT at 15.9099 RMSE. Robust-linear U 
 
 ### July 19–22 — Deployment contract and test-available candidate reconstruction
 
-E004 status: completed locally, remote parity blocked.
+E004 status: completed and deployment-ready; no leaderboard submission created.
 
 Measured E004 outcome:
 
@@ -153,8 +153,8 @@ Measured E004 outcome:
 - E003's 10.9280 surface-assisted result is not deployable as implemented.
 - Eight surface-free ablations were evaluated under all five maps and spatial stress.
 - Geometry plus visible-prefix evidence is best at 15.4913 RMSE, a 0.4185 gain; removing prefix leaves only 0.0883 gain and 0/5 wins.
-- Direct and self-contained notebook submissions are byte-identical; the notebook uses no external artifact or third-party package.
-- Remote Kaggle MCP parity is still required before deployment-ready status and is blocked by unavailable tooling.
+- Direct, self-contained local-notebook, and private Kaggle submissions are byte-identical at SHA-256 `62ae0657...5279`; the notebook uses no external artifact or third-party package.
+- The final private Kaggle version ran on Python 3.12 with internet disabled and the official competition source attached. Deployment readiness is proven, but the 0.4185 CV gain is too small for an isolated submission.
 
 Immediate deliverables now shift to E005:
 
@@ -242,7 +242,7 @@ These defaults may be revised only through a recorded decision before seeing the
 1. **E001 — Metric and fold harness — completed 2026-07-18.** Evaluator, five fold maps, leakage controls, reports, and hashes are frozen.
 2. **E002 — Structural baseline ladder — completed and rejected 2026-07-19.** Sign verified; last-known TVT retained; naive U continuation rejected after 0/25 fold-cell wins.
 3. **E003 — Datum/trend and risk learnability — completed and promoted 2026-07-19.** Ridge datum-plus-trend scores 10.9280; forest risk scores 0.5415 Spearman / 0.8125 AUC; both pass repeated and spatial gates.
-4. **E004 — Surface-free deployment candidate and ablations — completed, locally ready, remotely blocked 2026-07-19.** Geometry-plus-prefix scores 15.4913; local notebook parity passes; remote Kaggle MCP parity is unavailable.
+4. **E004 — Surface-free deployment candidate and ablations — completed and deployment-ready 2026-07-19.** Geometry-plus-prefix scores 15.4913; local-direct, local-notebook, and private Kaggle outputs are byte-identical. Retain it as a fallback; no standalone submission was made.
 5. **E005 — Clean PF and trellis candidates — next.** Independent test-available implementations with OOF paths and residual correlations against last-known TVT and E004.
 6. **E006 — Horizontal self-correlation candidate.** Template-shuffle control.
 7. **E007 — Candidate evidence tree stack.** Extend E003 with independent candidate evidence and strict controls.
