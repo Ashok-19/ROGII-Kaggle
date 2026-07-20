@@ -36,12 +36,14 @@ def write_well(path: Path, well_index: int, *, reappear: bool = False) -> None:
 
 
 class E001ValidationTests(unittest.TestCase):
-    def make_dataset(self, root: Path, wells: int = 5) -> Path:
-        train = root / "data" / "train"
+    def populate_train(self, train: Path, wells: int = 5) -> Path:
         train.mkdir(parents=True)
         for index in range(wells):
             write_well(train / f"{index:08x}__horizontal_well.csv", index)
         return train
+
+    def make_dataset(self, root: Path, wells: int = 5) -> Path:
+        return self.populate_train(root / "data" / "train", wells)
 
     def test_profile_and_fold_maps_are_deterministic(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -53,6 +55,19 @@ class E001ValidationTests(unittest.TestCase):
             self.assertEqual(len({item["fingerprint"] for item in first}), 5)
             for fold_map in first:
                 self.assertEqual(set(fold_map["assignments"]), {profile.well_id for profile in profiles})
+
+    def test_profile_signature_is_independent_of_mount_root(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            local_train = self.populate_train(root / "local" / "data" / "train")
+            kaggle_train = self.populate_train(
+                root / "kaggle" / "input" / "competitions" / "rogii-wellbore-geology-prediction" / "train"
+            )
+            local_profiles, local_data = scan_profiles(local_train)
+            kaggle_profiles, kaggle_data = scan_profiles(kaggle_train)
+            self.assertEqual(local_data, kaggle_data)
+            self.assertEqual(local_profiles, kaggle_profiles)
+            self.assertTrue(all(profile.path == f"data/train/{profile.well_id}__horizontal_well.csv" for profile in local_profiles))
 
     def test_full_fixture_run_passes_and_is_byte_deterministic(self):
         with tempfile.TemporaryDirectory() as tmp:

@@ -214,7 +214,7 @@ def scan_profiles(train_dir: Path) -> tuple[list[WellProfile], dict[str, Any]]:
         profiles.append(
             WellProfile(
                 well_id=well_id,
-                path=str(path.relative_to(train_dir.parent.parent)),
+                path=f"data/train/{path.name}",
                 total_rows=rows,
                 known_rows=known,
                 hidden_rows=hidden,
