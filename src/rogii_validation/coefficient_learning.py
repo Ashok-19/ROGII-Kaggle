@@ -16,8 +16,10 @@ import json
 import math
 import resource
 import time
+import zipfile
 from collections import Counter, defaultdict
 from dataclasses import dataclass
+from functools import lru_cache
 from pathlib import Path, PurePosixPath
 from typing import Any, Iterable, Iterator, Mapping, Sequence
 
@@ -161,6 +163,8 @@ class CoefficientWell:
     last_metric: WellMetric
     e006_metric: WellMetric
     statistics: Mapping[str, BasisSufficient]
+    spatial_group: int | None = None
+    typewell_group: int | None = None
 
 
 @dataclass
@@ -271,12 +275,64 @@ def basis_matrix(rows: int, name: str, config: Mapping[str, Any]) -> np.ndarray:
     return np.vstack([basis_vector(index / denominator, name, config) for index in range(count)])
 
 
-def _peak_correction(coefficients: np.ndarray, name: str, config: Mapping[str, Any]) -> float:
+def _peak_basis_contract(name: str, config: Mapping[str, Any]) -> tuple[int, tuple[float, ...]]:
+    spec = _representation_spec(config, name)
+    dimensions = int(spec["dimensions"])
+    knots: tuple[float, ...] = ()
     if name.startswith("spline"):
-        return float(np.max(np.abs(coefficients))) if coefficients.size else 0.0
-    samples = np.linspace(0.0, 1.0, 257)
-    matrix = np.vstack([basis_vector(float(value), name, config) for value in samples])
-    return float(np.max(np.abs(matrix @ coefficients)))
+        raw_knots = np.asarray(spec["knots"], dtype=np.float64)
+        if (
+            raw_knots.shape != (dimensions,)
+            or not np.all(np.isfinite(raw_knots))
+            or not np.all(np.diff(raw_knots) > 0.0)
+            or abs(float(raw_knots[-1]) - 1.0) > 1e-12
+        ):
+            raise DataValidationError(f"E011 malformed knot contract for {name}")
+        knots = tuple(float(value) for value in raw_knots)
+    return dimensions, knots
+
+
+@lru_cache(maxsize=None)
+def _cached_peak_basis(name: str, dimensions: int, knots: tuple[float, ...]) -> np.ndarray:
+    samples = np.linspace(0.0, 1.0, 257, dtype=np.float64)
+    if name == "linear1":
+        matrix = samples[:, None]
+    elif name == "quadratic2":
+        matrix = np.column_stack((samples, samples * samples))
+    elif name == "shape3":
+        matrix = np.column_stack(
+            (
+                samples,
+                4.0 * samples * (1.0 - samples),
+                16.0 * samples * (1.0 - samples) * (samples - 0.5),
+            )
+        )
+    elif name.startswith("spline"):
+        knot_values = np.asarray(knots, dtype=np.float64)
+        positions = np.unique(np.concatenate((samples, knot_values)))
+        grid = np.concatenate(([0.0], knot_values))
+        matrix = np.empty((len(positions), dimensions), dtype=np.float64)
+        for index in range(dimensions):
+            controls = np.zeros(dimensions + 1, dtype=np.float64)
+            controls[index + 1] = 1.0
+            matrix[:, index] = np.interp(positions, grid, controls)
+    else:
+        raise DataValidationError(f"E011 unsupported representation {name}")
+    if matrix.ndim != 2 or matrix.shape[1] != dimensions or not np.all(np.isfinite(matrix)):
+        raise DataValidationError(f"E011 peak basis width differs for {name}")
+    matrix = np.ascontiguousarray(matrix, dtype=np.float64)
+    matrix.setflags(write=False)
+    return matrix
+
+
+def _peak_basis_matrix(name: str, config: Mapping[str, Any]) -> np.ndarray:
+    dimensions, knots = _peak_basis_contract(name, config)
+    return _cached_peak_basis(name, dimensions, knots)
+
+
+def _peak_correction(coefficients: np.ndarray, name: str, config: Mapping[str, Any]) -> float:
+    matrix = _peak_basis_matrix(name, config)
+    return float(np.max(np.abs(matrix @ coefficients))) if coefficients.size else 0.0
 
 
 def bound_coefficients(coefficients: Sequence[float], name: str, config: Mapping[str, Any]) -> np.ndarray:
@@ -400,7 +456,7 @@ def _last_metric(well_id: str, rows: Sequence[tuple[float, float, float, float]]
     return accumulator.finalize(well_id)
 
 
-def _read_records(root: Path, train_dir: Path, config: Mapping[str, Any]) -> tuple[dict[str, CoefficientWell], tuple[str, ...], dict[str, Any]]:
+def _read_records_legacy(root: Path, train_dir: Path, config: Mapping[str, Any]) -> tuple[dict[str, CoefficientWell], tuple[str, ...], dict[str, Any]]:
     feature_item = config["parent_artifacts"]["e008_legal_features"]
     features, feature_names, feature_columns = _read_numeric_features(root / str(feature_item["path"]))
     feature_control = _validate_feature_schema(features, feature_names, feature_columns, config)
@@ -497,6 +553,111 @@ def _read_records(root: Path, train_dir: Path, config: Mapping[str, Any]) -> tup
     return records, feature_names, {"rows": total_rows, "wells": len(records), "parent_id_sequence_sha256": rolling_ids.hexdigest(), "feature_schema": feature_control}
 
 
+
+def _compact_path(root: Path, config: Mapping[str, Any]) -> Path:
+    item = config.get("compact_input")
+    if not isinstance(item, Mapping):
+        raise DataValidationError("E011 compact input is not registered")
+    path = root / str(item["path"])
+    if not path.is_file() or path.stat().st_size != int(item["bytes"]) or _sha256(path) != str(item["sha256"]):
+        raise DataValidationError("E011 compact input identity differs")
+    return path
+
+
+def _load_compact_arrays(root: Path, config: Mapping[str, Any]) -> tuple[dict[str, np.ndarray], dict[str, Any]]:
+    path = _compact_path(root, config)
+    with zipfile.ZipFile(path) as archive:
+        names = archive.namelist()
+        if len(names) != len(set(names)) or len(names) != int(config["compact_input"]["expected_members"]):
+            raise DataValidationError("E011 compact member count/uniqueness differs")
+        if any(not name.endswith(".npy") or PurePosixPath(name).is_absolute() or any(part in {"", ".", ".."} for part in name.split("/")) for name in names):
+            raise DataValidationError("E011 compact member path is unsafe")
+    with np.load(path, allow_pickle=False) as payload:
+        arrays = {name: np.asarray(payload[name]).copy() for name in payload.files}
+    required = {
+        "well_ids", "feature_names", "features", "rows", "sum_x", "sum_x_sq", "base_sum", "base_sse", "base_x_sum",
+        "last_sum", "last_sse", "last_x_sum", "spatial_assignment", "typewell_assignment", "manifest_json",
+        "control_well_indices", "control_codes", "control_hidden_index", "control_target", "control_e006",
+    }
+    for representation in LEARNED_REPRESENTATIONS:
+        required.update({f"{representation}__basis_sum", f"{representation}__basis_x_sum", f"{representation}__basis_base", f"{representation}__basis_cross", f"{representation}__target_coefficients"})
+    if set(arrays) != required:
+        missing = sorted(required - set(arrays)); extra = sorted(set(arrays) - required)
+        raise DataValidationError(f"E011 compact schema differs; missing={missing}, extra={extra}")
+    try:
+        manifest = json.loads(arrays["manifest_json"].astype(np.uint8, copy=False).tobytes().decode("utf-8"))
+    except Exception as exc:
+        raise DataValidationError("E011 compact manifest is invalid") from exc
+    if manifest.get("experiment_id") != "E011" or int(manifest.get("expected_wells", -1)) != int(config["expected_wells"]) or int(manifest.get("expected_hidden_rows", -1)) != int(config["expected_hidden_rows"]):
+        raise DataValidationError("E011 compact manifest identity differs")
+    for key in config["compact_input"]["required_source_keys"]:
+        source = manifest.get("sources", {}).get(key)
+        expected = config["parent_artifacts"].get(key)
+        if not source or not expected or source.get("path") != expected.get("path") or source.get("sha256") != expected.get("sha256") or int(source.get("bytes", -1)) != int(expected.get("bytes", -2)):
+            raise DataValidationError(f"E011 compact source manifest differs for {key}")
+    if bool(config["compact_input"].get("require_representation_oracle_match", True)):
+        for representation in LEARNED_REPRESENTATIONS:
+            actual = float(manifest["representations"][representation]["oracle_rmse"])
+            expected = float(config["representations"][representation]["oracle_rmse"])
+            if abs(actual - expected) > 1e-8:
+                raise DataValidationError(f"E011 compact oracle floor differs for {representation}")
+    return arrays, manifest
+
+
+def _metric_from_aggregates(well_id: str, rows: int, sum_x: float, sum_x_sq: float, sum_error: float, sum_error_sq: float, sum_x_error: float) -> WellMetric:
+    return ErrorAccumulator(rows=int(rows), sum_x=float(sum_x), sum_x_sq=float(sum_x_sq), sum_error=float(sum_error), sum_error_sq=float(sum_error_sq), sum_x_error=float(sum_x_error)).finalize(well_id)
+
+
+def _read_compact_records(root: Path, config: Mapping[str, Any]) -> tuple[dict[str, CoefficientWell], tuple[str, ...], dict[str, Any]]:
+    arrays, manifest = _load_compact_arrays(root, config)
+    well_ids = tuple(str(value) for value in arrays["well_ids"].tolist())
+    feature_names = tuple(str(value) for value in arrays["feature_names"].tolist())
+    features = np.asarray(arrays["features"], dtype=np.float64)
+    wells = int(config["expected_wells"]); rows = np.asarray(arrays["rows"], dtype=np.int32)
+    if len(well_ids) != wells or len(set(well_ids)) != wells or tuple(sorted(well_ids)) != well_ids or features.shape != (wells, int(config["compact_input"]["expected_feature_count"])) or len(feature_names) != features.shape[1]:
+        raise DataValidationError("E011 compact well/feature shape differs")
+    if int(rows.sum()) != int(config["expected_hidden_rows"]) or np.any(rows <= 0):
+        raise DataValidationError("E011 compact row totals differ")
+    spatial = np.asarray(arrays["spatial_assignment"], dtype=np.int8); typewell = np.asarray(arrays["typewell_assignment"], dtype=np.int8)
+    if spatial.shape != (wells,) or typewell.shape != (wells,) or set(spatial.tolist()) != set(range(5)) or set(typewell.tolist()) != set(range(5)):
+        raise DataValidationError("E011 compact evaluator assignments differ")
+    missing_index = feature_names.index("hidden_gr_missing_fraction")
+    feature_records: dict[str, dict[str, float | None]] = {}
+    records: dict[str, CoefficientWell] = {}
+    for index, well_id in enumerate(well_ids):
+        values = {name: (float(features[index, column]) if math.isfinite(float(features[index, column])) else None) for column, name in enumerate(feature_names)}
+        feature_records[well_id] = values
+        statistics = {}
+        for representation in LEARNED_REPRESENTATIONS:
+            target = np.asarray(arrays[f"{representation}__target_coefficients"][index], dtype=np.float64)
+            statistics[representation] = BasisSufficient(
+                representation=representation, rows=int(rows[index]), sum_x=float(arrays["sum_x"][index]), sum_x_sq=float(arrays["sum_x_sq"][index]),
+                base_sum=float(arrays["base_sum"][index]), base_sse=float(arrays["base_sse"][index]), base_x_sum=float(arrays["base_x_sum"][index]),
+                basis_sum=np.asarray(arrays[f"{representation}__basis_sum"][index], dtype=np.float64),
+                basis_x_sum=np.asarray(arrays[f"{representation}__basis_x_sum"][index], dtype=np.float64),
+                basis_base=np.asarray(arrays[f"{representation}__basis_base"][index], dtype=np.float64),
+                basis_cross=np.asarray(arrays[f"{representation}__basis_cross"][index], dtype=np.float64), target_coefficients=target,
+            )
+        e006_metric = _metric_from_aggregates(well_id, int(rows[index]), arrays["sum_x"][index], arrays["sum_x_sq"][index], arrays["base_sum"][index], arrays["base_sse"][index], arrays["base_x_sum"][index])
+        last_metric = _metric_from_aggregates(well_id, int(rows[index]), arrays["sum_x"][index], arrays["sum_x_sq"][index], arrays["last_sum"][index], arrays["last_sse"][index], arrays["last_x_sum"][index])
+        records[well_id] = CoefficientWell(
+            well_id=well_id, rows=int(rows[index]), features=values, spatial=(0.0, 0.0), typewell=(0.0, 0.0, 0.0),
+            hidden_gr_missing_fraction=float(features[index, missing_index]) if math.isfinite(float(features[index, missing_index])) else 0.0,
+            last_metric=last_metric, e006_metric=e006_metric, statistics=statistics, spatial_group=int(spatial[index]), typewell_group=int(typewell[index]),
+        )
+    feature_control = _validate_feature_schema(feature_records, feature_names, 1 + len(feature_names), config)
+    return records, feature_names, {
+        "rows": int(rows.sum()), "wells": wells, "feature_schema": feature_control, "input_mode": "compact_sufficient_statistics",
+        "compact_path": str(config["compact_input"]["path"]), "compact_sha256": str(config["compact_input"]["sha256"]),
+        "compact_bytes": int(config["compact_input"]["bytes"]), "source_manifest": manifest,
+    }
+
+
+def _read_records(root: Path, train_dir: Path, config: Mapping[str, Any]) -> tuple[dict[str, CoefficientWell], tuple[str, ...], dict[str, Any]]:
+    if "compact_input" in config:
+        return _read_compact_records(root, config)
+    return _read_records_legacy(root, train_dir, config)
+
 def _load_folds(root: Path, config: Mapping[str, Any], well_ids: Sequence[str]) -> list[dict[str, Any]]:
     output = []
     expected = set(well_ids)
@@ -527,8 +688,14 @@ def _build_contexts(records: Mapping[str, CoefficientWell], folds: Sequence[Mapp
             context = Context(f"repeated:{version}:{outer}", "repeated", version, outer, train, test, assignments)
             contexts.append(context)
             audits.append(_context_audit(context))
-    spatial = _group_assignments({well_id: record.spatial for well_id, record in records.items()}, 5)
-    typewell = _group_assignments({well_id: record.typewell for well_id, record in records.items()}, 5)
+    if all(record.spatial_group is not None and record.typewell_group is not None for record in records.values()):
+        spatial = {well_id: int(record.spatial_group) for well_id, record in records.items()}
+        typewell = {well_id: int(record.typewell_group) for well_id, record in records.items()}
+        if set(spatial.values()) != set(range(5)) or set(typewell.values()) != set(range(5)):
+            raise DataValidationError("E011 stored evaluator groups differ")
+    else:
+        spatial = _group_assignments({well_id: record.spatial for well_id, record in records.items()}, 5)
+        typewell = _group_assignments({well_id: record.typewell for well_id, record in records.items()}, 5)
     inner = {well_id: int(folds[0]["assignments"][well_id]) for well_id in ids}
     for scope, assignments in (("spatial", spatial), ("typewell", typewell)):
         for outer in range(5):
@@ -627,21 +794,40 @@ def _weights(records: Mapping[str, CoefficientWell], ids: Sequence[str], mode: s
     raise DataValidationError(f"E011 unknown sample weight mode {mode}")
 
 
+def _fit_prepared_ridge_many(prepared: PreparedFeatures, train_y: np.ndarray, alphas: Sequence[float], sample_weight: np.ndarray | None) -> dict[float, np.ndarray]:
+    x = np.asarray(prepared.train_x, dtype=np.float64); test_x = np.asarray(prepared.test_x, dtype=np.float64); y = np.asarray(train_y, dtype=np.float64)
+    if x.ndim != 2 or test_x.ndim != 2 or y.ndim != 2 or x.shape[0] != y.shape[0] or x.shape[1] != test_x.shape[1]:
+        raise DataValidationError("E011 ridge matrix shapes differ")
+    weights = np.ones(x.shape[0], dtype=np.float64) if sample_weight is None else np.asarray(sample_weight, dtype=np.float64)
+    if weights.shape != (x.shape[0],) or not np.all(np.isfinite(weights)) or np.any(weights <= 0.0):
+        raise DataValidationError("E011 ridge sample weights are invalid")
+    alpha_values = tuple(float(alpha) for alpha in alphas)
+    if not alpha_values or any(not math.isfinite(alpha) or alpha <= 0.0 for alpha in alpha_values):
+        raise DataValidationError("E011 ridge alpha grid is invalid")
+    y_mean = y.mean(axis=0); y_scale = y.std(axis=0); y_scale[~np.isfinite(y_scale) | (y_scale < 1e-9)] = 1.0
+    scaled = (y - y_mean) / y_scale
+    total_weight = float(weights.sum())
+    x_mean = np.sum(weights[:, None] * x, axis=0) / total_weight
+    scaled_mean = np.sum(weights[:, None] * scaled, axis=0) / total_weight
+    centered_x = x - x_mean; centered_y = scaled - scaled_mean
+    root_weight = np.sqrt(weights)[:, None]
+    weighted_x = centered_x * root_weight; weighted_y = centered_y * root_weight
+    gram = weighted_x.T @ weighted_x; right = weighted_x.T @ weighted_y
+    eigenvalues, eigenvectors = np.linalg.eigh(gram)
+    eigenvalues = np.maximum(eigenvalues, 0.0); projected = eigenvectors.T @ right
+    output: dict[float, np.ndarray] = {}
+    for alpha in alpha_values:
+        coefficients = eigenvectors @ (projected / (eigenvalues[:, None] + alpha))
+        predicted_scaled = (test_x - x_mean) @ coefficients + scaled_mean
+        values = predicted_scaled * y_scale + y_mean
+        if values.shape != (test_x.shape[0], y.shape[1]) or not np.all(np.isfinite(values)):
+            raise DataValidationError("E011 ridge emitted invalid coefficients")
+        output[alpha] = values
+    return output
+
+
 def _fit_prepared_ridge(prepared: PreparedFeatures, train_y: np.ndarray, alpha: float, sample_weight: np.ndarray | None) -> np.ndarray:
-    from sklearn.linear_model import Ridge
-    y_mean = train_y.mean(axis=0)
-    y_scale = train_y.std(axis=0)
-    y_scale[~np.isfinite(y_scale) | (y_scale < 1e-9)] = 1.0
-    scaled = (train_y - y_mean) / y_scale
-    model = Ridge(alpha=float(alpha), fit_intercept=True)
-    model.fit(prepared.train_x, scaled, sample_weight=sample_weight)
-    prediction = np.asarray(model.predict(prepared.test_x), dtype=np.float64)
-    if prediction.ndim == 1:
-        prediction = prediction[:, None]
-    values = prediction * y_scale + y_mean
-    if values.shape != (prepared.test_x.shape[0], train_y.shape[1]) or not np.all(np.isfinite(values)):
-        raise DataValidationError("E011 ridge emitted invalid coefficients")
-    return values
+    return _fit_prepared_ridge_many(prepared, train_y, (float(alpha),), sample_weight)[float(alpha)]
 
 
 def _fit_extra_trees(records: Mapping[str, CoefficientWell], train_ids: Sequence[str], test_ids: Sequence[str], feature_names: Sequence[str], representation: str, config: Mapping[str, Any]) -> tuple[dict[str, np.ndarray], tuple[str, ...]]:
@@ -694,8 +880,9 @@ def _ridge_selection(context: Context, records: Mapping[str, CoefficientWell], f
         for feature_count in spec["feature_counts"]:
             prepared = _prepare_features(records, training, validation, feature_names, train_y, int(feature_count))
             sample_weight = _weights(records, training, weight_mode)
+            values_by_alpha = _fit_prepared_ridge_many(prepared, train_y, tuple(float(alpha) for alpha in spec["alphas"]), sample_weight)
             for alpha in spec["alphas"]:
-                values = _fit_prepared_ridge(prepared, train_y, float(alpha), sample_weight)
+                values = values_by_alpha[float(alpha)]
                 grid_predictions[(int(feature_count), float(alpha))].update({well_id: values[index] for index, well_id in enumerate(validation)})
     if any(set(predictions) != set(context.train_ids) for predictions in grid_predictions.values()):
         raise DataValidationError(f"{context.key}: E011 ridge inner OOF coverage failed")
@@ -898,42 +1085,44 @@ def _coefficient_metrics(records: Mapping[str, CoefficientWell], final_coefficie
 
 
 
-def _direct_scoring_control(parent_oof: Path, records: Mapping[str, CoefficientWell], config: Mapping[str, Any]) -> tuple[float, float]:
-    """Compare frozen basis/statistics with direct row scoring on deterministic real wells."""
-    ids = tuple(sorted(records))
-    selected = {ids[0], ids[len(ids) // 2], ids[-1]}
+def _direct_scoring_control(root: Path, parent_oof: Path, records: Mapping[str, CoefficientWell], config: Mapping[str, Any]) -> tuple[float, float]:
+    """Compare frozen basis/statistics with direct rows on deterministic wells."""
+    ids = tuple(sorted(records)); selected = {ids[0], ids[len(ids) // 2], ids[-1]}
     matrices = {(well_id, representation): basis_matrix(records[well_id].rows, representation, config) for well_id in selected for representation in LEARNED_REPRESENTATIONS}
-    coefficients = {
-        (well_id, representation): bound_coefficients(0.73 * records[well_id].statistics[representation].target_coefficients, representation, config)
-        for well_id in selected for representation in LEARNED_REPRESENTATIONS
-    }
-    accumulators = {(well_id, representation): ErrorAccumulator() for well_id in selected for representation in LEARNED_REPRESENTATIONS}
-    basis_delta = 0.0
-    with gzip.open(parent_oof, "rt", newline="", encoding="utf-8") as handle:
-        reader = csv.DictReader(handle)
-        for row in reader:
-            well_id = str(row["well_id"])
+    coefficients = {(well_id, representation): bound_coefficients(0.73 * records[well_id].statistics[representation].target_coefficients, representation, config) for well_id in selected for representation in LEARNED_REPRESENTATIONS}
+    accumulators = {(well_id, representation): ErrorAccumulator() for well_id in selected for representation in LEARNED_REPRESENTATIONS}; basis_delta = 0.0
+    if "compact_input" in config:
+        arrays, _manifest = _load_compact_arrays(root, config)
+        well_ids = tuple(str(value) for value in arrays["well_ids"].tolist())
+        for code, hidden_index, target, e006 in zip(arrays["control_codes"], arrays["control_hidden_index"], arrays["control_target"], arrays["control_e006"]):
+            well_id = well_ids[int(code)]
             if well_id not in selected:
-                continue
-            hidden_index = int(row["hidden_index"])
-            target = _finite(row["target"], "direct-control target")
-            e006 = _finite(row["e006_nested_fusion"], "direct-control E006")
-            position = hidden_index / max(1, records[well_id].rows - 1)
+                raise DataValidationError("E011 compact direct-control well differs")
+            position = int(hidden_index) / max(1, records[well_id].rows - 1)
             for representation in LEARNED_REPRESENTATIONS:
-                direct_basis = basis_vector(position, representation, config)
-                matrix_basis = matrices[(well_id, representation)][hidden_index]
+                direct_basis = basis_vector(position, representation, config); matrix_basis = matrices[(well_id, representation)][int(hidden_index)]
                 basis_delta = max(basis_delta, float(np.max(np.abs(direct_basis - matrix_basis))))
-                error = e006 + float(direct_basis @ coefficients[(well_id, representation)]) - target
+                error = float(e006) + float(direct_basis @ coefficients[(well_id, representation)]) - float(target)
                 accumulators[(well_id, representation)].add(error, float(hidden_index))
+    else:
+        with gzip.open(parent_oof, "rt", newline="", encoding="utf-8") as handle:
+            reader = csv.DictReader(handle)
+            for row in reader:
+                well_id = str(row["well_id"])
+                if well_id not in selected: continue
+                hidden_index = int(row["hidden_index"]); target = _finite(row["target"], "direct-control target"); e006 = _finite(row["e006_nested_fusion"], "direct-control E006")
+                position = hidden_index / max(1, records[well_id].rows - 1)
+                for representation in LEARNED_REPRESENTATIONS:
+                    direct_basis = basis_vector(position, representation, config); matrix_basis = matrices[(well_id, representation)][hidden_index]
+                    basis_delta = max(basis_delta, float(np.max(np.abs(direct_basis - matrix_basis))))
+                    error = e006 + float(direct_basis @ coefficients[(well_id, representation)]) - target
+                    accumulators[(well_id, representation)].add(error, float(hidden_index))
     maximum_relative = 0.0
     for key, accumulator in accumulators.items():
-        well_id, representation = key
-        direct = accumulator.finalize(well_id)
-        sufficient = records[well_id].statistics[representation].metric(well_id, coefficients[key])
-        maximum_relative = max(maximum_relative, abs(direct.sse - sufficient.sse) / max(1.0, direct.sse))
-        maximum_relative = max(maximum_relative, abs(direct.mean_error - sufficient.mean_error) / max(1.0, abs(direct.mean_error)))
-        maximum_relative = max(maximum_relative, abs(direct.trend_per_row - sufficient.trend_per_row) / max(1.0, abs(direct.trend_per_row)))
+        well_id, representation = key; direct = accumulator.finalize(well_id); sufficient = records[well_id].statistics[representation].metric(well_id, coefficients[key])
+        maximum_relative = max(maximum_relative, abs(direct.sse - sufficient.sse) / max(1.0, direct.sse), abs(direct.mean_error - sufficient.mean_error) / max(1.0, abs(direct.mean_error)), abs(direct.trend_per_row - sufficient.trend_per_row) / max(1.0, abs(direct.trend_per_row)))
     return basis_delta, maximum_relative
+
 
 def _write_gzip_csv(path: Path, fieldnames: Sequence[str], rows: Iterable[Mapping[str, Any]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -1185,7 +1374,7 @@ def run_e011(*, root: Path, train_dir: Path, output_dir: Path, artifact_dir: Pat
     zero_delta = max(abs(record.e006_metric.sse - record.statistics["spline4"].metric(well_id, np.zeros(4)).sse) for well_id, record in records.items())
     pooled_relative = max(abs(sum(metric.sse for metric in by_well.values()) - float(summaries[candidate]["sse"])) / max(1.0, float(summaries[candidate]["sse"])) for candidate, by_well in final_metrics.items())
     parent_oof = root / str(config["parent_artifacts"]["e010_oof"]["path"])
-    basis_direct_delta, sufficient_direct_relative = _direct_scoring_control(parent_oof, records, config)
+    basis_direct_delta, sufficient_direct_relative = _direct_scoring_control(root, parent_oof, records, config)
     shuffled_gain = e006_rmse - float(summaries[NEGATIVE_CONTROLS[0]]["rmse"])
     sign_gain = e006_rmse - float(summaries[NEGATIVE_CONTROLS[1]]["rmse"])
     controls: dict[str, Any] = {

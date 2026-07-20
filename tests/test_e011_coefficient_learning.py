@@ -38,6 +38,10 @@ if np is not None:
         _context_audit,
         _direct_scoring_control,
         _fallback_selection,
+        _fit_prepared_ridge_many,
+        _peak_basis_matrix,
+        _peak_correction,
+        _read_records,
         _prepare_features,
         _safe_relative,
         basis_matrix,
@@ -81,13 +85,17 @@ class E011Tests(unittest.TestCase):
 
     def test_basis_one_two_rows_partition_and_invalid_inputs(self):
         for name in self.config["representations"]:
+            dimensions = self.config["representations"][name]["dimensions"]
             one = basis_matrix(1, name, self.config)
-            self.assertEqual(one.shape[0], 1)
+            self.assertEqual(one.shape, (1, dimensions))
             self.assertTrue(np.all(np.isfinite(one)))
+            np.testing.assert_array_equal(one[0], basis_vector(0.0, name, self.config))
+            two = basis_matrix(2, name, self.config)
+            self.assertEqual(two.shape, (2, dimensions))
+            np.testing.assert_array_equal(two[0], basis_vector(0.0, name, self.config))
+            np.testing.assert_array_equal(two[1], basis_vector(1.0, name, self.config))
         self.assertTrue(np.allclose(basis_matrix(1, "spline4", self.config), np.zeros((1, 4))))
-        two = basis_matrix(2, "spline4", self.config)
-        self.assertTrue(np.allclose(two[0], 0.0))
-        self.assertTrue(np.allclose(two[1], [0.0, 0.0, 0.0, 1.0]))
+        self.assertTrue(np.allclose(basis_matrix(2, "spline4", self.config)[1], [0.0, 0.0, 0.0, 1.0]))
         grid = basis_matrix(101, "spline5", self.config)
         self.assertTrue(np.all(grid >= -1e-12))
         self.assertTrue(np.all(grid.sum(axis=1) <= 1.0 + 1e-12))
@@ -99,17 +107,75 @@ class E011Tests(unittest.TestCase):
         with self.assertRaises(DataValidationError):
             basis_vector(0.5, "unknown", self.config)
 
-    def test_bounds_are_finite_deterministic_and_scale_shape3(self):
-        spline = bound_coefficients([500, -500, 200, -200], "spline4", self.config)
-        self.assertTrue(np.all(np.abs(spline) <= 80.0 + 1e-12))
-        shape = bound_coefficients([80, 80, 80], "shape3", self.config)
-        path = basis_matrix(1001, "shape3", self.config) @ shape
-        self.assertLessEqual(float(np.max(np.abs(path))), 120.0 + 1e-8)
-        self.assertTrue(np.array_equal(shape, bound_coefficients([80, 80, 80], "shape3", self.config)))
+    def _legacy_peak_correction(self, coefficients, name):
+        values = np.asarray(coefficients, dtype=np.float64)
+        if name.startswith("spline"):
+            return float(np.max(np.abs(values))) if values.size else 0.0
+        samples = np.linspace(0.0, 1.0, 257)
+        matrix = np.vstack([basis_vector(float(value), name, self.config) for value in samples])
+        return float(np.max(np.abs(matrix @ values)))
+
+    def _legacy_bound_coefficients(self, coefficients, name):
+        values = np.asarray(coefficients, dtype=np.float64)
+        bound_key = "spline_knot_absolute_ft" if name.startswith("spline") else "shape3_coefficient_absolute_ft"
+        limit = float(self.config["coefficient_bounds"][bound_key])
+        values = np.clip(values, -limit, limit)
+        peak = self._legacy_peak_correction(values, name)
+        maximum = float(self.config["coefficient_bounds"]["emitted_correction_absolute_ft"])
+        if peak > maximum and peak > 0.0:
+            values = values * (maximum / peak)
+        return values
+
+    def test_peak_basis_cache_is_immutable_and_matches_direct_grid(self):
+        samples = np.linspace(0.0, 1.0, 257, dtype=np.float64)
+        for name in ("shape3", "spline3", "spline4", "spline5", "spline7"):
+            first = _peak_basis_matrix(name, self.config)
+            second = _peak_basis_matrix(name, self.config)
+            self.assertIs(first, second)
+            self.assertFalse(first.flags.writeable)
+            snapshot = first.copy()
+            with self.assertRaises(ValueError):
+                first[0, 0] = 1.0
+            np.testing.assert_array_equal(first, snapshot)
+            knots = self.config["representations"][name]["knots"] or []
+            positions = np.unique(np.concatenate((samples, np.asarray(knots, dtype=np.float64))))
+            direct = np.vstack([basis_vector(float(value), name, self.config) for value in positions])
+            np.testing.assert_allclose(first, direct, rtol=0.0, atol=0.0)
+
+    def test_peak_and_bounds_match_legacy_for_zero_extremes_random_and_outside_vectors(self):
+        rng = np.random.default_rng(20260720)
+        maximum = float(self.config["coefficient_bounds"]["emitted_correction_absolute_ft"])
+        for name in ("shape3", "spline3", "spline4", "spline5", "spline7"):
+            dimensions = int(self.config["representations"][name]["dimensions"])
+            bound_key = "spline_knot_absolute_ft" if name.startswith("spline") else "shape3_coefficient_absolute_ft"
+            limit = float(self.config["coefficient_bounds"][bound_key])
+            vectors = (
+                np.zeros(dimensions),
+                np.full(dimensions, limit),
+                np.full(dimensions, -limit),
+                rng.uniform(-0.5 * limit, 0.5 * limit, size=dimensions),
+                rng.uniform(-3.0 * limit, 3.0 * limit, size=dimensions),
+            )
+            self.assertTrue(np.all(np.abs(vectors[3]) <= limit))
+            self.assertTrue(np.any(np.abs(vectors[4]) > limit))
+            for vector in vectors:
+                self.assertAlmostEqual(
+                    _peak_correction(vector, name, self.config),
+                    self._legacy_peak_correction(vector, name),
+                    places=12,
+                )
+                expected = self._legacy_bound_coefficients(vector, name)
+                actual = bound_coefficients(vector, name, self.config)
+                np.testing.assert_allclose(actual, expected, rtol=0.0, atol=1e-12)
+                np.testing.assert_array_equal(actual, bound_coefficients(vector, name, self.config))
+                self.assertLessEqual(_peak_correction(actual, name, self.config), maximum + 1e-8)
+            for nonfinite in (math.nan, math.inf, -math.inf):
+                vector = np.zeros(dimensions)
+                vector[dimensions // 2] = nonfinite
+                with self.assertRaises(DataValidationError):
+                    bound_coefficients(vector, name, self.config)
         with self.assertRaises(DataValidationError):
             bound_coefficients([1, 2], "spline4", self.config)
-        with self.assertRaises(DataValidationError):
-            bound_coefficients([1, math.nan, 2, 3], "spline4", self.config)
 
     def test_sufficient_statistics_match_direct_rows_singular_and_zero(self):
         rng = np.random.default_rng(123)
@@ -183,6 +249,43 @@ class E011Tests(unittest.TestCase):
         with self.assertRaises(DataValidationError):
             _prepare_features(records, (), test, names, y[:0], 3)
 
+    def test_batched_ridge_matches_sklearn_weighted_and_unweighted(self):
+        from sklearn.linear_model import Ridge
+        rng = np.random.default_rng(20260720)
+        for weighted in (False, True):
+            train_x = rng.normal(size=(91, 27))
+            test_x = rng.normal(size=(13, 27))
+            train_y = rng.normal(size=(91, 5))
+            weights = rng.uniform(0.2, 3.0, size=91) if weighted else None
+            prepared = type("Prepared", (), {"train_x": train_x, "test_x": test_x})()
+            alphas = (1.0, 10.0, 100.0, 1000.0)
+            actual = _fit_prepared_ridge_many(prepared, train_y, alphas, weights)
+            y_mean = train_y.mean(axis=0)
+            y_scale = train_y.std(axis=0)
+            y_scale[y_scale < 1e-9] = 1.0
+            scaled = (train_y - y_mean) / y_scale
+            for alpha in alphas:
+                expected = Ridge(alpha=alpha, fit_intercept=True).fit(train_x, scaled, sample_weight=weights).predict(test_x) * y_scale + y_mean
+                self.assertLess(float(np.max(np.abs(actual[alpha] - expected))), 1e-10)
+
+    @unittest.skipUnless((ROOT / "artifacts/E011/compact_stats_v1.npz").is_file(), "registered compact E011 artifact is not mounted")
+    def test_registered_compact_loader_reproduces_frozen_metrics(self):
+        records, names, audit = _read_records(ROOT, ROOT / "data/train", self.config)
+        self.assertEqual(audit["input_mode"], "compact_sufficient_statistics")
+        self.assertEqual(len(records), 773)
+        self.assertEqual(len(names), 142)
+        self.assertEqual(sum(record.rows for record in records.values()), 3783989)
+        e006_sse = sum(record.e006_metric.sse for record in records.values())
+        last_sse = sum(record.last_metric.sse for record in records.values())
+        self.assertAlmostEqual(math.sqrt(e006_sse / 3783989), 14.933140787237672, places=10)
+        self.assertAlmostEqual(math.sqrt(last_sse / 3783989), 15.90985287073455, places=10)
+        for representation in self.config["learned_representations"]:
+            sse = sum(record.statistics[representation].metric(well_id, record.statistics[representation].target_coefficients).sse for well_id, record in records.items())
+            self.assertAlmostEqual(math.sqrt(sse / 3783989), self.config["representations"][representation]["oracle_rmse"], places=10)
+        basis_delta, sufficient_delta = _direct_scoring_control(ROOT, ROOT / self.config["parent_artifacts"]["e010_oof"]["path"], records, self.config)
+        self.assertEqual(basis_delta, 0.0)
+        self.assertLess(sufficient_delta, 1e-10)
+
     def test_context_audit_and_group_building(self):
         records = {f"w{i}": self._small_record(f"w{i}", float(i)) for i in range(10)}
         folds = []
@@ -221,6 +324,11 @@ class E011Tests(unittest.TestCase):
         selected = _advance_candidates(specs, summaries, gates, order, 8)
         self.assertEqual(len(selected), 8)
         self.assertEqual(selected, [spec.name for spec in specs[:8]])
+        tied = {spec.name: {"rmse": 10.0} for spec in specs}
+        tied_first = _advance_candidates(specs, tied, gates, order, 8)
+        tied_second = _advance_candidates(specs, tied, gates, order, 8)
+        self.assertEqual(tied_first, tied_second)
+        self.assertEqual(tied_first, [spec.name for spec in specs[:8]])
         gates[specs[0].name]["a"] = False
         self.assertNotIn(specs[0].name, _advance_candidates(specs, summaries, gates, order, 8))
 
@@ -316,6 +424,7 @@ class E011Tests(unittest.TestCase):
             path=root/f"experiments/E010/results/{name}"
             path.write_text("well_id,value\n00000001,0\n")
         config=copy.deepcopy(self.config)
+        config.pop("compact_input", None)
         config["expected_wells"]=wells; config["expected_hidden_rows"]=wells*hidden; config["data_signature"]=profile["data_signature"]
         config["legal_feature_contract"]["expected_rows"]=wells; config["legal_feature_contract"]["expected_columns"]=len(feature_rows[0])
         fixture_paths={
