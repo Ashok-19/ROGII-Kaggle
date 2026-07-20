@@ -2,13 +2,13 @@
   "experiment_id": "E010",
   "title": "Nonlinear candidate coverage and visible-prefix selector regret",
   "hypothesis": "A legal bank of genuinely different whole-well nonlinear paths can achieve candidate-oracle RMSE below 5, and multi-cut visible-prefix evidence plus calibrated uncertainty can retain enough of that coverage without hidden-label routing.",
-  "status": "smoke_passed",
+  "status": "rejected",
   "track": "nonlinear_candidate_bank",
   "priority": 1,
   "owner": "NNMax",
   "parent_id": "E006",
   "created_at": "2026-07-19T19:25:22Z",
-  "updated_at": "2026-07-20T10:38:22Z",
+  "updated_at": "2026-07-20T11:38:00Z",
   "design": {
     "task_id": "T017",
     "hypothesis_id": "H013",
@@ -28,10 +28,47 @@
       "absolute spatial coordinates as predictors",
       "leaderboard feedback opaque artifacts or post-score mutation"
     ],
-    "candidate_families": ["raw anchors", "affine", "quadratic", "three hinges", "three smooth jumps", "four HMM screens", "four DTW screens"],
-    "selector_branches": ["ridge_all_f64", "ridge_path_f48", "extra_trees_all", "random_forest_all", "hybrid_ridge_trees", "hybrid_confidence_fallback"],
-    "controls": ["parent identity", "no-op", "duplicates", "basis reconstruction", "oracle positive", "shuffled target", "sign-flipped target", "exact fallback", "membership", "SSE", "bounds", "runtime", "memory", "reproduction"],
-    "harsher_splits": ["spatial group", "typewell group", "long suffix", "high GR missingness", "catastrophic wells", "repeated motifs and no-GR synthetic cases"],
+    "candidate_families": [
+      "raw anchors",
+      "affine",
+      "quadratic",
+      "three hinges",
+      "three smooth jumps",
+      "four HMM screens",
+      "four DTW screens"
+    ],
+    "selector_branches": [
+      "ridge_all_f64",
+      "ridge_path_f48",
+      "extra_trees_all",
+      "random_forest_all",
+      "hybrid_ridge_trees",
+      "hybrid_confidence_fallback"
+    ],
+    "controls": [
+      "parent identity",
+      "no-op",
+      "duplicates",
+      "basis reconstruction",
+      "oracle positive",
+      "shuffled target",
+      "sign-flipped target",
+      "exact fallback",
+      "membership",
+      "SSE",
+      "bounds",
+      "runtime",
+      "memory",
+      "reproduction"
+    ],
+    "harsher_splits": [
+      "spatial group",
+      "typewell group",
+      "long suffix",
+      "high GR missingness",
+      "catastrophic wells",
+      "repeated motifs and no-GR synthetic cases"
+    ],
     "promotion": "Bank oracle below 5; legal gain >=0.15 versus E006; >=4/5 maps and >=17/25 cells; tail limits; positive every spatial/typewell group; all controls, reproduction, packaging and parity.",
     "deployment": "Only after statistical promotion. No submission authorized.",
     "runtime_budget_minutes": 60,
@@ -41,11 +78,60 @@
     "kaggle_runbook": "KAGGLE_NOTEBOOK_RUNBOOK.md",
     "kaggle_notebook": "notebooks/training_and_submission/e010_candidate_selector_kaggle.ipynb",
     "kaggle_input_record": "experiments/E010/KAGGLE_INPUT_V2.json",
-    "kaggle_input_history": ["experiments/E010/KAGGLE_INPUT_V1.json", "experiments/E010/KAGGLE_INPUT_V2.json"],
+    "kaggle_input_history": [
+      "experiments/E010/KAGGLE_INPUT_V1.json",
+      "experiments/E010/KAGGLE_INPUT_V2.json"
+    ],
     "local_maximum_threads": 2,
     "full_validation_platform": "private Kaggle CPU notebook, internet disabled"
   },
-  "runs": [],
-  "result": null,
-  "conclusion": "Implementation and local validation passed. Kaggle input v1 failed before hidden-label scoring because the data signature encoded the physical mount path. A later v2 execution completed the expensive scoring phase but failed during final manifest construction because artifact_dir was outside the extracted runtime root; no output is accepted until packaging and independent review complete. Source fix 437d83a03df429657850546cc2d572b62df0681b makes finalization location-independent and idempotently recoverable. The updated notebook embeds that exact source as a hash-verified overlay, preserves dataset version 2, and passed a real-bundle/all-773-well notebook simulation covering preflight, fresh-run glue, recovery, packaging, archive hashes, and deterministic reproduction."
+  "runs": [
+    {
+      "run_id": "R20260720-1059-e010-nonlinear-selector",
+      "started_at": "2026-07-20T10:59:00.236893Z",
+      "ended_at": "2026-07-20T11:37:47.706375Z",
+      "code_sha": "49ca3995269638026561c5593ad2628f8f08a4e9",
+      "runtime_overlay_commit": "437d83a03df429657850546cc2d572b62df0681b",
+      "platform": "private Kaggle CPU notebook",
+      "kaggle_ref": "ashok205/e010-candidate-selector-kaggle",
+      "kaggle_version": 1,
+      "status": "rejected",
+      "selected_candidate": null,
+      "reported_candidate": "hybrid_confidence_fallback",
+      "reported_rmse": 14.780252852765782,
+      "e006_rmse": 14.933140787237672,
+      "bank_oracle_rmse": 4.751076827808648,
+      "artifact_manifest": "experiments/E010/results/artifact_manifest.json",
+      "oof_predictions": "artifacts/E010/oof_predictions.csv.gz",
+      "result": "experiments/E010/RESULT.md",
+      "verification": "experiments/E010/verification.json",
+      "kaggle_receipt": "experiments/E010/kaggle/v1/e010-run-receipt.json"
+    }
+  ],
+  "result": {
+    "decision": "reject",
+    "selected_candidate": null,
+    "reported_candidate": "hybrid_confidence_fallback",
+    "reported_rmse": 14.780252852765782,
+    "gain_vs_e006": 0.1528879344718903,
+    "bank_oracle_rmse": 4.751076827808648,
+    "candidate_count": 130252,
+    "map_wins": 5,
+    "outer_cell_wins": 17,
+    "failed_controls": [
+      "memory"
+    ],
+    "failed_gates": [
+      "controls",
+      "memory",
+      "spatial_stress",
+      "special_slices"
+    ],
+    "selected_family_oracle_counterfactual_rmse": 5.707519065770674,
+    "family_share_of_selector_gap": 0.095365983763921,
+    "coefficient_share_of_selector_gap": 0.9046340162360791,
+    "deployment_ready": false,
+    "submission_made": false
+  },
+  "conclusion": "Candidate generation succeeded: the fixed legal bank oracle reaches 4.7510768278 RMSE. Legal selection failed: the reported selector reaches 14.7802528528, retains only about 1.5% of the available oracle gain, regresses spatial group 1 and high-GR-missingness wells, and exceeds the 3 GB memory cap. Regret decomposition shows family choice explains 9.5% of the oracle-to-selector gap while coefficient estimation and aggregation explain 90.5%. Reject E010, retain E006/E004, and test low-dimensional coefficient prediction next."
 }

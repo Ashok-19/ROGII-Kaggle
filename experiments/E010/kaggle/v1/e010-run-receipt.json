@@ -1,0 +1,122 @@
+{
+  "accelerator_expected": "CPU",
+  "config_sha256": "82fe4f8b453a17a4b4f66a29733e0909dd0881f9682984e52bd004fce07686cd",
+  "dataset": {
+    "ref": "ashok205/rogii-e010-selector-inputs",
+    "version": 2
+  },
+  "ended_at_utc": "2026-07-20T11:37:47.706375+00:00",
+  "execution_mode": "full_run",
+  "experiment_id": "E010",
+  "input_bundle": {
+    "bytes": 549143874,
+    "sha256": "e26884fcfd49b41514f78b32cb7e46d87a87fb776791c41022ac912039864cad"
+  },
+  "internet_expected": false,
+  "numpy": "2.0.2",
+  "output_manifest": {
+    "bytes": 3346,
+    "filename": "e010-output-manifest.json",
+    "sha256": "0a9ad021322584ad69fc53a3adb6b3522deb4d1d1153358de7c7ff44572312b9"
+  },
+  "python": "3.12.13",
+  "result_archive": {
+    "bytes": 218524517,
+    "filename": "rogii-e010-results-v2.zip",
+    "sha256": "e2e12bec89ccdce4a35dff2fcacfa555fae1432eb260fa32659a863e57e09622"
+  },
+  "runtime_overlay": {
+    "bytes": 74526,
+    "commit": "437d83a03df429657850546cc2d572b62df0681b",
+    "path": "src/rogii_validation/nonlinear_selector.py",
+    "sha256": "df3774d9c2d79585e4341cbff0bd0f9b7d3cc663fb4ddc0a997f7e96f7bb46ba"
+  },
+  "schema_version": 1,
+  "scikit_learn": "1.6.1",
+  "source_commit": "49ca3995269638026561c5593ad2628f8f08a4e9",
+  "started_at_utc": "2026-07-20T10:59:00.236893+00:00",
+  "status": "COMPLETE",
+  "submission_created": false,
+  "submission_made": false,
+  "summary": {
+    "advanced_families": [
+      "dtw_derivative"
+    ],
+    "all_controls_pass": false,
+    "bank_oracle_rmse": 4.751076827808648,
+    "candidate_count": 130252,
+    "e006_rmse": 14.933140787237672,
+    "eligible_candidates": [],
+    "last_known_rmse": 15.909852870734571,
+    "reported_candidate": "hybrid_confidence_fallback",
+    "reported_rmse": 14.780252852765782,
+    "runtime": {
+      "max_rss_kb": 17528436,
+      "wall_seconds": 2199.3380178919997
+    },
+    "selected_candidate": null,
+    "status": "rejected"
+  },
+  "thread_limit": 2,
+  "thread_pools_after": [
+    {
+      "architecture": "Haswell",
+      "filepath": "/usr/local/lib/python3.12/dist-packages/numpy.libs/libscipy_openblas64_-99b71e71.so",
+      "internal_api": "openblas",
+      "num_threads": 2,
+      "prefix": "libscipy_openblas",
+      "threading_layer": "pthreads",
+      "user_api": "blas",
+      "version": "0.3.27"
+    },
+    {
+      "architecture": "Haswell",
+      "filepath": "/usr/local/lib/python3.12/dist-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+      "internal_api": "openblas",
+      "num_threads": 2,
+      "prefix": "libscipy_openblas",
+      "threading_layer": "pthreads",
+      "user_api": "blas",
+      "version": "0.3.29.dev"
+    },
+    {
+      "filepath": "/usr/local/lib/python3.12/dist-packages/scikit_learn.libs/libgomp-a34b3233.so.1.0.0",
+      "internal_api": "openmp",
+      "num_threads": 2,
+      "prefix": "libgomp",
+      "user_api": "openmp",
+      "version": null
+    }
+  ],
+  "thread_pools_before": [
+    {
+      "architecture": "Haswell",
+      "filepath": "/usr/local/lib/python3.12/dist-packages/numpy.libs/libscipy_openblas64_-99b71e71.so",
+      "internal_api": "openblas",
+      "num_threads": 2,
+      "prefix": "libscipy_openblas",
+      "threading_layer": "pthreads",
+      "user_api": "blas",
+      "version": "0.3.27"
+    },
+    {
+      "architecture": "Haswell",
+      "filepath": "/usr/local/lib/python3.12/dist-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+      "internal_api": "openblas",
+      "num_threads": 2,
+      "prefix": "libscipy_openblas",
+      "threading_layer": "pthreads",
+      "user_api": "blas",
+      "version": "0.3.29.dev"
+    },
+    {
+      "filepath": "/usr/local/lib/python3.12/dist-packages/scikit_learn.libs/libgomp-a34b3233.so.1.0.0",
+      "internal_api": "openmp",
+      "num_threads": 2,
+      "prefix": "libgomp",
+      "user_api": "openmp",
+      "version": null
+    }
+  ],
+  "wall_seconds": 2327.469482
+}

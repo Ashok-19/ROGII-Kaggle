@@ -1,0 +1,150 @@
+{
+  "code_sha": "49ca3995269638026561c5593ad2628f8f08a4e9",
+  "config": {
+    "bytes": 10195,
+    "path": "experiments/E010/config.json",
+    "sha256": "82fe4f8b453a17a4b4f66a29733e0909dd0881f9682984e52bd004fce07686cd"
+  },
+  "experiment_id": "E010",
+  "external_artifacts": [
+    {
+      "base": "artifact_dir",
+      "bytes": 228267787,
+      "kind": "oof_predictions_gzip",
+      "path": "oof_predictions.csv.gz",
+      "sha256": "80bae7649c783b1fa1536546e0485f1357cd59abf4a641ad26d01f90490d8f46",
+      "tracked": false
+    }
+  ],
+  "files": [
+    {
+      "bytes": 3017,
+      "path": "candidate_metrics.csv",
+      "sha256": "50ffbeb1ad681f182db101f4289c539eb941e914278679bed47f945bc4b80367"
+    },
+    {
+      "bytes": 880,
+      "path": "bank_family_metrics.csv",
+      "sha256": "e34237af3d4f8b253bf66f49752910f2dc211b39b90b674938ee96409776d058"
+    },
+    {
+      "bytes": 1017110,
+      "path": "oracle_targets.csv",
+      "sha256": "36f891448daa467e22fe710d5a20e68c78c08c385d77d8ca39d4d53f88c3dcea"
+    },
+    {
+      "bytes": 1284,
+      "path": "screen_metrics.csv",
+      "sha256": "4699b6c3b9e24b15e78959bbd7e22fbd505097ed4e6be34e925cbf046ea12954"
+    },
+    {
+      "bytes": 38791,
+      "path": "screen_well_metrics.csv",
+      "sha256": "a18b06ecdbd6a2bf1810b398c4c86d878b2801f9d78ad5db7338485df9eb8cc1"
+    },
+    {
+      "bytes": 94305,
+      "path": "outer_cell_metrics.csv",
+      "sha256": "0c6d88b8b0e9ca50cda7db3668151e26e4f784d4145c3730eaf063453e2f353a"
+    },
+    {
+      "bytes": 12349,
+      "path": "map_metrics.csv",
+      "sha256": "c934384209b4d72a1eaef00827dc8db1234bee77e76ef3b9a7fdcc02aceb5162"
+    },
+    {
+      "bytes": 27287,
+      "path": "stress_metrics.csv",
+      "sha256": "d515a32f5dab93b95c3713a0f2e135165e57c5e2cda3291f27827dfb18ae6962"
+    },
+    {
+      "bytes": 7937,
+      "path": "special_slice_metrics.csv",
+      "sha256": "50c177039264e18e8a777131976a184211e7fbf333e7f878442ba6277795e6e0"
+    },
+    {
+      "bytes": 6824881,
+      "path": "selector_predictions.csv",
+      "sha256": "38ece62b8b500c6cfbf6c72a8981b69184648d86c330a2b4392c9368d3f5c14e"
+    },
+    {
+      "bytes": 17497,
+      "path": "selected_feature_frequency.csv",
+      "sha256": "93cffb0d84839dd37ce2b04bc6f04a7302a5099f558e6f15e17f2999fa858fd1"
+    },
+    {
+      "bytes": 1611,
+      "path": "membership_audit.csv",
+      "sha256": "3433ba08faf4aad0b1bb407983b3e377ee6177ec01209b10ed7cf0ec524b2467"
+    },
+    {
+      "bytes": 137380,
+      "path": "selected_well_metrics.csv",
+      "sha256": "243263d648f62157d71d6a97992992b33cb2ef89bbdf9f0df41c6cb52d7efcc0"
+    },
+    {
+      "bytes": 4119,
+      "path": "control_metrics.csv",
+      "sha256": "ca496d761d5c9995617d2353f062da608da7ad2f48e26938779cdbe071bd9500"
+    },
+    {
+      "bytes": 22603,
+      "path": "summary.json",
+      "sha256": "eb66df85e2c837eb5d474909d00de8b454037d513e355c7051645690e5255cdc"
+    }
+  ],
+  "fold_files": [
+    {
+      "bytes": 15743,
+      "path": "folds/v1.json",
+      "sha256": "89ea99a594547b5b1457cdbd5d9d4f562d6b6f8f3f3a55ff8e3633b0e98ef555"
+    },
+    {
+      "bytes": 15743,
+      "path": "folds/v2.json",
+      "sha256": "8a116f8b60463c55c7f23fa640fee542352c9250b8775a9e98086f3cad7c938e"
+    },
+    {
+      "bytes": 15743,
+      "path": "folds/v3.json",
+      "sha256": "da69b7be2f115a2df2da1fd26f3d2e331503a43723cf3d24d4aaee2d3e79efa9"
+    },
+    {
+      "bytes": 15743,
+      "path": "folds/v4.json",
+      "sha256": "38b64e8ec4b904d5ce1bf105516d925724a518152302ef2ec48cf1867336153c"
+    },
+    {
+      "bytes": 15743,
+      "path": "folds/v5.json",
+      "sha256": "911011522eca1d1cb06e10ca5ac24b19b799796eb92560b6b6fd95921a9836ef"
+    }
+  ],
+  "parent_artifacts": [
+    {
+      "path": "artifacts/E005/oof_predictions.csv.gz",
+      "sha256": "5115f7ce80f70c827c6df6edc572657253495a44333a2bb35bc46a7547e13ae5"
+    },
+    {
+      "path": "artifacts/E006/oof_predictions.csv.gz",
+      "sha256": "9b9f26cd8ad82e32dbc0f9ba1466cb38424cd3bbf7001c1079a9867fb5a324b4"
+    },
+    {
+      "path": "artifacts/E009/oof_predictions.csv.gz",
+      "sha256": "3609b06eb5c38ebbdecbd951e925e31b8633ba7c904d508230a8e5bc07c0052e"
+    },
+    {
+      "path": "experiments/E008/results/legal_features.csv",
+      "sha256": "c4b332ccb62559609aee501eb6cd66237cf6a98fc370caa542d6be99b43f8853"
+    },
+    {
+      "path": "experiments/E009/results/model_predictions.csv",
+      "sha256": "3f4d4782555d255305fd6f08945f72cf09db47fc3f531fdefda44fb973f5e41f"
+    },
+    {
+      "path": "experiments/E008/results/residual_targets.csv",
+      "sha256": "bae9a5b11f63285d56d8b603c56d0d61579a43eb19a213d66c5b6b8a4eb4b439"
+    }
+  ],
+  "schema_version": 1
+}

@@ -1,0 +1,13 @@
+{
+  "type": "task",
+  "recorded_at": "2026-07-20T12:00:00Z",
+  "payload": {
+    "task_id": "T019",
+    "title": "Test memory-safe nonlinear coefficient learning",
+    "status": "next",
+    "priority": 1,
+    "phase": "nonlinear_coefficient_modeling",
+    "depends_on": "T017",
+    "due_at": "2026-07-23"
+  }
+}

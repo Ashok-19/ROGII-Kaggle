@@ -1,0 +1,53 @@
+{
+  "bundle": {
+    "bytes": 549143874,
+    "path": "/kaggle/input/datasets/ashok205/rogii-e010-selector-inputs/rogii-e010-inputs-v2.zip.bin",
+    "sha256": "e26884fcfd49b41514f78b32cb7e46d87a87fb776791c41022ac912039864cad"
+  },
+  "checked_at_utc": "2026-07-20T10:58:57.313490+00:00",
+  "competition_root": "/kaggle/input/competitions/rogii-wellbore-geology-prediction",
+  "config_sha256": "82fe4f8b453a17a4b4f66a29733e0909dd0881f9682984e52bd004fce07686cd",
+  "data_profile": {
+    "data_signature": "6ebe65b403f80fefd97dcd7bbfce7314252e779a1837c97364cf55761590fe77",
+    "hidden_rows": 3783989,
+    "known_rows": 1308266,
+    "max_visible_target_delta": 0.0,
+    "total_rows": 5092255,
+    "well_count": 773
+  },
+  "dataset": {
+    "ref": "ashok205/rogii-e010-selector-inputs",
+    "version": 2
+  },
+  "experiment_id": "E010",
+  "input_receipt": {
+    "path": "/kaggle/input/datasets/ashok205/rogii-e010-selector-inputs/e010-input-receipt-v2.json",
+    "sha256": "6460b3a5e04c8b4a8c4357a3dfdda9b0c0aecb6ff1c258002fe9ae6fe103dced"
+  },
+  "runtime": {
+    "accelerator_expected": "CPU",
+    "internet_expected": false,
+    "logical_cpus": 4,
+    "platform": "Linux-6.12.90+-x86_64-with-glibc2.35",
+    "python": "3.12.13 (main, Mar  4 2026, 09:23:07) [GCC 11.4.0]",
+    "thread_environment": {
+      "BLIS_NUM_THREADS": "2",
+      "MKL_NUM_THREADS": "2",
+      "NUMEXPR_NUM_THREADS": "2",
+      "OMP_NUM_THREADS": "2",
+      "OPENBLAS_NUM_THREADS": "2",
+      "VECLIB_MAXIMUM_THREADS": "2"
+    },
+    "thread_limit": 2
+  },
+  "runtime_overlay": {
+    "bytes": 74526,
+    "commit": "437d83a03df429657850546cc2d572b62df0681b",
+    "original_sha256": "20954431de182e6be9c86ff6640ba9ae38cb4821cd29990006bd0f54dd074f39",
+    "path": "src/rogii_validation/nonlinear_selector.py",
+    "sha256": "df3774d9c2d79585e4341cbff0bd0f9b7d3cc663fb4ddc0a997f7e96f7bb46ba"
+  },
+  "schema_version": 1,
+  "source_commit": "49ca3995269638026561c5593ad2628f8f08a4e9",
+  "status": "PASS"
+}

@@ -4,7 +4,7 @@
   "payload": {
     "task_id": "T017",
     "title": "Measure nonlinear candidate coverage and selector regret",
-    "status": "active",
+    "status": "done",
     "priority": 1,
     "phase": "nonlinear_candidate_bank",
     "depends_on": "T015",

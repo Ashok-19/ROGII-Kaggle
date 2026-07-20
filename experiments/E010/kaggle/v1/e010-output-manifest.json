@@ -1,0 +1,99 @@
+{
+  "config_sha256": "82fe4f8b453a17a4b4f66a29733e0909dd0881f9682984e52bd004fce07686cd",
+  "experiment_id": "E010",
+  "files": [
+    {
+      "bytes": 4651,
+      "path": "results/artifact_manifest.json",
+      "sha256": "ac70c7a09ddd740372b9bc7c71e9add7a3575ed8b87ca3900f07c06dbd551867"
+    },
+    {
+      "bytes": 880,
+      "path": "results/bank_family_metrics.csv",
+      "sha256": "e34237af3d4f8b253bf66f49752910f2dc211b39b90b674938ee96409776d058"
+    },
+    {
+      "bytes": 3017,
+      "path": "results/candidate_metrics.csv",
+      "sha256": "50ffbeb1ad681f182db101f4289c539eb941e914278679bed47f945bc4b80367"
+    },
+    {
+      "bytes": 4119,
+      "path": "results/control_metrics.csv",
+      "sha256": "ca496d761d5c9995617d2353f062da608da7ad2f48e26938779cdbe071bd9500"
+    },
+    {
+      "bytes": 12349,
+      "path": "results/map_metrics.csv",
+      "sha256": "c934384209b4d72a1eaef00827dc8db1234bee77e76ef3b9a7fdcc02aceb5162"
+    },
+    {
+      "bytes": 1611,
+      "path": "results/membership_audit.csv",
+      "sha256": "3433ba08faf4aad0b1bb407983b3e377ee6177ec01209b10ed7cf0ec524b2467"
+    },
+    {
+      "bytes": 1017110,
+      "path": "results/oracle_targets.csv",
+      "sha256": "36f891448daa467e22fe710d5a20e68c78c08c385d77d8ca39d4d53f88c3dcea"
+    },
+    {
+      "bytes": 94305,
+      "path": "results/outer_cell_metrics.csv",
+      "sha256": "0c6d88b8b0e9ca50cda7db3668151e26e4f784d4145c3730eaf063453e2f353a"
+    },
+    {
+      "bytes": 1284,
+      "path": "results/screen_metrics.csv",
+      "sha256": "4699b6c3b9e24b15e78959bbd7e22fbd505097ed4e6be34e925cbf046ea12954"
+    },
+    {
+      "bytes": 38791,
+      "path": "results/screen_well_metrics.csv",
+      "sha256": "a18b06ecdbd6a2bf1810b398c4c86d878b2801f9d78ad5db7338485df9eb8cc1"
+    },
+    {
+      "bytes": 17497,
+      "path": "results/selected_feature_frequency.csv",
+      "sha256": "93cffb0d84839dd37ce2b04bc6f04a7302a5099f558e6f15e17f2999fa858fd1"
+    },
+    {
+      "bytes": 137380,
+      "path": "results/selected_well_metrics.csv",
+      "sha256": "243263d648f62157d71d6a97992992b33cb2ef89bbdf9f0df41c6cb52d7efcc0"
+    },
+    {
+      "bytes": 6824881,
+      "path": "results/selector_predictions.csv",
+      "sha256": "38ece62b8b500c6cfbf6c72a8981b69184648d86c330a2b4392c9368d3f5c14e"
+    },
+    {
+      "bytes": 7937,
+      "path": "results/special_slice_metrics.csv",
+      "sha256": "50c177039264e18e8a777131976a184211e7fbf333e7f878442ba6277795e6e0"
+    },
+    {
+      "bytes": 27287,
+      "path": "results/stress_metrics.csv",
+      "sha256": "d515a32f5dab93b95c3713a0f2e135165e57c5e2cda3291f27827dfb18ae6962"
+    },
+    {
+      "bytes": 22603,
+      "path": "results/summary.json",
+      "sha256": "eb66df85e2c837eb5d474909d00de8b454037d513e355c7051645690e5255cdc"
+    },
+    {
+      "bytes": 228267787,
+      "path": "artifacts/oof_predictions.csv.gz",
+      "sha256": "80bae7649c783b1fa1536546e0485f1357cd59abf4a641ad26d01f90490d8f46"
+    }
+  ],
+  "input_bundle_sha256": "e26884fcfd49b41514f78b32cb7e46d87a87fb776791c41022ac912039864cad",
+  "runtime_overlay": {
+    "commit": "437d83a03df429657850546cc2d572b62df0681b",
+    "path": "src/rogii_validation/nonlinear_selector.py",
+    "sha256": "df3774d9c2d79585e4341cbff0bd0f9b7d3cc663fb4ddc0a997f7e96f7bb46ba"
+  },
+  "schema_version": 1,
+  "source_commit": "49ca3995269638026561c5593ad2628f8f08a4e9"
+}

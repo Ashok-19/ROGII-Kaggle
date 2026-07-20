@@ -47,7 +47,7 @@ A 13.420 trellis improved a 7.762 ensemble to 7.699 because residual correlation
 
 ### 5. Nonlinear whole-tail shape is mandatory
 
-Pilkwang's published 773-well oracle ladder is 15.9099 last-known, 9.0354 for an oracle constant, 6.6972 for an oracle line, and 3.1106 for a robust smooth curve. Therefore the gold route cannot be another datum-only or line-only correction. The next experiment separates legal nonlinear **candidate coverage** from **visible-prefix selector regret**.
+Pilkwang's published oracle ladder made nonlinear shape mandatory. E010 now proves legal candidate coverage directly: its 130,252-path bank oracle is 4.7511, but the legal selector is 14.7803. The next experiment targets low-dimensional coefficient/control-point learning because coefficient estimation and aggregation explain 90.5% of the selector gap.
 
 Amer's exact second-order HMM adds a deterministic posterior candidate over TVT position and dip rate. It joins PF, beam, DTW, smooth-U and jump/fault candidates, but its reported small-sample 4.57 blend remains preliminary until full frozen validation.
 
@@ -219,7 +219,7 @@ Measured E009 outcome:
 - The diagnostic 64-feature ridge reaches 14.6352733150, p90 20.8077, and 5/5 maps, but remains ineligible and still fails one spatial and three typewell groups.
 - Official and independent OOF artifacts are byte-identical at SHA-256 `3609b06e...052e`; runtime and memory pass. Statistical rejection prohibits packaging.
 
-Immediate deliverables shift to E010/H013: a fresh nonlinear candidate-coverage and visible-prefix selector-regret experiment. Freeze a legal whole-well bank containing E006, the wide-ridge comparator, exact HMM posterior mean/std, PF scales, beam/trellis, multiscale/stochastic DTW, constrained smooth-U curves, and a jump/fault candidate. First measure hidden-label bank-oracle coverage; then evaluate a selector using only multi-cut visible-prefix evidence and target-independent uncertainty. Oracle routing is diagnostic only. H012/T016 remain queued.
+Immediate deliverables shift to E011/H014: a memory-safe nonlinear coefficient-learning experiment. E010 already proves a 4.7511 bank oracle and rejects flat selector ranking. Freeze orthogonal coefficient, three-control-point, family-expert, and conservative fallback branches; screen coefficient learnability before full repeated/spatial/typewell validation. Oracle targets remain training-only inside folds. H012/T016 remain queued.
 
 Exit gate: candidate-bank oracle below 5 before selector promotion; legal action at least four repeated maps and 17 cells, tail limits, positive every spatial/typewell group, shuffle/sign controls, exact E006 fallback, runtime, final placement, packaging, and parity.
 
@@ -307,8 +307,8 @@ These defaults may be revised only through a recorded decision before seeing the
 7. **E007 — Horizontal self-correlation and candidate evidence stack — completed and rejected 2026-07-19.** Fixed 0.10 placement reaches 14.8305 with 5/5 maps, but fails p90 and spatial/typewell shift gates; no packaging or submission.
 8. **E008 — Cross-fitted legal residual-action model — completed and rejected 2026-07-19.** Datum-only ridge reaches 14.7951 with improved p90 and useful E007 evidence, but wins only 2/5 maps and 14/25 cells and fails spatial/typewell transfer; no packaging or submission.
 9. **E009 — Residual-model consensus abstention — completed and rejected 2026-07-19.** Majority consensus reaches 14.7935 and wins all maps but only 15/25 cells, repeats spatial/typewell failures, and fails the sign-flipped negative control; no package or submission.
-10. **E010 — Nonlinear candidate coverage and selector regret — next.** Freeze the legal whole-well bank, measure bank-oracle RMSE/catastrophe coverage, then evaluate visible-prefix multi-cut candidate probabilities against oracle regret under all repeated/shift/control gates.
-11. **E011 — Learned whole-well selector and shape refinement.** Proceed only if E010 proves below-5 candidate coverage; compare calibrated path selection, learned cost maps/control points, and explicit smooth-versus-jump decoding.
+10. **E010 — Nonlinear candidate coverage and selector regret — completed; rejected for deployment.** Bank oracle 4.7511 proves coverage; legal selector 14.7803 and 17.5 GB RSS fail the frozen contract.
+11. **E011 — Low-dimensional nonlinear coefficient learning — next.** Compare orthogonal correction coefficients, three control points, family-specific experts, and conservative E006 fallback. Do not expand the bank unless a new family adds independently verified unique coverage.
 12. **E012 — Final Kaggle offline parity.** Clean package, runtime, exact IDs, and finalist notebooks.
 
 ## Explicitly rejected behavior
@@ -334,4 +334,4 @@ Foundation is complete only when:
 - legacy roadmap is preserved;
 - no training run is falsely presented as completed.
 
-Foundation is complete. The current exact next action is E010/H013 candidate-coverage and selector-regret preregistration, not another roadmap revision.
+Foundation and E010 coverage measurement are complete. The current exact next action is E011/H014 coefficient-learning preregistration and execution, not another flat selector or candidate-bank expansion.

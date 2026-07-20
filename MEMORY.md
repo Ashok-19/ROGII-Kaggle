@@ -8,7 +8,7 @@ Public intelligence last checked: 2026-07-20 00:30 Asia/Kolkata
 - Deadline: 2026-08-05 23:59 UTC / 2026-08-06 05:29 Asia/Kolkata.
 - Current leader snapshot: 4.859. Best Kaggle-MCP-verified account submission: 7.119 (ref 54754431, 2026-07-16). User-reported best: 6.888, reference unverified.
 - E001 is frozen; E002, E005, E007, E008, and E009 are rejected; E003 is promoted only as nondeployable surface-assisted understanding; E004 is the exact fallback; E006 is the promoted deployment-ready primary.
-- E010 is implemented and `smoke_passed` but has no accepted scored run. Input v1 failed during preflight before scoring. A v2 Kaggle run later completed the expensive scoring phase but failed only during final manifest construction because `artifact_dir` was outside the extracted runtime root. Commit `437d83a03df429657850546cc2d572b62df0681b` fixes finalization and adds safe completed-run recovery; notebook SHA-256 is `f0be7e36...02be9e`, using unchanged dataset version 2. H012/T016 remain queued as comparators.
+- E010 is completed and rejected. Its 130,252-path legal bank oracle reaches 4.7510768278 RMSE, but the best legal selector reaches 14.7802528528, fails spatial group 1/high-GR-missingness transfer, and uses 17,528,436 KB RSS versus the frozen 3 GB cap. H014/T019 is next; H012/T016 remain queued comparators.
 
 ## Verified project state
 
@@ -18,6 +18,7 @@ Public intelligence last checked: 2026-07-20 00:30 Asia/Kolkata
 - E004 surface-free geometry/prefix ridge scores 15.4913063983 and has byte-identical local/private-Kaggle output at `62ae0657...5279`.
 - E006 nested PF-E004 fusion scores 14.9331407872, wins 5/5 maps and 25/25 outer cells, improves every registered spatial/typewell group, and has byte-identical local/private-Kaggle output at `e412864a...d81008`.
 - E007–E009 produced aggregate gains but failed frozen repeated-cell, shift, tail, or negative-control gates. E009's legal 64-feature diagnostic ridge reaches 14.6352733150 but fails one spatial and three typewell groups and is not promotion evidence.
+- E010 proves candidate coverage is no longer the primary blocker: bank oracle 4.7511 versus legal selector 14.7803. A chosen-family oracle counterfactual reaches 5.7075; family choice explains 9.54% of the gap and coefficient estimation/aggregation 90.46%. HMM added zero unique screen wins; DTW derivative added rare coverage but scores 30.434 standalone.
 
 ## New durable understanding from exact public-source audits
 
@@ -34,18 +35,18 @@ Public intelligence last checked: 2026-07-20 00:30 Asia/Kolkata
 - Check New/Recent discussions and newly run/high-vote notebooks at every session start and before major preregistration/promotion. Inspect deltas, source-audit exact code/dependencies/outputs, archive material findings, and never promote from claims or votes.
 - Preserve E006 as primary and E004 as exact fallback. Rejected E005/E007/E008/E009 actions may supply candidate paths or diagnostics only in a fresh preregistered experiment.
 - Queue H012/T016. Do not spend the next experiment optimizing datum-only wide ridges: the oracle line floor shows that even perfect linear action is insufficient for the gold target.
-- Candidate generation and candidate selection must be evaluated separately. Hidden-label oracle routing is diagnostic only and can never enter inference.
+- Candidate generation and candidate selection must be evaluated separately. Hidden-label oracle routing is diagnostic only and can never enter inference. E010 closes the candidate-coverage question positively but rejects flat selection; next work must target low-dimensional coefficients/control points, not enlarge the bank.
 - No opaque/private or unknown-license artifact enters a prize-targeting pipeline. No Kaggle submission occurs without explicit authorization.
 
 ## Exact next action
 
-Use the corrected private Kaggle E010 notebook with dataset version 2. In the still-open failed kernel, rerunning the updated execution cell should select `recovered_completed_outputs` and finalize the existing two-hour result without modeling again; a fresh kernel will perform one clean full run. Require `e010-run-receipt.json`, `e010-output-manifest.json`, and `rogii-e010-results-v2.zip`, then download and independently verify every output before recording any score or verdict.
+Pre-register E011/H014 as a memory-safe nonlinear coefficient-learning experiment. Freeze multiple branches before scoring: orthogonal correction coefficients, three control points, family-specific coefficient experts, and a disagreement-based E006 fallback. Use the existing E010 bank/oracle outputs as training targets only inside folds, require a registered learnability screen before full validation, and retain the same repeated/spatial/typewell/slice/control gates.
 
 ## Open risks
 
 - Public CV/LB ordering is noisy and hidden test contains roughly 200 wells; current public claims are not verified evidence.
 - HMM/DTW/PF can over-count autocorrelated GR, commit to repeated motifs, or smooth across faults. Posterior uncertainty must be calibrated OOF and a jump candidate must remain available.
-- Candidate oracle below 5 does not imply a legal selector exists; selector regret and catastrophe probability must be measured explicitly.
+- E010 confirms that a below-5 bank does not imply a useful legal selector. The immediate risk is coefficient learnability under spatial shift; family classification alone cannot close the 9.07 RMSE coefficient/aggregation gap.
 - The current public topic list reports 134 topics while the frozen archive contains 132. Canonical counts remain unchanged until a complete delta recrawl verifies additions, removals, and message counts.
 - Every future finalist needs its own clean Kaggle runtime, exact-ID, artifact-provenance, and output-parity verification.
 

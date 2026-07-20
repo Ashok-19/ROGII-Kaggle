@@ -305,13 +305,22 @@
       "visual": "posterior_paths",
       "summary": "Amer's exact second-order HMM tracks joint TVT position and dip rate with forward-backward inference and returns posterior mean plus uncertainty. A small-sample PF/HMM blend is reported at 4.57 RMSE.",
       "why_it_matters": "The mechanism is complementary and directly models nonlinear shape, but the score is not promotion evidence until reproduced on all frozen folds and shift groups. Its posterior uncertainty is a candidate selector feature, not an automatic gate."
+    },
+    {
+      "id": "B016",
+      "date": "2026-07-20",
+      "title": "The bank contains sub-5 paths, but coefficient selection collapses",
+      "evidence": "kaggle_verified",
+      "visual": "oracle_ladder",
+      "summary": "E010 evaluated 130,252 legal whole-well paths on all 773 wells. The bank oracle reaches 4.7511 RMSE, while the best legal visible-prefix selector reaches 14.7803 and retains only about 1.5% of the available oracle gain.",
+      "why_it_matters": "Candidate coverage is proven. A chosen-family oracle counterfactual is 5.7075, so family identity explains only 9.5% of the selector gap and coefficient estimation plus aggregation explain 90.5%. The next experiment must predict low-dimensional coefficients/control points and remain memory-safe; adding more flat candidates is not evidence-backed."
     }
   ],
   "idea_questions": [
     {
-      "signal": "candidate coverage",
-      "question": "Does a legal bank of HMM, PF, beam, DTW, smooth-U, jump and learned paths contain a below-5 trajectory for most wells, and how much does a visible-prefix selector lose relative to that oracle?",
-      "falsifier": "The bank oracle remains above 5, or legal multi-cut selection has large unstable regret and catastrophic shift-group failures."
+      "signal": "coefficient learning",
+      "question": "Can split-local legal features predict a few nonlinear path coefficients or control points well enough to recover materially more of E010's 4.7511 bank oracle while retaining exact E006 fallback?",
+      "falsifier": "Cross-fitted coefficient branches fail the registered learnability screen, retain less than a material fraction of oracle gain, or repeat spatial/high-missingness failures."
     },
     {
       "signal": "deployment",
@@ -419,6 +428,11 @@
       "title": "Public notebook and discussion intelligence refresh",
       "local_path": "archive/competition/public_intelligence_2026-07-20.md",
       "url": ""
+    },
+    {
+      "title": "E010 rejected selector and validated candidate-coverage result",
+      "local_path": "experiments/E010/RESULT.md",
+      "url": "https://www.kaggle.com/code/ashok205/e010-candidate-selector-kaggle/"
     }
   ]
 }

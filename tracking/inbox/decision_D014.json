@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-20T12:00:00Z",
+  "payload": {
+    "decision_id": "D014",
+    "decided_at": "2026-07-20",
+    "title": "Target coefficient regret instead of expanding the path bank",
+    "decision": "Close E010 as rejected for deployment but validated for candidate coverage. Do not add more path families or repeat flat best-candidate selection next. Prioritize E011/H014: split-local low-dimensional coefficient/control-point prediction with compact family experts, strict E006 fallback, and a memory-safe streaming implementation.",
+    "rationale": "E010 reaches a 4.7511 bank oracle but only 14.7803 legally. The chosen-family oracle counterfactual is 5.7075, so family identity accounts for 9.5% of the gap and coefficient estimation/aggregation for 90.5%. HMM added no unique screen coverage; DTW derivative is useful only rarely and scores 30.434 standalone.",
+    "source_ids": "experiments/E010/RESULT.md,experiments/E010/verification.json,experiments/E010/results/oracle_targets.csv,experiments/E010/results/selector_predictions.csv",
+    "revisit_trigger": "E011 proves coefficient targets are not learnable under repeated/spatial/typewell validation, or a new independently verified public method adds substantial legal oracle coverage below the current 4.7511 bank."
+  }
+}
