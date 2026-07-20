@@ -42,6 +42,9 @@ if np is not None:
         _family_definitions,
         _fit_model,
         _grid_clip,
+        E010_OOF_FILENAME,
+        E010_RESULT_FILENAMES,
+        finalize_e010_outputs,
         _prepare_features,
         _screen_ids,
         _selector_feature_names,
@@ -305,24 +308,78 @@ class E010Tests(unittest.TestCase):
             self.assertTrue(np.all(np.isfinite(dtw_path(missing, missing_base, dtw_variant, 160).path)))
 
     def test_full_fixture_run_is_complete_deterministic_and_hash_checked(self):
-        with tempfile.TemporaryDirectory() as tmp:
+        with tempfile.TemporaryDirectory() as tmp, tempfile.TemporaryDirectory() as external_tmp:
             root = Path(tmp); config, _ = self._fixture(root)
-            first = run_e010(root=root, train_dir=root / "data/train", output_dir=root / "first/results", artifact_dir=root / "first/artifacts", config=config, code_sha="a" * 40)
-            second = run_e010(root=root, train_dir=root / "data/train", output_dir=root / "second/results", artifact_dir=root / "second/artifacts", config=config, code_sha="a" * 40)
+            first = run_e010(
+                root=root,
+                train_dir=root / "data/train",
+                output_dir=root / "first/results",
+                artifact_dir=root / "first/artifacts",
+                config=config,
+                code_sha="a" * 40,
+            )
+            external_artifact_dir = Path(external_tmp) / "artifacts"
+            second = run_e010(
+                root=root,
+                train_dir=root / "data/train",
+                output_dir=root / "second/results",
+                artifact_dir=external_artifact_dir,
+                config=config,
+                code_sha="a" * 40,
+            )
             self.assertEqual(first["candidate_metrics"], second["candidate_metrics"])
             self.assertEqual(first["family_metrics"], second["family_metrics"])
             self.assertTrue(first["controls"]["parent_hashes"]["pass"])
             self.assertTrue(first["controls"]["membership"]["pass"])
             self.assertTrue(first["controls"]["oof_identity"]["pass"])
             self.assertTrue(first["controls"]["basis_reconstruction"]["pass"])
-            self.assertEqual((root / "first/artifacts/oof_predictions.csv.gz").read_bytes(), (root / "second/artifacts/oof_predictions.csv.gz").read_bytes())
+            self.assertEqual(
+                (root / "first/artifacts" / E010_OOF_FILENAME).read_bytes(),
+                (external_artifact_dir / E010_OOF_FILENAME).read_bytes(),
+            )
+            second_manifest = json.loads((root / "second/results/artifact_manifest.json").read_text())
+            self.assertEqual(second_manifest["external_artifacts"][0]["path"], E010_OOF_FILENAME)
+            self.assertEqual(second_manifest["external_artifacts"][0]["base"], "artifact_dir")
             dynamic = {"summary.json", "control_metrics.csv", "artifact_manifest.json", "screen_metrics.csv", "screen_well_metrics.csv"}
             for path in (root / "first/results").iterdir():
                 if path.name not in dynamic:
                     self.assertEqual(path.read_bytes(), (root / "second/results" / path.name).read_bytes(), path.name)
+
+            original_manifest = (root / "first/results/artifact_manifest.json").read_bytes()
+            (root / "first/results/artifact_manifest.json").unlink()
+            recovered = finalize_e010_outputs(
+                root=root,
+                output_dir=root / "first/results",
+                artifact_dir=root / "first/artifacts",
+                config=config,
+                code_sha="a" * 40,
+            )
+            self.assertEqual(recovered["candidate_metrics"], first["candidate_metrics"])
+            self.assertEqual((root / "first/results/artifact_manifest.json").read_bytes(), original_manifest)
+            self.assertEqual(
+                {path.name for path in (root / "first/results").iterdir()},
+                {*E010_RESULT_FILENAMES, "artifact_manifest.json"},
+            )
+
+            (root / "first/results/summary.json").write_text("{}\n", encoding="utf-8")
+            with self.assertRaises(DataValidationError):
+                finalize_e010_outputs(
+                    root=root,
+                    output_dir=root / "first/results",
+                    artifact_dir=root / "first/artifacts",
+                    config=config,
+                    code_sha="a" * 40,
+                )
             broken = copy.deepcopy(config); broken["parents"]["e005_oof"]["sha256"] = "0" * 64
             with self.assertRaises(DataValidationError):
-                run_e010(root=root, train_dir=root / "data/train", output_dir=root / "broken/results", artifact_dir=root / "broken/artifacts", config=broken, code_sha="a" * 40)
+                run_e010(
+                    root=root,
+                    train_dir=root / "data/train",
+                    output_dir=root / "broken/results",
+                    artifact_dir=root / "broken/artifacts",
+                    config=broken,
+                    code_sha="a" * 40,
+                )
 
 
 if __name__ == "__main__":

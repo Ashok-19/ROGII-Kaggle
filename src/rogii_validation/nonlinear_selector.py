@@ -73,6 +73,24 @@ COMPARATORS = ("last_known_tvt", "e006_nested_fusion")
 DIAGNOSTICS = ("bank_oracle",)
 ALL_CANDIDATES = (*COMPARATORS, *DIAGNOSTICS, *SELECTOR_BRANCHES, *NEGATIVE_BRANCHES)
 TARGET_WIDTH = 4  # three padded coefficients plus log1p(RMSE)
+E010_OOF_FILENAME = "oof_predictions.csv.gz"
+E010_RESULT_FILENAMES = (
+    "candidate_metrics.csv",
+    "bank_family_metrics.csv",
+    "oracle_targets.csv",
+    "screen_metrics.csv",
+    "screen_well_metrics.csv",
+    "outer_cell_metrics.csv",
+    "map_metrics.csv",
+    "stress_metrics.csv",
+    "special_slice_metrics.csv",
+    "selector_predictions.csv",
+    "selected_feature_frequency.csv",
+    "membership_audit.csv",
+    "selected_well_metrics.csv",
+    "control_metrics.csv",
+    "summary.json",
+)
 PATH_PREFIXES = ("e004_", "e006_", "e007_", "selfcorr_", "backtest_")
 
 
@@ -902,6 +920,117 @@ def _format(value: float) -> str:
     return f"{float(value):.8f}"
 
 
+def _artifact_relative_path(path: Path, artifact_dir: Path) -> str:
+    resolved_path = path.resolve()
+    resolved_artifact_dir = artifact_dir.resolve()
+    try:
+        relative = resolved_path.relative_to(resolved_artifact_dir)
+    except ValueError as exc:
+        raise DataValidationError(
+            f"E010 artifact {resolved_path} is outside artifact_dir {resolved_artifact_dir}"
+        ) from exc
+    if not relative.parts or any(part in {"", ".", ".."} for part in relative.parts):
+        raise DataValidationError(f"E010 artifact path is unsafe: {relative}")
+    return relative.as_posix()
+
+
+def finalize_e010_outputs(
+    *,
+    root: Path,
+    output_dir: Path,
+    artifact_dir: Path,
+    config: Mapping[str, Any],
+    code_sha: str,
+) -> dict[str, Any]:
+    """Validate completed E010 outputs and write the final artifact manifest.
+
+    This function is intentionally idempotent so a Kaggle run that completed
+    scoring but failed during final packaging can be recovered without fitting
+    or scoring the experiment again.
+    """
+    validate_e010_config(config)
+    root = root.resolve()
+    output_dir = output_dir.resolve()
+    artifact_dir = artifact_dir.resolve()
+    summary_path = output_dir / "summary.json"
+    missing = [name for name in E010_RESULT_FILENAMES if not (output_dir / name).is_file()]
+    if missing:
+        raise DataValidationError(f"E010 completed output set is missing files: {missing}")
+    if any((output_dir / name).stat().st_size <= 0 for name in E010_RESULT_FILENAMES):
+        raise DataValidationError("E010 completed output set contains an empty file")
+    try:
+        summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise DataValidationError("E010 summary.json is unreadable") from exc
+    if summary.get("experiment_id") != "E010" or int(summary.get("schema_version", 0)) != 1:
+        raise DataValidationError("E010 summary identity differs")
+    if str(summary.get("code_sha")) != str(code_sha):
+        raise DataValidationError("E010 summary code SHA differs")
+    if int(summary.get("candidate_count", -1)) != int(candidate_count(config)[0]):
+        raise DataValidationError("E010 summary candidate count differs")
+    controls = summary.get("controls")
+    if not isinstance(controls, dict):
+        raise DataValidationError("E010 summary controls are missing")
+    data_control = controls.get("data_integrity") or {}
+    if (
+        not bool(data_control.get("pass"))
+        or int(data_control.get("wells", -1)) != int(config["expected_wells"])
+        or str(data_control.get("data_signature")) != str(config["data_signature"])
+    ):
+        raise DataValidationError("E010 completed data identity control differs")
+    parent_control = controls.get("parent_hashes") or {}
+    if not bool(parent_control.get("pass")):
+        raise DataValidationError("E010 completed parent hash control failed")
+    oof_control = controls.get("oof_identity") or {}
+    if not bool(oof_control.get("pass")) or int(oof_control.get("rows", -1)) <= 0:
+        raise DataValidationError("E010 completed OOF identity control failed")
+
+    oof_path = artifact_dir / E010_OOF_FILENAME
+    if not oof_path.is_file() or oof_path.stat().st_size <= 0:
+        raise DataValidationError(f"E010 completed OOF artifact is missing: {oof_path}")
+    with oof_path.open("rb") as handle:
+        if handle.read(2) != b"\x1f\x8b":
+            raise DataValidationError("E010 completed OOF artifact is not gzip")
+
+    parent_hash_control = _verify_parent_hashes(root, config)
+    if not parent_hash_control["pass"]:
+        raise DataValidationError("E010 parent hash audit failed during finalization")
+    config_path = root / "experiments/E010/config.json"
+    if not config_path.is_file():
+        raise DataValidationError("E010 config is missing during finalization")
+    fold_files = []
+    for relative in config["fold_files"]:
+        path = root / str(relative)
+        if not path.is_file():
+            raise DataValidationError(f"E010 fold file is missing during finalization: {relative}")
+        fold_files.append({"path": str(relative), "sha256": _sha256(path), "bytes": path.stat().st_size})
+
+    result_files = [output_dir / name for name in E010_RESULT_FILENAMES]
+    manifest = {
+        "schema_version": 1,
+        "experiment_id": "E010",
+        "code_sha": code_sha,
+        "config": {"path": "experiments/E010/config.json", "sha256": _sha256(config_path), "bytes": config_path.stat().st_size},
+        "parent_artifacts": [{"path": str(item["path"]), "sha256": _sha256(root / str(item["path"]))} for item in config["parents"].values()],
+        "fold_files": fold_files,
+        "files": [{"path": path.name, "sha256": _sha256(path), "bytes": path.stat().st_size} for path in result_files],
+        "external_artifacts": [{
+            "path": _artifact_relative_path(oof_path, artifact_dir),
+            "base": "artifact_dir",
+            "kind": "oof_predictions_gzip",
+            "sha256": _sha256(oof_path),
+            "bytes": oof_path.stat().st_size,
+            "tracked": False,
+        }],
+    }
+    manifest_path = output_dir / "artifact_manifest.json"
+    _write_json(manifest_path, manifest)
+    written = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if written != manifest:
+        raise DataValidationError("E010 artifact manifest round-trip differs")
+    return summary
+
+
 def run_e010(
     *,
     root: Path,
@@ -1206,16 +1335,13 @@ def run_e010(
         },
     }
     _write_json(output_dir / "summary.json", summary)
-    result_files = sorted(path for path in output_dir.iterdir() if path.is_file() and path.name != "artifact_manifest.json")
-    manifest = {
-        "schema_version": 1,
-        "experiment_id": "E010",
-        "code_sha": code_sha,
-        "config": {"path": "experiments/E010/config.json", "sha256": _sha256(root / "experiments/E010/config.json"), "bytes": (root / "experiments/E010/config.json").stat().st_size},
-        "parent_artifacts": [{"path": str(item["path"]), "sha256": _sha256(root / str(item["path"]))} for item in config["parents"].values()],
-        "fold_files": [{"path": path, "sha256": _sha256(root / path), "bytes": (root / path).stat().st_size} for path in config["fold_files"]],
-        "files": [{"path": path.name, "sha256": _sha256(path), "bytes": path.stat().st_size} for path in result_files],
-        "external_artifacts": [{"path": str(oof_path.relative_to(root)), "kind": "oof_predictions_gzip", "sha256": _sha256(oof_path), "bytes": oof_path.stat().st_size, "tracked": False}],
-    }
-    _write_json(output_dir / "artifact_manifest.json", manifest)
+    finalized = finalize_e010_outputs(
+        root=root,
+        output_dir=output_dir,
+        artifact_dir=artifact_dir,
+        config=config,
+        code_sha=code_sha,
+    )
+    if finalized != summary:
+        raise DataValidationError("E010 finalized summary differs from in-memory summary")
     return summary
