@@ -1,14 +1,14 @@
 # ROGII Project Memory
 
 Last updated: 2026-07-20
-Public intelligence last checked: 2026-07-20 00:30 Asia/Kolkata
+Public intelligence last checked: 2026-07-20 20:33 Asia/Kolkata
 
 ## Mission state
 
 - Deadline: 2026-08-05 23:59 UTC / 2026-08-06 05:29 Asia/Kolkata.
 - Current leader snapshot: 4.859. Best Kaggle-MCP-verified account submission: 7.119 (ref 54754431, 2026-07-16). User-reported best: 6.888, reference unverified.
 - E001 is frozen; E002, E005, E007, E008, and E009 are rejected; E003 is promoted only as nondeployable surface-assisted understanding; E004 is the exact fallback; E006 is the promoted deployment-ready primary.
-- E010 is completed and rejected. Its 130,252-path legal bank oracle reaches 4.7510768278 RMSE, but the best legal selector reaches 14.7802528528, fails spatial group 1/high-GR-missingness transfer, and uses 17,528,436 KB RSS versus the frozen 3 GB cap. H014/T019 is next; H012/T016 remain queued comparators.
+- E010 is completed and rejected. Its 130,252-path legal bank oracle reaches 4.7510768278 RMSE, but the best legal selector reaches 14.7802528528, fails spatial group 1/high-GR-missingness transfer, and uses 17,528,436 KB RSS versus the frozen 3 GB cap. E011/H014/T019 is active with committed source at `c326a812`; H012/T016 remain queued comparators.
 
 ## Verified project state
 
@@ -19,6 +19,8 @@ Public intelligence last checked: 2026-07-20 00:30 Asia/Kolkata
 - E006 nested PF-E004 fusion scores 14.9331407872, wins 5/5 maps and 25/25 outer cells, improves every registered spatial/typewell group, and has byte-identical local/private-Kaggle output at `e412864a...d81008`.
 - E007–E009 produced aggregate gains but failed frozen repeated-cell, shift, tail, or negative-control gates. E009's legal 64-feature diagnostic ridge reaches 14.6352733150 but fails one spatial and three typewell groups and is not promotion evidence.
 - E010 proves candidate coverage is no longer the primary blocker: bank oracle 4.7511 versus legal selector 14.7803. A chosen-family oracle counterfactual reaches 5.7075; family choice explains 9.54% of the gap and coefficient estimation/aggregation 90.46%. HMM added zero unique screen wins; DTW derivative added rare coverage but scores 30.434 standalone.
+- E011 now has a hash-verified 2.57 MB compact sufficient-statistics loader, batched weighted Ridge, and immutable cached peak-basis checks. Focused tests pass 14/14 and the full repository passes 149/149. A score-blind official-data projection gives a conservative 9.2293-minute full-run estimate at 205.76 MB RSS under the two-thread cap; it calculated no held-out RMSE or candidate ranking.
+- The first official E011 local call was terminated by the workspace runner timeout and left no result files. No E011 learned score, candidate ranking, gate result, deployment change, or submission exists.
 
 ## New durable understanding from exact public-source audits
 
@@ -40,14 +42,14 @@ Public intelligence last checked: 2026-07-20 00:30 Asia/Kolkata
 
 ## Exact next action
 
-Pre-register E011/H014 as a memory-safe nonlinear coefficient-learning experiment. Freeze multiple branches before scoring: orthogonal correction coefficients, three control points, family-specific coefficient experts, and a disagreement-based E006 fallback. Use the existing E010 bank/oracle outputs as training targets only inside folds, require a registered learnability screen before full validation, and retain the same repeated/spatial/typewell/slice/control gates.
+Execute the frozen E011 validation from committed source `c326a812` in a persistent two-thread runtime that can exceed the workspace runner call timeout, then independently verify every expected output, hash, pooled/map/cell/slice metric, fallback identity, runtime, memory, and promotion gate before updating deployment state.
 
 ## Open risks
 
 - Public CV/LB ordering is noisy and hidden test contains roughly 200 wells; current public claims are not verified evidence.
 - HMM/DTW/PF can over-count autocorrelated GR, commit to repeated motifs, or smooth across faults. Posterior uncertainty must be calibrated OOF and a jump candidate must remain available.
 - E010 confirms that a below-5 bank does not imply a useful legal selector. The immediate risk is coefficient learnability under spatial shift; family classification alone cannot close the 9.07 RMSE coefficient/aggregation gap.
-- The current public topic list reports 134 topics while the frozen archive contains 132. Canonical counts remain unchanged until a complete delta recrawl verifies additions, removals, and message counts.
+- The current public topic list reports 135 topics while the frozen archive contains 132. Canonical counts remain unchanged until a complete delta recrawl verifies additions, removals, and message counts.
 - Every future finalist needs its own clean Kaggle runtime, exact-ID, artifact-provenance, and output-parity verification.
 
 ## Memory update rule

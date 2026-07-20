@@ -60,6 +60,13 @@ Reusable ideas are a heterogeneous legal path bank, robust projection in `U`, co
 - Neighbor-copying, azimuth splitting, kriging failure, and sub-5 architecture claims are mutually incomplete and remain hypotheses. No route or split is authorized from them.
 - The DateRun notebook scan surfaced several high-vote artifact/reproduction notebooks and no source-visible clean replacement for a nonlinear whole-well candidate study.
 
+## Late-session delta — 20:33 Asia/Kolkata
+
+- New/Recent topic listings now report 135 topics. Canonical archive counts remain 132 topics and 981 messages until a complete recrawl verifies the delta.
+- Topic `727708` reports a visible Save Version success followed by hidden reruns with `COMPLETE` and `totalBytes=0` for a roughly 7.39 GB, 195-feature LightGBM/CatBoost/Ridge workflow. Possible OOM and hidden-well edge cases are self-reported operational hypotheses, not verified performance evidence. This reinforces compact, streaming, fail-closed execution.
+- A new comment on topic `722236` self-reports roughly 9.71 four-seed CNN CV and argues that representation, validation, and training matter more than depth. No source or independently downloadable result establishes that score, so it remains a lead and does not alter E011's frozen design or gates.
+- The current `prvsiyan/rogii-goal-lowest-public-frontier-lab-visuals` remains version 22. Its unknown-license inputs, unrestricted parallelism, probe/canary logic, score-derived bias constants, and large materialized artifacts keep it quarantined as an implementation source.
+
 ## Research consequence
 
 The next experiment must distinguish:
