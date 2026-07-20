@@ -24,6 +24,14 @@ except ModuleNotFoundError as exc:  # Optional scientific runtime for E010 only.
     def run_e010(*args, **kwargs):
         raise RuntimeError("E010 requires NumPy and scikit-learn in the active Python environment") from _E010_IMPORT_ERROR
 
+try:
+    from .coefficient_learning import run_e011
+except ModuleNotFoundError as exc:  # Optional scientific runtime for E011 only.
+    _E011_IMPORT_ERROR = exc
+
+    def run_e011(*args, **kwargs):
+        raise RuntimeError("E011 requires NumPy and scikit-learn in the active Python environment") from _E011_IMPORT_ERROR
+
 __all__ = [
     "DEFAULT_FOLD_SEEDS",
     "DataValidationError",
@@ -39,5 +47,6 @@ __all__ = [
     "run_e008",
     "run_e009",
     "run_e010",
+    "run_e011",
     "scan_profiles",
 ]
