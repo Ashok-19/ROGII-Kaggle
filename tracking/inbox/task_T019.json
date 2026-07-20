@@ -4,7 +4,7 @@
   "payload": {
     "task_id": "T019",
     "title": "Test memory-safe nonlinear coefficient learning",
-    "status": "next",
+    "status": "active",
     "priority": 1,
     "phase": "nonlinear_coefficient_modeling",
     "depends_on": "T017",

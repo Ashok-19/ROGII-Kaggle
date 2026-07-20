@@ -1,0 +1,48 @@
+{
+  "experiment_id": "E011",
+  "title": "Memory-safe nonlinear coefficient and control-point learning",
+  "hypothesis_id": "H014",
+  "task_id": "T019",
+  "decision_id": "D014",
+  "status": "preregistered",
+  "track": "nonlinear_coefficient_learning",
+  "priority": 1,
+  "owner": "NNMax",
+  "parent_id": "E010",
+  "created_at": "2026-07-20T12:10:00Z",
+  "updated_at": "2026-07-20T12:10:00Z",
+  "design": {
+    "anchor": "E006 nested_conservative_grid",
+    "target": "3\u20137 coefficients of true suffix correction around E006",
+    "legal_features": "frozen E008 legal feature table",
+    "contexts": "25 repeated + 5 spatial + 5 typewell",
+    "models": [
+      "multi-output ridge equal/row weighted",
+      "ExtraTrees",
+      "fixed blend",
+      "training-only confidence fallback"
+    ],
+    "representations": [
+      "shape3",
+      "spline3",
+      "spline4",
+      "spline5",
+      "spline7"
+    ],
+    "negative_capacity_controls": [
+      "linear1",
+      "quadratic2"
+    ],
+    "maximum_threads": 2,
+    "maximum_rss_mb": 2048,
+    "runtime_budget_minutes": 30,
+    "config_path": "experiments/E011/config.json",
+    "pre_registration_path": "experiments/E011/PRE_REGISTRATION.md",
+    "representation_diagnostic": "experiments/E011/REPRESENTATION_DIAGNOSTIC.json",
+    "submission_authorized": false
+  },
+  "runs": [],
+  "result": null,
+  "conclusion": "Pre-registered from verified E010 outputs and a frozen representation-capacity audit. No learned E011 hidden-label score has been computed.",
+  "hypothesis": "Split-local prediction of 3\u20137 nonlinear correction coefficients or spline control points can recover materially more of E010 candidate coverage than flat candidate ranking, while remaining memory-safe and reverting exactly to E006 when confidence is weak."
+}

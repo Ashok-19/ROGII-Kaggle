@@ -1,0 +1,138 @@
+{
+  "bounds_evidence": {
+    "clip_160_changed_oracle_scores": false,
+    "maximum_fitted_absolute_correction_ft": 110.41232003187176,
+    "p95_absolute_correction_ft_range": [
+      43.34527392709021,
+      47.06391537706311
+    ]
+  },
+  "computed_at": "2026-07-20T12:10:00Z",
+  "decision": {
+    "exclude_from_learned_promotion": [
+      "linear1",
+      "quadratic2"
+    ],
+    "include_as_high_capacity_stress": [
+      "spline7"
+    ],
+    "include_as_learned_controls": [
+      "shape3",
+      "spline3"
+    ],
+    "include_as_primary": [
+      "spline4",
+      "spline5"
+    ],
+    "reason": "One- and two-dimensional paths cannot preserve sub-5 coverage. Three-dimensional paths barely do. Four to seven spline controls provide strong capacity while remaining a compact per-well target."
+  },
+  "e006_rmse": 14.933140787237669,
+  "e010_bank_oracle_rmse": 4.7510768278013575,
+  "experiment_id": "E011",
+  "parent_artifacts": {
+    "e006_oof": {
+      "bytes": 200145240,
+      "path": "artifacts/E006/oof_predictions.csv.gz",
+      "sha256": "9b9f26cd8ad82e32dbc0f9ba1466cb38424cd3bbf7001c1079a9867fb5a324b4"
+    },
+    "e008_legal_features": {
+      "bytes": 1380027,
+      "path": "experiments/E008/results/legal_features.csv",
+      "sha256": "c4b332ccb62559609aee501eb6cd66237cf6a98fc370caa542d6be99b43f8853"
+    },
+    "e010_oof": {
+      "bytes": 228267787,
+      "path": "artifacts/E010/oof_predictions.csv.gz",
+      "sha256": "80bae7649c783b1fa1536546e0485f1357cd59abf4a641ad26d01f90490d8f46"
+    },
+    "e010_oracle_targets": {
+      "bytes": 1017110,
+      "path": "experiments/E010/results/oracle_targets.csv",
+      "sha256": "36f891448daa467e22fe710d5a20e68c78c08c385d77d8ca39d4d53f88c3dcea"
+    },
+    "e010_selector_predictions": {
+      "bytes": 6824881,
+      "path": "experiments/E010/results/selector_predictions.csv",
+      "sha256": "38ece62b8b500c6cfbf6c72a8981b69184648d86c330a2b4392c9368d3f5c14e"
+    }
+  },
+  "representations": {
+    "linear1": {
+      "basis": "s",
+      "dimensions": 1,
+      "knots": null,
+      "oracle_rmse": 8.13599414978405,
+      "role": "negative_capacity_control"
+    },
+    "quadratic2": {
+      "basis": "s,s^2",
+      "dimensions": 2,
+      "knots": null,
+      "oracle_rmse": 5.94166641229861,
+      "role": "negative_capacity_control"
+    },
+    "shape3": {
+      "basis": "s,4s(1-s),16s(1-s)(s-0.5)",
+      "dimensions": 3,
+      "knots": null,
+      "oracle_rmse": 4.82337709286615,
+      "role": "compact_comparator"
+    },
+    "spline3": {
+      "basis": "piecewise-linear knot values with correction fixed to zero at suffix start",
+      "dimensions": 3,
+      "knots": [
+        0.3333333333333333,
+        0.6666666666666666,
+        1.0
+      ],
+      "oracle_rmse": 4.82078312787999,
+      "role": "compact_control"
+    },
+    "spline4": {
+      "basis": "piecewise-linear knot values with correction fixed to zero at suffix start",
+      "dimensions": 4,
+      "knots": [
+        0.25,
+        0.5,
+        0.75,
+        1.0
+      ],
+      "oracle_rmse": 4.081022760162826,
+      "role": "primary"
+    },
+    "spline5": {
+      "basis": "piecewise-linear knot values with correction fixed to zero at suffix start",
+      "dimensions": 5,
+      "knots": [
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1.0
+      ],
+      "oracle_rmse": 3.439123255296078,
+      "role": "primary"
+    },
+    "spline7": {
+      "basis": "piecewise-linear knot values with correction fixed to zero at suffix start",
+      "dimensions": 7,
+      "knots": [
+        0.14285714285714285,
+        0.2857142857142857,
+        0.42857142857142855,
+        0.5714285714285714,
+        0.7142857142857143,
+        0.8571428571428571,
+        1.0
+      ],
+      "oracle_rmse": 2.625141070954217,
+      "role": "high_capacity_stress"
+    }
+  },
+  "role": "preimplementation_capacity_diagnostic",
+  "rows": 3783989,
+  "schema_version": 1,
+  "source": "persisted E010 OOF target and E006 path; hidden labels used only to measure representation oracle capacity before any E011 learned prediction",
+  "wells": 773
+}
