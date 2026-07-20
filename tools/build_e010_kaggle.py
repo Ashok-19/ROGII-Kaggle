@@ -164,6 +164,7 @@ def notebook_payload(*, source_commit: str, config_sha: str, bundle_sha: str, bu
     constants_source = "CONTRACT = " + json.dumps(constants, indent=2, sort_keys=True) + "\n"
     preflight = r'''import datetime as _dt
 import hashlib
+import importlib
 import json
 import os
 import platform
@@ -237,6 +238,13 @@ for entry in manifest["files"]:
     if not path.is_file() or path.stat().st_size != int(entry["bytes"]) or _sha256(path) != entry["sha256"]:
         raise RuntimeError(f"E010 extracted member mismatch: {entry['path']}")
 
+# Kaggle interactive sessions retain imported modules across notebook re-imports.
+# Remove every prior ROGII module so this run can only use the hash-verified
+# package extracted above, never a stale module from an earlier failed notebook.
+for _module_name in tuple(sys.modules):
+    if _module_name == "rogii_validation" or _module_name.startswith("rogii_validation."):
+        del sys.modules[_module_name]
+importlib.invalidate_caches()
 sys.path.insert(0, str(RUNTIME_ROOT / "src"))
 from rogii_validation.harness import scan_profiles
 

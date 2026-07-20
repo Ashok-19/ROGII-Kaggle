@@ -78,7 +78,10 @@ class E010KaggleBundleTests(unittest.TestCase):
         ):
             self.assertIn(name, source)
         self.assertIn("threadpool_limits", source)
+        self.assertIn('del sys.modules[_module_name]', source)
+        self.assertIn('importlib.invalidate_caches()', source)
         self.assertIn("scan_profiles", source)
+        self.assertLess(source.index('del sys.modules[_module_name]'), source.index('from rogii_validation.harness import scan_profiles'))
         self.assertIn("/kaggle/input/competitions/rogii-wellbore-geology-prediction", source)
         self.assertIn("actual_profile", source)
         self.assertNotIn("matching_competition_roots", source)
