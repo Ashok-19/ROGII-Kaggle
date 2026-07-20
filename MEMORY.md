@@ -8,7 +8,7 @@ Public intelligence last checked: 2026-07-20 00:30 Asia/Kolkata
 - Deadline: 2026-08-05 23:59 UTC / 2026-08-06 05:29 Asia/Kolkata.
 - Current leader snapshot: 4.859. Best Kaggle-MCP-verified account submission: 7.119 (ref 54754431, 2026-07-16). User-reported best: 6.888, reference unverified.
 - E001 is frozen; E002, E005, E007, E008, and E009 are rejected; E003 is promoted only as nondeployable surface-assisted understanding; E004 is the exact fallback; E006 is the promoted deployment-ready primary.
-- E010 has not started and has no manifest or scored run. D013 supersedes the unstarted wide-datum priority with a nonlinear candidate-coverage and selector-regret study. H012/T016 remain queued as comparators.
+- E010 is implemented and `smoke_passed` but has no scored run. Kaggle input v1 failed during preflight before hidden-label scoring because the profile signature depended on the physical mount root. Commit `49ca3995269638026561c5593ad2628f8f08a4e9` fixes this without changing the frozen 773-well signature. Corrected private dataset/notebook v2 is ready. H012/T016 remain queued as comparators.
 
 ## Verified project state
 
@@ -39,12 +39,7 @@ Public intelligence last checked: 2026-07-20 00:30 Asia/Kolkata
 
 ## Exact next action
 
-Pre-register **E010/H013 — nonlinear candidate coverage and visible-prefix selector regret** before any new hidden-label scoring.
-
-1. Build identical-ID legal whole-well candidates: E006, the frozen wide-ridge comparator, exact HMM posterior mean/std, likelihood-PF scales, beam/trellis, multiscale and stochastic DTW, constrained smooth `U` curves, and an explicit jump/fault candidate.
-2. Measure candidate-bank oracle RMSE and catastrophe coverage under all frozen maps. If the bank oracle is not below 5, improve generation before learning a selector.
-3. Using only shortened visible-prefix pseudo-holdouts and target-independent uncertainty, estimate candidate regret/probabilities and compare the legal selected path with the bank oracle.
-4. Preserve E006 exact fallback. Require frozen controls, at least 4/5 maps and 17/25 cells for any promoted action, positive every spatial/typewell group, tail limits, runtime/memory, independent reproduction, and final-placement/parity gates.
+Run the corrected private Kaggle E010 notebook using `ashok205/rogii-e010-selector-inputs` version 2 and the official competition input. Require the v2 preflight to identify exactly one 773-well competition root, then complete the full run and persist `e010-run-receipt.json`, `e010-output-manifest.json`, and `rogii-e010-results-v2.zip`. Download and independently verify every output before recording any score or verdict.
 
 ## Open risks
 

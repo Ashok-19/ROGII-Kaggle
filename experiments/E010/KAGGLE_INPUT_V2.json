@@ -2,38 +2,37 @@
   "schema_version": 1,
   "experiment_id": "E010",
   "record_type": "private_kaggle_validation_input",
-  "status": "failed_preflight",
-  "prepared_at": "2026-07-19T20:31:05Z",
-  "failed_at": "2026-07-20T08:28:00Z",
-  "failure": {
-    "stage": "competition_data_discovery",
-    "error_type": "RuntimeError",
-    "message": "No competition root matched the frozen data signature even though both inputs were attached.",
-    "root_cause": "scan_profiles encoded the physical mount-relative path in each profile. Local paths were data/train/<file>, while Kaggle paths were rogii-wellbore-geology-prediction/train/<file>.",
-    "hidden_label_scoring_started": false,
-    "outputs_accepted": false,
-    "superseded_by": "experiments/E010/KAGGLE_INPUT_V2.json"
+  "status": "ready",
+  "prepared_at": "2026-07-20T08:41:32Z",
+  "supersedes": "experiments/E010/KAGGLE_INPUT_V1.json",
+  "source_commit": "49ca3995269638026561c5593ad2628f8f08a4e9",
+  "source_correction": {
+    "description": "Profile paths are canonical logical data/train/<filename> values, independent of physical local or Kaggle mount root.",
+    "regression_test": "tests/test_e001_validation.py::E001ValidationTests::test_profile_signature_is_independent_of_mount_root",
+    "official_wells": 773,
+    "official_data_signature": "6ebe65b403f80fefd97dcd7bbfce7314252e779a1837c97364cf55761590fe77",
+    "signature_unchanged": true
   },
-  "source_commit": "fa21e2951a700aeeff355e1cf439c55abc3ab408",
   "config": {
     "path": "experiments/E010/config.json",
     "sha256": "82fe4f8b453a17a4b4f66a29733e0909dd0881f9682984e52bd004fce07686cd"
   },
   "dataset": {
     "ref": "ashok205/rogii-e010-selector-inputs",
-    "version": 1,
+    "version": 2,
     "private": true,
     "status": "ready",
+    "verified_at": "2026-07-20T08:41:32Z",
     "files": [
       {
-        "name": "e010-input-receipt.json",
+        "name": "e010-input-receipt-v2.json",
         "bytes": 795,
-        "sha256": "f0832c607f12a5fd3d387a479d851d5914f3eb9c0d80f10d5c54e1f59ddcc041"
+        "sha256": "6460b3a5e04c8b4a8c4357a3dfdda9b0c0aecb6ff1c258002fe9ae6fe103dced"
       },
       {
-        "name": "rogii-e010-inputs-v1.zip.bin",
-        "bytes": 549143283,
-        "sha256": "02f99c652f8e6fe123701530a165adc1ad3dffee05d7eaba4eea0c1ff337eb03"
+        "name": "rogii-e010-inputs-v2.zip.bin",
+        "bytes": 549143874,
+        "sha256": "e26884fcfd49b41514f78b32cb7e46d87a87fb776791c41022ac912039864cad"
       }
     ]
   },
@@ -47,8 +46,8 @@
   },
   "notebook": {
     "path": "notebooks/training_and_submission/e010_candidate_selector_kaggle.ipynb",
-    "bytes": 19901,
-    "sha256": "8ddd4d5914d2e21430e0fc993a45a781a4f58c92abcf51b10212d3bc60179aca",
+    "bytes": 19904,
+    "sha256": "f8e1d3edb308cf0265be291668c7c42d4366544535456509f86da6d873875faf",
     "private": true,
     "internet": false,
     "accelerator": "CPU",
@@ -57,7 +56,7 @@
   "expected_outputs": [
     "e010-run-receipt.json",
     "e010-output-manifest.json",
-    "rogii-e010-results-v1.zip"
+    "rogii-e010-results-v2.zip"
   ],
   "acceptance": "Require exact notebook version COMPLETE, all three filenames listed, exact output download, hash/schema/source verification, and independent review before changing E010's verdict.",
   "submission_authorized": false,

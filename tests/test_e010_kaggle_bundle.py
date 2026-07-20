@@ -16,6 +16,13 @@ SPEC.loader.exec_module(MODULE)
 
 
 class E010KaggleBundleTests(unittest.TestCase):
+    def test_current_v2_contract_constants(self):
+        self.assertEqual(MODULE.DEFAULT_SOURCE_COMMIT, "49ca3995269638026561c5593ad2628f8f08a4e9")
+        self.assertEqual(MODULE.DEFAULT_DATASET_VERSION, 2)
+        self.assertEqual(MODULE.BUNDLE_FILENAME, "rogii-e010-inputs-v2.zip.bin")
+        self.assertEqual(MODULE.INPUT_RECEIPT_FILENAME, "e010-input-receipt-v2.json")
+        self.assertEqual(MODULE.RESULT_ARCHIVE_FILENAME, "rogii-e010-results-v2.zip")
+
     def test_safe_member_contract(self):
         self.assertEqual(MODULE.safe_member_name("src/rogii_validation/harness.py"), "src/rogii_validation/harness.py")
         for bad in ("", "/absolute", "../escape", "a/../../b", "a/./b"):

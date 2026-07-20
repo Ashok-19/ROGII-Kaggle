@@ -20,13 +20,13 @@ from pathlib import Path, PurePosixPath
 from typing import Any, Iterable, Mapping, Sequence
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SOURCE_COMMIT = "fa21e2951a700aeeff355e1cf439c55abc3ab408"
+DEFAULT_SOURCE_COMMIT = "49ca3995269638026561c5593ad2628f8f08a4e9"
 DEFAULT_DATASET_REF = "ashok205/rogii-e010-selector-inputs"
-DEFAULT_DATASET_VERSION = 1
-BUNDLE_FILENAME = "rogii-e010-inputs-v1.zip.bin"
-INPUT_RECEIPT_FILENAME = "e010-input-receipt.json"
+DEFAULT_DATASET_VERSION = 2
+BUNDLE_FILENAME = "rogii-e010-inputs-v2.zip.bin"
+INPUT_RECEIPT_FILENAME = "e010-input-receipt-v2.json"
 NOTEBOOK_PATH = Path("notebooks/training_and_submission/e010_candidate_selector_kaggle.ipynb")
-RESULT_ARCHIVE_FILENAME = "rogii-e010-results-v1.zip"
+RESULT_ARCHIVE_FILENAME = "rogii-e010-results-v2.zip"
 OUTPUT_MANIFEST_FILENAME = "e010-output-manifest.json"
 RUN_RECEIPT_FILENAME = "e010-run-receipt.json"
 THREAD_LIMIT = 2
@@ -569,7 +569,7 @@ def build(*, root: Path, staging_dir: Path, notebook_path: Path, source_commit: 
 def parser() -> argparse.ArgumentParser:
     command = argparse.ArgumentParser(description=__doc__)
     command.add_argument("--root", type=Path, default=ROOT)
-    command.add_argument("--staging-dir", type=Path, default=Path("scratch/agents/e010-kaggle/input-v1"))
+    command.add_argument("--staging-dir", type=Path, default=Path("scratch/agents/e010-kaggle-fix/T017/input-v2"))
     command.add_argument("--notebook", type=Path, default=NOTEBOOK_PATH)
     command.add_argument("--source-commit", default=DEFAULT_SOURCE_COMMIT)
     command.add_argument("--dataset-ref", default=DEFAULT_DATASET_REF)

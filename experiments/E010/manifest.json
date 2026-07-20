@@ -8,7 +8,7 @@
   "owner": "NNMax",
   "parent_id": "E006",
   "created_at": "2026-07-19T19:25:22Z",
-  "updated_at": "2026-07-19T20:31:05Z",
+  "updated_at": "2026-07-20T08:41:32Z",
   "design": {
     "task_id": "T017",
     "hypothesis_id": "H013",
@@ -40,11 +40,12 @@
     "pre_registration_path": "experiments/E010/PRE_REGISTRATION.md",
     "kaggle_runbook": "KAGGLE_NOTEBOOK_RUNBOOK.md",
     "kaggle_notebook": "notebooks/training_and_submission/e010_candidate_selector_kaggle.ipynb",
-    "kaggle_input_record": "experiments/E010/KAGGLE_INPUT_V1.json",
+    "kaggle_input_record": "experiments/E010/KAGGLE_INPUT_V2.json",
+    "kaggle_input_history": ["experiments/E010/KAGGLE_INPUT_V1.json", "experiments/E010/KAGGLE_INPUT_V2.json"],
     "local_maximum_threads": 2,
     "full_validation_platform": "private Kaggle CPU notebook, internet disabled"
   },
   "runs": [],
   "result": null,
-  "conclusion": "Implementation, 28 E010 scientific tests, full repository regression tests, deterministic bundle checks, and private Kaggle input/notebook preparation passed. Full hidden-label validation has not run; E010 remains pending the canonical private Kaggle CPU execution and independent output review."
+  "conclusion": "Implementation and local validation passed. Kaggle input v1 failed before hidden-label scoring because the data signature encoded the physical mount path; no v1 output was accepted. Source commit 49ca399 makes profile paths mount-independent without changing the frozen 773-well signature. Corrected private dataset/notebook v2 is ready; full hidden-label validation remains pending execution and independent output review."
 }
