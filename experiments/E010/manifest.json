@@ -8,7 +8,7 @@
   "owner": "NNMax",
   "parent_id": "E006",
   "created_at": "2026-07-19T19:25:22Z",
-  "updated_at": "2026-07-20T08:41:32Z",
+  "updated_at": "2026-07-20T10:38:22Z",
   "design": {
     "task_id": "T017",
     "hypothesis_id": "H013",
@@ -47,5 +47,5 @@
   },
   "runs": [],
   "result": null,
-  "conclusion": "Implementation and local validation passed. Kaggle input v1 failed before hidden-label scoring because the data signature encoded the physical mount path; no v1 output was accepted. Source commit 49ca399 makes profile paths mount-independent without changing the frozen 773-well signature. Corrected private dataset/notebook v2 is ready; full hidden-label validation remains pending execution and independent output review."
+  "conclusion": "Implementation and local validation passed. Kaggle input v1 failed before hidden-label scoring because the data signature encoded the physical mount path. A later v2 execution completed the expensive scoring phase but failed during final manifest construction because artifact_dir was outside the extracted runtime root; no output is accepted until packaging and independent review complete. Source fix 437d83a03df429657850546cc2d572b62df0681b makes finalization location-independent and idempotently recoverable. The updated notebook embeds that exact source as a hash-verified overlay, preserves dataset version 2, and passed a real-bundle/all-773-well notebook simulation covering preflight, fresh-run glue, recovery, packaging, archive hashes, and deterministic reproduction."
 }

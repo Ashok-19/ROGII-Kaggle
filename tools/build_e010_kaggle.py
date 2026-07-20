@@ -10,17 +10,21 @@ fail closed, and emits a result ZIP plus machine-readable receipts.
 from __future__ import annotations
 
 import argparse
+import base64
 import hashlib
 import io
 import json
 import shutil
 import subprocess
 import zipfile
+import zlib
 from pathlib import Path, PurePosixPath
 from typing import Any, Iterable, Mapping, Sequence
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SOURCE_COMMIT = "49ca3995269638026561c5593ad2628f8f08a4e9"
+DEFAULT_RUNTIME_OVERLAY_COMMIT = "437d83a03df429657850546cc2d572b62df0681b"
+RUNTIME_OVERLAY_PATH = "src/rogii_validation/nonlinear_selector.py"
 DEFAULT_DATASET_REF = "ashok205/rogii-e010-selector-inputs"
 DEFAULT_DATASET_VERSION = 2
 BUNDLE_FILENAME = "rogii-e010-inputs-v2.zip.bin"
@@ -143,7 +147,10 @@ def write_deterministic_bundle(
 
 def notebook_payload(*, source_commit: str, config_sha: str, bundle_sha: str, bundle_bytes: int,
                      receipt_sha: str, dataset_ref: str, dataset_version: int,
-                     data_signature: str, expected_wells: int) -> dict[str, Any]:
+                     data_signature: str, expected_wells: int,
+                     runtime_overlay_commit: str, runtime_overlay_original_sha: str,
+                     runtime_overlay_sha: str, runtime_overlay_bytes: int,
+                     runtime_overlay_zlib_b64: str) -> dict[str, Any]:
     constants = {
         "SOURCE_COMMIT": source_commit,
         "CONFIG_SHA256": config_sha,
@@ -160,9 +167,18 @@ def notebook_payload(*, source_commit: str, config_sha: str, bundle_sha: str, bu
         "RESULT_ARCHIVE_FILENAME": RESULT_ARCHIVE_FILENAME,
         "OUTPUT_MANIFEST_FILENAME": OUTPUT_MANIFEST_FILENAME,
         "RUN_RECEIPT_FILENAME": RUN_RECEIPT_FILENAME,
+        "RUNTIME_OVERLAY_PATH": RUNTIME_OVERLAY_PATH,
+        "RUNTIME_OVERLAY_COMMIT": runtime_overlay_commit,
+        "RUNTIME_OVERLAY_ORIGINAL_SHA256": runtime_overlay_original_sha,
+        "RUNTIME_OVERLAY_SHA256": runtime_overlay_sha,
+        "RUNTIME_OVERLAY_BYTES": runtime_overlay_bytes,
     }
-    constants_source = "CONTRACT = " + json.dumps(constants, indent=2, sort_keys=True) + "\n"
-    preflight = r'''import datetime as _dt
+    constants_source = (
+        "CONTRACT = " + json.dumps(constants, indent=2, sort_keys=True) + "\n"
+        + "RUNTIME_OVERLAY_ZLIB_B64 = " + json.dumps(runtime_overlay_zlib_b64) + "\n"
+    )
+    preflight = r'''import base64
+import datetime as _dt
 import hashlib
 import importlib
 import json
@@ -171,6 +187,7 @@ import platform
 import shutil
 import sys
 import zipfile
+import zlib
 from pathlib import Path, PurePosixPath
 
 for _name in (
@@ -238,6 +255,19 @@ for entry in manifest["files"]:
     if not path.is_file() or path.stat().st_size != int(entry["bytes"]) or _sha256(path) != entry["sha256"]:
         raise RuntimeError(f"E010 extracted member mismatch: {entry['path']}")
 
+runtime_overlay_path = RUNTIME_ROOT / _safe(CONTRACT["RUNTIME_OVERLAY_PATH"])
+if _sha256(runtime_overlay_path) != CONTRACT["RUNTIME_OVERLAY_ORIGINAL_SHA256"]:
+    raise RuntimeError("E010 runtime overlay original source identity mismatch")
+try:
+    runtime_overlay_payload = zlib.decompress(base64.b64decode(RUNTIME_OVERLAY_ZLIB_B64, validate=True))
+except Exception as exc:
+    raise RuntimeError("E010 runtime overlay decode failed") from exc
+if len(runtime_overlay_payload) != int(CONTRACT["RUNTIME_OVERLAY_BYTES"]) or hashlib.sha256(runtime_overlay_payload).hexdigest() != CONTRACT["RUNTIME_OVERLAY_SHA256"]:
+    raise RuntimeError("E010 runtime overlay payload identity mismatch")
+runtime_overlay_path.write_bytes(runtime_overlay_payload)
+if runtime_overlay_path.stat().st_size != int(CONTRACT["RUNTIME_OVERLAY_BYTES"]) or _sha256(runtime_overlay_path) != CONTRACT["RUNTIME_OVERLAY_SHA256"]:
+    raise RuntimeError("E010 runtime overlay write verification failed")
+
 # Kaggle interactive sessions retain imported modules across notebook re-imports.
 # Remove every prior ROGII module so this run can only use the hash-verified
 # package extracted above, never a stale module from an earlier failed notebook.
@@ -288,6 +318,13 @@ preflight = {
     "config_sha256": CONTRACT["CONFIG_SHA256"],
     "bundle": {"path": str(bundle_path), "bytes": bundle_path.stat().st_size, "sha256": _sha256(bundle_path)},
     "input_receipt": {"path": str(input_receipt_path), "sha256": _sha256(input_receipt_path)},
+    "runtime_overlay": {
+        "path": CONTRACT["RUNTIME_OVERLAY_PATH"],
+        "commit": CONTRACT["RUNTIME_OVERLAY_COMMIT"],
+        "original_sha256": CONTRACT["RUNTIME_OVERLAY_ORIGINAL_SHA256"],
+        "sha256": CONTRACT["RUNTIME_OVERLAY_SHA256"],
+        "bytes": CONTRACT["RUNTIME_OVERLAY_BYTES"],
+    },
     "dataset": {"ref": CONTRACT["DATASET_REF"], "version": CONTRACT["DATASET_VERSION"]},
     "competition_root": str(COMPETITION_ROOT),
     "data_profile": DATA_PROFILE,
@@ -309,15 +346,22 @@ print(json.dumps(preflight, indent=2, sort_keys=True))
 '''
     execution = r'''import datetime as _dt
 import json
+import shutil
 import traceback
 from pathlib import Path
 
 import numpy as np
 import sklearn
 from threadpoolctl import threadpool_info, threadpool_limits
-from rogii_validation.nonlinear_selector import run_e010
+from rogii_validation.nonlinear_selector import (
+    E010_OOF_FILENAME,
+    E010_RESULT_FILENAMES,
+    finalize_e010_outputs,
+    run_e010,
+)
 
 started_at = _dt.datetime.now(_dt.timezone.utc)
+execution_mode = "not_started"
 config_path = RUNTIME_ROOT / "experiments/E010/config.json"
 config = json.loads(config_path.read_text(encoding="utf-8"))
 try:
@@ -325,14 +369,33 @@ try:
         active_pools_before = threadpool_info()
         if any(int(item.get("num_threads", 0) or 0) > int(CONTRACT["THREAD_LIMIT"]) for item in active_pools_before):
             raise RuntimeError({"thread_pool_limit_failed": active_pools_before})
-        summary = run_e010(
-            root=RUNTIME_ROOT,
-            train_dir=TRAIN_DIR,
-            output_dir=RESULT_DIR,
-            artifact_dir=ARTIFACT_DIR,
-            config=config,
-            code_sha=CONTRACT["SOURCE_COMMIT"],
+        completed_outputs_exist = (
+            all((RESULT_DIR / name).is_file() for name in E010_RESULT_FILENAMES)
+            and (ARTIFACT_DIR / E010_OOF_FILENAME).is_file()
         )
+        if completed_outputs_exist:
+            execution_mode = "recovered_completed_outputs"
+            summary = finalize_e010_outputs(
+                root=RUNTIME_ROOT,
+                output_dir=RESULT_DIR,
+                artifact_dir=ARTIFACT_DIR,
+                config=config,
+                code_sha=CONTRACT["SOURCE_COMMIT"],
+            )
+        else:
+            execution_mode = "full_run"
+            if RESULT_DIR.exists():
+                shutil.rmtree(RESULT_DIR)
+            if ARTIFACT_DIR.exists():
+                shutil.rmtree(ARTIFACT_DIR)
+            summary = run_e010(
+                root=RUNTIME_ROOT,
+                train_dir=TRAIN_DIR,
+                output_dir=RESULT_DIR,
+                artifact_dir=ARTIFACT_DIR,
+                config=config,
+                code_sha=CONTRACT["SOURCE_COMMIT"],
+            )
         active_pools_after = threadpool_info()
         if any(int(item.get("num_threads", 0) or 0) > int(CONTRACT["THREAD_LIMIT"]) for item in active_pools_after):
             raise RuntimeError({"thread_pool_limit_failed_after": active_pools_after})
@@ -346,6 +409,7 @@ except Exception as exc:
         "failed_at_utc": _dt.datetime.now(_dt.timezone.utc).isoformat(),
         "error_type": type(exc).__name__,
         "error": str(exc),
+        "execution_mode": execution_mode,
         "traceback": traceback.format_exc(),
     }
     (Path("/kaggle/working") / CONTRACT["RUN_RECEIPT_FILENAME"]).write_text(
@@ -355,6 +419,7 @@ except Exception as exc:
 ended_at = _dt.datetime.now(_dt.timezone.utc)
 print(json.dumps({
     "status": summary["status"],
+    "execution_mode": execution_mode,
     "reported_candidate": summary["reported_candidate"],
     "selected_candidate": summary["selected_candidate"],
     "bank_oracle_rmse": summary["bank_oracle_metrics"]["rmse"],
@@ -410,6 +475,7 @@ manifest = {
     "source_commit": CONTRACT["SOURCE_COMMIT"],
     "config_sha256": CONTRACT["CONFIG_SHA256"],
     "input_bundle_sha256": CONTRACT["BUNDLE_SHA256"],
+    "runtime_overlay": {"commit": CONTRACT["RUNTIME_OVERLAY_COMMIT"], "path": CONTRACT["RUNTIME_OVERLAY_PATH"], "sha256": CONTRACT["RUNTIME_OVERLAY_SHA256"]},
     "files": [{key: item[key] for key in ("path", "bytes", "sha256")} for item in output_files],
 }
 manifest_path = WORKING / CONTRACT["OUTPUT_MANIFEST_FILENAME"]
@@ -440,6 +506,8 @@ receipt = {
     "source_commit": CONTRACT["SOURCE_COMMIT"],
     "config_sha256": CONTRACT["CONFIG_SHA256"],
     "input_bundle": {"sha256": CONTRACT["BUNDLE_SHA256"], "bytes": CONTRACT["BUNDLE_BYTES"]},
+    "runtime_overlay": {"commit": CONTRACT["RUNTIME_OVERLAY_COMMIT"], "path": CONTRACT["RUNTIME_OVERLAY_PATH"], "sha256": CONTRACT["RUNTIME_OVERLAY_SHA256"], "bytes": CONTRACT["RUNTIME_OVERLAY_BYTES"]},
+    "execution_mode": execution_mode,
     "dataset": {"ref": CONTRACT["DATASET_REF"], "version": CONTRACT["DATASET_VERSION"]},
     "started_at_utc": started_at.isoformat(),
     "ended_at_utc": ended_at.isoformat(),
@@ -498,6 +566,9 @@ print(json.dumps(receipt, indent=2, sort_keys=True))
                 "experiment_id": "E010",
                 "source_commit": source_commit,
                 "config_sha256": config_sha,
+                "runtime_overlay_commit": runtime_overlay_commit,
+                "runtime_overlay_path": RUNTIME_OVERLAY_PATH,
+                "runtime_overlay_sha256": runtime_overlay_sha,
                 "bundle_sha256": bundle_sha,
                 "dataset_ref": dataset_ref,
                 "dataset_version": dataset_version,
@@ -518,11 +589,18 @@ def write_notebook(path: Path, payload: Mapping[str, Any]) -> None:
 
 
 def build(*, root: Path, staging_dir: Path, notebook_path: Path, source_commit: str,
-          dataset_ref: str, dataset_version: int) -> dict[str, Any]:
+          runtime_overlay_commit: str, dataset_ref: str, dataset_version: int) -> dict[str, Any]:
     config_path = root / "experiments/E010/config.json"
     config = json.loads(config_path.read_text(encoding="utf-8"))
     paths = source_paths(root, config)
     entries, committed_payloads = verify_inputs(root, config, source_commit, paths)
+    runtime_overlay_original = git_bytes(root, source_commit, RUNTIME_OVERLAY_PATH)
+    runtime_overlay_payload = git_bytes(root, runtime_overlay_commit, RUNTIME_OVERLAY_PATH)
+    runtime_overlay_original_sha = sha256_bytes(runtime_overlay_original)
+    runtime_overlay_sha = sha256_bytes(runtime_overlay_payload)
+    if runtime_overlay_original_sha == runtime_overlay_sha:
+        raise ValueError("E010 runtime overlay does not differ from the sealed bundle source")
+    runtime_overlay_zlib_b64 = base64.b64encode(zlib.compress(runtime_overlay_payload, level=9)).decode("ascii")
     config_sha = sha256_file(config_path)
     bundle_manifest = {
         "schema_version": 1,
@@ -571,10 +649,22 @@ def build(*, root: Path, staging_dir: Path, notebook_path: Path, source_commit: 
         dataset_version=dataset_version,
         data_signature=str(config["data_signature"]),
         expected_wells=int(config["expected_wells"]),
+        runtime_overlay_commit=runtime_overlay_commit,
+        runtime_overlay_original_sha=runtime_overlay_original_sha,
+        runtime_overlay_sha=runtime_overlay_sha,
+        runtime_overlay_bytes=len(runtime_overlay_payload),
+        runtime_overlay_zlib_b64=runtime_overlay_zlib_b64,
     )
     write_notebook(notebook_path, notebook)
     return {
         "source_commit": source_commit,
+        "runtime_overlay": {
+            "commit": runtime_overlay_commit,
+            "path": RUNTIME_OVERLAY_PATH,
+            "original_sha256": runtime_overlay_original_sha,
+            "sha256": runtime_overlay_sha,
+            "bytes": len(runtime_overlay_payload),
+        },
         "config_sha256": config_sha,
         "dataset_ref": dataset_ref,
         "dataset_version": dataset_version,
@@ -594,6 +684,7 @@ def parser() -> argparse.ArgumentParser:
     command.add_argument("--staging-dir", type=Path, default=Path("scratch/agents/e010-kaggle-fix/T017/input-v2"))
     command.add_argument("--notebook", type=Path, default=NOTEBOOK_PATH)
     command.add_argument("--source-commit", default=DEFAULT_SOURCE_COMMIT)
+    command.add_argument("--runtime-overlay-commit", default=DEFAULT_RUNTIME_OVERLAY_COMMIT)
     command.add_argument("--dataset-ref", default=DEFAULT_DATASET_REF)
     command.add_argument("--dataset-version", type=int, default=DEFAULT_DATASET_VERSION)
     return command
@@ -611,6 +702,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         staging_dir=resolve(root, arguments.staging_dir),
         notebook_path=resolve(root, arguments.notebook),
         source_commit=str(arguments.source_commit),
+        runtime_overlay_commit=str(arguments.runtime_overlay_commit),
         dataset_ref=str(arguments.dataset_ref),
         dataset_version=int(arguments.dataset_version),
     )

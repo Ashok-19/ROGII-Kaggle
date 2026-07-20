@@ -4,6 +4,7 @@
   "record_type": "private_kaggle_validation_input",
   "status": "ready",
   "prepared_at": "2026-07-20T08:41:32Z",
+  "verified_at": "2026-07-20T10:38:22Z",
   "supersedes": "experiments/E010/KAGGLE_INPUT_V1.json",
   "source_commit": "49ca3995269638026561c5593ad2628f8f08a4e9",
   "source_correction": {
@@ -12,9 +13,23 @@
     "official_wells": 773,
     "official_data_signature": "6ebe65b403f80fefd97dcd7bbfce7314252e779a1837c97364cf55761590fe77",
     "signature_unchanged": true,
-    "preflight_revision": "Use the explicit Kaggle competition mount path first; retain only a bounded fallback and report the actual profile on mismatch."
-,
-    "module_cache_policy": "Purge all previously loaded rogii_validation modules and invalidate import caches before importing the hash-verified extracted v2 package."
+    "competition_mount_policy": "Use /kaggle/input/competitions/rogii-wellbore-geology-prediction directly, with one bounded fallback only if Kaggle changes the mount layout.",
+    "module_cache_policy": "Purge all previously loaded rogii_validation modules and invalidate import caches before importing the extracted runtime package."
+  },
+  "runtime_overlay": {
+    "reason": "The sealed dataset-v2 source completed scoring but failed while making the final manifest because artifact_dir was outside the extracted runtime root.",
+    "commit": "437d83a03df429657850546cc2d572b62df0681b",
+    "path": "src/rogii_validation/nonlinear_selector.py",
+    "original_sha256": "20954431de182e6be9c86ff6640ba9ae38cb4821cd29990006bd0f54dd074f39",
+    "sha256": "df3774d9c2d79585e4341cbff0bd0f9b7d3cc663fb4ddc0a997f7e96f7bb46ba",
+    "bytes": 74526,
+    "application": "The notebook verifies the original sealed source hash, decodes the compressed overlay, verifies its byte count and SHA-256, writes it over the extracted source, verifies the written bytes, purges stale modules, and imports the corrected source.",
+    "model_logic_changed": false,
+    "finalization_changes": [
+      "External OOF paths are relative to artifact_dir rather than runtime root.",
+      "Completed outputs can be finalized idempotently without rerunning modeling.",
+      "Partial or mixed outputs fail closed on code SHA, data identity, parent hashes, OOF identity, required-file, gzip, and manifest round-trip checks."
+    ]
   },
   "config": {
     "path": "experiments/E010/config.json",
@@ -25,7 +40,6 @@
     "version": 2,
     "private": true,
     "status": "ready",
-    "verified_at": "2026-07-20T08:41:32Z",
     "files": [
       {
         "name": "e010-input-receipt-v2.json",
@@ -44,24 +58,47 @@
     "archive_members": 30,
     "data_signature": "6ebe65b403f80fefd97dcd7bbfce7314252e779a1837c97364cf55761590fe77",
     "expected_wells": 773,
+    "expected_total_rows": 5092255,
+    "expected_known_rows": 1308266,
+    "expected_hidden_rows": 3783989,
     "competition_data_included": false,
     "competition_attachment_required": true
   },
   "notebook": {
     "path": "notebooks/training_and_submission/e010_candidate_selector_kaggle.ipynb",
-    "bytes": 21123,
-    "sha256": "b427e8e55a7c4da50f5480aa8cbc0d3cb0e57ac5012177bb57928b1d7468ad36",
+    "bytes": 47893,
+    "sha256": "f0be7e36f193e884fc4bbfab1c052de88f72667d6466ce7052a94a048a02be9e",
     "private": true,
     "internet": false,
     "accelerator": "CPU",
-    "maximum_threads": 2
+    "maximum_threads": 2,
+    "execution_policy": "Recover and finalize a complete existing run; otherwise delete partial result/artifact directories and perform one clean full run."
+  },
+  "integrity_check": {
+    "status": "PASS",
+    "checked_at": "2026-07-20T10:38:22Z",
+    "real_bundle_used": true,
+    "all_773_wells_scanned": true,
+    "checks": [
+      "All notebook code cells compile.",
+      "Bundle and input receipt hashes match dataset version 2.",
+      "All 30 archive members are unique, safe, extracted, and hash-verified.",
+      "Runtime overlay original bytes, decoded bytes, written bytes, size, and SHA-256 are verified.",
+      "Competition profile is exactly 773 wells, 5,092,255 total rows, 1,308,266 known rows, and 3,783,989 hidden rows.",
+      "Two-thread environment and native thread pools are enforced.",
+      "Fresh-run notebook glue passes with artifact_dir outside runtime root.",
+      "Completed-output recovery recreates artifact_manifest.json without invoking modeling.",
+      "Final output manifest hashes match every archived result and artifact.",
+      "ZIP member names are unique and safe.",
+      "Packaging before and after recovery is byte-identical."
+    ]
   },
   "expected_outputs": [
     "e010-run-receipt.json",
     "e010-output-manifest.json",
     "rogii-e010-results-v2.zip"
   ],
-  "acceptance": "Require exact notebook version COMPLETE, all three filenames listed, exact output download, hash/schema/source verification, and independent review before changing E010's verdict.",
+  "acceptance": "Require status COMPLETE, an execution_mode of full_run or recovered_completed_outputs, all three filenames, exact output download, and independent hash/schema/source review before changing E010's verdict.",
   "submission_authorized": false,
   "submission_made": false
 }

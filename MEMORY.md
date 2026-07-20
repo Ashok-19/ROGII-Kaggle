@@ -8,7 +8,7 @@ Public intelligence last checked: 2026-07-20 00:30 Asia/Kolkata
 - Deadline: 2026-08-05 23:59 UTC / 2026-08-06 05:29 Asia/Kolkata.
 - Current leader snapshot: 4.859. Best Kaggle-MCP-verified account submission: 7.119 (ref 54754431, 2026-07-16). User-reported best: 6.888, reference unverified.
 - E001 is frozen; E002, E005, E007, E008, and E009 are rejected; E003 is promoted only as nondeployable surface-assisted understanding; E004 is the exact fallback; E006 is the promoted deployment-ready primary.
-- E010 is implemented and `smoke_passed` but has no scored run. Kaggle input v1 failed during preflight before hidden-label scoring because the profile signature depended on the physical mount root. Commit `49ca3995269638026561c5593ad2628f8f08a4e9` fixes this without changing the frozen 773-well signature. Corrected private dataset/notebook v2 is ready. H012/T016 remain queued as comparators.
+- E010 is implemented and `smoke_passed` but has no accepted scored run. Input v1 failed during preflight before scoring. A v2 Kaggle run later completed the expensive scoring phase but failed only during final manifest construction because `artifact_dir` was outside the extracted runtime root. Commit `437d83a03df429657850546cc2d572b62df0681b` fixes finalization and adds safe completed-run recovery; notebook SHA-256 is `f0be7e36...02be9e`, using unchanged dataset version 2. H012/T016 remain queued as comparators.
 
 ## Verified project state
 
@@ -39,7 +39,7 @@ Public intelligence last checked: 2026-07-20 00:30 Asia/Kolkata
 
 ## Exact next action
 
-Run the corrected private Kaggle E010 notebook using `ashok205/rogii-e010-selector-inputs` version 2 and the official competition input. Require the v2 preflight to identify exactly one 773-well competition root, then complete the full run and persist `e010-run-receipt.json`, `e010-output-manifest.json`, and `rogii-e010-results-v2.zip`. Download and independently verify every output before recording any score or verdict.
+Use the corrected private Kaggle E010 notebook with dataset version 2. In the still-open failed kernel, rerunning the updated execution cell should select `recovered_completed_outputs` and finalize the existing two-hour result without modeling again; a fresh kernel will perform one clean full run. Require `e010-run-receipt.json`, `e010-output-manifest.json`, and `rogii-e010-results-v2.zip`, then download and independently verify every output before recording any score or verdict.
 
 ## Open risks
 
