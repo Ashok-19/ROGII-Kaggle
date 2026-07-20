@@ -240,22 +240,36 @@ for entry in manifest["files"]:
 sys.path.insert(0, str(RUNTIME_ROOT / "src"))
 from rogii_validation.harness import scan_profiles
 
-competition_matches = []
-for sample in sorted(Path("/kaggle/input").rglob("sample_submission.csv")):
-    candidate = sample.parent
-    train = candidate / "train"
-    if not train.is_dir():
-        continue
-    try:
-        _, profile = scan_profiles(train)
-    except Exception:
-        continue
-    if int(profile["well_count"]) == int(CONTRACT["EXPECTED_WELLS"]) and profile["data_signature"] == CONTRACT["DATA_SIGNATURE"]:
-        competition_matches.append((candidate, profile))
-if len(competition_matches) != 1:
-    raise RuntimeError({"matching_competition_roots": [str(item[0]) for item in competition_matches]})
-COMPETITION_ROOT, DATA_PROFILE = competition_matches[0]
+preferred_roots = (
+    Path("/kaggle/input/competitions/rogii-wellbore-geology-prediction"),
+    Path("/kaggle/input/rogii-wellbore-geology-prediction"),
+)
+COMPETITION_ROOT = next(
+    (
+        root
+        for root in preferred_roots
+        if (root / "train").is_dir() and (root / "sample_submission.csv").is_file()
+    ),
+    None,
+)
+if COMPETITION_ROOT is None:
+    fallback_roots = sorted(
+        sample.parent
+        for sample in Path("/kaggle/input").rglob("sample_submission.csv")
+        if (sample.parent / "train").is_dir()
+    )
+    if len(fallback_roots) != 1:
+        raise RuntimeError({"competition_roots_found": [str(root) for root in fallback_roots]})
+    COMPETITION_ROOT = fallback_roots[0]
 TRAIN_DIR = COMPETITION_ROOT / "train"
+_, DATA_PROFILE = scan_profiles(TRAIN_DIR)
+if int(DATA_PROFILE["well_count"]) != int(CONTRACT["EXPECTED_WELLS"]) or DATA_PROFILE["data_signature"] != CONTRACT["DATA_SIGNATURE"]:
+    raise RuntimeError({
+        "competition_root": str(COMPETITION_ROOT),
+        "expected_wells": CONTRACT["EXPECTED_WELLS"],
+        "expected_signature": CONTRACT["DATA_SIGNATURE"],
+        "actual_profile": DATA_PROFILE,
+    })
 
 preflight = {
     "schema_version": 1,

@@ -11,7 +11,8 @@
     "regression_test": "tests/test_e001_validation.py::E001ValidationTests::test_profile_signature_is_independent_of_mount_root",
     "official_wells": 773,
     "official_data_signature": "6ebe65b403f80fefd97dcd7bbfce7314252e779a1837c97364cf55761590fe77",
-    "signature_unchanged": true
+    "signature_unchanged": true,
+    "preflight_revision": "Use the explicit Kaggle competition mount path first; retain only a bounded fallback and report the actual profile on mismatch."
   },
   "config": {
     "path": "experiments/E010/config.json",
@@ -46,8 +47,8 @@
   },
   "notebook": {
     "path": "notebooks/training_and_submission/e010_candidate_selector_kaggle.ipynb",
-    "bytes": 19904,
-    "sha256": "f8e1d3edb308cf0265be291668c7c42d4366544535456509f86da6d873875faf",
+    "bytes": 20559,
+    "sha256": "6d7db7c4271529cb64a6969f7d754feb2e24df5a4394301471e31df3646bf495",
     "private": true,
     "internet": false,
     "accelerator": "CPU",
