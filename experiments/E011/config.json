@@ -135,7 +135,6 @@
     "expected_columns": 143,
     "expected_rows": 773,
     "forbidden_name_fragments": [
-      "hidden",
       "oracle",
       "formation_surface",
       "surface_",
@@ -143,7 +142,10 @@
       "target_tvt",
       "geology",
       "absolute_x",
-      "absolute_y"
+      "absolute_y",
+      "hidden_tvt",
+      "hidden_target",
+      "hidden_label"
     ],
     "path": "experiments/E008/results/legal_features.csv",
     "required_prefixes": [
@@ -253,6 +255,14 @@
       "sha256": "38ece62b8b500c6cfbf6c72a8981b69184648d86c330a2b4392c9368d3f5c14e"
     }
   },
+  "pre_score_corrections": [
+    {
+      "correction": "Forbid hidden_tvt, hidden_target, and hidden_label instead; retain legal suffix geometry and observed-GR missingness fields.",
+      "issue": "The initial generic forbidden token hidden also matched legal test-time fields hidden_rows, hidden_fraction, and hidden_gr_missing_fraction.",
+      "recorded_at": "2026-07-20T12:35:00Z",
+      "score_observed_before_correction": false
+    }
+  ],
   "promotion": {
     "maximum_p90_deterioration_vs_e006": 0.0,
     "maximum_rss_mb": 2048,
