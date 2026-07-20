@@ -24,6 +24,26 @@
     "shape3_coefficient_absolute_ft": 80.0,
     "spline_knot_absolute_ft": 80.0
   },
+  "compact_input": {
+    "bytes": 2574866,
+    "expected_control_wells": [
+      "000d7d20",
+      "87695469",
+      "ffefef30"
+    ],
+    "expected_feature_count": 142,
+    "expected_members": 45,
+    "path": "artifacts/E011/compact_stats_v1.npz",
+    "receipt_path": "experiments/E011/COMPACT_INPUT_V1.json",
+    "require_representation_oracle_match": true,
+    "required_source_keys": [
+      "e008_legal_features",
+      "e010_oof",
+      "e010_selector_predictions"
+    ],
+    "schema_version": 1,
+    "sha256": "cb2788c602f718dc7a76f09a62bbb433c1d7cda7dd93d69ee8905524eb09156d"
+  },
   "confidence_fallback": {
     "disagreement": "maximum absolute coefficient difference between ridge and tree",
     "eligible_models": [
@@ -261,6 +281,13 @@
       "issue": "The initial generic forbidden token hidden also matched legal test-time fields hidden_rows, hidden_fraction, and hidden_gr_missing_fraction.",
       "recorded_at": "2026-07-20T12:35:00Z",
       "score_observed_before_correction": false
+    },
+    {
+      "artifact_sha256": "cb2788c602f718dc7a76f09a62bbb433c1d7cda7dd93d69ee8905524eb09156d",
+      "correction": "Use a 2.57 MB deterministic compact NPZ containing exact per-well sufficient statistics, legal features, direct-control rows, and E010-verified spatial/typewell assignments. Model families, targets, folds, gates, bounds, and candidate order are unchanged.",
+      "issue": "The literal reader recomputed about 19 million Python-level basis values and rescanned 1,546 train/typewell files; score-blind official-data loading exceeded three minutes and a one-context projection exceeded fifteen minutes.",
+      "recorded_at": "2026-07-20T13:00:00Z",
+      "score_observed_before_correction": false
     }
   ],
   "promotion": {
@@ -358,9 +385,10 @@
   },
   "resource_design": {
     "heavy_run_policy": "If projected runtime exceeds 15 minutes or RSS exceeds 2 GB, stop locally and run the hash-sealed notebook on Kaggle CPU.",
+    "input_preprocessing": "The compact artifact is built once by tools/build_e011_compact.py from verified E010 parents and must reproduce byte-for-byte.",
     "maximum_threads": 2,
     "persist_row_predictions": "only final repeated OOF candidate and exact E006 fallback",
-    "scoring": "per-well basis sufficient statistics; never materialize the 130,252-path bank or a row-by-candidate matrix"
+    "scoring": "Load hash-sealed per-well basis sufficient statistics from artifacts/E011/compact_stats_v1.npz; never materialize the 130,252-path bank or a row-by-candidate matrix."
   },
   "schema_version": 1,
   "shrinkages": [

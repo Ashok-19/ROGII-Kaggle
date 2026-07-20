@@ -10,7 +10,7 @@
   "owner": "NNMax",
   "parent_id": "E010",
   "created_at": "2026-07-20T12:10:00Z",
-  "updated_at": "2026-07-20T12:35:00Z",
+  "updated_at": "2026-07-20T13:00:00Z",
   "design": {
     "anchor": "E006 nested_conservative_grid",
     "target": "3\u20137 coefficients of true suffix correction around E006",
@@ -41,11 +41,13 @@
     "representation_diagnostic": "experiments/E011/REPRESENTATION_DIAGNOSTIC.json",
     "submission_authorized": false,
     "pre_score_corrections": [
-      "Narrow generic hidden feature-token rejection to hidden TVT/target/label fields; legal hidden-row geometry and GR missingness remain allowed."
-    ]
+      "Narrow generic hidden feature-token rejection to hidden TVT/target/label fields; legal hidden-row geometry and GR missingness remain allowed.",
+      "Replace repeated OOF/train-file parsing with deterministic hash-sealed sufficient statistics; model semantics and gates unchanged."
+    ],
+    "compact_input": "experiments/E011/COMPACT_INPUT_V1.json"
   },
   "runs": [],
   "result": null,
-  "conclusion": "Pre-registered from verified E010 outputs and a frozen representation-capacity audit. A pre-score schema correction narrowed the generic hidden-token rejection so legal suffix geometry/GR-missingness features remain usable; no learned E011 hidden-label score has been computed.",
+  "conclusion": "Pre-registered from verified E010 outputs and a frozen representation-capacity audit. Two pre-score execution/schema corrections are recorded: legal suffix geometry remains allowed, and repeated row/file parsing is replaced by a deterministic compact sufficient-statistics artifact. No learned E011 hidden-label score has been computed.",
   "hypothesis": "Split-local prediction of 3\u20137 nonlinear correction coefficients or spline control points can recover materially more of E010 candidate coverage than flat candidate ranking, while remaining memory-safe and reverting exactly to E006 when confidence is weak."
 }

@@ -1,0 +1,588 @@
+{
+  "artifact": {
+    "bytes": 2574866,
+    "members": [
+      {
+        "bytes": 6312,
+        "dtype": "float64",
+        "member": "base_sse.npy",
+        "name": "base_sse",
+        "sha256": "d02eb017c7bfaae603f1cf62fb3f7fd44d02667529eb329e8ac1ee7a03515daf",
+        "shape": [
+          773
+        ]
+      },
+      {
+        "bytes": 6312,
+        "dtype": "float64",
+        "member": "base_sum.npy",
+        "name": "base_sum",
+        "sha256": "13dc927584eeff4eaac3601ddfaf5913b9f0734b9a601281cab2560924879a43",
+        "shape": [
+          773
+        ]
+      },
+      {
+        "bytes": 6312,
+        "dtype": "float64",
+        "member": "base_x_sum.npy",
+        "name": "base_x_sum",
+        "sha256": "c15d625418f8c4202800d723a328ac6260215b5ea7604709cee129f6b4580a06",
+        "shape": [
+          773
+        ]
+      },
+      {
+        "bytes": 61764,
+        "dtype": "int32",
+        "member": "control_codes.npy",
+        "name": "control_codes",
+        "sha256": "03d5f11707c7ff424ea275a50a39157d1b9d697cb95fa30c23ec76451f6e0731",
+        "shape": [
+          15409
+        ]
+      },
+      {
+        "bytes": 123400,
+        "dtype": "float64",
+        "member": "control_e006.npy",
+        "name": "control_e006",
+        "sha256": "e5c8a15d92d7b3d289bcfab5b666f24a8c1d7ad16b3b1993d81e878d88a8530e",
+        "shape": [
+          15409
+        ]
+      },
+      {
+        "bytes": 61764,
+        "dtype": "int32",
+        "member": "control_hidden_index.npy",
+        "name": "control_hidden_index",
+        "sha256": "f4731e6148888729f7a012ac802c4c7fce48d9f5e462c4224737d46da8768db5",
+        "shape": [
+          15409
+        ]
+      },
+      {
+        "bytes": 123400,
+        "dtype": "float64",
+        "member": "control_target.npy",
+        "name": "control_target",
+        "sha256": "929f760c2f48d78f1287a25c47dc4aafd1068a5ef379ea43d0a1f9892983331e",
+        "shape": [
+          15409
+        ]
+      },
+      {
+        "bytes": 140,
+        "dtype": "int32",
+        "member": "control_well_indices.npy",
+        "name": "control_well_indices",
+        "sha256": "5ae804ba260e9c5c7f7e273a98ee37303da736fb6e8220e0e6dc646ea247b186",
+        "shape": [
+          3
+        ]
+      },
+      {
+        "bytes": 23416,
+        "dtype": "<U41",
+        "member": "feature_names.npy",
+        "name": "feature_names",
+        "sha256": "354d69dea729849253cd8a7d81fac0fffc11eb02fdcaf4c648366e5c16a7c318",
+        "shape": [
+          142
+        ]
+      },
+      {
+        "bytes": 878256,
+        "dtype": "float64",
+        "member": "features.npy",
+        "name": "features",
+        "sha256": "1ab3c2f74fe89d2554fb37dc57c0b8844440657254073064b15ab66dd98b29d9",
+        "shape": [
+          773,
+          142
+        ]
+      },
+      {
+        "bytes": 6312,
+        "dtype": "float64",
+        "member": "last_sse.npy",
+        "name": "last_sse",
+        "sha256": "72c2f4e9d4c9a8c66381c90ca58fc5a75b399ce548e9cc48b0b7e0f3b4d685af",
+        "shape": [
+          773
+        ]
+      },
+      {
+        "bytes": 6312,
+        "dtype": "float64",
+        "member": "last_sum.npy",
+        "name": "last_sum",
+        "sha256": "0499d1b6b2c9cf1f1345fc07f3788f023db7595dbad8e8a7bab6cdded5326651",
+        "shape": [
+          773
+        ]
+      },
+      {
+        "bytes": 6312,
+        "dtype": "float64",
+        "member": "last_x_sum.npy",
+        "name": "last_x_sum",
+        "sha256": "2226ceaa91141663a7086b2443c0a1377324355d60976c4df638a8b66ba55d8f",
+        "shape": [
+          773
+        ]
+      },
+      {
+        "bytes": 1784,
+        "dtype": "uint8",
+        "member": "manifest_json.npy",
+        "name": "manifest_json",
+        "sha256": "db5092aa4d756ba6e0c9753a4c23f9407387ea69e32073921b39bc1392b99423",
+        "shape": [
+          1656
+        ]
+      },
+      {
+        "bytes": 3220,
+        "dtype": "int32",
+        "member": "rows.npy",
+        "name": "rows",
+        "sha256": "802fa203db9b768c5f92002038b25e26f6c3bb4dde3d91323de2395d9adc6386",
+        "shape": [
+          773
+        ]
+      },
+      {
+        "bytes": 18680,
+        "dtype": "float64",
+        "member": "shape3__basis_base.npy",
+        "name": "shape3__basis_base",
+        "sha256": "b46c815a553a29054e93046d74f7b2741e51c2bc13bb48b8aaa04a24d49c3b05",
+        "shape": [
+          773,
+          3
+        ]
+      },
+      {
+        "bytes": 55784,
+        "dtype": "float64",
+        "member": "shape3__basis_cross.npy",
+        "name": "shape3__basis_cross",
+        "sha256": "3b8c2199e6d75b3d8ad5ea059891c7fa2d2f91482b7141c012d39d8d8d67b864",
+        "shape": [
+          773,
+          3,
+          3
+        ]
+      },
+      {
+        "bytes": 18680,
+        "dtype": "float64",
+        "member": "shape3__basis_sum.npy",
+        "name": "shape3__basis_sum",
+        "sha256": "20df1d7056f7340e5c91893fe2d07e8aedaf2570dc660fa25abbdda2951c6e83",
+        "shape": [
+          773,
+          3
+        ]
+      },
+      {
+        "bytes": 18680,
+        "dtype": "float64",
+        "member": "shape3__basis_x_sum.npy",
+        "name": "shape3__basis_x_sum",
+        "sha256": "1a088e770e8e5dc8eab36b484e0538ab8d87573ceb1f06e98bf2ccf2a8841031",
+        "shape": [
+          773,
+          3
+        ]
+      },
+      {
+        "bytes": 18680,
+        "dtype": "float64",
+        "member": "shape3__target_coefficients.npy",
+        "name": "shape3__target_coefficients",
+        "sha256": "46f3a7a5202217b5ef255dd53dda9ad430ac312112f5d60892d4115a741b9fea",
+        "shape": [
+          773,
+          3
+        ]
+      },
+      {
+        "bytes": 901,
+        "dtype": "int8",
+        "member": "spatial_assignment.npy",
+        "name": "spatial_assignment",
+        "sha256": "89b32bc300540a6f216b78815c7d22b7358c838e18a1bd1a9802f9bf09637805",
+        "shape": [
+          773
+        ]
+      },
+      {
+        "bytes": 18680,
+        "dtype": "float64",
+        "member": "spline3__basis_base.npy",
+        "name": "spline3__basis_base",
+        "sha256": "7778ba012ff885cf429ddc96cb3f59e530b2f1aedfa6a6dac927d4e10db138c5",
+        "shape": [
+          773,
+          3
+        ]
+      },
+      {
+        "bytes": 55784,
+        "dtype": "float64",
+        "member": "spline3__basis_cross.npy",
+        "name": "spline3__basis_cross",
+        "sha256": "d8e48846b914aa66f65cbb832dbc8ad4ed0567dd7cf06ece21586d4510fed6e9",
+        "shape": [
+          773,
+          3,
+          3
+        ]
+      },
+      {
+        "bytes": 18680,
+        "dtype": "float64",
+        "member": "spline3__basis_sum.npy",
+        "name": "spline3__basis_sum",
+        "sha256": "ac3ea29e145ac8f3f8b5f4c3eb3f3311fae9e2ea266d74f2f33f722c8cd25c97",
+        "shape": [
+          773,
+          3
+        ]
+      },
+      {
+        "bytes": 18680,
+        "dtype": "float64",
+        "member": "spline3__basis_x_sum.npy",
+        "name": "spline3__basis_x_sum",
+        "sha256": "55030c3d8d50aef83c2f9f8ebc438ef4a11e973674dd6179c309c5bc9913e923",
+        "shape": [
+          773,
+          3
+        ]
+      },
+      {
+        "bytes": 18680,
+        "dtype": "float64",
+        "member": "spline3__target_coefficients.npy",
+        "name": "spline3__target_coefficients",
+        "sha256": "47b1a6aafcd0e195e01b7fd8c3831969218da5ebc080ca97ea7fc185f6368834",
+        "shape": [
+          773,
+          3
+        ]
+      },
+      {
+        "bytes": 24864,
+        "dtype": "float64",
+        "member": "spline4__basis_base.npy",
+        "name": "spline4__basis_base",
+        "sha256": "449766a7a7b50900c3d2b4c82bf8d045c943d90bb9ef1aaabcfe4af304397f81",
+        "shape": [
+          773,
+          4
+        ]
+      },
+      {
+        "bytes": 99072,
+        "dtype": "float64",
+        "member": "spline4__basis_cross.npy",
+        "name": "spline4__basis_cross",
+        "sha256": "bea19c3838f150939c35b4fd9d6c66fa76a6423b1733fb5114ffba5e6ea85fe5",
+        "shape": [
+          773,
+          4,
+          4
+        ]
+      },
+      {
+        "bytes": 24864,
+        "dtype": "float64",
+        "member": "spline4__basis_sum.npy",
+        "name": "spline4__basis_sum",
+        "sha256": "fab0ca5c084e14612990fd8dcfaf8f285bf97714e258464667c4e3a1a9a7dc67",
+        "shape": [
+          773,
+          4
+        ]
+      },
+      {
+        "bytes": 24864,
+        "dtype": "float64",
+        "member": "spline4__basis_x_sum.npy",
+        "name": "spline4__basis_x_sum",
+        "sha256": "b2e951a1b6242713fe249a46467503408832cda3cf0bec1a5bf4354d373f3942",
+        "shape": [
+          773,
+          4
+        ]
+      },
+      {
+        "bytes": 24864,
+        "dtype": "float64",
+        "member": "spline4__target_coefficients.npy",
+        "name": "spline4__target_coefficients",
+        "sha256": "a1ccffa7ee8065c33b4c4acbb63d0714ec1f24adbe2cf2f10db99eb126d3aa44",
+        "shape": [
+          773,
+          4
+        ]
+      },
+      {
+        "bytes": 31048,
+        "dtype": "float64",
+        "member": "spline5__basis_base.npy",
+        "name": "spline5__basis_base",
+        "sha256": "39bab4c31579d2450b830fa6969a744364ca524efa3e6a7456b11e511e1e7238",
+        "shape": [
+          773,
+          5
+        ]
+      },
+      {
+        "bytes": 154728,
+        "dtype": "float64",
+        "member": "spline5__basis_cross.npy",
+        "name": "spline5__basis_cross",
+        "sha256": "da77d084bc0a135f52fc6f500cf7a02d38736fac98c1f3bfb81ceb9cf9a4d8c7",
+        "shape": [
+          773,
+          5,
+          5
+        ]
+      },
+      {
+        "bytes": 31048,
+        "dtype": "float64",
+        "member": "spline5__basis_sum.npy",
+        "name": "spline5__basis_sum",
+        "sha256": "a35d881ded7ca9e65b381832bb73e4ec6065b903b810cc577e53e6d613ec0735",
+        "shape": [
+          773,
+          5
+        ]
+      },
+      {
+        "bytes": 31048,
+        "dtype": "float64",
+        "member": "spline5__basis_x_sum.npy",
+        "name": "spline5__basis_x_sum",
+        "sha256": "f715a75dd9b81d355a732e56333018925578a0987c31761981fb8a63fc82cfc0",
+        "shape": [
+          773,
+          5
+        ]
+      },
+      {
+        "bytes": 31048,
+        "dtype": "float64",
+        "member": "spline5__target_coefficients.npy",
+        "name": "spline5__target_coefficients",
+        "sha256": "13e558ff40bfd2601ddc303411bc5921d8c7d035ce589743159c96f53de5dbc0",
+        "shape": [
+          773,
+          5
+        ]
+      },
+      {
+        "bytes": 43416,
+        "dtype": "float64",
+        "member": "spline7__basis_base.npy",
+        "name": "spline7__basis_base",
+        "sha256": "126c9435481e6242fcb6aaa8971a59543caf972222c0408bed325267022bc1c9",
+        "shape": [
+          773,
+          7
+        ]
+      },
+      {
+        "bytes": 303144,
+        "dtype": "float64",
+        "member": "spline7__basis_cross.npy",
+        "name": "spline7__basis_cross",
+        "sha256": "c0d6899e038e9cf60db4751d266a6cad3ffa10ad97a07b21fe8bb14a391a1e5e",
+        "shape": [
+          773,
+          7,
+          7
+        ]
+      },
+      {
+        "bytes": 43416,
+        "dtype": "float64",
+        "member": "spline7__basis_sum.npy",
+        "name": "spline7__basis_sum",
+        "sha256": "454aeb9c0ff1478ed7923a9cd03f0162a51d3b1887c29eb8409e1d1831cf0735",
+        "shape": [
+          773,
+          7
+        ]
+      },
+      {
+        "bytes": 43416,
+        "dtype": "float64",
+        "member": "spline7__basis_x_sum.npy",
+        "name": "spline7__basis_x_sum",
+        "sha256": "7bb96755dac0d393af412b1921626feab18c0830c8b1ebbec4cdcbdbee54d4f5",
+        "shape": [
+          773,
+          7
+        ]
+      },
+      {
+        "bytes": 43416,
+        "dtype": "float64",
+        "member": "spline7__target_coefficients.npy",
+        "name": "spline7__target_coefficients",
+        "sha256": "6d2af94735a972181374ced40342385853d7648944b43a67d67b5de8f7245a24",
+        "shape": [
+          773,
+          7
+        ]
+      },
+      {
+        "bytes": 6312,
+        "dtype": "float64",
+        "member": "sum_x.npy",
+        "name": "sum_x",
+        "sha256": "eb864309fca25a0998523fca34c2d10e80fa080e1349bba22887e1a8d319befc",
+        "shape": [
+          773
+        ]
+      },
+      {
+        "bytes": 6312,
+        "dtype": "float64",
+        "member": "sum_x_sq.npy",
+        "name": "sum_x_sq",
+        "sha256": "a31dbc1fca55a565da17fa4901f666f3fd03eb38c2f3c19bcf337f34885c66b0",
+        "shape": [
+          773
+        ]
+      },
+      {
+        "bytes": 901,
+        "dtype": "int8",
+        "member": "typewell_assignment.npy",
+        "name": "typewell_assignment",
+        "sha256": "7387b3bff5af1a0fb4a93290bc4c890fef75a6f1407767420f1f474431364100",
+        "shape": [
+          773
+        ]
+      },
+      {
+        "bytes": 24864,
+        "dtype": "<U8",
+        "member": "well_ids.npy",
+        "name": "well_ids",
+        "sha256": "3ab8a3b52bb57c7e3823941993deed5ac2366826928fc458865ffe534489987d",
+        "shape": [
+          773
+        ]
+      }
+    ],
+    "path": "artifacts/E011/compact_stats_v1.npz",
+    "sha256": "cb2788c602f718dc7a76f09a62bbb433c1d7cda7dd93d69ee8905524eb09156d"
+  },
+  "built_at": "2026-07-20T13:00:00Z",
+  "config_path": "experiments/E011/config.json",
+  "config_sha256_at_build": "8cc4514a011218480acfc781024ef29e8372986d1a579a1f218dfa64c9132505",
+  "experiment_id": "E011",
+  "record_type": "compact_sufficient_statistics",
+  "schema_version": 1,
+  "source_manifest": {
+    "assignment_audit": {
+      "branches": [
+        "extra_trees_all",
+        "hybrid_confidence_fallback",
+        "hybrid_ridge_trees",
+        "random_forest_all",
+        "ridge_all_f64",
+        "ridge_path_f48",
+        "shuffled_target_selector",
+        "sign_flipped_target_selector"
+      ],
+      "deduplicated_rows": 1546,
+      "source_rows": 12368,
+      "spatial_counts": {
+        "0": 155,
+        "1": 155,
+        "2": 154,
+        "3": 155,
+        "4": 154
+      },
+      "typewell_counts": {
+        "0": 155,
+        "1": 155,
+        "2": 154,
+        "3": 155,
+        "4": 154
+      }
+    },
+    "builder": {
+      "maximum_threads": 2,
+      "numpy": "2.4.4",
+      "pandas": "3.0.3",
+      "path": "tools/build_e011_compact.py"
+    },
+    "control_well_ids": [
+      "000d7d20",
+      "87695469",
+      "ffefef30"
+    ],
+    "expected_hidden_rows": 3783989,
+    "expected_wells": 773,
+    "experiment_id": "E011",
+    "representations": {
+      "shape3": {
+        "dimensions": 3,
+        "oracle_rmse": 4.823377092866155,
+        "oracle_sse": 88034377.6240345
+      },
+      "spline3": {
+        "dimensions": 3,
+        "oracle_rmse": 4.820783127879993,
+        "oracle_sse": 87939715.03209269
+      },
+      "spline4": {
+        "dimensions": 4,
+        "oracle_rmse": 4.081022760162832,
+        "oracle_sse": 63021378.571556896
+      },
+      "spline5": {
+        "dimensions": 5,
+        "oracle_rmse": 3.4391232552960913,
+        "oracle_sse": 44755390.10395155
+      },
+      "spline7": {
+        "dimensions": 7,
+        "oracle_rmse": 2.6251410709542258,
+        "oracle_sse": 26076851.785860024
+      }
+    },
+    "role": "compact_sufficient_statistics",
+    "schema_version": 1,
+    "sources": {
+      "e008_legal_features": {
+        "bytes": 1380027,
+        "path": "experiments/E008/results/legal_features.csv",
+        "sha256": "c4b332ccb62559609aee501eb6cd66237cf6a98fc370caa542d6be99b43f8853"
+      },
+      "e010_oof": {
+        "bytes": 228267787,
+        "path": "artifacts/E010/oof_predictions.csv.gz",
+        "sha256": "80bae7649c783b1fa1536546e0485f1357cd59abf4a641ad26d01f90490d8f46"
+      },
+      "e010_selector_predictions": {
+        "bytes": 6824881,
+        "path": "experiments/E010/results/selector_predictions.csv",
+        "sha256": "38ece62b8b500c6cfbf6c72a8981b69184648d86c330a2b4392c9368d3f5c14e"
+      }
+    }
+  },
+  "status": "ready",
+  "submission_authorized": false
+}
