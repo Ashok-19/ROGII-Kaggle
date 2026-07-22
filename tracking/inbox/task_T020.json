@@ -4,11 +4,11 @@
   "payload": {
     "task_id": "T020",
     "title": "Run E011 notebook and review saved outputs",
-    "status": "active",
+    "status": "completed",
     "priority": 1,
-    "phase": "deployment_user_run_pending",
+    "phase": "deployment_verified",
     "depends_on": "T019",
     "due_at": null,
-    "updated_at": "2026-07-22T18:45:00Z"
+    "updated_at": "2026-07-22T19:50:00Z"
   }
 }

@@ -1,12 +1,12 @@
 # E011 Result — Memory-Safe Nonlinear Coefficient Learning
 
-Status: **statistically promoted; exact package prepared and uploaded; awaiting authorized user Kaggle run; not deployment-ready; no Kaggle submission**
+Status: **statistically and operationally promoted; deployment-ready primary; no Kaggle submission**
 Official run: `R20260722-1537-e011-local-reproduction`  
 Frozen source: `c326a812b0f663bb7a095a0d435fd302abc0bf6f`
 
 ## Decision
 
-Promote `spline4_ridge_equal_s075` as the verified E011 statistical winner. The exact inference runtime is now committed and sealed, but do not promote it to the deployment primary yet. E006 remains the deployment-ready primary and E004 remains the exact deployment fallback until the user-run private-Kaggle outputs are independently verified.
+Promote `spline4_ridge_equal_s075` as both the verified statistical winner and the primary deployment model. Saved Kaggle notebook version 1 completed and its three outputs passed the D019 correctness review. Retain E006 as the secondary fallback and E004 as the exact fallback.
 
 The complete-looking directory discovered after the timed-out first call was not accepted on static consistency alone. Its ownership, timestamps, source/config/fold identities, parent hashes, and manifest were consistent, but no successful invocation receipt, process log, task log, Codex receipt, or operation receipt could be linked to that run. The original process provenance is therefore incomplete. Its runtime-dependent manifest, controls, and summary are archived under `experiments/E011/provenance/original_unregistered/`.
 
@@ -56,8 +56,8 @@ The packaged E011 inference path reconstructs all 142 legal features across 773 
 
 The canonical notebook is `notebooks/training_and_submission/e011_spline4_deployment_kaggle.ipynb`. It now contains two code cells: one small contract cell and one inference cell. It locates the attached bundle and competition data, runs inference, and writes `submission.csv`, `e011-run-receipt.json`, and `e011-well-predictions.json`. It does not check internet state, CPU/device/thread settings, hashes, training signatures, or local/Kaggle byte parity. Private dataset `ashok205/rogii-e011-deployment-inputs` version 1 is READY.
 
-The canonical notebook has **not** been executed. The user is the only authorized notebook runner. E011 remains not deployment-ready until the saved outputs are retrieved and checked for complete rows, IDs/order, finite predictions, and readability. E006 remains primary, E004 remains exact fallback, and no Kaggle competition submission has been made.
+The canonical notebook was executed and saved as `ashok205/e011-spline4-deployment-kaggle`, version 1, `scriptVersionId=337242364`. Kaggle reported `COMPLETE`; the receipt records a 3.540805-second inference run. The three expected outputs were retrieved and reviewed: `submission.csv` has 14,151 unique IDs in exact sample order with finite TVT values, the receipt is readable and complete, and the well diagnostics contain three records. E011 is deployment-ready and primary. E006 remains the secondary fallback, E004 remains the exact fallback, and no Kaggle competition submission has been made.
 
 ## Next action
 
-The user imports the canonical notebook, attaches private dataset version 1 and the ROGII competition data, runs all cells, saves a notebook version, and supplies the owner/slug/version. Then retrieve and inspect the three expected outputs. Do not start H015 specialist routing before that result is reviewed.
+Preregister H015 regime-specialized coefficient experts with legal cross-fitted routing, minimum regime support, bounded actions, exact E011 fallback, and frozen negative and distribution-shift controls before implementation or scoring.

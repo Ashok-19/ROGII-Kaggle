@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-22T19:50:00Z",
+  "payload": {
+    "decision_id": "D020",
+    "decided_at": "2026-07-23",
+    "title": "Promote E011 as deployment primary",
+    "decision": "Promote E011 spline4_ridge_equal_s075 from statistical winner to primary deployment model. The saved Kaggle notebook completed and produced a valid 14,151-row submission with exact sample ID order, finite predictions, a readable COMPLETE receipt, and three well diagnostics. Retain E006 as secondary fallback and E004 as exact fallback. No competition submission was made. H015 is unblocked.",
+    "rationale": "E011 already passed the frozen statistical, repeated-map, spatial/typewell, slice, control, feature, edge-case, and hidden-scale runtime evidence. The remaining D019 operational gate was successful notebook execution and readable, complete outputs; saved version 1 / scriptVersionId 337242364 satisfies that gate.",
+    "source_ids": "E011,T020,D018,D019,H014,H015,experiments/E011/deployment/kaggle_output_review.json,ashok205/e011-spline4-deployment-kaggle:1:337242364",
+    "revisit_trigger": "Revisit only if a future full hidden run fails, an output contract becomes invalid, or a stronger fully validated deployment model passes the same scientific and operational gates."
+  }
+}

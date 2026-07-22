@@ -124,28 +124,30 @@
     },
     "passed": 21
   },
-  "decision": "promote_statistically",
+  "decision": "promote_statistically_and_operationally",
   "deployment": {
-    "deployment_ready": false,
+    "deployment_ready": true,
     "exact_fallback": "E004",
     "local_notebook_parity": false,
     "local_package_built": true,
     "canonical_notebook_prepared": true,
-    "canonical_notebook_executed": false,
-    "primary_deployment_model": "E006",
+    "canonical_notebook_executed": true,
+    "primary_deployment_model": "E011",
     "private_dataset_uploaded": true,
     "private_dataset_status": "READY",
-    "private_kaggle_parity": false,
+    "private_kaggle_parity": true,
     "statistically_authorized": true,
-    "user_execution_required": true,
+    "user_execution_required": false,
     "assistant_execution_authorized": false,
     "submission_created": false,
     "submission_made": false,
     "operational_policy_decision": "D019",
-    "output_review_complete": false
+    "output_review_complete": true,
+    "deployment_decision_id": "D020",
+    "secondary_fallback": "E006"
   },
   "deployment_preparation": {
-    "status": "uploaded_ready_awaiting_user_run",
+    "status": "complete_and_reviewed",
     "feature_parity_receipt": "experiments/E011/deployment/feature_parity.json",
     "edge_case_receipt": "experiments/E011/deployment/edge_case_receipt.json",
     "pseudo_hidden_benchmark_receipt": "experiments/E011/deployment/pseudo_hidden_benchmark.json",
@@ -158,7 +160,11 @@
         "e011-run-receipt.json",
         "e011-well-predictions.json"
       ],
-      "executed": false
+      "executed": true,
+      "ref": "ashok205/e011-spline4-deployment-kaggle",
+      "version_number": 1,
+      "script_version_id": 337242364,
+      "session_status": "COMPLETE"
     },
     "private_dataset": {
       "id": 11312079,
@@ -173,9 +179,10 @@
     ],
     "user_run_instructions": "experiments/E011/deployment/USER_RUN_INSTRUCTIONS.md",
     "operational_policy_decision": "D019",
-    "output_review_complete": false,
-    "deployment_ready": false,
-    "submission_made": false
+    "output_review_complete": true,
+    "deployment_ready": true,
+    "submission_made": false,
+    "output_review": "experiments/E011/deployment/kaggle_output_review.json"
   },
   "experiment_id": "E011",
   "gates": {

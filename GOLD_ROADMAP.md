@@ -59,7 +59,7 @@ E003 shows that risk and signed action are both learnable from legal evidence, b
 
 The official BirdCLEF+ 2026 first-place writeup used an Amphibia/Insecta specialist and a genus specialist, but only inside a diverse ensemble with global CNNs, native Perch, controlled self-training, complementary validation splits, masked restricted-label outputs, and pipeline-specific post-processing. The lesson is not that specialists win by default.
 
-For ROGII, a regime-specialized coefficient expert must have a legal cross-fitted regime definition, sufficient split-local support, bounded action, exact fallback to the strongest verified global path, full-system improvement, stable repeated/spatial/typewell/missingness/tail results, and negative controls that destroy the gain. H015 remains queued until E011's existing output is independently verified and formally decided.
+For ROGII, a regime-specialized coefficient expert must have a legal cross-fitted regime definition, sufficient split-local support, bounded action, exact fallback to the strongest verified global path, full-system improvement, stable repeated/spatial/typewell/missingness/tail results, and negative controls that destroy the gain. E011 deployment is now verified, so H015 is unblocked and becomes the next preregistration target.
 
 ## Score objectives
 
@@ -228,7 +228,7 @@ Measured E009 outcome:
 
 E011/H014 is independently reproduced and statistically promoted. `spline4_ridge_equal_s075` reaches 12.5507562957 RMSE, improves all five maps, all 25 repeated cells, every spatial/typewell holdout, and every registered special slice, with all 21 controls passing. Oracle targets remained training-only inside folds.
 
-The E011 package reconstructs all 142 frozen legal columns across 773 wells, passes 13 edge-case groups and 167 repository tests, and processes the 200-well pseudo-hidden benchmark in about 75–76 seconds with about 353 MB RSS. The canonical notebook has been simplified to run inference and save three outputs, and private dataset `ashok205/rogii-e011-deployment-inputs` version 1 is READY. The remaining gate is the authorized user-run notebook plus basic output review. E006 remains deployment primary and E004 exact fallback. H015 specialist routing must not start before that review.
+The E011 package reconstructs all 142 frozen legal columns across 773 wells, passes 13 edge-case groups and 167 repository tests, and processes the 200-well pseudo-hidden benchmark in about 75–76 seconds with about 353 MB RSS. Saved Kaggle version 1 (`scriptVersionId=337242364`) completed and produced a valid 14,151-row submission with exact sample ID order, finite predictions, a COMPLETE receipt, and three well diagnostics. E011 is now deployment primary, E006 secondary fallback, and E004 exact fallback. H015 is unblocked.
 
 ### July 24–26 — Tabular residual and datum models
 
@@ -315,9 +315,9 @@ These defaults may be revised only through a recorded decision before seeing the
 8. **E008 — Cross-fitted legal residual-action model — completed and rejected 2026-07-19.** Datum-only ridge reaches 14.7951 with improved p90 and useful E007 evidence, but wins only 2/5 maps and 14/25 cells and fails spatial/typewell transfer; no packaging or submission.
 9. **E009 — Residual-model consensus abstention — completed and rejected 2026-07-19.** Majority consensus reaches 14.7935 and wins all maps but only 15/25 cells, repeats spatial/typewell failures, and fails the sign-flipped negative control; no package or submission.
 10. **E010 — Nonlinear candidate coverage and selector regret — completed; rejected for deployment.** Bank oracle 4.7511 proves coverage; legal selector 14.7803 and 17.5 GB RSS fail the frozen contract.
-11. **E011 — Low-dimensional nonlinear coefficient learning — independently reproduced and statistically promoted.** `spline4_ridge_equal_s075` reaches 12.5507562957 RMSE with 5/5 maps, 25/25 cells, positive spatial/typewell/slice transfer, deterministic substantive outputs, and all controls. The exact package and private dataset are prepared, but it is not deployment-ready until the user-run Kaggle outputs pass independent verification.
-12. **E012/T020 — E011 notebook run and output review — active at user-run boundary.** The package, hidden-scale benchmark, simplified canonical notebook, and private dataset version 1 are complete. The user runs the notebook; then `submission.csv`, `e011-run-receipt.json`, and `e011-well-predictions.json` are retrieved and checked for complete rows, correct IDs/order, finite predictions, and readability.
-13. **H015 — Regime-specialized coefficient experts — queued, not started.** Consider only after E012 completes and only under D016's stronger evidence standard.
+11. **E011 — Low-dimensional nonlinear coefficient learning — statistically and operationally promoted; deployment primary.** `spline4_ridge_equal_s075` reaches 12.5507562957 RMSE with 5/5 maps, 25/25 cells, positive spatial/typewell/slice transfer, all controls, and a successful saved Kaggle output review.
+12. **E012/T020 — E011 notebook run and output review — completed 2026-07-23.** Saved version 1 / `scriptVersionId=337242364` completed; all three expected outputs passed row, ID/order, finite-value, and readability checks. No competition submission was made.
+13. **H015 — Regime-specialized coefficient experts — next, unblocked.** Preregister under D016 with legal regimes, sufficient support, cross-fitted routing, bounded action, exact E011 fallback, full subgroup gates, and negative routing controls.
 
 ## Explicitly rejected behavior
 
@@ -344,4 +344,4 @@ Foundation is complete only when:
 - legacy roadmap is preserved;
 - no training run is falsely presented as completed.
 
-Foundation, E010 coverage measurement, E011 statistical verification, runtime packaging, hidden-scale direct benchmarking, canonical notebook authoring, and private dataset upload are complete. The current exact next action is the authorized user-run E011 Kaggle execution followed by retrieval and basic correctness review of the three saved outputs. H015 remains queued and must not start before that review.
+Foundation, E010 coverage measurement, E011 statistical verification, runtime packaging, hidden-scale benchmarking, canonical notebook execution, and saved-output review are complete. E011 is the deployment primary. The current exact next action is to preregister H015 regime-specialized coefficient experts with exact E011 fallback and frozen cross-fitted routing controls.

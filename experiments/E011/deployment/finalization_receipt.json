@@ -1,8 +1,4 @@
 {
-  "schema_version": 2,
-  "status": "PASS",
-  "completed_at_utc": "2026-07-22T18:55:00Z",
-  "operational_policy_decision": "D019",
   "changes": [
     "project-wide Kaggle and experiment instructions simplified",
     "internet, CPU/device/thread, repeated hash, and byte-parity checks removed as default gates",
@@ -10,14 +6,31 @@
     "E011 outputs reduced to submission, run receipt, and well diagnostics",
     "scientific validation and correctness-critical ID/finite/output checks retained"
   ],
+  "completed_at_utc": "2026-07-22T19:50:00Z",
+  "deployment_ready": true,
+  "exact_fallback": "E004",
+  "kaggle_submission_made": false,
+  "notebook_executed": true,
+  "operational_policy_decision": "D019",
+  "output_review": "experiments/E011/deployment/kaggle_output_review.json",
+  "output_review_complete": true,
+  "primary_deployment_model": "E011",
+  "saved_run": {
+    "ref": "ashok205/e011-spline4-deployment-kaggle",
+    "script_version_id": 337242364,
+    "status": "COMPLETE",
+    "version_number": 1
+  },
+  "schema_version": 2,
+  "secondary_fallback": "E006",
+  "status": "PASS_DEPLOYMENT_READY",
+  "submission_made": false,
   "validation": {
     "focused_tests_passed": 31,
     "full_repository_tests_passed": 168,
-    "tracker_sync": "ok",
-    "tracker_validate": "ok",
+    "sqlite_foreign_key_violations": 0,
     "sqlite_integrity": "ok",
-    "sqlite_foreign_key_violations": 0
-  },
-  "notebook_executed": false,
-  "kaggle_submission_made": false
+    "tracker_sync": "ok",
+    "tracker_validate": "ok"
+  }
 }

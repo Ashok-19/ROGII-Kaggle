@@ -13,12 +13,16 @@
       "path": "experiments/E011/deployment/feature_parity.json"
     },
     {
-      "bytes": 814,
+      "bytes": 1256,
       "path": "experiments/E011/deployment/finalization_receipt.json"
     },
     {
-      "bytes": 965,
+      "bytes": 1629,
       "path": "experiments/E011/deployment/kaggle_contract.json"
+    },
+    {
+      "bytes": 1377,
+      "path": "experiments/E011/deployment/kaggle_output_review.json"
     },
     {
       "bytes": 869,

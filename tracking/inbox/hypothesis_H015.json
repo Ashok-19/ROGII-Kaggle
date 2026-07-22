@@ -6,9 +6,9 @@
     "title": "Regime-specialized coefficient experts",
     "statement": "After the E011 notebook run is reviewed, split-local legal regime experts may recover additional nonlinear coefficient accuracy on demonstrably distinct well regimes while a confidence gate falls back exactly to the strongest verified global path.",
     "status": "queued",
-    "priority": 2,
-    "evidence_for": "The official BirdCLEF+ 2026 first-place writeup shows that narrow specialists can add value inside a diverse validated ensemble. E010 shows that ROGII coefficient estimation and aggregation, not candidate coverage, explain 90.46% of selector regret.",
+    "priority": 1,
+    "evidence_for": "The official BirdCLEF+ 2026 first-place writeup shows that narrow specialists can add value inside a diverse validated ensemble. E010 shows that ROGII coefficient estimation and aggregation, not candidate coverage, explain 90.46% of selector regret. E011 saved Kaggle version 1 completed and its outputs passed the basic correctness review, so the deployment prerequisite is now satisfied.",
     "evidence_against": "ROGII E007-E009 show that apparent regimes, model agreement, and aggregate gains can repeat shared spatial/typewell bias. Small regimes invite unstable routing and overfitting.",
-    "next_test": "Do not start before T020 reviews the saved E011 Kaggle outputs. Then preregister legal regime definitions, minimum sample sizes, cross-fitted routing, bounded coefficient actions, exact global fallback, full repeated/spatial/typewell/slice gates, and random/shuffled/sign-flipped routing controls."
+    "next_test": "Now unblocked: preregister the first H015 experiment with legal regime definitions, minimum split-local support, cross-fitted routing, bounded coefficient actions, exact E011 global fallback, full repeated/spatial/typewell/slice gates, and random/shuffled/sign-flipped routing controls."
   }
 }

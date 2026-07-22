@@ -1,0 +1,48 @@
+{
+  "decision": {
+    "deployment_ready": true,
+    "exact_fallback": "E004",
+    "next_research": "H015 regime-specialized coefficient experts",
+    "primary_deployment_model": "E011",
+    "secondary_fallback": "E006",
+    "submission_made": false
+  },
+  "notebook": {
+    "private": true,
+    "ref": "ashok205/e011-spline4-deployment-kaggle",
+    "script_version_id": 337242364,
+    "session_status": "COMPLETE",
+    "url": "https://www.kaggle.com/code/ashok205/e011-spline4-deployment-kaggle?scriptVersionId=337242364",
+    "version_number": 1
+  },
+  "outputs": {
+    "expected": [
+      "submission.csv",
+      "e011-run-receipt.json",
+      "e011-well-predictions.json"
+    ],
+    "finite_prediction_cells": 14151,
+    "prediction_maximum": 12234.20919,
+    "prediction_minimum": 11599.6915,
+    "present_and_readable": true,
+    "sample_id_order_matches": true,
+    "submission_columns": [
+      "id",
+      "tvt"
+    ],
+    "submission_rows": 14151,
+    "unique_ids": 14151,
+    "well_diagnostics_records": 3
+  },
+  "reviewed_at_utc": "2026-07-22T19:50:00Z",
+  "run_receipt": {
+    "ended_at_utc": "2026-07-22T19:43:06.481066+00:00",
+    "kaggle_submission_made": false,
+    "started_at_utc": "2026-07-22T19:43:02.940261+00:00",
+    "status": "COMPLETE",
+    "submission_file_created": true,
+    "wall_seconds": 3.540805
+  },
+  "schema_version": 1,
+  "status": "PASS"
+}

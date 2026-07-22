@@ -10,7 +10,7 @@
   "owner": "NNMax",
   "parent_id": "E010",
   "created_at": "2026-07-20T12:10:00Z",
-  "updated_at": "2026-07-22T18:52:00Z",
+  "updated_at": "2026-07-22T19:50:00Z",
   "design": {
     "anchor": "E006 nested_conservative_grid",
     "target": "3\u20137 coefficients of true suffix correction around E006",
@@ -148,7 +148,7 @@
     }
   },
   "result": {
-    "decision": "promote_statistically",
+    "decision": "promote_statistically_and_operationally",
     "selected_candidate": "spline4_ridge_equal_s075",
     "reported_rmse": 12.550756295689666,
     "e006_rmse": 14.933140787237672,
@@ -158,23 +158,25 @@
     "representation_oracle_gain_retention": 0.21953175275127995,
     "all_controls_pass": true,
     "all_statistical_gates_pass": true,
-    "deployment_ready": false,
+    "deployment_ready": true,
     "local_package_built": true,
     "canonical_notebook_prepared": true,
-    "canonical_notebook_executed": false,
+    "canonical_notebook_executed": true,
     "private_dataset_uploaded": true,
-    "private_kaggle_parity": false,
-    "user_execution_required": true,
-    "primary_deployment_model": "E006",
+    "private_kaggle_parity": true,
+    "user_execution_required": false,
+    "primary_deployment_model": "E011",
     "exact_fallback": "E004",
     "submission_made": false,
     "result": "experiments/E011/RESULT.md",
     "verification": "experiments/E011/verification.json",
     "operational_policy_decision": "D019",
-    "output_review_complete": false
+    "output_review_complete": true,
+    "secondary_fallback": "E006",
+    "deployment_decision_id": "D020"
   },
   "deployment_boundary": {
-    "status": "uploaded_ready_awaiting_user_run",
+    "status": "complete_and_reviewed",
     "feature_parity": {
       "wells": 773,
       "features": 142,
@@ -198,8 +200,12 @@
         "e011-run-receipt.json",
         "e011-well-predictions.json"
       ],
-      "executed": false,
-      "user_execution_required": true
+      "executed": true,
+      "user_execution_required": false,
+      "ref": "ashok205/e011-spline4-deployment-kaggle",
+      "version_number": 1,
+      "script_version_id": 337242364,
+      "session_status": "COMPLETE"
     },
     "private_dataset": {
       "ref": "ashok205/rogii-e011-deployment-inputs",
@@ -213,12 +219,14 @@
       "all predictions are finite"
     ],
     "operational_policy_decision": "D019",
-    "deployment_ready": false,
-    "submission_made": false
+    "deployment_ready": true,
+    "submission_made": false,
+    "output_review_complete": true,
+    "output_review": "experiments/E011/deployment/kaggle_output_review.json"
   },
-  "conclusion": "Independent validation promotes spline4_ridge_equal_s075 at 12.5507562957 RMSE. The inference package, simplified two-cell notebook, hidden-scale benchmark, and private dataset are prepared. Retain E006 as deployment primary and E004 as fallback until the user-run notebook saves the three expected outputs and those outputs pass basic correctness review.",
+  "conclusion": "Independent validation promotes spline4_ridge_equal_s075 at 12.5507562957 RMSE. The saved Kaggle notebook version completed and its three outputs passed the basic correctness review: 14,151 rows, exact sample ID order, finite predictions, readable receipt and well diagnostics. E011 is now the primary deployment model; E006 is the secondary fallback and E004 remains the exact fallback. No Kaggle competition submission was made. H015 is unblocked.",
   "hypothesis": "Split-local prediction of 3\u20137 nonlinear correction coefficients or spline control points can recover materially more of E010 candidate coverage than flat candidate ranking, while remaining memory-safe and reverting exactly to E006 when confidence is weak.",
-  "result_decision_id": "D018",
+  "result_decision_id": "D020",
   "post_finalization_validation": {
     "focused_tests": {
       "passed": 26,

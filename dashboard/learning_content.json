@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-07-22",
+  "updated_at": "2026-07-23",
   "title": "ROGII Competition Learning Lab",
   "subtitle": "A beginner-first visual guide to the data, geology, target, validation, and idea space.",
   "beginner_path": [
@@ -314,8 +314,7 @@
       "visual": "oracle_ladder",
       "summary": "E010 evaluated 130,252 legal whole-well paths on all 773 wells. The bank oracle reaches 4.7511 RMSE, while the best legal visible-prefix selector reaches 14.7803 and retains only about 1.5% of the available oracle gain.",
       "why_it_matters": "Candidate coverage is proven. A chosen-family oracle counterfactual is 5.7075, so family identity explains only 9.5% of the selector gap and coefficient estimation plus aggregation explain 90.5%. The next experiment must predict low-dimensional coefficients/control points and remain memory-safe; adding more flat candidates is not evidence-backed."
-    }
-,
+    },
     {
       "id": "B017",
       "date": "2026-07-22",
@@ -359,16 +358,25 @@
       "evidence": "independent_frozen_commit_reproduction",
       "visual": "deployment_gap",
       "summary": "E011's spline4 ridge coefficient model reproduces at 12.5507562957 RMSE versus E006 at 14.9331407872. It wins all five maps and all 25 repeated cells, improves every spatial/typewell holdout and special slice, and reproduces byte-identical substantive outputs under two threads.",
-      "why_it_matters": "Low-dimensional nonlinear coefficient prediction is now verified statistical evidence rather than an oracle-only lead. The runtime, hidden-scale benchmark, simplified notebook, and private input dataset are prepared; only the authorized user-run notebook and basic output review remain. E006 stays primary until then."
+      "why_it_matters": "Low-dimensional nonlinear coefficient prediction is verified statistical evidence and now the primary deployment path. Saved Kaggle version 1 completed and its outputs passed row, ID/order, finite-value, and readability checks."
     },
     {
       "id": "B022",
       "date": "2026-07-22",
-      "title": "E011 deployment package is sealed and uploaded",
-      "evidence": "local_verified_operational",
+      "title": "E011 deployment is complete",
+      "evidence": "kaggle_verified",
       "visual": "remote_parity",
-      "summary": "The E011 package reconstructs all 142 frozen legal features with zero substantive mismatches. The 200-well direct benchmark covers 970,903 hidden rows in about 75–76 seconds at roughly 353 MB RSS. The canonical notebook now has two code cells and saves three outputs; private dataset ashok205/rogii-e011-deployment-inputs version 1 is READY.",
-      "why_it_matters": "The package, edge cases, and hidden-scale runtime are complete. The user runs the notebook, then the saved submission, run receipt, and well diagnostics are checked for complete rows, correct IDs/order, finite predictions, and readability before E011 can replace E006."
+      "summary": "Saved Kaggle version 1 (scriptVersionId 337242364) completed in 3.54 seconds and produced the three required outputs. The submission has 14,151 unique IDs in exact sample order with finite predictions, plus a COMPLETE receipt and three well diagnostics.",
+      "why_it_matters": "E011 now replaces E006 as deployment primary. E006 remains the secondary fallback and E004 the exact fallback. H015 regime specialization is unblocked; no competition submission was made."
+    },
+    {
+      "id": "B023",
+      "date": "2026-07-23",
+      "title": "The next bottleneck is specialist transfer",
+      "evidence": "decision_recorded",
+      "visual": "risk_action",
+      "summary": "D020 promotes E011 as the global deployment model. The next experiment may test regime-specific coefficient experts only with split-local legal routing and exact E011 fallback.",
+      "why_it_matters": "E007–E009 showed that apparent regimes and agreement can repeat shared bias. H015 must improve the complete system under repeated and spatial/typewell gates, and shuffled or sign-flipped routing must lose the gain."
     }
   ],
   "idea_questions": [
@@ -384,8 +392,8 @@
     },
     {
       "signal": "E011 packaging",
-      "question": "Does the user-run E011 notebook finish and save a valid complete prediction?",
-      "falsifier": "The notebook crashes, an expected output is missing or unreadable, rows or IDs are incomplete or out of order, predictions are non-finite, or runtime exceeds the competition limit."
+      "question": "Can the verified E011 global model be improved safely by regime-specialized coefficient experts?",
+      "falsifier": "A regime lacks split-local support, routing repeats spatial/typewell failures, negative routing controls retain gain, or fallback differs from exact E011."
     },
     {
       "signal": "regime specialists",
@@ -520,9 +528,9 @@
       "url": ""
     },
     {
-      "title": "E011 prepared private Kaggle contract",
-      "local_path": "experiments/E011/deployment/kaggle_contract.json",
-      "url": ""
+      "title": "E011 completed Kaggle output review",
+      "local_path": "experiments/E011/deployment/kaggle_output_review.json",
+      "url": "https://www.kaggle.com/code/ashok205/e011-spline4-deployment-kaggle?scriptVersionId=337242364"
     },
     {
       "title": "E011 private dataset upload receipt",
