@@ -359,7 +359,7 @@
       "evidence": "independent_frozen_commit_reproduction",
       "visual": "deployment_gap",
       "summary": "E011's spline4 ridge coefficient model reproduces at 12.5507562957 RMSE versus E006 at 14.9331407872. It wins all five maps and all 25 repeated cells, improves every spatial/typewell holdout and special slice, and reproduces byte-identical substantive outputs under two threads.",
-      "why_it_matters": "Low-dimensional nonlinear coefficient prediction is now verified statistical evidence rather than an oracle-only lead. The exact runtime, hidden-scale direct benchmark, canonical notebook, and private input dataset are prepared; only the authorized user-run Kaggle outputs and independent verification remain. E006 stays primary until then."
+      "why_it_matters": "Low-dimensional nonlinear coefficient prediction is now verified statistical evidence rather than an oracle-only lead. The runtime, hidden-scale benchmark, simplified notebook, and private input dataset are prepared; only the authorized user-run notebook and basic output review remain. E006 stays primary until then."
     },
     {
       "id": "B022",
@@ -367,8 +367,8 @@
       "title": "E011 deployment package is sealed and uploaded",
       "evidence": "local_verified_operational",
       "visual": "remote_parity",
-      "summary": "Runtime commit e6fbfaa02e8a72dc3c67713da51fe843417cc114 reconstructs all 142 frozen legal features with zero substantive mismatches. Two deterministic 200-well direct runs cover 970,903 hidden rows in about 75–76 seconds at roughly 353 MB RSS. The canonical notebook is statically validated, and private dataset ashok205/rogii-e011-deployment-inputs version 1 is READY.",
-      "why_it_matters": "The packaging, identity, edge-case, and hidden-scale direct-runtime gates are complete without using train-only labels or executing the canonical notebook. The user must run the private internet-disabled notebook, after which every output must be downloaded and independently verified before E011 can replace E006."
+      "summary": "The E011 package reconstructs all 142 frozen legal features with zero substantive mismatches. The 200-well direct benchmark covers 970,903 hidden rows in about 75–76 seconds at roughly 353 MB RSS. The canonical notebook now has two code cells and saves three outputs; private dataset ashok205/rogii-e011-deployment-inputs version 1 is READY.",
+      "why_it_matters": "The package, edge cases, and hidden-scale runtime are complete. The user runs the notebook, then the saved submission, run receipt, and well diagnostics are checked for complete rows, correct IDs/order, finite predictions, and readability before E011 can replace E006."
     }
   ],
   "idea_questions": [
@@ -384,8 +384,8 @@
     },
     {
       "signal": "E011 packaging",
-      "question": "Do the authorized user-run private Kaggle outputs satisfy the sealed E011 source, model, ID, and output contract?",
-      "falsifier": "Any expected output is missing; source, model, bundle, ID/order, schema, hash, thread, internet, finite-value, runtime, or memory checks fail; or downloaded output cannot be independently reproduced from the sealed contract."
+      "question": "Does the user-run E011 notebook finish and save a valid complete prediction?",
+      "falsifier": "The notebook crashes, an expected output is missing or unreadable, rows or IDs are incomplete or out of order, predictions are non-finite, or runtime exceeds the competition limit."
     },
     {
       "signal": "regime specialists",

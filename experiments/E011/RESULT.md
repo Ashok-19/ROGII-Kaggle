@@ -52,12 +52,12 @@ The legal feature table contains 773 wells and 142 features. No forbidden hidden
 
 ## Deployment and submission
 
-The runtime/model boundary is committed at `e6fbfaa02e8a72dc3c67713da51fe843417cc114`. All 142 legal features match the frozen E008 table across 773 wells with zero substantive mismatches. Thirteen edge-case groups and the 167-test repository suite pass. Two deterministic 200-well pseudo-hidden direct runs score 970,903 hidden rows in 74.97 and 76.44 seconds with at most 361,752 KB RSS and identical SHA-256 `12556650...3b56`.
+The packaged E011 inference path reconstructs all 142 legal features across 773 wells, passes 13 edge-case groups and the 167-test repository suite, and processes the 200-well pseudo-hidden benchmark in about 75–76 seconds using about 353 MB RSS.
 
-The canonical private CPU notebook is `notebooks/training_and_submission/e011_spline4_deployment_kaggle.ipynb`, SHA-256 `63f299fc...e9e9`. It has four statically compiled code cells, internet disabled, two-thread caps, fail-closed archive/data/output checks, and no submission operation. The private input dataset `ashok205/rogii-e011-deployment-inputs` version 1 is READY; its sealed bundle SHA-256 is `15a82b9e...66a2`.
+The canonical notebook is `notebooks/training_and_submission/e011_spline4_deployment_kaggle.ipynb`. It now contains two code cells: one small contract cell and one inference cell. It locates the attached bundle and competition data, runs inference, and writes `submission.csv`, `e011-run-receipt.json`, and `e011-well-predictions.json`. It does not check internet state, CPU/device/thread settings, hashes, training signatures, or local/Kaggle byte parity. Private dataset `ashok205/rogii-e011-deployment-inputs` version 1 is READY.
 
-The canonical notebook has **not** been executed. The user is the only authorized notebook runner. Therefore private Kaggle parity remains false, E011 remains not deployment-ready, E006 remains primary, E004 remains exact fallback, and no Kaggle competition submission has been made.
+The canonical notebook has **not** been executed. The user is the only authorized notebook runner. E011 remains not deployment-ready until the saved outputs are retrieved and checked for complete rows, IDs/order, finite predictions, and readability. E006 remains primary, E004 remains exact fallback, and no Kaggle competition submission has been made.
 
 ## Next action
 
-The user imports the canonical notebook, manually attaches private dataset version 1 and the ROGII competition data, keeps internet disabled, runs all cells, and supplies the exact notebook owner/slug/version. Then list, download, hash, parse, and independently verify all five expected outputs before changing deployment status. Do not start H015 specialist routing before that decision.
+The user imports the canonical notebook, attaches private dataset version 1 and the ROGII competition data, runs all cells, saves a notebook version, and supplies the owner/slug/version. Then retrieve and inspect the three expected outputs. Do not start H015 specialist routing before that result is reviewed.

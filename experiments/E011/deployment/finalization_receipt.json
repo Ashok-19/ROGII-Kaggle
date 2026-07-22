@@ -1,42 +1,23 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "status": "PASS",
-  "completed_at_utc": "2026-07-22T18:27:00Z",
-  "sealed_runtime_source_commit": "e6fbfaa02e8a72dc3c67713da51fe843417cc114",
-  "uploaded_dataset": {
-    "ref": "ashok205/rogii-e011-deployment-inputs",
-    "version": 1,
-    "status": "READY",
-    "bundle_sha256": "15a82b9eee1b13d126c9e57b6402c1b307b89238718f0f292eca7773321f66a2"
+  "completed_at_utc": "2026-07-22T18:55:00Z",
+  "operational_policy_decision": "D019",
+  "changes": [
+    "project-wide Kaggle and experiment instructions simplified",
+    "internet, CPU/device/thread, repeated hash, and byte-parity checks removed as default gates",
+    "E011 notebook reduced to two code cells",
+    "E011 outputs reduced to submission, run receipt, and well diagnostics",
+    "scientific validation and correctness-critical ID/finite/output checks retained"
+  ],
+  "validation": {
+    "focused_tests_passed": 31,
+    "full_repository_tests_passed": 168,
+    "tracker_sync": "ok",
+    "tracker_validate": "ok",
+    "sqlite_integrity": "ok",
+    "sqlite_foreign_key_violations": 0
   },
-  "canonical_notebook": {
-    "path": "notebooks/training_and_submission/e011_spline4_deployment_kaggle.ipynb",
-    "sha256": "63f299fcf069bbcdf6a8f17c7e66f0e88b1ff7f238a1b0e5b13934d353f5e9e9",
-    "executed": false,
-    "user_execution_required": true,
-    "assistant_execution_authorized": false
-  },
-  "tracker_sync": "ok",
-  "tracker_validate": "ok",
-  "tracker_warning": "unknown-license notebook inputs remain quarantined",
-  "sqlite_integrity": "ok",
-  "sqlite_foreign_key_violations": 0,
-  "focused_tests": {
-    "command": "python3.12 -m unittest tests.test_e011_inference tests.test_e011_kaggle_packaging tests.test_dashboard_learning",
-    "passed": 30,
-    "failed": 0,
-    "errors": 0,
-    "wall_seconds": 0.691
-  },
-  "full_repository_tests": {
-    "command": "python3.12 -m unittest discover -s tests",
-    "passed": 167,
-    "failed": 0,
-    "errors": 0,
-    "wall_seconds": 75.432
-  },
-  "private_kaggle_parity": false,
-  "deployment_ready": false,
-  "kaggle_submission_authorized": false,
+  "notebook_executed": false,
   "kaggle_submission_made": false
 }

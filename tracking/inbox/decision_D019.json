@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-22T18:50:00Z",
+  "payload": {
+    "decision_id": "D019",
+    "decided_at": "2026-07-23",
+    "title": "Use outcome-focused experiment operations",
+    "decision": "Across all experiments and Kaggle notebooks, require only the checks needed to obtain a correct, readable result: required inputs, visible failures, expected rows and IDs, finite predictions, saved outputs, and experiment-specific scientific controls. Internet state, CPU or accelerator checks, thread-pool checks, repeated hashes, exact byte parity, environment inventories, and verbose manifests are not default gates.",
+    "rationale": "The prior workflow overcommitted effort to operational ceremony that did not improve model quality or the ability to produce a valid output. The new policy keeps scientific validation strict while making execution and output retrieval simple.",
+    "source_ids": "user_direction,AGENTS.md,PROJECT_WORKFLOW.md,KAGGLE_NOTEBOOK_RUNBOOK.md,MEMORY.md,T020",
+    "revisit_trigger": "Add a specific operational check only after a demonstrated failure shows that the check prevents an incorrect or unusable result."
+  }
+}

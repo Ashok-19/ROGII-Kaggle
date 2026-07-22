@@ -22,7 +22,7 @@ Use a fixed small well set only to find crashes, leakage, ID/order errors, NaNs,
 
 ## 4A. Place compute deliberately
 
-Keep local execution to at most two CPU threads. Run only source checks, unit/contract tests, deterministic packaging, and tiny smokes locally. Prepare a bounded private Kaggle notebook for workflows expected to exceed roughly 15 minutes or materially stress local memory/I/O. Follow `KAGGLE_NOTEBOOK_RUNBOOK.md`: exact committed SHA, hash-sealed input dataset version, manual exact attachment, internet disabled, fail-closed preflight, fixed output filenames, and independent downloaded-output verification.
+Use local compute for convenient development and Kaggle when a run is heavy or easier to execute there. Do not create fixed internet, CPU, accelerator, thread, hash, or environment gates unless the experiment has a concrete reason for them. The notebook needs the required inputs, runnable code, visible failures, and saved outputs.
 
 ## 5. Run controls
 
@@ -42,9 +42,9 @@ Use only frozen thresholds:
 
 Never relabel a failed run, route by observed validation subgroups, or alter history. A changed hypothesis receives a new ID.
 
-## 8. Package and parity-test
+## 8. Package and run
 
-Build one canonical offline notebook from approved hash-sealed inputs only. Verify no internet, at most two CPU threads unless a separately approved accelerator workflow requires otherwise, exact sample IDs/order, finite predictions, artifact hashes, deterministic inference, runtime below the 8-hour target / 9-hour hard limit, and local/Kaggle parity. A `COMPLETE` notebook is not accepted until expected outputs are listed, downloaded, hashed, parsed, and independently checked.
+Build one canonical notebook with the code and inputs needed for the experiment. Run it successfully and save the primary outputs. Verify exact sample IDs/order, finite predictions, complete row coverage, and readable output files. Retrieve and parse the outputs before updating the experiment decision. Do not require internet state, CPU/device checks, repeated hashes, or exact local/Kaggle byte parity unless a demonstrated issue makes one of them necessary.
 
 ## 9. Submit deliberately
 

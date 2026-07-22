@@ -1,8 +1,8 @@
 # ROGII Gold Medal Roadmap
 
-Updated: 2026-07-22
+Updated: 2026-07-23
 Final deadline: 2026-08-05 23:59 UTC / 2026-08-06 05:29 Asia/Kolkata  
-Time remaining at update: 14 days
+Time remaining at update: 13 days
 
 ## Objective and reality check
 
@@ -12,7 +12,7 @@ The public board is not the final objective. Private-leaderboard robustness, leg
 
 ## Standing public-intelligence loop
 
-At each session start and before major preregistration or promotion, inspect New/Recent discussions and newly run/high-vote notebooks since the timestamp in `tracking/seed.json`. Source-audit exact code, dependencies, outputs and hashes; archive material deltas by evidence class. Participant claims and notebook scores generate hypotheses only.
+At each session start and before major preregistration or promotion, inspect New/Recent discussions and newly run/high-vote notebooks since the timestamp in `tracking/seed.json`. Source-audit code, dependencies, outputs, provenance, and licenses; archive material deltas by evidence class. Participant claims and notebook scores generate hypotheses only.
 
 ## Foundation status
 
@@ -130,12 +130,12 @@ Targets to compare:
 
 ### Layer E — deployment
 
-- Offline notebook, approved inputs only.
-- Deterministic seeds and bounded parallelism.
-- Artifact hashes and manifest.
-- Exact ID/order audit and finite-prediction checks.
-- Runtime target below 8 hours; hard competition limit 9 hours.
-- Local/Kaggle inference parity test.
+- One runnable notebook with the required inputs.
+- Visible errors and a small run receipt.
+- Exact ID/order audit, complete row coverage, and finite-prediction checks.
+- Primary output files saved under `/kaggle/working`.
+- Runtime within the competition limit.
+- No default internet, CPU/device/thread, hash, or byte-parity gate.
 
 ## Seventeen-day execution plan
 
@@ -228,7 +228,7 @@ Measured E009 outcome:
 
 E011/H014 is independently reproduced and statistically promoted. `spline4_ridge_equal_s075` reaches 12.5507562957 RMSE, improves all five maps, all 25 repeated cells, every spatial/typewell holdout, and every registered special slice, with all 21 controls passing. Oracle targets remained training-only inside folds.
 
-The exact E011 inference runtime is committed at `e6fbfaa02e8a72dc3c67713da51fe843417cc114`. Feature reconstruction matches all 142 frozen legal columns across 773 wells, 13 edge-case groups and 167 repository tests pass, and two direct 200-well pseudo-hidden runs cover 970,903 hidden rows in about 75–76 seconds with about 353 MB RSS and deterministic output. The canonical notebook is statically validated and private dataset `ashok205/rogii-e011-deployment-inputs` version 1 is READY. The remaining exit gate is the authorized user-run private Kaggle execution plus independent output retrieval and verification. E006 remains deployment primary and E004 exact fallback. H015 specialist routing must not start before that decision.
+The E011 package reconstructs all 142 frozen legal columns across 773 wells, passes 13 edge-case groups and 167 repository tests, and processes the 200-well pseudo-hidden benchmark in about 75–76 seconds with about 353 MB RSS. The canonical notebook has been simplified to run inference and save three outputs, and private dataset `ashok205/rogii-e011-deployment-inputs` version 1 is READY. The remaining gate is the authorized user-run notebook plus basic output review. E006 remains deployment primary and E004 exact fallback. H015 specialist routing must not start before that review.
 
 ### July 24–26 — Tabular residual and datum models
 
@@ -265,29 +265,29 @@ Deliverables:
 
 Exit gate: both families pass controls and differ materially in residual structure.
 
-### August 2–3 — Kaggle parity and measured submissions
+### August 2–3 — Kaggle runs and measured submissions
 
 Deliverables:
 
-- Offline inference notebooks for finalists.
-- Runtime/memory profile and artifact audit.
+- Runnable inference notebooks for finalists.
+- Saved submissions plus concise run receipts.
 - One submission per discriminating question, all recorded in the dashboard.
 - Compare local/public score pairs without changing historical thresholds.
 
-Exit gate: reproducible `submission.csv`, runtime below target, and no unapproved dependency.
+Exit gate: complete, readable `submission.csv` with correct IDs/order and finite predictions, runtime within the competition limit, and no unapproved dependency.
 
 ### August 4 — Freeze
 
 - Stop broad feature/model exploration.
 - Re-run finalists from clean state.
-- Verify hashes, fold evidence, score history, and selected final slots.
+- Verify fold evidence, saved outputs, score history, and selected final slots.
 - Prepare winner documentation outline and environment lock.
 
 ### August 5 — Finalize
 
 - Select up to two final submissions: one public-proven family and one decorrelated private-expectation family.
 - Confirm Kaggle final selection before 23:59 UTC.
-- Archive exact code, notebook version, artifacts, hashes, and decision rationale.
+- Archive the code, notebook version, primary outputs, and decision rationale.
 
 ## Promotion thresholds
 
@@ -299,7 +299,7 @@ Thresholds must be filled in each manifest before the run. Default starting poli
 - No worst-5% SSE share increase greater than 2 percentage points without a specific mitigation.
 - Positive control passes; no-op/duplicate changes remain within numerical tolerance; shuffled evidence loses its gain.
 - Harsher-split result is directionally consistent or the component is explicitly excluded from the private-expectation family.
-- Final notebook parity passes and runtime is below 8 hours target.
+- Final notebook completes, saves the expected outputs, and stays within the competition runtime limit.
 
 These defaults may be revised only through a recorded decision before seeing the result they govern.
 
@@ -316,7 +316,7 @@ These defaults may be revised only through a recorded decision before seeing the
 9. **E009 — Residual-model consensus abstention — completed and rejected 2026-07-19.** Majority consensus reaches 14.7935 and wins all maps but only 15/25 cells, repeats spatial/typewell failures, and fails the sign-flipped negative control; no package or submission.
 10. **E010 — Nonlinear candidate coverage and selector regret — completed; rejected for deployment.** Bank oracle 4.7511 proves coverage; legal selector 14.7803 and 17.5 GB RSS fail the frozen contract.
 11. **E011 — Low-dimensional nonlinear coefficient learning — independently reproduced and statistically promoted.** `spline4_ridge_equal_s075` reaches 12.5507562957 RMSE with 5/5 maps, 25/25 cells, positive spatial/typewell/slice transfer, deterministic substantive outputs, and all controls. The exact package and private dataset are prepared, but it is not deployment-ready until the user-run Kaggle outputs pass independent verification.
-12. **E012/T020 — E011 packaging and final Kaggle offline parity — active at user-run boundary.** Runtime commit `e6fbfaa0`, hidden-scale direct benchmark, canonical notebook, and private dataset version 1 are complete. The user must run the notebook; then all five outputs must be downloaded and independently verified without submitting.
+12. **E012/T020 — E011 notebook run and output review — active at user-run boundary.** The package, hidden-scale benchmark, simplified canonical notebook, and private dataset version 1 are complete. The user runs the notebook; then `submission.csv`, `e011-run-receipt.json`, and `e011-well-predictions.json` are retrieved and checked for complete rows, correct IDs/order, finite predictions, and readability.
 13. **H015 — Regime-specialized coefficient experts — queued, not started.** Consider only after E012 completes and only under D016's stronger evidence standard.
 
 ## Explicitly rejected behavior
@@ -344,4 +344,4 @@ Foundation is complete only when:
 - legacy roadmap is preserved;
 - no training run is falsely presented as completed.
 
-Foundation, E010 coverage measurement, E011 statistical verification, runtime packaging, hidden-scale direct benchmarking, canonical notebook authoring, and private dataset upload are complete. The current exact next action is the authorized user-run E011 private Kaggle execution followed by exact output inventory, download, hashing, parsing, and independent parity verification. H015 remains queued and must not start before that decision.
+Foundation, E010 coverage measurement, E011 statistical verification, runtime packaging, hidden-scale direct benchmarking, canonical notebook authoring, and private dataset upload are complete. The current exact next action is the authorized user-run E011 Kaggle execution followed by retrieval and basic correctness review of the three saved outputs. H015 remains queued and must not start before that review.

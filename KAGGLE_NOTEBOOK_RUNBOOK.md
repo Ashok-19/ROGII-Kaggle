@@ -1,98 +1,72 @@
-# ROGII Private Kaggle Notebook Runbook
+# ROGII Kaggle Notebook Runbook
 
-This runbook adapts the verified private-notebook workflow from the PTCG repository to ROGII. Repository code, frozen configuration, input hashes, and downloaded raw outputs remain the source of truth. A notebook status of `COMPLETE` is not evidence until every expected output is listed, downloaded, hashed, parsed, and checked.
+The purpose of a Kaggle notebook is to run an experiment or inference job successfully and save the outputs needed for evaluation or submission.
 
-## Compute placement
+## Default workflow
 
-- **Local machine:** source edits, metadata inspection, deterministic bundle construction, unit/contract tests, tiny smoke cases, packaging, and output verification.
-- **Local resource ceiling:** do not start a workflow that needs more than two CPU threads. Set `OMP_NUM_THREADS`, `OPENBLAS_NUM_THREADS`, `MKL_NUM_THREADS`, `NUMEXPR_NUM_THREADS`, `VECLIB_MAXIMUM_THREADS`, and `BLIS_NUM_THREADS` to at most `2`. Tree models must use `n_jobs <= 2`.
-- **Private Kaggle notebook:** any workflow expected to take more than roughly 15 minutes, consume substantial memory/I/O, or benefit from remote compute. E010 full validation belongs here.
-- **Kaggle submission:** never create one without explicit user authorization.
+1. Prepare one runnable notebook and the data/model files it needs.
+2. Attach the required dataset and competition data.
+3. Run all cells.
+4. Confirm the notebook completed without an exception.
+5. Confirm the primary output files exist and can be opened.
+6. Record the notebook reference/version and retrieve the outputs.
 
-## Required state before a Kaggle run
+Do not add operational checks unless they prevent a realistic failure that would make the result wrong or unusable.
 
-No heavy notebook is ready until all of the following are fixed and recorded:
+## Required checks
 
-1. an exact committed Git SHA and explicit dirty-state statement;
-2. one resolved configuration and SHA-256;
-3. exact source, fold, parent-artifact, and data identity hashes;
-4. a unique run ID and declared question;
-5. accelerator, internet, CPU-thread, wall-time, memory, and output caps;
-6. fail-closed stop conditions;
-7. one canonical private input dataset reference and integer version;
-8. one canonical local notebook path;
-9. expected output filenames and schemas;
-10. a retrieval and independent-verification procedure.
+A notebook should check only what is necessary for correctness:
 
-Notebook-only algorithm logic is forbidden. The notebook must import the exact hash-sealed `src/` package from the prepared input bundle. Rebuild and republish the bundle whenever any included source, config, fold, or parent artifact changes.
+- required input files and directories exist;
+- the competition test data and sample submission can be located;
+- prediction rows match the sample-submission IDs and order;
+- predictions are finite;
+- required output files are written successfully;
+- exceptions are visible and, when practical, summarized in a small failure receipt.
 
-## Canonical dataset and notebook policy
+These checks protect the result itself. They should remain simple and actionable.
 
-- Reuse one private dataset record per stable input role; publish new integer versions rather than creating a new dataset slug for every retry.
-- Store sealed archive bytes with a neutral extension such as `.zip.bin` so Kaggle does not auto-extract or rewrite them.
-- The archive must contain a machine-readable manifest with every relative path, byte count, and SHA-256.
-- The notebook must reject missing, duplicate, extra, size-mismatched, or hash-mismatched inputs before importing project code.
-- Automatic dataset/model attachment through notebook APIs is not trusted. The user manually attaches the exact prepared dataset version and competition data in the Kaggle UI.
-- Keep one canonical notebook file and update it in place after source changes.
+## Checks that are not required by default
+
+Do not block a run merely because of:
+
+- internet state;
+- CPU, GPU, accelerator, or native thread-pool details;
+- Python/platform/version differences that do not cause an actual incompatibility;
+- repeated SHA-256, byte-count, archive-member, or source-identity verification;
+- exact local-versus-Kaggle byte equality;
+- verbose manifests, environment inventories, or redundant receipts.
+
+Use one of these only when a specific experiment has demonstrated that the condition materially affects correctness.
+
+## Packaging
+
+Prefer the simplest reliable packaging method:
+
+- a normal Kaggle dataset containing the required code/model files;
+- a compact archive when many files must stay together;
+- one canonical notebook per experiment or inference path.
+
+The notebook may load packaged project code, but it does not need to prove the identity of every file before running. Rebuild or update the package when the implementation changes.
 
 ## User and assistant responsibilities
 
-The assistant prepares and verifies:
+The assistant prepares the notebook, required dataset files, and concise run instructions. The assistant does not run a Kaggle notebook unless the user explicitly authorizes it.
 
-- the canonical local notebook;
-- the minimal private input dataset staging directory and dataset version;
-- exact dataset/competition attachments and runtime settings;
-- fail-closed preflight, execution, output archive, and manifests;
-- post-run status inspection, output listing, download, hashing, schema validation, evidence updates, and continuation.
+The user imports or opens the notebook, attaches the required inputs, runs it, and saves a notebook version. Afterward, the user provides the notebook owner, slug, and version when output retrieval is needed.
 
-The user performs only the platform actions that cannot be completed reliably through the API:
+## Output retrieval
 
-1. import the prepared local notebook into a private Kaggle notebook;
-2. attach the exact private dataset version and the ROGII competition data;
-3. select the specified accelerator and keep internet disabled;
-4. run all cells and provide the notebook reference/version after completion.
+After a run:
 
-The user should not recreate bundles, paste large source blocks, or manually download result files.
+1. verify the notebook completed;
+2. list the notebook output files;
+3. retrieve the primary result files;
+4. parse them and check rows, IDs, finite values, and the experiment-specific metric or result;
+5. update the experiment record.
 
-## Fail-closed notebook requirements
+Missing or malformed output is a reason to fix and rerun the notebook. A hash mismatch, device difference, or environment difference is not a failure unless it caused an incorrect result.
 
-Every notebook must:
+## Submissions
 
-- set all CPU thread controls before importing NumPy/scikit-learn;
-- use at most two threads and verify the active native thread pools where possible;
-- verify the sealed input archive hash and every manifest entry;
-- locate official competition data without assuming a mount slug, then verify the frozen data signature and well count;
-- record Python, NumPy, scikit-learn, platform, CPU count, thread limits, accelerator, and internet expectation;
-- write all durable outputs under `/kaggle/working`;
-- emit a compact top-level run receipt and a downloadable result archive;
-- include exact Git/config/input/output hashes, start/end UTC times, wall time, status, selected/reported candidate, controls, and runtime/memory metrics;
-- raise on any missing output, failed control, non-finite value, malformed ID/order, hash mismatch, or uncaught exception.
-
-A failed notebook must still preserve a compact failure receipt when possible. It must never silently substitute E006, alter E010 thresholds, add candidates, or continue after an identity failure.
-
-## Proven output-retrieval procedure
-
-After the user runs the notebook:
-
-1. verify the exact notebook version and require status `COMPLETE`;
-2. call `kaggle_list_notebook_files` and require every expected filename;
-3. call `kaggle_download_notebook_output` with owner, slug, exact version, and exact file path;
-4. download the returned signed URL immediately because it is short-lived;
-5. store raw outputs only under ignored `scratch/` or private paths;
-6. verify bytes, SHA-256, archive members, schemas, source identity, runtime/device, controls, and metrics;
-7. independently reproduce deterministic summaries before changing an experiment verdict;
-8. if a filename is absent, rerun the canonical notebook instead of repeatedly requesting a 404 output.
-
-## E010 canonical heavy run
-
-- Notebook: `notebooks/training_and_submission/e010_candidate_selector_kaggle.ipynb`
-- Builder: `tools/build_e010_kaggle.py`
-- Code SHA for input version 1: `fa21e2951a700aeeff355e1cf439c55abc3ab408` or a later explicitly resealed operational commit.
-- Runtime: private Kaggle CPU notebook; internet disabled; CPU threads capped at `2`; no GPU required.
-- Frozen statistical wall-time gate: 60 minutes.
-- Expected top-level outputs:
-  - `e010-run-receipt.json`
-  - `e010-output-manifest.json`
-  - `rogii-e010-results-v1.zip`
-
-The notebook is accepted only after those files are listed and independently verified. No Kaggle competition submission is authorized by an E010 validation run.
+Creating an output named `submission.csv` is allowed as part of inference. Sending it to the competition still requires explicit user authorization.

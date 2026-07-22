@@ -2,9 +2,9 @@
 """Build the E011 model, sealed private input dataset, and canonical notebook.
 
 This tool never executes the notebook and never creates a Kaggle competition
-submission.  It performs deterministic model fitting, committed-source
-packaging, hash verification, notebook authoring, and static code-cell checks.
-The user alone imports, attaches, and runs the notebook on Kaggle.
+submission. It can fit the E011 model, package the files needed for inference,
+author the notebook, and perform a small static syntax check. The user alone
+imports, attaches, and runs the notebook on Kaggle.
 """
 from __future__ import annotations
 
@@ -13,24 +13,12 @@ import hashlib
 import io
 import json
 import math
-import os
 import shutil
 import subprocess
 import sys
 import zipfile
 from pathlib import Path, PurePosixPath
 from typing import Any, Mapping, Sequence
-
-for _name in (
-    "OMP_NUM_THREADS",
-    "OPENBLAS_NUM_THREADS",
-    "MKL_NUM_THREADS",
-    "NUMEXPR_NUM_THREADS",
-    "VECLIB_MAXIMUM_THREADS",
-    "BLIS_NUM_THREADS",
-):
-    os.environ[_name] = "2"
-os.environ["JOBLIB_MULTIPROCESSING"] = "0"
 
 import numpy as np
 
@@ -50,15 +38,10 @@ BUNDLE_FILENAME = "rogii-e011-deployment-inputs-v1.zip.bin"
 INPUT_RECEIPT_FILENAME = "e011-input-receipt-v1.json"
 NOTEBOOK_PATH = Path("notebooks/training_and_submission/e011_spline4_deployment_kaggle.ipynb")
 CONTRACT_PATH = Path("experiments/E011/deployment/kaggle_contract.json")
-RESULT_ARCHIVE_FILENAME = "rogii-e011-deployment-results-v1.zip"
-OUTPUT_MANIFEST_FILENAME = "e011-output-manifest.json"
 RUN_RECEIPT_FILENAME = "e011-run-receipt.json"
 WELL_DIAGNOSTICS_FILENAME = "e011-well-predictions.json"
 SUBMISSION_FILENAME = "submission.csv"
-THREAD_LIMIT = 2
 FIXED_ZIP_TIME = (1980, 1, 1, 0, 0, 0)
-TRAIN_WELLS = 773
-TRAIN_SIGNATURE = "6ebe65b403f80fefd97dcd7bbfce7314252e779a1837c97364cf55761590fe77"
 
 
 def sha256_bytes(payload: bytes) -> str:
@@ -305,30 +288,25 @@ def prepare_model(root: Path) -> dict[str, Any]:
 
 
 def bundle_paths(root: Path) -> tuple[str, ...]:
-    package = sorted(path.relative_to(root).as_posix() for path in (root / "src/rogii_validation").glob("*.py"))
-    fixed = [
-        "tools/run_e011_inference.py",
-        "experiments/E011/config.json",
-        "experiments/E011/manifest.json",
-        "experiments/E011/verification.json",
-        "experiments/E011/deployment/model.json",
-        "experiments/E011/deployment/model_fit_receipt.json",
-        "experiments/E011/deployment/feature_parity.json",
-        "experiments/E011/deployment/edge_case_receipt.json",
-        "experiments/E011/deployment/pseudo_hidden_benchmark.json",
-        "experiments/E011/deployment/validation_receipt.json",
-    ]
-    return tuple(dict.fromkeys([*package, *fixed]))
+    package = sorted(
+        path.relative_to(root).as_posix()
+        for path in (root / "src/rogii_validation").glob("*.py")
+    )
+    return tuple([*package, "experiments/E011/deployment/model.json"])
 
 
-def committed_entries(root: Path, source_commit: str, paths: Sequence[str]) -> tuple[list[dict[str, Any]], dict[str, bytes]]:
+def committed_entries(
+    root: Path,
+    source_commit: str,
+    paths: Sequence[str],
+) -> tuple[list[dict[str, Any]], dict[str, bytes]]:
     entries: list[dict[str, Any]] = []
     payloads: dict[str, bytes] = {}
     for relative in paths:
         safe_member_name(relative)
         payload = git_bytes(root, source_commit, relative)
         payloads[relative] = payload
-        entries.append({"path": relative, "bytes": len(payload), "sha256": sha256_bytes(payload)})
+        entries.append({"path": relative, "bytes": len(payload)})
     return entries, payloads
 
 
@@ -346,327 +324,137 @@ def write_bundle(path: Path, manifest: Mapping[str, Any], payloads: Mapping[str,
 
 def notebook_payload(contract: Mapping[str, Any]) -> dict[str, Any]:
     constants_source = "CONTRACT = " + json.dumps(contract, indent=2, sort_keys=True) + "\n"
-    preflight = r'''import datetime as _dt
-import hashlib
+    run_source = r'''import datetime as _dt
 import importlib
 import json
-import os
-import platform
 import shutil
 import sys
 import traceback
 import zipfile
 from pathlib import Path, PurePosixPath
 
-for _name in (
-    "OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS",
-    "NUMEXPR_NUM_THREADS", "VECLIB_MAXIMUM_THREADS", "BLIS_NUM_THREADS",
-):
-    os.environ[_name] = str(CONTRACT["THREAD_LIMIT"])
-os.environ["JOBLIB_MULTIPROCESSING"] = "0"
-
 WORKING = Path("/kaggle/working")
 RUNTIME_ROOT = WORKING / "rogii-e011-runtime"
-PREFLIGHT_PATH = WORKING / "e011-preflight.json"
 RUN_RECEIPT_PATH = WORKING / CONTRACT["RUN_RECEIPT_FILENAME"]
 SUBMISSION_PATH = WORKING / CONTRACT["SUBMISSION_FILENAME"]
 WELL_DIAGNOSTICS_PATH = WORKING / CONTRACT["WELL_DIAGNOSTICS_FILENAME"]
+STARTED_AT = _dt.datetime.now(_dt.timezone.utc)
 
 
-def _sha256(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        while True:
-            block = handle.read(16 * 1024 * 1024)
-            if not block:
-                break
-            digest.update(block)
-    return digest.hexdigest()
-
-
-def _safe(name: str) -> str:
+def _safe_member(name: str) -> str:
     raw = str(name).replace("\\", "/")
-    raw_parts = raw.split("/")
     value = PurePosixPath(raw)
-    if value.is_absolute() or not raw or any(part in {"", ".", ".."} for part in raw_parts) or not value.parts:
-        raise RuntimeError(f"unsafe archive member {name!r}")
+    if value.is_absolute() or not raw or any(part in {"", ".", ".."} for part in value.parts):
+        raise RuntimeError(f"unsafe archive member: {name!r}")
     return value.as_posix()
 
 
 def _write_failure(stage: str, exc: BaseException) -> None:
-    failure = {
-        "schema_version": 1,
-        "experiment_id": "E011",
+    payload = {
         "status": "FAILED",
         "stage": stage,
-        "source_commit": CONTRACT["SOURCE_COMMIT"],
-        "failed_at_utc": _dt.datetime.now(_dt.timezone.utc).isoformat(),
         "error_type": type(exc).__name__,
         "error": str(exc),
+        "failed_at_utc": _dt.datetime.now(_dt.timezone.utc).isoformat(),
         "traceback": traceback.format_exc(),
-        "submission_made": False,
+        "kaggle_submission_made": False,
     }
-    RUN_RECEIPT_PATH.write_text(json.dumps(failure, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    RUN_RECEIPT_PATH.write_text(
+        json.dumps(payload, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+
 
 try:
     bundle_matches = sorted(Path("/kaggle/input").rglob(CONTRACT["BUNDLE_FILENAME"]))
-    receipt_matches = sorted(Path("/kaggle/input").rglob(CONTRACT["INPUT_RECEIPT_FILENAME"]))
-    if len(bundle_matches) != 1 or len(receipt_matches) != 1:
-        raise RuntimeError({
-            "bundle_matches": [str(path) for path in bundle_matches],
-            "receipt_matches": [str(path) for path in receipt_matches],
-        })
-    BUNDLE_PATH = bundle_matches[0]
-    INPUT_RECEIPT_PATH = receipt_matches[0]
-    if BUNDLE_PATH.stat().st_size != int(CONTRACT["BUNDLE_BYTES"]) or _sha256(BUNDLE_PATH) != CONTRACT["BUNDLE_SHA256"]:
-        raise RuntimeError("sealed E011 bundle identity mismatch")
-    if _sha256(INPUT_RECEIPT_PATH) != CONTRACT["INPUT_RECEIPT_SHA256"]:
-        raise RuntimeError("E011 input receipt identity mismatch")
-    input_receipt = json.loads(INPUT_RECEIPT_PATH.read_text(encoding="utf-8"))
-    if (
-        input_receipt["dataset"]["ref"] != CONTRACT["DATASET_REF"]
-        or int(input_receipt["dataset"]["version"]) != int(CONTRACT["DATASET_VERSION"])
-    ):
-        raise RuntimeError("attached E011 dataset ref/version differs from notebook contract")
+    if len(bundle_matches) != 1:
+        raise RuntimeError({"bundle_matches": [str(path) for path in bundle_matches]})
+    bundle_path = bundle_matches[0]
 
     if RUNTIME_ROOT.exists():
         shutil.rmtree(RUNTIME_ROOT)
     RUNTIME_ROOT.mkdir(parents=True)
-    with zipfile.ZipFile(BUNDLE_PATH) as archive:
+    with zipfile.ZipFile(bundle_path) as archive:
         names = archive.namelist()
         if len(names) != len(set(names)):
-            raise RuntimeError("duplicate E011 archive members")
+            raise RuntimeError("duplicate archive members")
         for name in names:
-            _safe(name)
+            _safe_member(name)
         archive.extractall(RUNTIME_ROOT)
-    manifest = json.loads((RUNTIME_ROOT / "bundle_manifest.json").read_text(encoding="utf-8"))
-    if manifest["source_commit"] != CONTRACT["SOURCE_COMMIT"] or manifest["model_sha256"] != CONTRACT["MODEL_SHA256"]:
-        raise RuntimeError("E011 bundle source/model contract mismatch")
-    for entry in manifest["files"]:
-        path = RUNTIME_ROOT / _safe(entry["path"])
-        if not path.is_file() or path.stat().st_size != int(entry["bytes"]) or _sha256(path) != entry["sha256"]:
-            raise RuntimeError(f"E011 extracted member mismatch: {entry['path']}")
 
     for module_name in tuple(sys.modules):
         if module_name == "rogii_validation" or module_name.startswith("rogii_validation."):
             del sys.modules[module_name]
     importlib.invalidate_caches()
     sys.path.insert(0, str(RUNTIME_ROOT / "src"))
-    from rogii_validation.harness import scan_profiles
-    from rogii_validation.e011_inference import load_e011_model, profile_e011_test_input, write_e011_submission
+
+    from rogii_validation.e011_inference import load_e011_model, write_e011_submission
 
     preferred_roots = (
         Path("/kaggle/input/competitions/rogii-wellbore-geology-prediction"),
         Path("/kaggle/input/rogii-wellbore-geology-prediction"),
     )
-    COMPETITION_ROOT = next(
+    competition_root = next(
         (
             root
             for root in preferred_roots
-            if (root / "train").is_dir() and (root / "test").is_dir() and (root / "sample_submission.csv").is_file()
+            if (root / "test").is_dir() and (root / "sample_submission.csv").is_file()
         ),
         None,
     )
-    if COMPETITION_ROOT is None:
-        fallback_roots = sorted(
+    if competition_root is None:
+        candidates = sorted(
             sample.parent
             for sample in Path("/kaggle/input").rglob("sample_submission.csv")
-            if (sample.parent / "train").is_dir() and (sample.parent / "test").is_dir()
+            if (sample.parent / "test").is_dir()
         )
-        if len(fallback_roots) != 1:
-            raise RuntimeError({"competition_roots_found": [str(root) for root in fallback_roots]})
-        COMPETITION_ROOT = fallback_roots[0]
-    TRAIN_DIR = COMPETITION_ROOT / "train"
-    TEST_DIR = COMPETITION_ROOT / "test"
-    SAMPLE_SUBMISSION = COMPETITION_ROOT / "sample_submission.csv"
-    _, TRAIN_PROFILE = scan_profiles(TRAIN_DIR)
-    if int(TRAIN_PROFILE["well_count"]) != int(CONTRACT["TRAIN_WELLS"]) or TRAIN_PROFILE["data_signature"] != CONTRACT["TRAIN_SIGNATURE"]:
-        raise RuntimeError({
-            "competition_root": str(COMPETITION_ROOT),
-            "expected_train_wells": CONTRACT["TRAIN_WELLS"],
-            "expected_train_signature": CONTRACT["TRAIN_SIGNATURE"],
-            "actual_train_profile": TRAIN_PROFILE,
-        })
-    TEST_PROFILE = profile_e011_test_input(TEST_DIR, SAMPLE_SUBMISSION)
-    if int(TEST_PROFILE["wells"]) == int(CONTRACT["VISIBLE_FIXTURE"]["wells"]):
-        fixture = CONTRACT["VISIBLE_FIXTURE"]
-        if (
-            TEST_PROFILE["input_files_signature"] != fixture["input_files_signature"]
-            or TEST_PROFILE["sample_id_order_sha256"] != fixture["sample_id_order_sha256"]
-            or int(TEST_PROFILE["sample_rows"]) != int(fixture["sample_rows"])
-        ):
-            raise RuntimeError("visible E011 competition fixture identity mismatch")
-        TEST_MODE = "visible_fixture"
-    else:
-        TEST_MODE = "private_rerun"
-    MODEL_PATH = RUNTIME_ROOT / "experiments/E011/deployment/model.json"
-    if _sha256(MODEL_PATH) != CONTRACT["MODEL_SHA256"]:
-        raise RuntimeError("E011 deployment model hash mismatch")
-    MODEL = load_e011_model(MODEL_PATH)
+        if len(candidates) != 1:
+            raise RuntimeError({"competition_roots_found": [str(root) for root in candidates]})
+        competition_root = candidates[0]
 
-    PREFLIGHT = {
-        "schema_version": 1,
-        "experiment_id": "E011",
-        "status": "PASS",
-        "checked_at_utc": _dt.datetime.now(_dt.timezone.utc).isoformat(),
-        "source_commit": CONTRACT["SOURCE_COMMIT"],
-        "model_sha256": CONTRACT["MODEL_SHA256"],
-        "bundle": {"path": str(BUNDLE_PATH), "bytes": BUNDLE_PATH.stat().st_size, "sha256": _sha256(BUNDLE_PATH)},
-        "input_receipt": {"path": str(INPUT_RECEIPT_PATH), "sha256": _sha256(INPUT_RECEIPT_PATH)},
-        "dataset": {"ref": CONTRACT["DATASET_REF"], "version": CONTRACT["DATASET_VERSION"]},
-        "competition_root": str(COMPETITION_ROOT),
-        "train_profile": TRAIN_PROFILE,
-        "test_mode": TEST_MODE,
-        "test_profile": TEST_PROFILE,
-        "runtime": {
-            "python": sys.version,
-            "platform": platform.platform(),
-            "logical_cpus": os.cpu_count(),
-            "thread_limit": CONTRACT["THREAD_LIMIT"],
-            "thread_environment": {
-                name: os.environ.get(name)
-                for name in (
-                    "OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS",
-                    "NUMEXPR_NUM_THREADS", "VECLIB_MAXIMUM_THREADS", "BLIS_NUM_THREADS",
-                )
-            },
-            "internet_expected": False,
-            "accelerator_expected": "CPU",
-        },
-        "submission_authorized": False,
-    }
-    PREFLIGHT_PATH.write_text(json.dumps(PREFLIGHT, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(json.dumps(PREFLIGHT, indent=2, sort_keys=True))
-except Exception as exc:
-    _write_failure("preflight", exc)
-    raise
-'''
-    execution = r'''import datetime as _dt
-import json
-import resource
-import traceback
+    model_path = RUNTIME_ROOT / "experiments/E011/deployment/model.json"
+    if not model_path.is_file():
+        raise FileNotFoundError(model_path)
 
-import numpy as np
-import sklearn
-from threadpoolctl import threadpool_info, threadpool_limits
-
-STARTED_AT = _dt.datetime.now(_dt.timezone.utc)
-try:
-    with threadpool_limits(limits=CONTRACT["THREAD_LIMIT"]):
-        THREAD_POOLS_BEFORE = threadpool_info()
-        if any(int(item.get("num_threads", 0) or 0) > int(CONTRACT["THREAD_LIMIT"]) for item in THREAD_POOLS_BEFORE):
-            raise RuntimeError({"thread_pool_limit_failed": THREAD_POOLS_BEFORE})
-        RESULT = write_e011_submission(MODEL, TEST_DIR, SAMPLE_SUBMISSION, SUBMISSION_PATH)
-        WELL_DIAGNOSTICS_PATH.write_text(
-            json.dumps(RESULT["well_predictions"], indent=2, sort_keys=True, allow_nan=False) + "\n",
-            encoding="utf-8",
-        )
-        THREAD_POOLS_AFTER = threadpool_info()
-        if any(int(item.get("num_threads", 0) or 0) > int(CONTRACT["THREAD_LIMIT"]) for item in THREAD_POOLS_AFTER):
-            raise RuntimeError({"thread_pool_limit_failed_after": THREAD_POOLS_AFTER})
-    ENDED_AT = _dt.datetime.now(_dt.timezone.utc)
-    print(json.dumps({
-        "status": "PASS",
-        "test_mode": TEST_MODE,
-        "wells": RESULT["wells"],
-        "rows": RESULT["rows"],
-        "submission_sha256": RESULT["sha256"],
-        "wall_seconds": (ENDED_AT - STARTED_AT).total_seconds(),
-        "max_rss_kb": int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss),
-    }, indent=2, sort_keys=True))
-except Exception as exc:
-    _write_failure("inference", exc)
-    raise
-'''
-    packaging = r'''import hashlib
-import json
-import resource
-import shutil
-import zipfile
-from pathlib import Path, PurePosixPath
-
-
-def _output_sha256(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        while True:
-            block = handle.read(16 * 1024 * 1024)
-            if not block:
-                break
-            digest.update(block)
-    return digest.hexdigest()
-
-
-def _output_safe(name: str) -> str:
-    raw = str(name).replace("\\", "/")
-    parts = raw.split("/")
-    value = PurePosixPath(raw)
-    if value.is_absolute() or not raw or any(part in {"", ".", ".."} for part in parts) or not value.parts:
-        raise RuntimeError(f"unsafe output member {name!r}")
-    return value.as_posix()
-
-try:
-    output_sources = [SUBMISSION_PATH, WELL_DIAGNOSTICS_PATH, PREFLIGHT_PATH]
-    if not all(path.is_file() for path in output_sources):
-        raise RuntimeError("E011 expected output file is missing before packaging")
-    manifest = {
-        "schema_version": 1,
-        "experiment_id": "E011",
-        "source_commit": CONTRACT["SOURCE_COMMIT"],
-        "model_sha256": CONTRACT["MODEL_SHA256"],
-        "input_bundle_sha256": CONTRACT["BUNDLE_SHA256"],
-        "files": [
-            {"path": path.name, "bytes": path.stat().st_size, "sha256": _output_sha256(path)}
-            for path in output_sources
-        ],
-    }
-    MANIFEST_PATH = WORKING / CONTRACT["OUTPUT_MANIFEST_FILENAME"]
-    MANIFEST_PATH.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    ARCHIVE_PATH = WORKING / CONTRACT["RESULT_ARCHIVE_FILENAME"]
-    temporary = ARCHIVE_PATH.with_suffix(".zip.tmp")
-    temporary.unlink(missing_ok=True)
-    with zipfile.ZipFile(temporary, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
-        for path in [*output_sources, MANIFEST_PATH]:
-            info = zipfile.ZipInfo(_output_safe(path.name), date_time=(1980, 1, 1, 0, 0, 0))
-            info.compress_type = zipfile.ZIP_DEFLATED
-            info.create_system = 3
-            info.external_attr = 0o100644 << 16
-            archive.writestr(info, path.read_bytes())
-    temporary.replace(ARCHIVE_PATH)
-    RECEIPT = {
-        "schema_version": 1,
-        "experiment_id": "E011",
+    model = load_e011_model(model_path)
+    result = write_e011_submission(
+        model,
+        competition_root / "test",
+        competition_root / "sample_submission.csv",
+        SUBMISSION_PATH,
+    )
+    WELL_DIAGNOSTICS_PATH.write_text(
+        json.dumps(result["well_predictions"], indent=2, sort_keys=True, allow_nan=False) + "\n",
+        encoding="utf-8",
+    )
+    ended_at = _dt.datetime.now(_dt.timezone.utc)
+    receipt = {
         "status": "COMPLETE",
-        "source_commit": CONTRACT["SOURCE_COMMIT"],
-        "model_sha256": CONTRACT["MODEL_SHA256"],
-        "input_bundle": {"sha256": CONTRACT["BUNDLE_SHA256"], "bytes": CONTRACT["BUNDLE_BYTES"]},
-        "dataset": {"ref": CONTRACT["DATASET_REF"], "version": CONTRACT["DATASET_VERSION"]},
-        "competition_root": str(COMPETITION_ROOT),
-        "train_profile": TRAIN_PROFILE,
-        "test_mode": TEST_MODE,
-        "test_profile": TEST_PROFILE,
+        "experiment_id": "E011",
+        "dataset": {
+            "ref": CONTRACT["DATASET_REF"],
+            "version": CONTRACT["DATASET_VERSION"],
+        },
+        "competition_root": str(competition_root),
         "started_at_utc": STARTED_AT.isoformat(),
-        "ended_at_utc": ENDED_AT.isoformat(),
-        "wall_seconds": (ENDED_AT - STARTED_AT).total_seconds(),
-        "max_rss_kb": int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss),
-        "python": platform.python_version(),
-        "numpy": np.__version__,
-        "scikit_learn": sklearn.__version__,
-        "thread_limit": CONTRACT["THREAD_LIMIT"],
-        "thread_pools_before": THREAD_POOLS_BEFORE,
-        "thread_pools_after": THREAD_POOLS_AFTER,
-        "internet_expected": False,
-        "accelerator_expected": "CPU",
-        "prediction": {key: value for key, value in RESULT.items() if key != "well_predictions"},
-        "output_manifest": {"filename": MANIFEST_PATH.name, "bytes": MANIFEST_PATH.stat().st_size, "sha256": _output_sha256(MANIFEST_PATH)},
-        "result_archive": {"filename": ARCHIVE_PATH.name, "bytes": ARCHIVE_PATH.stat().st_size, "sha256": _output_sha256(ARCHIVE_PATH)},
+        "ended_at_utc": ended_at.isoformat(),
+        "wall_seconds": (ended_at - STARTED_AT).total_seconds(),
+        "prediction": {key: value for key, value in result.items() if key != "well_predictions"},
+        "outputs": [
+            SUBMISSION_PATH.name,
+            RUN_RECEIPT_PATH.name,
+            WELL_DIAGNOSTICS_PATH.name,
+        ],
         "submission_file_created": True,
         "kaggle_submission_made": False,
     }
-    RUN_RECEIPT_PATH.write_text(json.dumps(RECEIPT, indent=2, sort_keys=True, allow_nan=False) + "\n", encoding="utf-8")
-    print(json.dumps(RECEIPT, indent=2, sort_keys=True))
+    RUN_RECEIPT_PATH.write_text(
+        json.dumps(receipt, indent=2, sort_keys=True, allow_nan=False) + "\n",
+        encoding="utf-8",
+    )
+    print(json.dumps(receipt, indent=2, sort_keys=True))
 except Exception as exc:
-    _write_failure("packaging", exc)
+    _write_failure("run", exc)
     raise
 '''
     return {
@@ -676,36 +464,40 @@ except Exception as exc:
                 "id": "e011-intro",
                 "metadata": {},
                 "source": [
-                    "# E011 spline4 deployment parity\n",
-                    "Private, internet-disabled, CPU-only deployment notebook. Attach the exact private E011 input dataset version and the ROGII competition data manually. The user is the only authorized notebook runner. This notebook never submits to the competition.\n",
+                    "# E011 spline4 inference\n",
+                    "Attach the E011 input dataset and the ROGII competition data, then run all cells. The notebook writes the submission and a small run receipt to `/kaggle/working`.\n",
                 ],
             },
-            {"cell_type": "code", "id": "e011-contract", "execution_count": None, "metadata": {}, "outputs": [], "source": constants_source.splitlines(keepends=True)},
-            {"cell_type": "code", "id": "e011-preflight", "execution_count": None, "metadata": {}, "outputs": [], "source": preflight.splitlines(keepends=True)},
-            {"cell_type": "code", "id": "e011-inference", "execution_count": None, "metadata": {}, "outputs": [], "source": execution.splitlines(keepends=True)},
-            {"cell_type": "code", "id": "e011-package", "execution_count": None, "metadata": {}, "outputs": [], "source": packaging.splitlines(keepends=True)},
+            {
+                "cell_type": "code",
+                "id": "e011-contract",
+                "execution_count": None,
+                "metadata": {},
+                "outputs": [],
+                "source": constants_source.splitlines(keepends=True),
+            },
+            {
+                "cell_type": "code",
+                "id": "e011-run",
+                "execution_count": None,
+                "metadata": {},
+                "outputs": [],
+                "source": run_source.splitlines(keepends=True),
+            },
         ],
         "metadata": {
             "kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},
             "language_info": {"name": "python", "version": "3"},
             "rogii": {
                 "experiment_id": "E011",
-                "source_commit": contract["SOURCE_COMMIT"],
-                "model_sha256": contract["MODEL_SHA256"],
-                "bundle_sha256": contract["BUNDLE_SHA256"],
                 "dataset_ref": contract["DATASET_REF"],
                 "dataset_version": contract["DATASET_VERSION"],
-                "internet_required": False,
-                "accelerator": "CPU",
-                "maximum_threads": THREAD_LIMIT,
                 "user_execution_required": True,
                 "assistant_execution_authorized": False,
                 "submission_authorized": False,
                 "expected_outputs": [
-                    RUN_RECEIPT_FILENAME,
-                    OUTPUT_MANIFEST_FILENAME,
-                    RESULT_ARCHIVE_FILENAME,
                     SUBMISSION_FILENAME,
+                    RUN_RECEIPT_FILENAME,
                     WELL_DIAGNOSTICS_FILENAME,
                 ],
             },
@@ -719,30 +511,40 @@ def static_validate_notebook(notebook: Mapping[str, Any]) -> dict[str, Any]:
     if int(notebook.get("nbformat", 0)) != 4:
         raise ValueError("E011 notebook must use nbformat 4")
     code_cells = [cell for cell in notebook.get("cells", []) if cell.get("cell_type") == "code"]
-    if len(code_cells) != 4:
-        raise ValueError("E011 notebook must contain exactly four code cells")
+    if len(code_cells) != 2:
+        raise ValueError("E011 notebook must contain exactly two code cells")
     for cell in code_cells:
         source = cell.get("source", [])
         text = "".join(source) if isinstance(source, list) else str(source)
         compile(text, f"notebook:{cell.get('id', 'unknown')}", "exec")
-    combined = "\n".join("".join(cell["source"]) for cell in code_cells)
-    forbidden = ["kaggle_create_code_competition_submission", "competitions submit", "kaggle competitions submit"]
+    combined = "\n".join("".join(cell["source"]) for cell in code_cells).lower()
+    forbidden = [
+        "kaggle_create_code_competition_submission",
+        "competitions submit",
+        "kaggle competitions submit",
+    ]
     present = [token for token in forbidden if token in combined]
     if present:
         raise ValueError(f"E011 notebook contains submission operation tokens: {present}")
     return {"status": "PASS", "code_cells": len(code_cells), "submission_operation_tokens": []}
 
 
-def regenerate_artifact_manifest(root: Path, notebook_path: Path | None = None) -> dict[str, Any]:
+def regenerate_artifact_manifest(
+    root: Path,
+    notebook_path: Path | None = None,
+) -> dict[str, Any]:
     deployment_dir = root / "experiments/E011/deployment"
-    files = [path for path in deployment_dir.iterdir() if path.is_file() and path.name != "artifact_manifest.json"]
+    files = [
+        path
+        for path in deployment_dir.iterdir()
+        if path.is_file() and path.name != "artifact_manifest.json"
+    ]
     payload: dict[str, Any] = {
-        "schema_version": 1,
+        "schema_version": 2,
         "files": [
             {
                 "path": str(path.relative_to(root)),
                 "bytes": path.stat().st_size,
-                "sha256": sha256_file(path),
             }
             for path in sorted(files)
         ],
@@ -751,7 +553,6 @@ def regenerate_artifact_manifest(root: Path, notebook_path: Path | None = None) 
         payload["notebook"] = {
             "path": str(notebook_path.relative_to(root)),
             "bytes": notebook_path.stat().st_size,
-            "sha256": sha256_file(notebook_path),
         }
     write_json(deployment_dir / "artifact_manifest.json", payload)
     return payload
@@ -766,28 +567,22 @@ def build_package(
     dataset_ref: str,
     dataset_version: int,
 ) -> dict[str, Any]:
-    if len(source_commit) != 40 or any(character not in "0123456789abcdef" for character in source_commit):
+    if len(source_commit) != 40 or any(
+        character not in "0123456789abcdef" for character in source_commit
+    ):
         raise ValueError("source commit must be a full lowercase Git SHA")
+
     paths = bundle_paths(root)
     entries, payloads = committed_entries(root, source_commit, paths)
-    model_entry = next(entry for entry in entries if entry["path"] == "experiments/E011/deployment/model.json")
-    model_payload = json.loads(payloads[model_entry["path"]].decode("utf-8"))
+    model_path = "experiments/E011/deployment/model.json"
+    model_payload = json.loads(payloads[model_path].decode("utf-8"))
     validate_e011_model(model_payload)
-    inference_sha = next(entry["sha256"] for entry in entries if entry["path"] == "src/rogii_validation/e011_inference.py")
-    if model_payload["source_identities"]["e011_inference_sha256"] != inference_sha:
-        raise ValueError("committed E011 inference source differs from the fitted model receipt")
+
     bundle_manifest = {
-        "schema_version": 1,
+        "schema_version": 2,
         "experiment_id": "E011",
-        "role": "spline4_deployment_runtime",
+        "role": "spline4_inference_runtime",
         "source_commit": source_commit,
-        "model_sha256": model_entry["sha256"],
-        "train_wells": TRAIN_WELLS,
-        "train_signature": TRAIN_SIGNATURE,
-        "maximum_threads": THREAD_LIMIT,
-        "internet_required": False,
-        "external_artifacts_required": False,
-        "submission_authorized": False,
         "files": entries,
     }
     staging_dir.mkdir(parents=True, exist_ok=True)
@@ -795,26 +590,16 @@ def build_package(
     for path in staging_dir.iterdir():
         if path.name not in allowed_names:
             raise ValueError(f"unexpected file in E011 staging directory: {path}")
+
     bundle_path = staging_dir / BUNDLE_FILENAME
     write_bundle(bundle_path, bundle_manifest, payloads)
-    bundle_sha = sha256_file(bundle_path)
-    visible_profile = profile_e011_test_input(root / "data/test", root / "data/sample_submission.csv")
     input_receipt = {
-        "schema_version": 1,
+        "schema_version": 2,
         "experiment_id": "E011",
-        "role": "spline4_deployment_inputs",
+        "role": "spline4_inference_inputs",
         "dataset": {"ref": dataset_ref, "version": dataset_version, "private": True},
         "source_commit": source_commit,
-        "model_sha256": model_entry["sha256"],
-        "bundle": {"filename": BUNDLE_FILENAME, "bytes": bundle_path.stat().st_size, "sha256": bundle_sha},
-        "train_wells": TRAIN_WELLS,
-        "train_signature": TRAIN_SIGNATURE,
-        "visible_fixture": {
-            key: visible_profile[key]
-            for key in ("wells", "rows", "known_rows", "hidden_rows", "sample_rows", "well_ids_sha256", "sample_id_order_sha256", "input_files_signature")
-        },
-        "maximum_threads": THREAD_LIMIT,
-        "competition_data_included": False,
+        "bundle": {"filename": BUNDLE_FILENAME, "bytes": bundle_path.stat().st_size},
         "competition_data_attachment_required": True,
         "user_execution_required": True,
         "assistant_execution_authorized": False,
@@ -822,28 +607,19 @@ def build_package(
     }
     receipt_path = staging_dir / INPUT_RECEIPT_FILENAME
     write_json(receipt_path, input_receipt)
-    metadata = {
-        "title": "ROGII E011 Deployment Inputs",
-        "id": dataset_ref,
-        "licenses": [{"name": "other"}],
-    }
-    write_json(staging_dir / "dataset-metadata.json", metadata)
+    write_json(
+        staging_dir / "dataset-metadata.json",
+        {
+            "title": "ROGII E011 Deployment Inputs",
+            "id": dataset_ref,
+            "licenses": [{"name": "other"}],
+        },
+    )
+
     contract = {
-        "SOURCE_COMMIT": source_commit,
-        "MODEL_SHA256": model_entry["sha256"],
         "BUNDLE_FILENAME": BUNDLE_FILENAME,
-        "BUNDLE_SHA256": bundle_sha,
-        "BUNDLE_BYTES": bundle_path.stat().st_size,
-        "INPUT_RECEIPT_FILENAME": INPUT_RECEIPT_FILENAME,
-        "INPUT_RECEIPT_SHA256": sha256_file(receipt_path),
         "DATASET_REF": dataset_ref,
         "DATASET_VERSION": dataset_version,
-        "TRAIN_WELLS": TRAIN_WELLS,
-        "TRAIN_SIGNATURE": TRAIN_SIGNATURE,
-        "VISIBLE_FIXTURE": input_receipt["visible_fixture"],
-        "THREAD_LIMIT": THREAD_LIMIT,
-        "RESULT_ARCHIVE_FILENAME": RESULT_ARCHIVE_FILENAME,
-        "OUTPUT_MANIFEST_FILENAME": OUTPUT_MANIFEST_FILENAME,
         "RUN_RECEIPT_FILENAME": RUN_RECEIPT_FILENAME,
         "WELL_DIAGNOSTICS_FILENAME": WELL_DIAGNOSTICS_FILENAME,
         "SUBMISSION_FILENAME": SUBMISSION_FILENAME,
@@ -851,37 +627,30 @@ def build_package(
     notebook = notebook_payload(contract)
     static_receipt = static_validate_notebook(notebook)
     write_json(notebook_path, notebook)
+
     durable_contract = {
-        "schema_version": 1,
+        "schema_version": 2,
         "status": "prepared_for_user_run",
         "source_commit": source_commit,
-        "model": {"path": model_entry["path"], "bytes": model_entry["bytes"], "sha256": model_entry["sha256"]},
         "dataset": {
             "ref": dataset_ref,
             "version": dataset_version,
             "private": True,
             "bundle_filename": BUNDLE_FILENAME,
             "bundle_bytes": bundle_path.stat().st_size,
-            "bundle_sha256": bundle_sha,
-            "input_receipt_filename": INPUT_RECEIPT_FILENAME,
-            "input_receipt_sha256": sha256_file(receipt_path),
         },
         "notebook": {
             "path": str(notebook_path.relative_to(root)),
             "bytes": notebook_path.stat().st_size,
-            "sha256": sha256_file(notebook_path),
             "static_validation": static_receipt,
         },
         "required_manual_attachments": [
             f"private dataset {dataset_ref} version {dataset_version}",
             "ROGII competition data",
         ],
-        "runtime": {"private": True, "internet": False, "accelerator": "CPU", "maximum_threads": THREAD_LIMIT},
         "expected_outputs": [
-            RUN_RECEIPT_FILENAME,
-            OUTPUT_MANIFEST_FILENAME,
-            RESULT_ARCHIVE_FILENAME,
             SUBMISSION_FILENAME,
+            RUN_RECEIPT_FILENAME,
             WELL_DIAGNOSTICS_FILENAME,
         ],
         "user_execution_required": True,

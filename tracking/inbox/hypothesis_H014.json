@@ -7,8 +7,8 @@
     "statement": "Split-local prediction of a small number of nonlinear correction coefficients or control points can recover materially more of E010 candidate coverage than flat family/candidate ranking, while remaining memory-safe and falling back exactly to E006 when confidence is weak.",
     "status": "promoted",
     "priority": 1,
-    "evidence_for": "E011 independently reproduces spline4_ridge_equal_s075 at 12.5507562957 RMSE versus E006 at 14.9331407872. It wins all five maps and all 25 repeated cells, improves every spatial/typewell holdout and registered special slice, and passes all 21 controls under two threads.",
-    "evidence_against": "Statistical promotion does not establish deployment parity. E011 still lacks a verified inference package, local notebook parity, approximately 200-well hidden-scale runtime receipt, and private internet-disabled Kaggle parity.",
-    "next_test": "T020/E012: package the exact verified spline4_ridge_equal_s075 path, prove local notebook parity, benchmark approximately 200 pseudo-hidden wells, and obtain private internet-disabled Kaggle parity without submitting."
+    "evidence_for": "E011 independently reproduces spline4_ridge_equal_s075 at 12.5507562957 RMSE versus E006 at 14.9331407872. It wins all five maps and all 25 repeated cells, improves every spatial/typewell holdout and registered special slice, and passes all 21 scientific controls.",
+    "evidence_against": "The prepared Kaggle inference notebook has not yet been run, so its saved competition outputs have not been reviewed.",
+    "next_test": "T020: run the prepared E011 notebook, retrieve submission.csv, e011-run-receipt.json, and e011-well-predictions.json, and verify row coverage, IDs/order, finite predictions, and readable outputs."
   }
 }

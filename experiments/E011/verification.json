@@ -140,35 +140,40 @@
     "user_execution_required": true,
     "assistant_execution_authorized": false,
     "submission_created": false,
-    "submission_made": false
+    "submission_made": false,
+    "operational_policy_decision": "D019",
+    "output_review_complete": false
   },
   "deployment_preparation": {
     "status": "uploaded_ready_awaiting_user_run",
-    "runtime_source_commit": "e6fbfaa02e8a72dc3c67713da51fe843417cc114",
-    "model_sha256": "dd92e8b12f275b6d453e55d6cce2e7c10a43c8a34957d6d47b1b5e5ff5b3c5a8",
     "feature_parity_receipt": "experiments/E011/deployment/feature_parity.json",
     "edge_case_receipt": "experiments/E011/deployment/edge_case_receipt.json",
-    "validation_receipt": "experiments/E011/deployment/validation_receipt.json",
     "pseudo_hidden_benchmark_receipt": "experiments/E011/deployment/pseudo_hidden_benchmark.json",
     "notebook": {
       "path": "notebooks/training_and_submission/e011_spline4_deployment_kaggle.ipynb",
-      "bytes": 22865,
-      "sha256": "63f299fcf069bbcdf6a8f17c7e66f0e88b1ff7f238a1b0e5b13934d353f5e9e9",
-      "static_code_cells_pass": 4,
-      "submission_operation_tokens": [],
+      "bytes": 8239,
+      "code_cells": 2,
+      "expected_outputs": [
+        "submission.csv",
+        "e011-run-receipt.json",
+        "e011-well-predictions.json"
+      ],
       "executed": false
     },
     "private_dataset": {
       "id": 11312079,
       "ref": "ashok205/rogii-e011-deployment-inputs",
       "version": 1,
-      "status": "READY",
-      "bundle_bytes": 861617,
-      "bundle_sha256": "15a82b9eee1b13d126c9e57b6402c1b307b89238718f0f292eca7773321f66a2",
-      "input_receipt_sha256": "2ce82b05cbf52460af47d52202072c5999d42ed1fa59d3d9c9669f6a23a4d955"
+      "status": "READY"
     },
+    "output_review_requirements": [
+      "expected files present and readable",
+      "complete rows and sample IDs in the correct order",
+      "finite predictions"
+    ],
     "user_run_instructions": "experiments/E011/deployment/USER_RUN_INSTRUCTIONS.md",
-    "private_kaggle_parity": false,
+    "operational_policy_decision": "D019",
+    "output_review_complete": false,
     "deployment_ready": false,
     "submission_made": false
   },

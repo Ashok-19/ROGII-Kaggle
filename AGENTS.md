@@ -25,7 +25,7 @@ At the start of each new session, and immediately before pre-registering or prom
 
 - check the competition's New/Recent discussions and newly run/high-vote public notebooks;
 - compare against `public_intelligence_last_checked` in `tracking/seed.json` and inspect only material deltas;
-- source-audit exact notebook code, mounted inputs, executed outputs, provenance, license, and source hash before using a claim;
+- source-audit notebook code, mounted inputs, executed outputs, provenance, and license before using a claim;
 - archive material findings with date and evidence class, then update claims/tasks if the research priority changes.
 
 Discussion claims, notebook titles, votes, and leaderboard scores are leads, not promotion evidence. Do not copy opaque artifacts or infer causality from a public score. A full discussion recrawl is required before changing canonical archive counts.
@@ -45,7 +45,7 @@ Non-negotiable rules:
 - test every component in final placement and preserve negative results;
 - never treat the three visible overlap wells as hidden-test evidence.
 
-A candidate is promoted only if it passes its frozen repeated-map, tail, shift, control, deployment, and parity gates. Public leaderboard results update belief but never retroactively alter a gate.
+A candidate is promoted only if it passes its frozen repeated-map, tail, shift, scientific-control, and deployment-output gates. Public leaderboard results update belief but never retroactively alter a gate.
 
 ## Experiment and repository discipline
 
@@ -63,7 +63,7 @@ Canonical locations:
 - evidence archive: `archive/`;
 - temporary work: agent-specific `scratch/` only.
 
-Use stable IDs (`H###`, `E###`, `R...`, `D###`, `T###`). Acquire a task claim for focused work and the official lock only for serialized durable writes. Stage explicit intended paths only. Never delete canonical artifacts referenced by manifests; remove scratch copies only after hash/provenance checks.
+Use stable IDs (`H###`, `E###`, `R...`, `D###`, `T###`). Acquire a task claim for focused work and the official lock only for serialized durable writes. Stage explicit intended paths only. Never delete canonical artifacts referenced by manifests; remove scratch copies only after confirming they are not needed for provenance or recovery.
 
 Update the dashboard Learning Lab in the same workstream when verified evidence changes the problem framing, next experiment, or an important failure mode; label public and oracle evidence explicitly.
 
@@ -71,13 +71,13 @@ Update the dashboard Learning Lab in the same workstream when verified evidence 
 
 Follow `KAGGLE_NOTEBOOK_RUNBOOK.md`.
 
-The local machine is limited to at most two CPU threads for project workflows. Keep source edits, metadata inspection, deterministic bundle construction, unit/contract tests, tiny smokes, packaging, and output verification local. Send workflows expected to take more than roughly 15 minutes, consume substantial memory/I/O, or require more compute to a bounded private Kaggle notebook instead of stressing the local system.
+Choose local or Kaggle compute based on practicality. Avoid stressing the local machine, but do not impose fixed CPU, accelerator, internet, or thread requirements unless an experiment specifically needs them.
 
-Use Kaggle only after exact code/configuration is committed and a hash-sealed private input bundle is prepared. Maintain one canonical notebook per heavy workflow; it must import the exact bundled `src/` package, cap all native/BLAS/tree-model thread pools at two, fail closed on identity/control errors, keep internet disabled, and write a run receipt plus downloadable output manifest/archive under `/kaggle/working`. Automatic dataset attachment is not trusted: the user manually attaches the exact prepared private dataset version and competition data.
+For every experiment, prefer the smallest workflow that can answer the registered question. A Kaggle notebook should locate its required inputs, run the model, preserve sample IDs/order, reject non-finite predictions, and save the primary outputs. Do not add repeated hashes, environment inventories, byte-equality requirements, or device checks as default gates.
 
-A Kaggle status of `COMPLETE` is not evidence. Require every expected output filename in the notebook file listing, download the exact versioned outputs, verify bytes/hashes/schema/source identity, and independently review the result before changing any gate. Final deployment notebooks must also preserve exact IDs/order, finite outputs, deterministic inference, and runtime below the 8-hour target / 9-hour hard limit.
+A completed notebook becomes usable evidence when its primary outputs exist, parse correctly, cover the expected rows/IDs, and support the claimed result. Additional provenance or parity checks are optional and should be added only when they address a demonstrated risk.
 
-No Kaggle submission is created without explicit user authorization. Record every authorized submission immediately with its reference, run, score, and purpose.
+The assistant prepares notebooks and inputs but does not run a Kaggle notebook unless the user explicitly authorizes it. No Kaggle submission is sent without explicit user authorization. Record every authorized submission immediately with its reference, run, score, and purpose.
 
 ## Finish every work session
 

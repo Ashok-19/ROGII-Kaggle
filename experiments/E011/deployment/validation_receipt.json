@@ -1,23 +1,29 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "status": "PASS",
-  "thread_limit": 2,
-  "notebook_executed": false,
-  "focused": {
-    "command": "python3.12 -m unittest tests.test_e011_inference tests.test_e011_kaggle_packaging",
-    "passed": 18,
+  "operational_policy_decision": "D019",
+  "focused_tests": {
+    "command": "python3.12 -m unittest tests.test_e011_kaggle_packaging tests.test_e011_inference tests.test_dashboard_learning",
+    "passed": 31,
     "failed": 0,
     "errors": 0,
-    "wall_seconds": 0.054
+    "wall_seconds": 0.681
   },
-  "full_repository": {
+  "full_repository_tests": {
     "command": "python3.12 -m unittest discover -s tests",
-    "passed": 167,
+    "passed": 168,
     "failed": 0,
     "errors": 0,
-    "wall_seconds": 75.520
+    "wall_seconds": 78.001
   },
-  "canonical_kaggle_notebook_executed": false,
-  "canonical_kaggle_parity_established": false,
-  "kaggle_submission_made": false
+  "notebook": {
+    "path": "notebooks/training_and_submission/e011_spline4_deployment_kaggle.ipynb",
+    "code_cells": 2,
+    "expected_outputs": [
+      "submission.csv",
+      "e011-run-receipt.json",
+      "e011-well-predictions.json"
+    ],
+    "executed": false
+  }
 }
