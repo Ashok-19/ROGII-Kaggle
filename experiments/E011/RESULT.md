@@ -1,12 +1,12 @@
 # E011 Result — Memory-Safe Nonlinear Coefficient Learning
 
-Status: **statistically promoted; independently reproduced; not deployment-ready; no Kaggle submission**  
+Status: **statistically promoted; exact package prepared and uploaded; awaiting authorized user Kaggle run; not deployment-ready; no Kaggle submission**
 Official run: `R20260722-1537-e011-local-reproduction`  
 Frozen source: `c326a812b0f663bb7a095a0d435fd302abc0bf6f`
 
 ## Decision
 
-Promote `spline4_ridge_equal_s075` as the verified E011 statistical winner. Do not promote it to the deployment primary yet. E006 remains the deployment-ready primary and E004 remains the exact deployment fallback until an E011 package and local/private-Kaggle parity are independently verified.
+Promote `spline4_ridge_equal_s075` as the verified E011 statistical winner. The exact inference runtime is now committed and sealed, but do not promote it to the deployment primary yet. E006 remains the deployment-ready primary and E004 remains the exact deployment fallback until the user-run private-Kaggle outputs are independently verified.
 
 The complete-looking directory discovered after the timed-out first call was not accepted on static consistency alone. Its ownership, timestamps, source/config/fold identities, parent hashes, and manifest were consistent, but no successful invocation receipt, process log, task log, Codex receipt, or operation receipt could be linked to that run. The original process provenance is therefore incomplete. Its runtime-dependent manifest, controls, and summary are archived under `experiments/E011/provenance/original_unregistered/`.
 
@@ -52,8 +52,12 @@ The legal feature table contains 773 wells and 142 features. No forbidden hidden
 
 ## Deployment and submission
 
-E011 is statistically authorized but not deployment-ready. No local package, local notebook parity, or private internet-disabled Kaggle parity exists. No submission file was created and no Kaggle submission was made. E006 remains primary; E004 remains the exact fallback.
+The runtime/model boundary is committed at `e6fbfaa02e8a72dc3c67713da51fe843417cc114`. All 142 legal features match the frozen E008 table across 773 wells with zero substantive mismatches. Thirteen edge-case groups and the 167-test repository suite pass. Two deterministic 200-well pseudo-hidden direct runs score 970,903 hidden rows in 74.97 and 76.44 seconds with at most 361,752 KB RSS and identical SHA-256 `12556650...3b56`.
+
+The canonical private CPU notebook is `notebooks/training_and_submission/e011_spline4_deployment_kaggle.ipynb`, SHA-256 `63f299fc...e9e9`. It has four statically compiled code cells, internet disabled, two-thread caps, fail-closed archive/data/output checks, and no submission operation. The private input dataset `ashok205/rogii-e011-deployment-inputs` version 1 is READY; its sealed bundle SHA-256 is `15a82b9e...66a2`.
+
+The canonical notebook has **not** been executed. The user is the only authorized notebook runner. Therefore private Kaggle parity remains false, E011 remains not deployment-ready, E006 remains primary, E004 remains exact fallback, and no Kaggle competition submission has been made.
 
 ## Next action
 
-Build and independently verify an E011 inference package with exact local-notebook parity and hidden-scale runtime checks. Do not start H015 specialist routing before that packaging decision is complete.
+The user imports the canonical notebook, manually attaches private dataset version 1 and the ROGII competition data, keeps internet disabled, runs all cells, and supplies the exact notebook owner/slug/version. Then list, download, hash, parse, and independently verify all five expected outputs before changing deployment status. Do not start H015 specialist routing before that decision.

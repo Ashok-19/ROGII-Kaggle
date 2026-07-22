@@ -1,0 +1,68 @@
+{
+  "assistant_execution_authorized": false,
+  "dataset": {
+    "bundle_bytes": 861617,
+    "bundle_filename": "rogii-e011-deployment-inputs-v1.zip.bin",
+    "bundle_sha256": "15a82b9eee1b13d126c9e57b6402c1b307b89238718f0f292eca7773321f66a2",
+    "input_receipt_filename": "e011-input-receipt-v1.json",
+    "input_receipt_sha256": "2ce82b05cbf52460af47d52202072c5999d42ed1fa59d3d9c9669f6a23a4d955",
+    "created_at_utc": "2026-07-22T18:18:34.133Z",
+    "files": [
+      {
+        "bytes": 1288,
+        "name": "e011-input-receipt-v1.json",
+        "sha256": "2ce82b05cbf52460af47d52202072c5999d42ed1fa59d3d9c9669f6a23a4d955"
+      },
+      {
+        "bytes": 861617,
+        "name": "rogii-e011-deployment-inputs-v1.zip.bin",
+        "sha256": "15a82b9eee1b13d126c9e57b6402c1b307b89238718f0f292eca7773321f66a2"
+      }
+    ],
+    "id": 11312079,
+    "private": true,
+    "ref": "ashok205/rogii-e011-deployment-inputs",
+    "status": "READY",
+    "total_bytes": 862905,
+    "version": 1
+  },
+  "expected_outputs": [
+    "e011-run-receipt.json",
+    "e011-output-manifest.json",
+    "rogii-e011-deployment-results-v1.zip",
+    "submission.csv",
+    "e011-well-predictions.json"
+  ],
+  "kaggle_submission_authorized": false,
+  "kaggle_submission_made": false,
+  "model": {
+    "bytes": 52946,
+    "path": "experiments/E011/deployment/model.json",
+    "sha256": "dd92e8b12f275b6d453e55d6cce2e7c10a43c8a34957d6d47b1b5e5ff5b3c5a8"
+  },
+  "notebook": {
+    "bytes": 22865,
+    "path": "notebooks/training_and_submission/e011_spline4_deployment_kaggle.ipynb",
+    "sha256": "63f299fcf069bbcdf6a8f17c7e66f0e88b1ff7f238a1b0e5b13934d353f5e9e9",
+    "static_validation": {
+      "code_cells": 4,
+      "status": "PASS",
+      "submission_operation_tokens": []
+    }
+  },
+  "notebook_executed": false,
+  "required_manual_attachments": [
+    "private dataset ashok205/rogii-e011-deployment-inputs version 1",
+    "ROGII competition data"
+  ],
+  "runtime": {
+    "accelerator": "CPU",
+    "internet": false,
+    "maximum_threads": 2,
+    "private": true
+  },
+  "schema_version": 1,
+  "source_commit": "e6fbfaa02e8a72dc3c67713da51fe843417cc114",
+  "status": "uploaded_ready_awaiting_user_run",
+  "user_execution_required": true
+}

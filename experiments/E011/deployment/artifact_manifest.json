@@ -1,6 +1,11 @@
 {
   "files": [
     {
+      "bytes": 1752,
+      "path": "experiments/E011/deployment/USER_RUN_INSTRUCTIONS.md",
+      "sha256": "5ea3e3bffb0e57dc6dbf4c04f1e05dec5081b8e1ff3fccf5ee0f0f80c584f7c9"
+    },
+    {
       "bytes": 1267,
       "path": "experiments/E011/deployment/edge_case_receipt.json",
       "sha256": "d602527685efaaa1136f6621ea31bed829b6a7e588336fd2f678ad6745afc706"
@@ -9,6 +14,21 @@
       "bytes": 597,
       "path": "experiments/E011/deployment/feature_parity.json",
       "sha256": "6bac868ecc3b36a397d4e52b1fa2c00679465287dabeafd01b9de75e3628a21a"
+    },
+    {
+      "bytes": 1422,
+      "path": "experiments/E011/deployment/finalization_receipt.json",
+      "sha256": "9fa60eaae4de96f3e40ea5ccba7b033879f510a13368b77cd8aeb2fc1ff4b5e7"
+    },
+    {
+      "bytes": 2215,
+      "path": "experiments/E011/deployment/kaggle_contract.json",
+      "sha256": "5264996f10952bcce517bed2aa7c1e013a17e47d831e761542e0a0010c215239"
+    },
+    {
+      "bytes": 1420,
+      "path": "experiments/E011/deployment/kaggle_upload_receipt.json",
+      "sha256": "45d6c820305ef8dabc31564c28ab871d692c39e4a818b0ad3cdde4fdabffe28a"
     },
     {
       "bytes": 1203,
@@ -36,5 +56,10 @@
       "sha256": "08ed69c9c5a1dc253ddb31319a823725486a79bc45bccbc34390ec0e4d52a927"
     }
   ],
+  "notebook": {
+    "bytes": 22865,
+    "path": "notebooks/training_and_submission/e011_spline4_deployment_kaggle.ipynb",
+    "sha256": "63f299fcf069bbcdf6a8f17c7e66f0e88b1ff7f238a1b0e5b13934d353f5e9e9"
+  },
   "schema_version": 1
 }

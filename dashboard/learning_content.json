@@ -359,7 +359,16 @@
       "evidence": "independent_frozen_commit_reproduction",
       "visual": "deployment_gap",
       "summary": "E011's spline4 ridge coefficient model reproduces at 12.5507562957 RMSE versus E006 at 14.9331407872. It wins all five maps and all 25 repeated cells, improves every spatial/typewell holdout and special slice, and reproduces byte-identical substantive outputs under two threads.",
-      "why_it_matters": "Low-dimensional nonlinear coefficient prediction is now verified statistical evidence rather than an oracle-only lead. Deployment still requires an exact inference package, local notebook parity, hidden-scale runtime testing, and private Kaggle parity; E006 remains primary until then."
+      "why_it_matters": "Low-dimensional nonlinear coefficient prediction is now verified statistical evidence rather than an oracle-only lead. The exact runtime, hidden-scale direct benchmark, canonical notebook, and private input dataset are prepared; only the authorized user-run Kaggle outputs and independent verification remain. E006 stays primary until then."
+    },
+    {
+      "id": "B022",
+      "date": "2026-07-22",
+      "title": "E011 deployment package is sealed and uploaded",
+      "evidence": "local_verified_operational",
+      "visual": "remote_parity",
+      "summary": "Runtime commit e6fbfaa02e8a72dc3c67713da51fe843417cc114 reconstructs all 142 frozen legal features with zero substantive mismatches. Two deterministic 200-well direct runs cover 970,903 hidden rows in about 75–76 seconds at roughly 353 MB RSS. The canonical notebook is statically validated, and private dataset ashok205/rogii-e011-deployment-inputs version 1 is READY.",
+      "why_it_matters": "The packaging, identity, edge-case, and hidden-scale direct-runtime gates are complete without using train-only labels or executing the canonical notebook. The user must run the private internet-disabled notebook, after which every output must be downloaded and independently verified before E011 can replace E006."
     }
   ],
   "idea_questions": [
@@ -375,8 +384,8 @@
     },
     {
       "signal": "E011 packaging",
-      "question": "Can the verified coefficient model produce exact local-notebook and private-Kaggle outputs within the hidden-scale resource envelope?",
-      "falsifier": "Packaged predictions differ from verified OOF semantics, IDs or ordering change, approximately 200-well runtime exceeds the envelope, or local and private Kaggle outputs are not byte-identical."
+      "question": "Do the authorized user-run private Kaggle outputs satisfy the sealed E011 source, model, ID, and output contract?",
+      "falsifier": "Any expected output is missing; source, model, bundle, ID/order, schema, hash, thread, internet, finite-value, runtime, or memory checks fail; or downloaded output cannot be independently reproduced from the sealed contract."
     },
     {
       "signal": "regime specialists",
@@ -508,6 +517,16 @@
     {
       "title": "E011 independently reproduced statistical promotion",
       "local_path": "experiments/E011/RESULT.md",
+      "url": ""
+    },
+    {
+      "title": "E011 prepared private Kaggle contract",
+      "local_path": "experiments/E011/deployment/kaggle_contract.json",
+      "url": ""
+    },
+    {
+      "title": "E011 private dataset upload receipt",
+      "local_path": "experiments/E011/deployment/kaggle_upload_receipt.json",
       "url": ""
     },
     {

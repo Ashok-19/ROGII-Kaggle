@@ -10,7 +10,7 @@
   "owner": "NNMax",
   "parent_id": "E010",
   "created_at": "2026-07-20T12:10:00Z",
-  "updated_at": "2026-07-22T16:14:00Z",
+  "updated_at": "2026-07-22T18:20:31Z",
   "design": {
     "anchor": "E006 nested_conservative_grid",
     "target": "3–7 coefficients of true suffix correction around E006",
@@ -159,13 +159,53 @@
     "all_controls_pass": true,
     "all_statistical_gates_pass": true,
     "deployment_ready": false,
+    "local_package_built": true,
+    "canonical_notebook_prepared": true,
+    "canonical_notebook_executed": false,
+    "private_dataset_uploaded": true,
+    "private_kaggle_parity": false,
+    "user_execution_required": true,
     "primary_deployment_model": "E006",
     "exact_fallback": "E004",
     "submission_made": false,
     "result": "experiments/E011/RESULT.md",
     "verification": "experiments/E011/verification.json"
   },
-  "conclusion": "Independent frozen-commit reproduction verifies spline4_ridge_equal_s075 at 12.5507562957 RMSE, a 2.3823844915 gain over E006, with 5/5 map wins, 25/25 cell wins, positive spatial/typewell/slice gains, all controls, and deterministic substantive outputs. Promote E011 statistically, but retain E006 as deployment primary and E004 as exact fallback until E011 packaging and Kaggle parity pass.",
+  "deployment_boundary": {
+    "status": "uploaded_ready_awaiting_user_run",
+    "runtime_source_commit": "e6fbfaa02e8a72dc3c67713da51fe843417cc114",
+    "model_sha256": "dd92e8b12f275b6d453e55d6cce2e7c10a43c8a34957d6d47b1b5e5ff5b3c5a8",
+    "feature_parity": {
+      "wells": 773,
+      "features": 142,
+      "mismatched_cells": 0,
+      "maximum_relative_delta": 4.967445924117632e-12
+    },
+    "pseudo_hidden_benchmark": {
+      "wells": 200,
+      "hidden_rows": 970903,
+      "direct_run_seconds": [74.9737888210002, 76.44275634299993],
+      "maximum_rss_kb": 361752,
+      "deterministic_sha256": "125566500b2c140a3393514b0575686fbcf6fa7cfdb5f345c996034bd8de3b56"
+    },
+    "notebook": {
+      "path": "notebooks/training_and_submission/e011_spline4_deployment_kaggle.ipynb",
+      "sha256": "63f299fcf069bbcdf6a8f17c7e66f0e88b1ff7f238a1b0e5b13934d353f5e9e9",
+      "static_validation": "PASS",
+      "executed": false,
+      "user_execution_required": true
+    },
+    "private_dataset": {
+      "ref": "ashok205/rogii-e011-deployment-inputs",
+      "version": 1,
+      "status": "READY",
+      "bundle_sha256": "15a82b9eee1b13d126c9e57b6402c1b307b89238718f0f292eca7773321f66a2"
+    },
+    "private_kaggle_parity": false,
+    "deployment_ready": false,
+    "submission_made": false
+  },
+  "conclusion": "Independent frozen-commit reproduction verifies spline4_ridge_equal_s075 at 12.5507562957 RMSE, a 2.3823844915 gain over E006, with 5/5 map wins, 25/25 cell wins, positive spatial/typewell/slice gains, all controls, and deterministic substantive outputs. The exact runtime package is committed, the canonical notebook is statically validated, and private dataset version 1 is READY. Retain E006 as deployment primary and E004 as exact fallback until the user-run private Kaggle outputs are downloaded and independently verified.",
   "hypothesis": "Split-local prediction of 3–7 nonlinear correction coefficients or spline control points can recover materially more of E010 candidate coverage than flat candidate ranking, while remaining memory-safe and reverting exactly to E006 when confidence is weak.",
   "result_decision_id": "D018",
   "post_finalization_validation": {

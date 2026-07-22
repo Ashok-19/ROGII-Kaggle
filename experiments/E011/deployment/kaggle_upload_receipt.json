@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "status": "READY",
+  "dataset": {
+    "id": 11312079,
+    "ref": "ashok205/rogii-e011-deployment-inputs",
+    "version": 1,
+    "private": true,
+    "title": "ROGII E011 Deployment Inputs",
+    "created_at_utc": "2026-07-22T18:18:34.133Z",
+    "total_bytes": 862905,
+    "files": [
+      {
+        "name": "e011-input-receipt-v1.json",
+        "bytes": 1288,
+        "sha256": "2ce82b05cbf52460af47d52202072c5999d42ed1fa59d3d9c9669f6a23a4d955"
+      },
+      {
+        "name": "rogii-e011-deployment-inputs-v1.zip.bin",
+        "bytes": 861617,
+        "sha256": "15a82b9eee1b13d126c9e57b6402c1b307b89238718f0f292eca7773321f66a2"
+      }
+    ]
+  },
+  "source_commit": "e6fbfaa02e8a72dc3c67713da51fe843417cc114",
+  "notebook": {
+    "path": "notebooks/training_and_submission/e011_spline4_deployment_kaggle.ipynb",
+    "bytes": 22865,
+    "sha256": "63f299fcf069bbcdf6a8f17c7e66f0e88b1ff7f238a1b0e5b13934d353f5e9e9",
+    "executed": false
+  },
+  "verification": {
+    "kaggle_dataset_status": "READY",
+    "kaggle_version_status": "Ready",
+    "listed_file_count": 2,
+    "listed_names_and_sizes_match": true,
+    "local_bundle_manifest_members": 27,
+    "local_bundle_verified_files": 26,
+    "local_bundle_member_hashes_pass": true
+  },
+  "user_execution_required": true,
+  "assistant_execution_authorized": false,
+  "kaggle_submission_authorized": false,
+  "kaggle_submission_made": false
+}

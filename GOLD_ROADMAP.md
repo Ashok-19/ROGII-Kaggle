@@ -1,8 +1,8 @@
 # ROGII Gold Medal Roadmap
 
-Updated: 2026-07-20  
+Updated: 2026-07-22
 Final deadline: 2026-08-05 23:59 UTC / 2026-08-06 05:29 Asia/Kolkata  
-Time remaining at update: 17 days
+Time remaining at update: 14 days
 
 ## Objective and reality check
 
@@ -228,7 +228,7 @@ Measured E009 outcome:
 
 E011/H014 is independently reproduced and statistically promoted. `spline4_ridge_equal_s075` reaches 12.5507562957 RMSE, improves all five maps, all 25 repeated cells, every spatial/typewell holdout, and every registered special slice, with all 21 controls passing. Oracle targets remained training-only inside folds.
 
-Immediate deliverables now shift to an exact E011 inference package: local notebook parity, approximately 200-well pseudo-hidden runtime and memory benchmarking, complete output receipts, and private internet-disabled Kaggle parity without submission. E006 remains deployment primary and E004 exact fallback until this exit gate passes. H015 specialist routing must not start before the packaging decision.
+The exact E011 inference runtime is committed at `e6fbfaa02e8a72dc3c67713da51fe843417cc114`. Feature reconstruction matches all 142 frozen legal columns across 773 wells, 13 edge-case groups and 167 repository tests pass, and two direct 200-well pseudo-hidden runs cover 970,903 hidden rows in about 75–76 seconds with about 353 MB RSS and deterministic output. The canonical notebook is statically validated and private dataset `ashok205/rogii-e011-deployment-inputs` version 1 is READY. The remaining exit gate is the authorized user-run private Kaggle execution plus independent output retrieval and verification. E006 remains deployment primary and E004 exact fallback. H015 specialist routing must not start before that decision.
 
 ### July 24–26 — Tabular residual and datum models
 
@@ -315,8 +315,8 @@ These defaults may be revised only through a recorded decision before seeing the
 8. **E008 — Cross-fitted legal residual-action model — completed and rejected 2026-07-19.** Datum-only ridge reaches 14.7951 with improved p90 and useful E007 evidence, but wins only 2/5 maps and 14/25 cells and fails spatial/typewell transfer; no packaging or submission.
 9. **E009 — Residual-model consensus abstention — completed and rejected 2026-07-19.** Majority consensus reaches 14.7935 and wins all maps but only 15/25 cells, repeats spatial/typewell failures, and fails the sign-flipped negative control; no package or submission.
 10. **E010 — Nonlinear candidate coverage and selector regret — completed; rejected for deployment.** Bank oracle 4.7511 proves coverage; legal selector 14.7803 and 17.5 GB RSS fail the frozen contract.
-11. **E011 — Low-dimensional nonlinear coefficient learning — independently reproduced and statistically promoted.** `spline4_ridge_equal_s075` reaches 12.5507562957 RMSE with 5/5 maps, 25/25 cells, positive spatial/typewell/slice transfer, deterministic substantive outputs, and all controls. It is not deployment-ready until packaging and parity pass.
-12. **E012 — E011 packaging and final Kaggle offline parity — next.** Build the exact inference package, prove local notebook parity, benchmark approximately 200 pseudo-hidden wells, verify exact IDs and complete output receipts, and obtain private internet-disabled Kaggle parity without submitting.
+11. **E011 — Low-dimensional nonlinear coefficient learning — independently reproduced and statistically promoted.** `spline4_ridge_equal_s075` reaches 12.5507562957 RMSE with 5/5 maps, 25/25 cells, positive spatial/typewell/slice transfer, deterministic substantive outputs, and all controls. The exact package and private dataset are prepared, but it is not deployment-ready until the user-run Kaggle outputs pass independent verification.
+12. **E012/T020 — E011 packaging and final Kaggle offline parity — active at user-run boundary.** Runtime commit `e6fbfaa0`, hidden-scale direct benchmark, canonical notebook, and private dataset version 1 are complete. The user must run the notebook; then all five outputs must be downloaded and independently verified without submitting.
 13. **H015 — Regime-specialized coefficient experts — queued, not started.** Consider only after E012 completes and only under D016's stronger evidence standard.
 
 ## Explicitly rejected behavior
@@ -344,4 +344,4 @@ Foundation is complete only when:
 - legacy roadmap is preserved;
 - no training run is falsely presented as completed.
 
-Foundation, E010 coverage measurement, and E011 statistical verification are complete. The current exact next action is E012: package `spline4_ridge_equal_s075`, prove exact local-notebook parity, benchmark approximately 200 pseudo-hidden wells, and obtain private internet-disabled Kaggle parity without submitting. H015 remains queued and must not start before that packaging decision.
+Foundation, E010 coverage measurement, E011 statistical verification, runtime packaging, hidden-scale direct benchmarking, canonical notebook authoring, and private dataset upload are complete. The current exact next action is the authorized user-run E011 private Kaggle execution followed by exact output inventory, download, hashing, parsing, and independent parity verification. H015 remains queued and must not start before that decision.

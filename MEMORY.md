@@ -8,7 +8,7 @@ Public intelligence last checked: 2026-07-22 14:59 Asia/Kolkata
 - Deadline: 2026-08-05 23:59 UTC / 2026-08-06 05:29 Asia/Kolkata.
 - Current public leaderboard snapshot: 4.859 at rank 1, 4.913 at rank 2, 5.265 at rank 5, and 5.523 at rank 10. Official Meta Kaggle verifies that the public leaderboard covers exactly 26% of the test data and the private leaderboard the remaining 74%. Best Kaggle-MCP-verified account submission remains 7.119 (ref 54754431, 2026-07-16); user-reported best remains 6.888 with reference unverified.
 - E001 is frozen; E002, E005, E007, E008, and E009 are rejected; E003 is promoted only as nondeployable surface-assisted understanding; E004 is the exact fallback; E006 is the promoted deployment-ready primary.
-- E010 is completed and rejected. Its 130,252-path legal bank oracle reaches 4.7510768278 RMSE, but the best legal selector reaches 14.7802528528, fails spatial group 1/high-GR-missingness transfer, and uses 17,528,436 KB RSS versus the frozen 3 GB cap. E011/H014 is independently reproduced and statistically promoted at 12.5507562957 RMSE; E006 remains the deployment-ready primary, E004 the exact fallback, and H015 remains blocked pending E011 packaging/parity.
+- E010 is completed and rejected. Its 130,252-path legal bank oracle reaches 4.7510768278 RMSE, but the best legal selector reaches 14.7802528528, fails spatial group 1/high-GR-missingness transfer, and uses 17,528,436 KB RSS versus the frozen 3 GB cap. E011/H014 is independently reproduced and statistically promoted at 12.5507562957 RMSE. Its exact runtime is committed, canonical notebook authored, and private input dataset version 1 is READY; E006 remains the deployment-ready primary, E004 the exact fallback, and H015 remains blocked until the user-run Kaggle outputs are independently verified.
 
 ## Verified project state
 
@@ -22,7 +22,7 @@ Public intelligence last checked: 2026-07-22 14:59 Asia/Kolkata
 - E011 official run `R20260722-1537-e011-local-reproduction` was reproduced from frozen source `c326a812` with two numerical threads. The OOF artifact and eleven substantive CSV tables are byte-identical to the discovered output; only measured runtime/RSS fields differ. The reproduced model wall time is 1059.98 seconds and model RSS 399.44 MB.
 - `spline4_ridge_equal_s075` reaches 12.5507562957 pooled RMSE versus E006 at 14.9331407872, gaining 2.3823844915. It wins 5/5 maps and 25/25 cells, improves every spatial/typewell holdout and all three special slices, reduces RMSE catastrophes at thresholds 12/20/30 from 291/95/31 to 233/59/11, and passes all 21 controls.
 - The original complete-looking invocation remains unregistered because no successful command/process/task/Codex/operation receipt could be linked to it. Its static identities and files are consistent, but process provenance is incomplete. The official result is the independently reproduced run.
-- E011 is statistically authorized but not deployment-ready: no verified inference package, local notebook parity, hidden-scale runtime receipt, or private internet-disabled Kaggle parity exists. E006 remains primary and E004 remains the exact fallback.
+- E011 deployment preparation is complete through the user-run boundary. Runtime source commit `e6fbfaa02e8a72dc3c67713da51fe843417cc114` contains the exact model and inference path. All 142 legal features match across 773 wells with zero substantive mismatches; 13 edge-case groups and 167 repository tests pass. Two direct 200-well pseudo-hidden runs cover 970,903 hidden rows in 74.97/76.44 seconds at most 361,752 KB RSS with identical SHA-256 `12556650...3b56`. The canonical notebook SHA-256 is `63f299fc...e9e9`; private dataset `ashok205/rogii-e011-deployment-inputs` version 1 is READY with bundle SHA-256 `15a82b9e...66a2`. The canonical notebook has not been executed, so private Kaggle parity and deployment readiness remain false. E006 remains primary and E004 remains exact fallback.
 
 ## New durable understanding from exact public-source audits
 
@@ -53,7 +53,7 @@ Public intelligence last checked: 2026-07-22 14:59 Asia/Kolkata
 
 ## Exact next action
 
-Build the exact E011 inference package, prove local notebook parity, benchmark approximately 200 pseudo-hidden wells under the hidden-scale resource envelope, and obtain private internet-disabled Kaggle parity without submitting. Keep E006 primary and do not start H015 until this packaging decision is complete.
+The user imports `notebooks/training_and_submission/e011_spline4_deployment_kaggle.ipynb`, attaches private dataset `ashok205/rogii-e011-deployment-inputs` version 1 plus the ROGII competition data, keeps internet disabled, runs all cells, and provides the exact notebook owner/slug/version. Then list, download, hash, parse, and independently verify the five expected outputs. Keep E006 primary and do not start H015 until that parity decision is complete.
 
 ## Open risks
 
@@ -61,7 +61,7 @@ Build the exact E011 inference package, prove local notebook parity, benchmark a
 - The public leaderboard covers only 26% of the test data. Score-directed tuning on that minority split has a high private-shakeup risk and cannot override frozen local validation.
 - HMM/DTW/PF can over-count autocorrelated GR, commit to repeated motifs, or smooth across faults. Posterior uncertainty must be calibrated OOF and a jump candidate must remain available.
 - E010 confirms that a below-5 bank does not imply a useful legal selector. The immediate risk is coefficient learnability under spatial shift; family classification alone cannot close the 9.07 RMSE coefficient/aggregation gap.
-- E011 resolves coefficient learnability positively in cross-fitted validation, but deployment transfer remains unproven until the exact inference package and private Kaggle parity are verified at hidden scale.
+- E011 resolves coefficient learnability positively and the exact package now passes local source, feature, edge, and hidden-scale direct-runtime gates. Deployment transfer remains unproven only because the canonical user-run private Kaggle outputs have not yet been produced and independently verified.
 - The current public topic list reports 137 topics while the frozen archive contains 132. New/Recent deltas are audited, but canonical topic/message counts remain unchanged until a complete recrawl verifies additions, removals, and message counts.
 - Every future finalist needs its own clean Kaggle runtime, exact-ID, artifact-provenance, and output-parity verification.
 
