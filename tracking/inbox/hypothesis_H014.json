@@ -5,10 +5,10 @@
     "hypothesis_id": "H014",
     "title": "Low-dimensional nonlinear coefficient learning",
     "statement": "Split-local prediction of a small number of nonlinear correction coefficients or control points can recover materially more of E010 candidate coverage than flat family/candidate ranking, while remaining memory-safe and falling back exactly to E006 when confidence is weak.",
-    "status": "active",
+    "status": "promoted",
     "priority": 1,
-    "evidence_for": "E010 bank oracle is 4.7511. A counterfactual granting oracle coefficients to the families actually chosen by the selector is 5.7075, while the real selector is 14.7803. Coefficient estimation and aggregation explain 90.46% of the total selector gap.",
-    "evidence_against": "Legal features may still be too weak to infer signed nonlinear coefficients under spatial shift. E008/E009 learned datum action only weakly and repeatedly failed spatial/typewell transfer.",
-    "next_test": "E011: compare orthogonal coefficient regression, three-control-point regression, family-specific coefficient experts, and conservative disagreement fallback under the frozen repeated/spatial/typewell/slice gates. Stop branches on a registered screen before full scoring."
+    "evidence_for": "E011 independently reproduces spline4_ridge_equal_s075 at 12.5507562957 RMSE versus E006 at 14.9331407872. It wins all five maps and all 25 repeated cells, improves every spatial/typewell holdout and registered special slice, and passes all 21 controls under two threads.",
+    "evidence_against": "Statistical promotion does not establish deployment parity. E011 still lacks a verified inference package, local notebook parity, approximately 200-well hidden-scale runtime receipt, and private internet-disabled Kaggle parity.",
+    "next_test": "T020/E012: package the exact verified spline4_ridge_equal_s075 path, prove local notebook parity, benchmark approximately 200 pseudo-hidden wells, and obtain private internet-disabled Kaggle parity without submitting."
   }
 }

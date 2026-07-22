@@ -4,11 +4,11 @@
   "payload": {
     "hypothesis_id": "H015",
     "title": "Regime-specialized coefficient experts",
-    "statement": "After E011 is independently verified, split-local legal regime experts may recover additional nonlinear coefficient accuracy on demonstrably distinct well regimes while a confidence gate falls back exactly to the strongest verified global path.",
+    "statement": "After E011 packaging and parity are independently verified, split-local legal regime experts may recover additional nonlinear coefficient accuracy on demonstrably distinct well regimes while a confidence gate falls back exactly to the strongest verified global path.",
     "status": "queued",
     "priority": 2,
     "evidence_for": "The official BirdCLEF+ 2026 first-place writeup shows that narrow specialists can add value inside a diverse validated ensemble. E010 shows that ROGII coefficient estimation and aggregation, not candidate coverage, explain 90.46% of selector regret.",
     "evidence_against": "ROGII E007-E009 show that apparent regimes, model agreement, and aggregate gains can repeat shared spatial/typewell bias. Small regimes invite unstable routing and overfitting.",
-    "next_test": "Do not start before the E011 verification decision. Then preregister legal regime definitions, minimum sample sizes, cross-fitted routing, bounded coefficient actions, exact global fallback, full repeated/spatial/typewell/slice gates, and random/shuffled/sign-flipped routing controls."
+    "next_test": "Do not start before T020/E012 completes E011 packaging, hidden-scale runtime, and private Kaggle parity. Only then preregister legal regime definitions, minimum sample sizes, cross-fitted routing, bounded coefficient actions, exact global fallback, full repeated/spatial/typewell/slice gates, and random/shuffled/sign-flipped routing controls."
   }
 }

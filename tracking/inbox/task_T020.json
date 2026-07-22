@@ -1,0 +1,13 @@
+{
+  "type": "task",
+  "recorded_at": "2026-07-22T16:22:26Z",
+  "payload": {
+    "task_id": "T020",
+    "title": "Package E011 and prove offline parity",
+    "status": "active",
+    "priority": 1,
+    "phase": "deployment",
+    "depends_on": "T019",
+    "due_at": null
+  }
+}
