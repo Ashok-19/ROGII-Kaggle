@@ -1,0 +1,83 @@
+{
+  "e006_nested_fusion": {
+    "catastrophe_counts_rmse_ge_12_20_30": {
+      "12": 291,
+      "20": 95,
+      "30": 31
+    },
+    "datum_removed_rmse": 8.976833662759683,
+    "datum_trend_removed_rmse": 6.697194770121531,
+    "linear_trend_sse_share": 0.160230197834841,
+    "max_well_rmse": 64.86998236666649,
+    "mean_error_sse_share": 0.6386367056865324,
+    "median_well_rmse": 9.759889405130561,
+    "p90_well_rmse": 21.785550088365714,
+    "p95_well_rmse": 28.000475094948513,
+    "p99_well_rmse": 44.602342468110336,
+    "rmse": 14.933140787237672,
+    "rows_scored": 3783989,
+    "shape_sse_share": 0.20113309647862723,
+    "sse": 843824604.2455783,
+    "wells_scored": 773,
+    "worst_10pct_sse_share": 0.5092058889604304,
+    "worst_5pct_sse_share": 0.3685061111900008
+  },
+  "gain_vs_e006": 2.382384491548006,
+  "gain_vs_last": 3.359096575044898,
+  "last_known_tvt": {
+    "catastrophe_counts_rmse_ge_12_20_30": {
+      "12": 319,
+      "20": 107,
+      "30": 35
+    },
+    "datum_removed_rmse": 9.035409988099236,
+    "datum_trend_removed_rmse": 6.697194770121073,
+    "linear_trend_sse_share": 0.1453291682817132,
+    "max_well_rmse": 70.6393746196804,
+    "mean_error_sse_share": 0.6774749875800963,
+    "median_well_rmse": 10.665140786694277,
+    "p90_well_rmse": 22.972536567136498,
+    "p95_well_rmse": 29.010764433298682,
+    "p99_well_rmse": 47.801912735697705,
+    "rmse": 15.909852870734564,
+    "rows_scored": 3783989,
+    "shape_sse_share": 0.17719584413819195,
+    "sse": 957816230.7485026,
+    "wells_scored": 773,
+    "worst_10pct_sse_share": 0.5247630979620319,
+    "worst_5pct_sse_share": 0.38990723847856945
+  },
+  "row_identity": {
+    "child_extra": null,
+    "duplicate_ids": 0,
+    "id_sequence_sha256": "de07df322a8dc3a981b556ea78c3ddcecb2e708a31e986cfe05873109d4ae9d3",
+    "mismatches": [],
+    "parent_extra": null,
+    "rows": 3783989,
+    "unique_ids": 3783989,
+    "wells": 773
+  },
+  "spline4_ridge_equal_s075": {
+    "catastrophe_counts_rmse_ge_12_20_30": {
+      "12": 233,
+      "20": 59,
+      "30": 11
+    },
+    "datum_removed_rmse": 8.188313773597613,
+    "datum_trend_removed_rmse": 6.510167305150859,
+    "linear_trend_sse_share": 0.15658946037761398,
+    "max_well_rmse": 55.461281983221404,
+    "mean_error_sse_share": 0.574353409292483,
+    "median_well_rmse": 9.068493673508419,
+    "p90_well_rmse": 17.831023926499395,
+    "p95_well_rmse": 22.133270667058696,
+    "p99_well_rmse": 31.347572344679087,
+    "rmse": 12.550756295689666,
+    "rows_scored": 3783989,
+    "shape_sse_share": 0.26905713032990397,
+    "sse": 596059561.1825962,
+    "wells_scored": 773,
+    "worst_10pct_sse_share": 0.4516411410496304,
+    "worst_5pct_sse_share": 0.31532172426448263
+  }
+}

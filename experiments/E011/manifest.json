@@ -4,16 +4,16 @@
   "hypothesis_id": "H014",
   "task_id": "T019",
   "decision_id": "D014",
-  "status": "smoke_passed",
+  "status": "promoted",
   "track": "nonlinear_coefficient_learning",
   "priority": 1,
   "owner": "NNMax",
   "parent_id": "E010",
   "created_at": "2026-07-20T12:10:00Z",
-  "updated_at": "2026-07-20T15:02:46Z",
+  "updated_at": "2026-07-22T16:14:00Z",
   "design": {
     "anchor": "E006 nested_conservative_grid",
-    "target": "3\u20137 coefficients of true suffix correction around E006",
+    "target": "3–7 coefficients of true suffix correction around E006",
     "legal_features": "frozen E008 legal feature table",
     "contexts": "25 repeated + 5 spatial + 5 typewell",
     "models": [
@@ -46,7 +46,62 @@
     ],
     "compact_input": "experiments/E011/COMPACT_INPUT_V1.json"
   },
-  "runs": [],
+  "runs": [
+    {
+      "run_id": "R20260722-1537-e011-local-reproduction",
+      "status": "promoted",
+      "started_at": "2026-07-22T15:37:00.804390Z",
+      "ended_at": "2026-07-22T15:54:50.189144Z",
+      "git_sha": "c326a812b0f663bb7a095a0d435fd302abc0bf6f",
+      "fold_map": "v1-v5 repeated plus spatial/typewell holdouts",
+      "config_path": "experiments/E011/config.json",
+      "artifact_dir": "artifacts/E011",
+      "controls": {
+        "passed": 21,
+        "failed": 0,
+        "all_pass": true
+      },
+      "metrics": [
+        {
+          "split": "cv",
+          "name": "rmse",
+          "value": 12.550756295689666
+        },
+        {
+          "split": "cv",
+          "name": "e006_rmse",
+          "value": 14.933140787237672
+        },
+        {
+          "split": "cv",
+          "name": "gain_vs_e006",
+          "value": 2.382384491548006
+        },
+        {
+          "split": "cv",
+          "name": "p90_well_rmse",
+          "value": 17.831023926499395
+        },
+        {
+          "split": "cv",
+          "name": "p99_well_rmse",
+          "value": 31.347572344679087
+        }
+      ],
+      "well_metrics_path": null,
+      "notes": "Official run is the independent frozen-commit reproduction. The earlier complete-looking invocation has incomplete process provenance and is archived only as unregistered static evidence.",
+      "updated_at": "2026-07-22T16:02:42Z",
+      "selected_candidate": "spline4_ridge_equal_s075",
+      "reported_candidate": "spline4_ridge_equal_s075",
+      "reported_rmse": 12.550756295689666,
+      "runtime_seconds": 1059.9797521180008,
+      "max_rss_kb": 409024,
+      "artifact_manifest": "experiments/E011/results/artifact_manifest.json",
+      "oof_predictions": "artifacts/E011/oof_predictions.csv.gz",
+      "verification": "experiments/E011/verification.json",
+      "process_receipt": "experiments/E011/local/reproduction/process_receipt.json"
+    }
+  ],
   "execution_boundary": {
     "source_commit": "c326a812b0f663bb7a095a0d435fd302abc0bf6f",
     "focused_tests": {
@@ -72,9 +127,61 @@
       "result_files_created": false,
       "score_recovered": false,
       "promotion_decision_made": false
+    },
+    "original_complete_looking_output": {
+      "process_provenance": "incomplete",
+      "static_files_archived": "experiments/E011/provenance/original_unregistered",
+      "not_registered": true
+    },
+    "official_independent_reproduction": {
+      "run_id": "R20260722-1537-e011-local-reproduction",
+      "status": "complete",
+      "source_commit": "c326a812b0f663bb7a095a0d435fd302abc0bf6f",
+      "returncode": 0,
+      "threads": 2,
+      "wall_seconds_external": 1069.384753530001,
+      "model_wall_seconds": 1059.9797521180008,
+      "child_max_rss_kb": 411984,
+      "model_max_rss_kb": 409024,
+      "process_receipt": "experiments/E011/local/reproduction/process_receipt.json",
+      "deterministic_substantive_outputs": true
     }
   },
-  "result": null,
-  "conclusion": "The compact E011 implementation is committed and passes the focused and full repository suites. A score-blind official-data projection is below the local resource threshold at a conservative 9.2293 minutes and 205.76 MB RSS. The first official local call was terminated by the workspace runner timeout before any result file was written; no learned E011 hidden-label score or promotion decision has been recorded.",
-  "hypothesis": "Split-local prediction of 3\u20137 nonlinear correction coefficients or spline control points can recover materially more of E010 candidate coverage than flat candidate ranking, while remaining memory-safe and reverting exactly to E006 when confidence is weak."
+  "result": {
+    "decision": "promote_statistically",
+    "selected_candidate": "spline4_ridge_equal_s075",
+    "reported_rmse": 12.550756295689666,
+    "e006_rmse": 14.933140787237672,
+    "gain_vs_e006": 2.382384491548006,
+    "map_wins": 5,
+    "outer_cell_wins": 25,
+    "representation_oracle_gain_retention": 0.21953175275127995,
+    "all_controls_pass": true,
+    "all_statistical_gates_pass": true,
+    "deployment_ready": false,
+    "primary_deployment_model": "E006",
+    "exact_fallback": "E004",
+    "submission_made": false,
+    "result": "experiments/E011/RESULT.md",
+    "verification": "experiments/E011/verification.json"
+  },
+  "conclusion": "Independent frozen-commit reproduction verifies spline4_ridge_equal_s075 at 12.5507562957 RMSE, a 2.3823844915 gain over E006, with 5/5 map wins, 25/25 cell wins, positive spatial/typewell/slice gains, all controls, and deterministic substantive outputs. Promote E011 statistically, but retain E006 as deployment primary and E004 as exact fallback until E011 packaging and Kaggle parity pass.",
+  "hypothesis": "Split-local prediction of 3–7 nonlinear correction coefficients or spline control points can recover materially more of E010 candidate coverage than flat candidate ranking, while remaining memory-safe and reverting exactly to E006 when confidence is weak.",
+  "result_decision_id": "D018",
+  "post_finalization_validation": {
+    "focused_tests": {
+      "passed": 26,
+      "failed": 0,
+      "wall_seconds": 50.587
+    },
+    "full_repository_tests": {
+      "passed": 149,
+      "failed": 0,
+      "wall_seconds": 73.685
+    },
+    "tracker_validate": "ok",
+    "sqlite_integrity": "ok",
+    "sqlite_foreign_key_violations": 0,
+    "completed_at": "2026-07-22T16:14:00Z"
+  }
 }

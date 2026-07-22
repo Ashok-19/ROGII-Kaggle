@@ -8,7 +8,7 @@ Public intelligence last checked: 2026-07-22 14:59 Asia/Kolkata
 - Deadline: 2026-08-05 23:59 UTC / 2026-08-06 05:29 Asia/Kolkata.
 - Current public leaderboard snapshot: 4.859 at rank 1, 4.913 at rank 2, 5.265 at rank 5, and 5.523 at rank 10. Official Meta Kaggle verifies that the public leaderboard covers exactly 26% of the test data and the private leaderboard the remaining 74%. Best Kaggle-MCP-verified account submission remains 7.119 (ref 54754431, 2026-07-16); user-reported best remains 6.888 with reference unverified.
 - E001 is frozen; E002, E005, E007, E008, and E009 are rejected; E003 is promoted only as nondeployable surface-assisted understanding; E004 is the exact fallback; E006 is the promoted deployment-ready primary.
-- E010 is completed and rejected. Its 130,252-path legal bank oracle reaches 4.7510768278 RMSE, but the best legal selector reaches 14.7802528528, fails spatial group 1/high-GR-missingness transfer, and uses 17,528,436 KB RSS versus the frozen 3 GB cap. E011/H014/T019 is active with committed source at `c326a812`; H012/T016 remain queued comparators.
+- E010 is completed and rejected. Its 130,252-path legal bank oracle reaches 4.7510768278 RMSE, but the best legal selector reaches 14.7802528528, fails spatial group 1/high-GR-missingness transfer, and uses 17,528,436 KB RSS versus the frozen 3 GB cap. E011/H014 is independently reproduced and statistically promoted at 12.5507562957 RMSE; E006 remains the deployment-ready primary, E004 the exact fallback, and H015 remains blocked pending E011 packaging/parity.
 
 ## Verified project state
 
@@ -19,8 +19,10 @@ Public intelligence last checked: 2026-07-22 14:59 Asia/Kolkata
 - E006 nested PF-E004 fusion scores 14.9331407872, wins 5/5 maps and 25/25 outer cells, improves every registered spatial/typewell group, and has byte-identical local/private-Kaggle output at `e412864a...d81008`.
 - E007–E009 produced aggregate gains but failed frozen repeated-cell, shift, tail, or negative-control gates. E009's legal 64-feature diagnostic ridge reaches 14.6352733150 but fails one spatial and three typewell groups and is not promotion evidence.
 - E010 proves candidate coverage is no longer the primary blocker: bank oracle 4.7511 versus legal selector 14.7803. A chosen-family oracle counterfactual reaches 5.7075; family choice explains 9.54% of the gap and coefficient estimation/aggregation 90.46%. HMM added zero unique screen wins; DTW derivative added rare coverage but scores 30.434 standalone.
-- E011 now has a hash-verified 2.57 MB compact sufficient-statistics loader, batched weighted Ridge, and immutable cached peak-basis checks. Focused tests pass 14/14 and the full repository passes 149/149. A score-blind official-data projection gives a conservative 9.2293-minute full-run estimate at 205.76 MB RSS under the two-thread cap; it calculated no held-out RMSE or candidate ranking.
-- A complete-looking untracked E011 output set appeared after the prior boundary record. Its summary identifies committed source `c326a812`, reports `spline4_ridge_equal_s075` at 12.5507562957 RMSE versus E006 14.9331407872, and records all controls passing. This is not accepted evidence until output hashes, provenance/timestamps, repeated/stress gates, and an independent reproduction are verified; E011 remains `smoke_passed` with zero registered runs.
+- E011 official run `R20260722-1537-e011-local-reproduction` was reproduced from frozen source `c326a812` with two numerical threads. The OOF artifact and eleven substantive CSV tables are byte-identical to the discovered output; only measured runtime/RSS fields differ. The reproduced model wall time is 1059.98 seconds and model RSS 399.44 MB.
+- `spline4_ridge_equal_s075` reaches 12.5507562957 pooled RMSE versus E006 at 14.9331407872, gaining 2.3823844915. It wins 5/5 maps and 25/25 cells, improves every spatial/typewell holdout and all three special slices, reduces RMSE catastrophes at thresholds 12/20/30 from 291/95/31 to 233/59/11, and passes all 21 controls.
+- The original complete-looking invocation remains unregistered because no successful command/process/task/Codex/operation receipt could be linked to it. Its static identities and files are consistent, but process provenance is incomplete. The official result is the independently reproduced run.
+- E011 is statistically authorized but not deployment-ready: no verified inference package, local notebook parity, hidden-scale runtime receipt, or private internet-disabled Kaggle parity exists. E006 remains primary and E004 remains the exact fallback.
 
 ## New durable understanding from exact public-source audits
 
@@ -47,10 +49,11 @@ Public intelligence last checked: 2026-07-22 14:59 Asia/Kolkata
 - D015 freezes the current public frontier as a mechanism catalogue, not an ingestible solution. Verify E011 first; only then preregister clean-room branch-uncertainty or continuity experiments if the verified E011 residuals justify them.
 - D016 gives specialists a higher evidence burden than global models; unsupported or uncertain regimes must use the exact verified global fallback.
 - D017 makes public notebooks and writeups permanent hypothesis generators rather than trusted pipelines. Their scores, artifacts, thresholds, and routing rules cannot enter official state without legal clean-room reconstruction and independent reproduction.
+- D018 statistically promotes E011 but explicitly retains E006 for deployment until E011 packaging and parity pass. H015 specialist routing must not start before that packaging decision.
 
 ## Exact next action
 
-Independently verify the newly appeared E011 output set against committed source `c326a812`: establish provenance/timestamps, require every expected file and manifest hash, recompute pooled/map/cell/slice and fallback controls, and reproduce the run before registering any result. Only after that decision should PF seed-cloud uncertainty or bounded continuity receive a fresh experiment ID.
+Build the exact E011 inference package, prove local notebook parity, benchmark approximately 200 pseudo-hidden wells under the hidden-scale resource envelope, and obtain private internet-disabled Kaggle parity without submitting. Keep E006 primary and do not start H015 until this packaging decision is complete.
 
 ## Open risks
 
@@ -58,6 +61,7 @@ Independently verify the newly appeared E011 output set against committed source
 - The public leaderboard covers only 26% of the test data. Score-directed tuning on that minority split has a high private-shakeup risk and cannot override frozen local validation.
 - HMM/DTW/PF can over-count autocorrelated GR, commit to repeated motifs, or smooth across faults. Posterior uncertainty must be calibrated OOF and a jump candidate must remain available.
 - E010 confirms that a below-5 bank does not imply a useful legal selector. The immediate risk is coefficient learnability under spatial shift; family classification alone cannot close the 9.07 RMSE coefficient/aggregation gap.
+- E011 resolves coefficient learnability positively in cross-fitted validation, but deployment transfer remains unproven until the exact inference package and private Kaggle parity are verified at hidden scale.
 - The current public topic list reports 137 topics while the frozen archive contains 132. New/Recent deltas are audited, but canonical topic/message counts remain unchanged until a complete recrawl verifies additions, removals, and message counts.
 - Every future finalist needs its own clean Kaggle runtime, exact-ID, artifact-provenance, and output-parity verification.
 

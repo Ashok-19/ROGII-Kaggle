@@ -1,0 +1,28 @@
+{
+  "child_max_rss_kb": 411984,
+  "command": [
+    "python3.12",
+    "scratch/e011-repro-worktree/tools/run_e011.py",
+    "--root",
+    "/home/nnmax/Desktop/kaggle/ROGII",
+    "--output-dir",
+    "/home/nnmax/Desktop/kaggle/ROGII/scratch/e011-reproduction/results",
+    "--artifact-dir",
+    "/home/nnmax/Desktop/kaggle/ROGII/scratch/e011-reproduction/artifacts",
+    "--code-sha",
+    "c326a812b0f663bb7a095a0d435fd302abc0bf6f"
+  ],
+  "joblib_multiprocessing": "0",
+  "returncode": 0,
+  "stderr": "",
+  "stdout": "{\n  \"advanced_candidates\": [\n    \"shape3_ridge_equal_s100\",\n    \"spline3_ridge_equal_s075\",\n    \"spline4_ridge_equal_s075\",\n    \"spline5_ridge_equal_s075\",\n    \"spline7_ridge_equal_s075\",\n    \"spline4_ridge_row_weighted_s075\",\n    \"spline7_ridge_tree_blend_s100\",\n    \"spline7_blend_confidence_fallback\"\n  ],\n  \"e006_rmse\": 14.933140787237672,\n  \"eligible_candidates\": [\n    \"shape3_ridge_equal_s100\",\n    \"spline3_ridge_equal_s075\",\n    \"spline4_ridge_equal_s075\",\n    \"spline4_ridge_row_weighted_s075\",\n    \"spline5_ridge_equal_s075\",\n    \"spline7_ridge_equal_s075\",\n    \"spline7_ridge_tree_blend_s100\",\n    \"spline7_blend_confidence_fallback\"\n  ],\n  \"last_known_rmse\": 15.909852870734571,\n  \"max_rss_kb\": 409024,\n  \"reported_candidate\": \"spline4_ridge_equal_s075\",\n  \"reported_rmse\": 12.550756295690169,\n  \"selected_candidate\": \"spline4_ridge_equal_s075\",\n  \"status\": \"promoted\",\n  \"wall_seconds\": 1068.871041184997\n}\n",
+  "thread_env": {
+    "BLIS_NUM_THREADS": "2",
+    "MKL_NUM_THREADS": "2",
+    "NUMEXPR_NUM_THREADS": "2",
+    "OMP_NUM_THREADS": "2",
+    "OPENBLAS_NUM_THREADS": "2",
+    "VECLIB_MAXIMUM_THREADS": "2"
+  },
+  "wall_seconds_external": 1069.384753530001
+}

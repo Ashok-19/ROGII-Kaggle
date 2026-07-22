@@ -1,0 +1,79 @@
+{
+  "compact": {
+    "expected_sha256": "cb2788c602f718dc7a76f09a62bbb433c1d7cda7dd93d69ee8905524eb09156d",
+    "expected_source_keys": [
+      "e008_legal_features",
+      "e010_oof",
+      "e010_selector_predictions"
+    ],
+    "hash_match": true,
+    "hidden_rows": 3783989,
+    "manifest_schema": 1,
+    "member_count": 45,
+    "sha256": "cb2788c602f718dc7a76f09a62bbb433c1d7cda7dd93d69ee8905524eb09156d",
+    "source_keys": [
+      "e008_legal_features",
+      "e010_oof",
+      "e010_selector_predictions"
+    ],
+    "spatial_counts": {
+      "0": 155,
+      "1": 155,
+      "2": 154,
+      "3": 155,
+      "4": 154
+    },
+    "typewell_counts": {
+      "0": 155,
+      "1": 155,
+      "2": 154,
+      "3": 155,
+      "4": 154
+    },
+    "well_count": 773
+  },
+  "external_input_paths": [
+    "artifacts/E006/oof_predictions.csv.gz",
+    "artifacts/E010/oof_predictions.csv.gz",
+    "artifacts/E011/compact_stats_v1.npz",
+    "experiments/E008/results/legal_features.csv",
+    "experiments/E010/results/oracle_targets.csv",
+    "experiments/E010/results/selector_predictions.csv"
+  ],
+  "legal_features": {
+    "absolute_coordinate_features": [],
+    "columns": 143,
+    "feature_names_exact": true,
+    "forbidden_feature_names": [],
+    "max_numeric_delta": 0.0,
+    "missing_required_prefixes": [],
+    "nonfinite_feature_cells": 20,
+    "parse_errors": [],
+    "rows": 773,
+    "selected_feature_count": 142,
+    "selected_illegal": [],
+    "selected_subset_legal": true,
+    "spatial_or_typewell_features": [],
+    "unique_well_ids": 773,
+    "well_order_exact": true
+  },
+  "lexical_source_counts": {
+    "formation_surface": 0,
+    "hidden_label": 0,
+    "hidden_target": 0,
+    "kaggle": 1,
+    "leaderboard": 0,
+    "oracle": 19,
+    "public": 0,
+    "target_coefficients": 12,
+    "validation_targets": 0
+  },
+  "membership": {
+    "all_pass": true,
+    "contexts_recomputed": 35,
+    "exact_key_and_detail_match": true,
+    "mismatches": [],
+    "shipped_rows": 35
+  },
+  "submission_authorized": false
+}

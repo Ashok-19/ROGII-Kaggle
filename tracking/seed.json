@@ -181,6 +181,18 @@
       "confidence": "official Kaggle topic and full first message verified",
       "last_checked": "2026-07-22",
       "notes": "Nikita Babych; BirdCLEF+ 2026; topic 704752; first message 3467343; official Kaggle MCP retrieval."
+    },
+    {
+      "source_id": "S_E011_VERIFIED_20260722",
+      "title": "E011 independent frozen-commit reproduction and verification",
+      "kind": "official_local_experiment_verification",
+      "url": "",
+      "local_path": "experiments/E011/verification.json",
+      "accessibility": "repository-local",
+      "license": "project-generated",
+      "confidence": "independently reproduced and hash verified",
+      "last_checked": "2026-07-22",
+      "notes": "Official run R20260722-1537-e011-local-reproduction from c326a812; two threads; deterministic OOF and substantive result tables; original complete-looking invocation retained only as unregistered static evidence because its process provenance is incomplete."
     }
   ],
   "claims": [
@@ -532,6 +544,36 @@
       "confidence": "confirmed structural lesson",
       "source_id": "S_BIRDCLEF_W86265",
       "implication": "ROGII specialist evidence must exceed global-model evidence: sufficient regime support, cross-fitted routing, complete-system improvement, subgroup stability, failed negative controls, and exact fallback identity.",
+      "status": "active"
+    },
+    {
+      "claim_id": "C036",
+      "category": "experiment_result",
+      "claim": "The independently reproduced E011 candidate spline4_ridge_equal_s075 reaches 12.5507562957 pooled RMSE versus E006 at 14.9331407872, a gain of 2.3823844915.",
+      "evidence_class": "frozen_commit_independent_reproduction",
+      "confidence": "confirmed",
+      "source_id": "S_E011_VERIFIED_20260722",
+      "implication": "Low-dimensional nonlinear coefficient learning is statistically promoted and materially closes the E010 selector gap.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C037",
+      "category": "validation",
+      "claim": "E011 improves all five repeated maps, all 25 repeated outer cells, every spatial and typewell holdout, and all three registered special slices while all 21 controls pass.",
+      "evidence_class": "independent_metric_and_context_recomputation",
+      "confidence": "confirmed",
+      "source_id": "S_E011_VERIFIED_20260722",
+      "implication": "E011 passes its frozen statistical promotion contract, including shift, tail, negative-control, fallback, runtime, and memory gates.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C038",
+      "category": "deployment",
+      "claim": "E011 is not deployment-ready because no verified inference package, exact local-notebook parity, hidden-scale runtime benchmark, or private internet-disabled Kaggle parity exists.",
+      "evidence_class": "verified_missing_deployment_receipts",
+      "confidence": "confirmed",
+      "source_id": "S_E011_VERIFIED_20260722",
+      "implication": "Retain E006 as deployment primary and E004 as exact fallback; packaging and parity are the exact next action and H015 remains blocked.",
       "status": "active"
     }
   ],

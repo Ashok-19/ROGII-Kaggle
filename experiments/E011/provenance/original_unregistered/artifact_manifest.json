@@ -1,0 +1,141 @@
+{
+  "code_sha": "c326a812b0f663bb7a095a0d435fd302abc0bf6f",
+  "config": {
+    "bytes": 13306,
+    "path": "experiments/E011/config.json",
+    "sha256": "8cc4514a011218480acfc781024ef29e8372986d1a579a1f218dfa64c9132505"
+  },
+  "experiment_id": "E011",
+  "external_artifacts": [
+    {
+      "base": "artifact_dir",
+      "bytes": 78309663,
+      "kind": "oof_predictions_gzip",
+      "path": "oof_predictions.csv.gz",
+      "sha256": "6ad01b630c9a24eb5f4246639d6a85d974d3633493de90e04c393886f841679d",
+      "tracked": false
+    }
+  ],
+  "files": [
+    {
+      "bytes": 21408,
+      "path": "candidate_metrics.csv",
+      "sha256": "397eb05eab555db09bff089201552d8f814d94929c7ae4e22d079bc56be82921"
+    },
+    {
+      "bytes": 37704,
+      "path": "coefficient_metrics.csv",
+      "sha256": "b53f05b92a1d91dc729146b9b675a56c2b5e4fb21d9bfb1fdd5d10eeb3fedcc1"
+    },
+    {
+      "bytes": 72120,
+      "path": "map_metrics.csv",
+      "sha256": "edf12da2aac2ad2abc5eb355f09bb5546cc1ddd61981ed1c63d6f83b278f90ed"
+    },
+    {
+      "bytes": 397446,
+      "path": "outer_cell_metrics.csv",
+      "sha256": "7253f6ed101d77cee8de4e2231148e067da1eefc0e9ed1b701d286e4d39ff4c1"
+    },
+    {
+      "bytes": 23020,
+      "path": "stress_metrics.csv",
+      "sha256": "7142506eb21455963fc0c519275b79ffa4fee2196b9b36e4a5501535038ee635"
+    },
+    {
+      "bytes": 45875,
+      "path": "special_slice_metrics.csv",
+      "sha256": "e51de22e7f66ffb143cdac6e0530353abe84e838f8675a6d00aab9aa8f91f82f"
+    },
+    {
+      "bytes": 1302058,
+      "path": "selected_hyperparameters.csv",
+      "sha256": "8f3cfc371adbe0ec96adf62c3be4f29e0edebf3dc8bff6ed328e4393feacb87a"
+    },
+    {
+      "bytes": 88571,
+      "path": "selected_feature_frequency.csv",
+      "sha256": "22348c5d655b1505a17f8b34e5cd7038f33a56edc9b778bda878082949f174c8"
+    },
+    {
+      "bytes": 5565,
+      "path": "controls.csv",
+      "sha256": "0177d7654958c5ee4314fd27114cbf37d2025029a3dad7bf2b644a43b3f44c51"
+    },
+    {
+      "bytes": 12957,
+      "path": "membership_audit.csv",
+      "sha256": "dc285107c0272b50d3479beeead936fc7a138ba9a26b79a54013beb3150c6bb5"
+    },
+    {
+      "bytes": 447735,
+      "path": "representation_targets.csv",
+      "sha256": "1d686c28c07ec5d95127eb2b5354820e334998d949ec74cb2eae7f2a75b9475f"
+    },
+    {
+      "bytes": 8523764,
+      "path": "model_predictions.csv",
+      "sha256": "67e889ff246fc9f004b239c1b0b64dd0819ed448cb12056e905f21e9d6b44c6f"
+    },
+    {
+      "bytes": 136914,
+      "path": "summary.json",
+      "sha256": "3d706e28e88e9d16f6f0a9a0d03e5c6a222792719358d920aca26b5205e43a12"
+    }
+  ],
+  "fold_files": [
+    {
+      "bytes": 15743,
+      "path": "folds/v1.json",
+      "sha256": "89ea99a594547b5b1457cdbd5d9d4f562d6b6f8f3f3a55ff8e3633b0e98ef555"
+    },
+    {
+      "bytes": 15743,
+      "path": "folds/v2.json",
+      "sha256": "8a116f8b60463c55c7f23fa640fee542352c9250b8775a9e98086f3cad7c938e"
+    },
+    {
+      "bytes": 15743,
+      "path": "folds/v3.json",
+      "sha256": "da69b7be2f115a2df2da1fd26f3d2e331503a43723cf3d24d4aaee2d3e79efa9"
+    },
+    {
+      "bytes": 15743,
+      "path": "folds/v4.json",
+      "sha256": "38b64e8ec4b904d5ce1bf105516d925724a518152302ef2ec48cf1867336153c"
+    },
+    {
+      "bytes": 15743,
+      "path": "folds/v5.json",
+      "sha256": "911011522eca1d1cb06e10ca5ac24b19b799796eb92560b6b6fd95921a9836ef"
+    }
+  ],
+  "parent_artifacts": [
+    {
+      "bytes": 200145240,
+      "path": "artifacts/E006/oof_predictions.csv.gz",
+      "sha256": "9b9f26cd8ad82e32dbc0f9ba1466cb38424cd3bbf7001c1079a9867fb5a324b4"
+    },
+    {
+      "bytes": 1380027,
+      "path": "experiments/E008/results/legal_features.csv",
+      "sha256": "c4b332ccb62559609aee501eb6cd66237cf6a98fc370caa542d6be99b43f8853"
+    },
+    {
+      "bytes": 228267787,
+      "path": "artifacts/E010/oof_predictions.csv.gz",
+      "sha256": "80bae7649c783b1fa1536546e0485f1357cd59abf4a641ad26d01f90490d8f46"
+    },
+    {
+      "bytes": 1017110,
+      "path": "experiments/E010/results/oracle_targets.csv",
+      "sha256": "36f891448daa467e22fe710d5a20e68c78c08c385d77d8ca39d4d53f88c3dcea"
+    },
+    {
+      "bytes": 6824881,
+      "path": "experiments/E010/results/selector_predictions.csv",
+      "sha256": "38ece62b8b500c6cfbf6c72a8981b69184648d86c330a2b4392c9368d3f5c14e"
+    }
+  ],
+  "schema_version": 1
+}

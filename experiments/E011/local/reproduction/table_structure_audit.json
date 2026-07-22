@@ -1,0 +1,130 @@
+{
+  "candidate_metrics": {
+    "all_numeric_finite": true,
+    "duplicates": 0,
+    "nonfinite": [],
+    "rows": 63,
+    "unique_keys": 63
+  },
+  "coefficient_metrics": {
+    "all_numeric_finite": true,
+    "duplicates": 0,
+    "nonfinite": [],
+    "rows": 304,
+    "unique_keys": 304
+  },
+  "controls": {
+    "all_numeric_finite": true,
+    "duplicates": 0,
+    "nonfinite": [],
+    "rows": 21,
+    "unique_keys": 21
+  },
+  "coverage": {
+    "candidate_count_total": 63,
+    "eligible_candidates": 59,
+    "maps": 5,
+    "outer_contexts": 25,
+    "representations": 5,
+    "special_slices": 3,
+    "stress_contexts": 10,
+    "wells_in_targets": 773
+  },
+  "map_metrics": {
+    "all_numeric_finite": true,
+    "duplicates": 0,
+    "nonfinite": [],
+    "rows": 315,
+    "unique_keys": 315
+  },
+  "membership": {
+    "all_numeric_finite": true,
+    "duplicates": 0,
+    "nonfinite": [],
+    "rows": 35,
+    "unique_keys": 35
+  },
+  "model_predictions": {
+    "all_numeric_finite": true,
+    "duplicates": 0,
+    "nonfinite": [],
+    "rows": 66478,
+    "unique_keys": 66478
+  },
+  "ordering": {
+    "map_candidate_blocks_match_canonical": true,
+    "map_labels": [
+      "v1",
+      "v2",
+      "v3",
+      "v4",
+      "v5"
+    ],
+    "outer_candidate_blocks_match_canonical": true,
+    "outer_first_last": [
+      "repeated:v1:0",
+      "repeated:v5:4"
+    ],
+    "special_candidate_blocks_match_canonical": true,
+    "special_labels": [
+      "long_suffix",
+      "high_gr_missingness",
+      "e006_catastrophe"
+    ],
+    "stress_candidate_blocks_match_expected": true,
+    "stress_labels": [
+      "spatial:0",
+      "spatial:1",
+      "spatial:2",
+      "spatial:3",
+      "spatial:4",
+      "typewell:0",
+      "typewell:1",
+      "typewell:2",
+      "typewell:3",
+      "typewell:4"
+    ]
+  },
+  "outer_cell_metrics": {
+    "all_numeric_finite": true,
+    "duplicates": 0,
+    "nonfinite": [],
+    "rows": 1575,
+    "unique_keys": 1575
+  },
+  "representation_targets": {
+    "all_numeric_finite": true,
+    "duplicates": 0,
+    "nonfinite": [],
+    "rows": 3865,
+    "unique_keys": 3865
+  },
+  "selected_feature_frequency": {
+    "all_numeric_finite": true,
+    "duplicates": 0,
+    "nonfinite": [],
+    "rows": 1846,
+    "unique_keys": 1846
+  },
+  "selected_hyperparameters": {
+    "all_numeric_finite": true,
+    "duplicates": 0,
+    "nonfinite": [],
+    "rows": 480,
+    "unique_keys": 480
+  },
+  "special_slice_metrics": {
+    "all_numeric_finite": true,
+    "duplicates": 0,
+    "nonfinite": [],
+    "rows": 189,
+    "unique_keys": 189
+  },
+  "stress_metrics": {
+    "all_numeric_finite": true,
+    "duplicates": 0,
+    "nonfinite": [],
+    "rows": 90,
+    "unique_keys": 90
+  }
+}

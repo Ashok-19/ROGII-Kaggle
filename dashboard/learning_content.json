@@ -350,7 +350,16 @@
       "evidence": "official_winning_writeup_verified",
       "visual": "ensemble_paths",
       "summary": "BirdCLEF+ 2026's winner used an Amphibia/Insecta specialist and a genus specialist only as masked parts of a diverse ensemble with global models, distillation, bounded pseudo-labeling, complementary validation, and separate post-processing pipelines.",
-      "why_it_matters": "ROGII may test regime-specific coefficient experts only after E011 verification. Routing must be legal and cross-fitted, regimes must have enough samples, actions must be bounded, negative controls must fail, and uncertain wells must return the exact strongest global fallback."
+      "why_it_matters": "ROGII may test regime-specific coefficient experts only after E011 packaging and parity. Routing must be legal and cross-fitted, regimes must have enough samples, actions must be bounded, negative controls must fail, and uncertain wells must return the exact strongest global fallback."
+    },
+    {
+      "id": "B021",
+      "date": "2026-07-22",
+      "title": "Coefficient learning closes a material part of selector regret",
+      "evidence": "independent_frozen_commit_reproduction",
+      "visual": "deployment_gap",
+      "summary": "E011's spline4 ridge coefficient model reproduces at 12.5507562957 RMSE versus E006 at 14.9331407872. It wins all five maps and all 25 repeated cells, improves every spatial/typewell holdout and special slice, and reproduces byte-identical substantive outputs under two threads.",
+      "why_it_matters": "Low-dimensional nonlinear coefficient prediction is now verified statistical evidence rather than an oracle-only lead. Deployment still requires an exact inference package, local notebook parity, hidden-scale runtime testing, and private Kaggle parity; E006 remains primary until then."
     }
   ],
   "idea_questions": [
@@ -365,9 +374,9 @@
       "falsifier": "Runtime extrapolates beyond the scoring limit, memory grows with row-by-candidate matrices, or any well failure prevents a complete output receipt."
     },
     {
-      "signal": "coefficient learning",
-      "question": "Can split-local legal features predict a few nonlinear path coefficients or control points well enough to recover materially more of E010's 4.7511 bank oracle while retaining exact E006 fallback?",
-      "falsifier": "Cross-fitted coefficient branches fail the registered learnability screen, retain less than a material fraction of oracle gain, or repeat spatial/high-missingness failures."
+      "signal": "E011 packaging",
+      "question": "Can the verified coefficient model produce exact local-notebook and private-Kaggle outputs within the hidden-scale resource envelope?",
+      "falsifier": "Packaged predictions differ from verified OOF semantics, IDs or ordering change, approximately 200-well runtime exceeds the envelope, or local and private Kaggle outputs are not byte-identical."
     },
     {
       "signal": "regime specialists",
@@ -495,6 +504,16 @@
       "title": "Verified leaderboard split and BirdCLEF specialist lesson",
       "local_path": "archive/competition/knowledge_context_2026-07-22.md",
       "url": "https://doi.org/10.34740/KAGGLE/W/86265"
+    },
+    {
+      "title": "E011 independently reproduced statistical promotion",
+      "local_path": "experiments/E011/RESULT.md",
+      "url": ""
+    },
+    {
+      "title": "E011 verification and artifact receipts",
+      "local_path": "experiments/E011/verification.json",
+      "url": ""
     }
   ]
 }

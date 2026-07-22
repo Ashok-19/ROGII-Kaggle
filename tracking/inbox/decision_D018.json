@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-22T16:08:00Z",
+  "payload": {
+    "decision_id": "D018",
+    "decided_at": "2026-07-22",
+    "title": "Promote E011 statistically but retain E006 for deployment",
+    "decision": "Promote E011 candidate spline4_ridge_equal_s075 as the verified statistical winner at 12.5507562957 RMSE. Do not make E011 the deployment primary until an inference package, exact local-notebook parity, hidden-scale runtime benchmark, and private internet-disabled Kaggle parity pass independently. E006 remains the deployment-ready primary and E004 remains the exact fallback. Do not start H015 specialist routing before the E011 packaging decision is complete.",
+    "rationale": "A frozen-commit two-thread reproduction produced byte-identical OOF predictions and eleven substantive result tables, all frozen statistical gates and 21 controls passed, and legality and membership audits found no prohibited routing inputs. The earlier complete-looking invocation still lacks a linked process receipt, so only the independently reproduced run is official. Statistical evidence is complete; deployment evidence is not.",
+    "source_ids": "E011,R20260722-1537-e011-local-reproduction,experiments/E011/verification.json,experiments/E011/RESULT.md,H014,H015,D014,D016",
+    "revisit_trigger": "Revisit deployment status only after the exact E011 package, local notebook, hidden-scale runtime, and private internet-disabled Kaggle outputs are independently verified."
+  }
+}
