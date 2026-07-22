@@ -7,15 +7,19 @@
     "final_deadline_ist": "2026-08-06T05:29:00+05:30",
     "leader_score": "4.859",
     "leader_team": "shu01",
+    "leaderboard_checked_at": "2026-07-22T14:59:00+05:30",
+    "second_place_score": "4.913",
+    "fifth_place_score": "5.265",
+    "tenth_place_score": "5.523",
     "verified_best_public_score": "7.119",
     "user_reported_best_score": "6.888",
     "train_wells": "773",
     "hidden_test_wells_approx": "200",
     "discussion_topics_archived": "132",
     "discussion_messages_archived": "981",
-    "public_intelligence_last_checked": "2026-07-20T20:33:00+05:30",
-    "current_topic_count_observed": "135",
-    "discussion_archive_refresh_status": "delta recrawl pending; canonical 132/981 unchanged"
+    "public_intelligence_last_checked": "2026-07-22T14:59:00+05:30",
+    "current_topic_count_observed": "137",
+    "discussion_archive_refresh_status": "new/recent delta audited; canonical 132/981 unchanged pending full recrawl"
   },
   "sources": [
     {
@@ -137,6 +141,18 @@
       "confidence": "mixed; exact metadata and unverified claims",
       "last_checked": "2026-07-20",
       "notes": "Current topic count, new discussion claims, DateRun notebook scan, and Yusuke source audit."
+    },
+    {
+      "source_id": "S_PUBLIC_SCAN_20260722",
+      "title": "ROGII leaderboard, discussion, and public-notebook frontier audit",
+      "kind": "public_intelligence",
+      "url": "https://www.kaggle.com/competitions/rogii-wellbore-geology-prediction",
+      "local_path": "archive/competition/public_intelligence_2026-07-22.md",
+      "accessibility": "public source and executed outputs",
+      "license": "participant/author copyright; mixed external artifact licensing",
+      "confidence": "exact Kaggle metadata and source/output audit; score causality limited",
+      "last_checked": "2026-07-22",
+      "notes": "Current top-ten leaderboard, all New/Recent discussion deltas since the prior check, DateRun/VoteCount notebook scan, and exact audits of P100, public 6.40/6.768, MHA well-bias, A23, GBDT gate, and Single CatBoost."
     }
   ],
   "claims": [
@@ -363,12 +379,82 @@
     {
       "claim_id": "C023",
       "category": "archive",
-      "claim": "Kaggle currently lists 134 competition topics while the frozen archive contains 132.",
+      "claim": "Kaggle listed 134 competition topics on 2026-07-20 while the frozen archive contained 132.",
       "evidence_class": "kaggle_metadata_delta",
-      "confidence": "confirmed count; incomplete delta",
+      "confidence": "confirmed historical count; incomplete delta",
       "source_id": "S_PUBLIC_SCAN_20260720",
-      "implication": "Run a complete delta recrawl before changing canonical topic/message counts.",
+      "implication": "Superseded by the later observed count; canonical counts still require a complete recrawl.",
+      "status": "superseded"
+    },
+    {
+      "claim_id": "C024",
+      "category": "leaderboard",
+      "claim": "On 2026-07-22 the public leaderboard was 4.859 at rank 1, 4.913 at rank 2, 5.265 at rank 5, and 5.523 at rank 10.",
+      "evidence_class": "kaggle_leaderboard_metadata",
+      "confidence": "confirmed snapshot",
+      "source_id": "S_PUBLIC_SCAN_20260722",
+      "implication": "A solo top-five attempt currently needs a score below about 5.265, with margin for continued movement.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C025",
+      "category": "provenance",
+      "claim": "The current P100/ANCC, public 6.40/6.768, MHA 6.832, high-vote public TVT, and related forks share a composite pretrained/PF/contact/overlap lineage and several unknown-license dependencies.",
+      "evidence_class": "source_audited_public_notebooks",
+      "confidence": "confirmed composition",
+      "source_id": "S_PUBLIC_SCAN_20260722",
+      "implication": "Treat their scores as composite references; clean-room test mechanisms separately and keep artifacts, overlap constants, and unknown-license inputs quarantined.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C026",
+      "category": "public_overlap",
+      "claim": "The public 6.40 guard's 0.055 overlap calibration activates exactly the three visible train-overlap wells and declares unchanged fallback for unseen wells.",
+      "evidence_class": "executed_public_notebook_output",
+      "confidence": "confirmed visible-test behavior",
+      "source_id": "S_PUBLIC_SCAN_20260722",
+      "implication": "The 6.40 title does not establish hidden unseen-well gain from that calibration layer.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C027",
+      "category": "branch_uncertainty",
+      "claim": "P100's 128-seed branch hedge moves only visible well 00e12e8b by +2.0 ft; its model-package correction is disabled by its own p95-difference guard.",
+      "evidence_class": "executed_public_notebook_output",
+      "confidence": "confirmed visible-test behavior",
+      "source_id": "S_PUBLIC_SCAN_20260722",
+      "implication": "PF branch mass/separation is a hypothesis-generating uncertainty feature, but the public well shift and package result are not unseen-well evidence.",
       "status": "active"
+    },
+    {
+      "claim_id": "C028",
+      "category": "negative",
+      "claim": "The public well-level GBDT gate worsens OOF RMSE from 10.3723 to 10.3824 and p90 from 14.6850 to 14.8066, so its own gate remains inactive.",
+      "evidence_class": "executed_public_notebook_oof",
+      "confidence": "confirmed within that composite feature pipeline",
+      "source_id": "S_PUBLIC_SCAN_20260722",
+      "implication": "Do not copy this shallow residual gate; any well-level correction needs a fresh legal feature representation and frozen transfer controls.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C029",
+      "category": "runtime",
+      "claim": "A participant's 15-minute three-well notebook implies roughly 17 hours over about 200 hidden wells; the discussion recommends targeting approximately five visible-test minutes after overhead margin.",
+      "evidence_class": "participant_runtime_report_plus_scale_arithmetic",
+      "confidence": "strong operational warning; not an official formula",
+      "source_id": "S_PUBLIC_SCAN_20260722",
+      "implication": "Require pseudo-hidden inference benchmarks over roughly 200 wells before packaging any finalist.",
+      "status": "active"
+    },
+    {
+      "claim_id": "C030",
+      "category": "validation",
+      "claim": "New participant comments report hardware-dependent GPU variance and more stable CV/LB behavior for simpler models than opaque multipart ensembles.",
+      "evidence_class": "participant_claims",
+      "confidence": "unverified but consistent with prior CV/LB inversion evidence",
+      "source_id": "S_PUBLIC_SCAN_20260722",
+      "implication": "Preserve deterministic reproduction, report variance across seeds/hardware where relevant, and do not infer causality from public ensemble scores.",
+      "status": "hypothesis"
     }
   ],
   "submissions": [

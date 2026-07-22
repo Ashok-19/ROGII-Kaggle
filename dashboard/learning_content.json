@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-07-20",
+  "updated_at": "2026-07-22",
   "title": "ROGII Competition Learning Lab",
   "subtitle": "A beginner-first visual guide to the data, geology, target, validation, and idea space.",
   "beginner_path": [
@@ -315,8 +315,46 @@
       "summary": "E010 evaluated 130,252 legal whole-well paths on all 773 wells. The bank oracle reaches 4.7511 RMSE, while the best legal visible-prefix selector reaches 14.7803 and retains only about 1.5% of the available oracle gain.",
       "why_it_matters": "Candidate coverage is proven. A chosen-family oracle counterfactual is 5.7075, so family identity explains only 9.5% of the selector gap and coefficient estimation plus aggregation explain 90.5%. The next experiment must predict low-dimensional coefficients/control points and remain memory-safe; adding more flat candidates is not evidence-backed."
     }
+,
+    {
+      "id": "B017",
+      "date": "2026-07-22",
+      "title": "The public score frontier is overlap-heavy",
+      "evidence": "source_audited_public_outputs",
+      "visual": "cv_lb_split",
+      "summary": "Exact audits of the public 6.40-6.83/P100 family show a shared pretrained/PF/contact/overlap lineage. The 6.40 overlap calibration acts only on the three visible wells, P100 moves one visible well by +2 ft, and Yusuke A23 extends that same public-well branch shift.",
+      "why_it_matters": "Public titles and votes do not establish hidden unseen-well causality. Reuse only clean-room hypotheses such as seed-cloud branch uncertainty and bounded continuity; reject score-derived constants, public-well overrides, train-only formations, and unknown-license artifacts."
+    },
+    {
+      "id": "B018",
+      "date": "2026-07-22",
+      "title": "A well-level gate failed its own OOF test",
+      "evidence": "source_audited_public_oof",
+      "visual": "consensus_gate",
+      "summary": "A public shallow GBDT gate over 391 composite features worsened OOF RMSE from 10.3723 to 10.3824 and p90 from 14.6850 to 14.8066, so its own activation rule kept the gate off.",
+      "why_it_matters": "Another router is not automatically the answer. The feature representation and transfer controls matter more than adding a gate around a composite path."
+    },
+    {
+      "id": "B019",
+      "date": "2026-07-22",
+      "title": "Inference must be tested at hidden scale",
+      "evidence": "discussion_supported_operational",
+      "visual": "remote_parity",
+      "summary": "A reported 15-minute run over three visible wells scales to roughly 17 hours over about 200 hidden wells. The discussion recommends targeting around five visible-test minutes after overhead margin.",
+      "why_it_matters": "A validation workflow can fit the resource budget while the final inference notebook times out. Every finalist needs a roughly 200-well pseudo-hidden benchmark, fixed output receipt, and deterministic fail-closed behavior."
+    }
   ],
   "idea_questions": [
+    {
+      "signal": "PF branch uncertainty",
+      "question": "Can likelihood-weighted PF seed clouds expose branch mass, separation, entropy, and instability that predict when a bounded path move is safe?",
+      "falsifier": "The features fail split-local signed-action tests, repeat spatial/typewell failures, or only explain the three visible public wells."
+    },
+    {
+      "signal": "hidden-scale runtime",
+      "question": "Can the final inference path process roughly 200 pseudo-test wells within a conservative resource envelope while preserving exact IDs and deterministic output?",
+      "falsifier": "Runtime extrapolates beyond the scoring limit, memory grows with row-by-candidate matrices, or any well failure prevents a complete output receipt."
+    },
     {
       "signal": "coefficient learning",
       "question": "Can split-local legal features predict a few nonlinear path coefficients or control points well enough to recover materially more of E010's 4.7511 bank oracle while retaining exact E006 fallback?",
@@ -427,6 +465,11 @@
     {
       "title": "Public notebook and discussion intelligence refresh",
       "local_path": "archive/competition/public_intelligence_2026-07-20.md",
+      "url": ""
+    },
+    {
+      "title": "July 22 public frontier and discussion audit",
+      "local_path": "archive/competition/public_intelligence_2026-07-22.md",
       "url": ""
     },
     {

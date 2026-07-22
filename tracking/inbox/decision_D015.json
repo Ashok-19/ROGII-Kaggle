@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-22T09:29:00Z",
+  "payload": {
+    "decision_id": "D015",
+    "decided_at": "2026-07-22",
+    "title": "Audit public frontier as mechanisms, not a pipeline",
+    "decision": "Do not reproduce or ingest the current public 6.40-6.83/P100 composite stack. Keep unknown-license artifacts, train-only formations, exact visible-well overlap, probe/canary bias constants, and score-directed branch shifts out of the prize pipeline. After independently verifying E011, test only clean-room PF seed-cloud uncertainty, bounded continuity, and prefix-GR well-bias hypotheses in fresh preregistered experiments.",
+    "rationale": "Exact source and output audits show the apparent frontier is a family of forks sharing pretrained artifacts, guarded same-well contact reconstruction, public overlap calibration, and score-specific constants. The 6.40 overlap layer acts only on the three visible wells; P100 moves one visible well by +2 ft; the public GBDT gate fails its own OOF check. These notebooks provide mechanism leads but no clean causal route to the current 5.265 top-five cutoff.",
+    "source_ids": "S_PUBLIC_SCAN_20260722,C024,C025,C026,C027,C028,C029",
+    "revisit_trigger": "A source-audited notebook supplies reproducible full grouped OOF and hidden-scale runtime from legal inputs without public overlap, opaque artifacts, train-only formations, or score-derived constants."
+  }
+}
