@@ -1,0 +1,18 @@
+{
+  "extra_examples": [],
+  "extra_feature_pairs": 0,
+  "features": 142,
+  "finite_cells": 109746,
+  "legal_features_sha256": "c4b332ccb62559609aee501eb6cd66237cf6a98fc370caa542d6be99b43f8853",
+  "maximum_absolute_delta": 5.00003807246685e-08,
+  "maximum_relative_delta": 4.967445924117632e-12,
+  "mismatch_examples": [],
+  "mismatched_cells": 0,
+  "missing_examples": [],
+  "missing_feature_pairs": 0,
+  "missingness_cells": 20,
+  "schema_version": 1,
+  "status": "PASS",
+  "tolerance": "relative <=5e-11 or absolute <=5e-11; accounts only for frozen CSV decimal serialization",
+  "wells": 773
+}

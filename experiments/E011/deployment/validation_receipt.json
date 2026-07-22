@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "status": "PASS",
+  "thread_limit": 2,
+  "notebook_executed": false,
+  "focused": {
+    "command": "python3.12 -m unittest tests.test_e011_inference tests.test_e011_kaggle_packaging",
+    "passed": 18,
+    "failed": 0,
+    "errors": 0,
+    "wall_seconds": 0.054
+  },
+  "full_repository": {
+    "command": "python3.12 -m unittest discover -s tests",
+    "passed": 167,
+    "failed": 0,
+    "errors": 0,
+    "wall_seconds": 75.520
+  },
+  "canonical_kaggle_notebook_executed": false,
+  "canonical_kaggle_parity_established": false,
+  "kaggle_submission_made": false
+}

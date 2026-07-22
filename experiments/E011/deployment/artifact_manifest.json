@@ -1,0 +1,40 @@
+{
+  "files": [
+    {
+      "bytes": 1267,
+      "path": "experiments/E011/deployment/edge_case_receipt.json",
+      "sha256": "d602527685efaaa1136f6621ea31bed829b6a7e588336fd2f678ad6745afc706"
+    },
+    {
+      "bytes": 597,
+      "path": "experiments/E011/deployment/feature_parity.json",
+      "sha256": "6bac868ecc3b36a397d4e52b1fa2c00679465287dabeafd01b9de75e3628a21a"
+    },
+    {
+      "bytes": 1203,
+      "path": "experiments/E011/deployment/local_parity.json",
+      "sha256": "62b960940262cdca3756658b151ca7c5a51b46b092f861b7fdedf56b6d0ea191"
+    },
+    {
+      "bytes": 52946,
+      "path": "experiments/E011/deployment/model.json",
+      "sha256": "dd92e8b12f275b6d453e55d6cce2e7c10a43c8a34957d6d47b1b5e5ff5b3c5a8"
+    },
+    {
+      "bytes": 1621,
+      "path": "experiments/E011/deployment/model_fit_receipt.json",
+      "sha256": "4a68972622b8993be1331d0e7eaff73179c8c02937bd7a953c89d88b7352c2b0"
+    },
+    {
+      "bytes": 2313,
+      "path": "experiments/E011/deployment/pseudo_hidden_benchmark.json",
+      "sha256": "639cfc6af7c810246cca9959b4be73a9a852786478c907725204f0d09b02aec3"
+    },
+    {
+      "bytes": 592,
+      "path": "experiments/E011/deployment/validation_receipt.json",
+      "sha256": "08ed69c9c5a1dc253ddb31319a823725486a79bc45bccbc34390ec0e4d52a927"
+    }
+  ],
+  "schema_version": 1
+}

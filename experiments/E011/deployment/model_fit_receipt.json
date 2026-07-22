@@ -1,0 +1,34 @@
+{
+  "alpha": 1.0,
+  "bounded_prediction_maximum": 63.24291096524883,
+  "bounded_prediction_minimum": -42.7583838626134,
+  "candidate": "spline4_ridge_equal_s075",
+  "coefficient_bound_ft": 80.0,
+  "feature_order_sha256": "718a64d4c1ef3e1bfe67ccf01e39fd4405a9d30761a863a166d7bdf746f06d31",
+  "features": 142,
+  "model_sha256": "dd92e8b12f275b6d453e55d6cce2e7c10a43c8a34957d6d47b1b5e5ff5b3c5a8",
+  "nonfinite_feature_cells_imputed": 20,
+  "raw_prediction_maximum": 84.32388128699844,
+  "raw_prediction_minimum": -57.011178483484535,
+  "ridge_matrix_shape": [
+    142,
+    4
+  ],
+  "runtime_coefficient_max_abs_delta": 8.704148513061227e-14,
+  "schema_version": 1,
+  "shrinkage": 0.75,
+  "source_identities": {
+    "compact_stats_sha256": "cb2788c602f718dc7a76f09a62bbb433c1d7cda7dd93d69ee8905524eb09156d",
+    "e006_model_sha256": "bee16499c6361395d556dd5c4ff8555e95739c36f68444b3d0dfcf648d73cddf",
+    "e007_config_sha256": "ff94bae7f3eca066d4e5fecb16355b80a1fe14c493f8a5fa0e463f15f6b99645",
+    "e008_config_sha256": "ea312e6784ed2fe665acdad33d11a2b083d4e47b0774dd567970f10b552aa972",
+    "e011_config_sha256": "8cc4514a011218480acfc781024ef29e8372986d1a579a1f218dfa64c9132505",
+    "e011_inference_sha256": "524f55a7db4079cf3774e5d93906e9a320d8120d84458bf13b2084ef829ac0f7",
+    "e011_verification_sha256": "ed22dc8b76d7ba1ebc4c9e05c14220688b09b66447ba8a0422e121fc0965a16d",
+    "legal_features_sha256": "c4b332ccb62559609aee501eb6cd66237cf6a98fc370caa542d6be99b43f8853"
+  },
+  "status": "PASS",
+  "targets": 4,
+  "well_order_sha256": "60ee4bbd5e50cf4bcde66109dbdd2bb735a5e81f20b1bb535741767ab86f6d0f",
+  "wells": 773
+}

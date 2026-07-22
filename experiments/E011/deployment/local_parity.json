@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "status": "HISTORICAL_LOCAL_PROTOTYPE_PASS",
+  "scope": "Local prototype execution completed before the user explicitly reserved notebook execution to themselves. It is retained only as historical local evidence and is not the canonical Kaggle notebook receipt.",
+  "canonical_kaggle_notebook_executed": false,
+  "canonical_kaggle_parity_established": false,
+  "prototype_model_sha256": "9fa830e3908d3d13292dd7e1cf8e97ab6e3471e46eceafe104884001a7087f0d",
+  "current_model_sha256": "dd92e8b12f275b6d453e55d6cce2e7c10a43c8a34957d6d47b1b5e5ff5b3c5a8",
+  "prototype_notebook_sha256": "7a04d1d1fb6d1c12d84c12793b1098ab61d9fff3b58cf8096c9b1275b4812ce2",
+  "prototype_runtime_sha256": "e8f0256f0c0385fc188f6acd363ea06cbc05f556f2a5aeb89c49d189697d2042",
+  "prototype_submission": {
+    "wells": 3,
+    "rows": 14151,
+    "bytes": 367933,
+    "sha256": "259f047595e0d40438f56d62cf8958a77bc1d0a7328c0409bce75885205e2615",
+    "minimum_prediction": 11599.691500232728,
+    "maximum_prediction": 12234.20918782154,
+    "maximum_absolute_spline_correction": 9.609626305513334
+  },
+  "direct_and_prototype_notebook_byte_identical": true,
+  "threads": 2,
+  "kaggle_submission_made": false
+}

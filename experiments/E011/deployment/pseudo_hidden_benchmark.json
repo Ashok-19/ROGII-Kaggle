@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "status": "PASS_WITH_HISTORICAL_PROTOTYPE_NOTEBOOK_EVIDENCE",
+  "scope": "The two direct runs and one local prototype-notebook run were completed before the user explicitly reserved notebook execution to themselves. The canonical Kaggle notebook remains unexecuted and must be run by the user.",
+  "selection": {
+    "population_wells": 773,
+    "selected_wells": 200,
+    "selection_rule": "lowest 200 SHA-256(E011-pseudo-hidden-200|well_id), then well_id",
+    "selected_well_ids_sha256": "3efebda362abceab61453bf7a3b607477dd0e723552dafdb65ed97b41fb4602d",
+    "total_rows": 1308373,
+    "known_rows": 337470,
+    "hidden_rows": 970903,
+    "hidden_rows_min": 911,
+    "hidden_rows_median": 4812,
+    "hidden_rows_max": 10052,
+    "mean_gr_missing_fraction": 0.300330731119174
+  },
+  "direct_runs": [
+    {
+      "run": 1,
+      "returncode": 0,
+      "wall_seconds": 74.9737888210002,
+      "max_rss_kb": 361696,
+      "rows": 970903,
+      "wells": 200,
+      "bytes": 25246900,
+      "sha256": "125566500b2c140a3393514b0575686fbcf6fa7cfdb5f345c996034bd8de3b56"
+    },
+    {
+      "run": 2,
+      "returncode": 0,
+      "wall_seconds": 76.44275634299993,
+      "max_rss_kb": 361752,
+      "rows": 970903,
+      "wells": 200,
+      "bytes": 25246900,
+      "sha256": "125566500b2c140a3393514b0575686fbcf6fa7cfdb5f345c996034bd8de3b56"
+    }
+  ],
+  "historical_local_prototype_notebook_run": {
+    "returncode": 0,
+    "wall_seconds": 76.10099733599782,
+    "max_rss_kb": 352456,
+    "rows": 970903,
+    "wells": 200,
+    "bytes": 25246900,
+    "sha256": "125566500b2c140a3393514b0575686fbcf6fa7cfdb5f345c996034bd8de3b56"
+  },
+  "controls": {
+    "two_thread_environment": true,
+    "joblib_multiprocessing_disabled": true,
+    "direct_runs_byte_identical": true,
+    "direct_and_historical_prototype_byte_identical": true,
+    "complete_id_coverage": true,
+    "finite_predictions": true,
+    "maximum_absolute_spline_correction": 76.32757586859282,
+    "maximum_prediction": 12870.291063971263,
+    "minimum_prediction": 10627.472391120033,
+    "runtime_below_eight_hours": true,
+    "rss_below_2048_mb": true
+  },
+  "canonical_kaggle_notebook_executed": false,
+  "canonical_kaggle_parity_established": false,
+  "scratch_fixture_retained": false,
+  "kaggle_submission_made": false
+}
