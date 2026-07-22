@@ -55,6 +55,12 @@ Amer's exact second-order HMM adds a deterministic posterior candidate over TVT 
 
 E003 shows that risk and signed action are both learnable from legal evidence, but with separate models and separate gates. Forest risk reaches 0.5415 Spearman and 0.8125 worst-20% AUC; ridge datum-plus-trend achieves 88.39% material datum-sign accuracy and improves all five maps. A risk score still cannot authorize routing unless the routed action beats the fixed E003 action under repeated and shift validation.
 
+### 7. Specialists are conditional system components
+
+The official BirdCLEF+ 2026 first-place writeup used an Amphibia/Insecta specialist and a genus specialist, but only inside a diverse ensemble with global CNNs, native Perch, controlled self-training, complementary validation splits, masked restricted-label outputs, and pipeline-specific post-processing. The lesson is not that specialists win by default.
+
+For ROGII, a regime-specialized coefficient expert must have a legal cross-fitted regime definition, sufficient split-local support, bounded action, exact fallback to the strongest verified global path, full-system improvement, stable repeated/spatial/typewell/missingness/tail results, and negative controls that destroy the gain. H015 remains queued until E011's existing output is independently verified and formally decided.
+
 ## Score objectives
 
 These are campaign targets, not promises or medal definitions:
@@ -120,6 +126,7 @@ Targets to compare:
 - Prefer small weights for weak/diverse legs.
 - Re-test all additions after final pipeline placement.
 - Candidate routing is rejected unless signed choice beats a fixed blend on repeated folds and harsher splits.
+- Specialist routing has a higher burden than a global model: minimum regime support, cross-fitted legal routing, masked/bounded influence, exact fallback identity, and random/shuffled/sign-flipped regime controls are mandatory.
 
 ### Layer E — deployment
 
@@ -308,8 +315,9 @@ These defaults may be revised only through a recorded decision before seeing the
 8. **E008 — Cross-fitted legal residual-action model — completed and rejected 2026-07-19.** Datum-only ridge reaches 14.7951 with improved p90 and useful E007 evidence, but wins only 2/5 maps and 14/25 cells and fails spatial/typewell transfer; no packaging or submission.
 9. **E009 — Residual-model consensus abstention — completed and rejected 2026-07-19.** Majority consensus reaches 14.7935 and wins all maps but only 15/25 cells, repeats spatial/typewell failures, and fails the sign-flipped negative control; no package or submission.
 10. **E010 — Nonlinear candidate coverage and selector regret — completed; rejected for deployment.** Bank oracle 4.7511 proves coverage; legal selector 14.7803 and 17.5 GB RSS fail the frozen contract.
-11. **E011 — Low-dimensional nonlinear coefficient learning — next.** Compare orthogonal correction coefficients, three control points, family-specific experts, and conservative E006 fallback. Do not expand the bank unless a new family adds independently verified unique coverage.
-12. **E012 — Final Kaggle offline parity.** Clean package, runtime, exact IDs, and finalist notebooks.
+11. **E011 — Low-dimensional nonlinear coefficient learning — verification pending.** A complete-looking untracked output exists, but no run is registered and no result is accepted. Independently verify provenance, hashes, identities, metrics, legality, controls, and deterministic reproduction before any decision.
+12. **H015 — Regime-specialized coefficient experts — queued, not started.** Consider only after E011's formal verification decision and only under D016's stronger evidence standard.
+13. **E012 — Final Kaggle offline parity.** Clean package, runtime, exact IDs, and finalist notebooks.
 
 ## Explicitly rejected behavior
 
@@ -320,6 +328,8 @@ These defaults may be revised only through a recorded decision before seeing the
 - Treating train-only formation surfaces as final inference features.
 - Per-well oracle routing used as evidence that a legal selector exists.
 - Submitting undocumented blends or tuning many tiny public-LB changes.
+- Treating a public notebook or winning writeup as a trusted pipeline rather than a hypothesis source requiring clean-room reconstruction.
+- Promoting a specialist from aggregate gain without sufficient regime support, legal cross-fitted routing, complete-system gates, negative controls, and exact fallback identity.
 - Replacing negative results with vague summaries that allow the same experiment to be repeated.
 
 ## Definition of foundation complete
@@ -334,4 +344,4 @@ Foundation is complete only when:
 - legacy roadmap is preserved;
 - no training run is falsely presented as completed.
 
-Foundation and E010 coverage measurement are complete. The current exact next action is E011/H014 coefficient-learning preregistration and execution, not another flat selector or candidate-bank expansion.
+Foundation and E010 coverage measurement are complete. The current exact next action is independent verification and reproduction of the untracked E011 output against frozen source `c326a812`; H015 specialist work remains queued and must not start before that formal decision.

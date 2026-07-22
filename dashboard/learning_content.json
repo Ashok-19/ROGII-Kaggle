@@ -342,6 +342,15 @@
       "visual": "remote_parity",
       "summary": "A reported 15-minute run over three visible wells scales to roughly 17 hours over about 200 hidden wells. The discussion recommends targeting around five visible-test minutes after overhead margin.",
       "why_it_matters": "A validation workflow can fit the resource budget while the final inference notebook times out. Every finalist needs a roughly 200-well pseudo-hidden benchmark, fixed output receipt, and deterministic fail-closed behavior."
+    },
+    {
+      "id": "B020",
+      "date": "2026-07-22",
+      "title": "Specialists need a stronger evidence contract",
+      "evidence": "official_winning_writeup_verified",
+      "visual": "ensemble_paths",
+      "summary": "BirdCLEF+ 2026's winner used an Amphibia/Insecta specialist and a genus specialist only as masked parts of a diverse ensemble with global models, distillation, bounded pseudo-labeling, complementary validation, and separate post-processing pipelines.",
+      "why_it_matters": "ROGII may test regime-specific coefficient experts only after E011 verification. Routing must be legal and cross-fitted, regimes must have enough samples, actions must be bounded, negative controls must fail, and uncertain wells must return the exact strongest global fallback."
     }
   ],
   "idea_questions": [
@@ -359,6 +368,11 @@
       "signal": "coefficient learning",
       "question": "Can split-local legal features predict a few nonlinear path coefficients or control points well enough to recover materially more of E010's 4.7511 bank oracle while retaining exact E006 fallback?",
       "falsifier": "Cross-fitted coefficient branches fail the registered learnability screen, retain less than a material fraction of oracle gain, or repeat spatial/high-missingness failures."
+    },
+    {
+      "signal": "regime specialists",
+      "question": "Can a legally routed coefficient expert improve a sufficiently large distinct regime while exact global fallback protects uncertain wells?",
+      "falsifier": "The regime is small or unstable, routing uses validation labels, complete-system subgroup gates fail, random/shuffled/sign-flipped routing retains gain, or fallback differs from the verified global path."
     },
     {
       "signal": "deployment",
@@ -476,6 +490,11 @@
       "title": "E010 rejected selector and validated candidate-coverage result",
       "local_path": "experiments/E010/RESULT.md",
       "url": "https://www.kaggle.com/code/ashok205/e010-candidate-selector-kaggle/"
+    },
+    {
+      "title": "Verified leaderboard split and BirdCLEF specialist lesson",
+      "local_path": "archive/competition/knowledge_context_2026-07-22.md",
+      "url": "https://doi.org/10.34740/KAGGLE/W/86265"
     }
   ]
 }

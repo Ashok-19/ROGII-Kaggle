@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-22T15:20:00Z",
+  "payload": {
+    "decision_id": "D017",
+    "decided_at": "2026-07-22",
+    "title": "Public notebooks are hypothesis generators",
+    "decision": "Treat every public notebook, writeup, score, threshold, blend, artifact, and routing rule as a hypothesis source rather than a trusted project pipeline. Reconstruct any borrowed mechanism from legal inputs, preregister it, run frozen controls and subgroup tests, independently reproduce it, and benchmark hidden-scale runtime before it can affect official state.",
+    "rationale": "The ROGII public frontier contains overlap-specific shifts, opaque artifacts, unknown-license dependencies, and gates that fail their own OOF checks. The BirdCLEF winning writeup is useful because its mechanism and controls are explicit, but cross-domain transfer still requires independent ROGII evidence.",
+    "source_ids": "D015,S_PUBLIC_SCAN_20260722,S_BIRDCLEF_W86265,C025,C028,C032",
+    "revisit_trigger": "Never waive the evidence-first reconstruction rule during this competition."
+  }
+}

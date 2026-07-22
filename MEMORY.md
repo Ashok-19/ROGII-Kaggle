@@ -6,7 +6,7 @@ Public intelligence last checked: 2026-07-22 14:59 Asia/Kolkata
 ## Mission state
 
 - Deadline: 2026-08-05 23:59 UTC / 2026-08-06 05:29 Asia/Kolkata.
-- Current public leaderboard snapshot: 4.859 at rank 1, 4.913 at rank 2, 5.265 at rank 5, and 5.523 at rank 10. Best Kaggle-MCP-verified account submission remains 7.119 (ref 54754431, 2026-07-16); user-reported best remains 6.888 with reference unverified.
+- Current public leaderboard snapshot: 4.859 at rank 1, 4.913 at rank 2, 5.265 at rank 5, and 5.523 at rank 10. Official Meta Kaggle verifies that the public leaderboard covers exactly 26% of the test data and the private leaderboard the remaining 74%. Best Kaggle-MCP-verified account submission remains 7.119 (ref 54754431, 2026-07-16); user-reported best remains 6.888 with reference unverified.
 - E001 is frozen; E002, E005, E007, E008, and E009 are rejected; E003 is promoted only as nondeployable surface-assisted understanding; E004 is the exact fallback; E006 is the promoted deployment-ready primary.
 - E010 is completed and rejected. Its 130,252-path legal bank oracle reaches 4.7510768278 RMSE, but the best legal selector reaches 14.7802528528, fails spatial group 1/high-GR-missingness transfer, and uses 17,528,436 KB RSS versus the frozen 3 GB cap. E011/H014/T019 is active with committed source at `c326a812`; H012/T016 remain queued comparators.
 
@@ -33,6 +33,8 @@ Public intelligence last checked: 2026-07-22 14:59 Asia/Kolkata
 - The latest public 6.40-6.83/P100 notebooks are mostly forks of one composite pretrained/PF/contact/overlap stack. Exact outputs show the 6.40 overlap layer acts only on the three visible wells; P100 moves only `00e12e8b` by +2 ft; Yusuke A23 extends that public-well shift; and a public well-level GBDT gate worsens its own OOF and stays inactive.
 - Reusable clean-room leads are PF seed-cloud branch mass/separation, bounded `U` continuity, and prefix-GR well-bias diagnostics. Unknown-license inputs, train-only formations, guarded same-well overlap, canary-decoded bias, score-directed shifts, and static/precomputed submissions remain excluded.
 - Hidden scoring scale is now an explicit deployment risk: a participant's 15-minute three-visible-well run implies roughly 17 hours over about 200 hidden wells. Finalists need a pseudo-hidden 200-well inference benchmark and a conservative visible-runtime target around five minutes.
+- Nikita Babych's official BirdCLEF+ 2026 first-place writeup is verified through Kaggle topic `704752`, first message `3467343`, DOI `10.34740/KAGGLE/W/86265`. The winner combined global SED/MLP models, native Perch, an Amphibia/Insecta specialist, and a genus specialist; distilled backbones before fine-tuning; bounded pseudo-label influence; validated on complementary domain splits; and blended pipeline-specific outputs.
+- The transferable lesson is conditional specialization, not "specialists win." H015 is queued only after E011 verification. Any regime expert needs legal cross-fitted routing, enough samples, bounded action, complete-system gains, failed negative controls, and exact fallback to the strongest verified global path.
 
 ## Decisions
 
@@ -43,6 +45,8 @@ Public intelligence last checked: 2026-07-22 14:59 Asia/Kolkata
 - Candidate generation and candidate selection must be evaluated separately. Hidden-label oracle routing is diagnostic only and can never enter inference. E010 closes the candidate-coverage question positively but rejects flat selection; next work must target low-dimensional coefficients/control points, not enlarge the bank.
 - No opaque/private or unknown-license artifact enters a prize-targeting pipeline. No Kaggle submission occurs without explicit authorization.
 - D015 freezes the current public frontier as a mechanism catalogue, not an ingestible solution. Verify E011 first; only then preregister clean-room branch-uncertainty or continuity experiments if the verified E011 residuals justify them.
+- D016 gives specialists a higher evidence burden than global models; unsupported or uncertain regimes must use the exact verified global fallback.
+- D017 makes public notebooks and writeups permanent hypothesis generators rather than trusted pipelines. Their scores, artifacts, thresholds, and routing rules cannot enter official state without legal clean-room reconstruction and independent reproduction.
 
 ## Exact next action
 
@@ -51,6 +55,7 @@ Independently verify the newly appeared E011 output set against committed source
 ## Open risks
 
 - Public CV/LB ordering is noisy and hidden test contains roughly 200 wells; current public claims are not verified evidence.
+- The public leaderboard covers only 26% of the test data. Score-directed tuning on that minority split has a high private-shakeup risk and cannot override frozen local validation.
 - HMM/DTW/PF can over-count autocorrelated GR, commit to repeated motifs, or smooth across faults. Posterior uncertainty must be calibrated OOF and a jump candidate must remain available.
 - E010 confirms that a below-5 bank does not imply a useful legal selector. The immediate risk is coefficient learnability under spatial shift; family classification alone cannot close the 9.07 RMSE coefficient/aggregation gap.
 - The current public topic list reports 137 topics while the frozen archive contains 132. New/Recent deltas are audited, but canonical topic/message counts remain unchanged until a complete recrawl verifies additions, removals, and message counts.

@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-22T15:20:00Z",
+  "payload": {
+    "decision_id": "D016",
+    "decided_at": "2026-07-22",
+    "title": "Specialists require stronger evidence than global models",
+    "decision": "A regime-specialized coefficient expert may be tested only after E011 verification and may be promoted only when legal cross-fitted routing, adequate regime support, bounded action, exact fallback identity, complete-system gain, subgroup stability, catastrophe controls, and negative controls all pass. Uncertain or unsupported regimes must return the exact strongest verified global path.",
+    "rationale": "The BirdCLEF+ 2026 winner used specialists as masked components inside a diverse ensemble with complementary validation, controlled pseudo-labeling, and separately tuned pipelines. ROGII's prior routers repeatedly converted shared bias into confident but unstable action, so specialization has a higher burden than one global model.",
+    "source_ids": "S_BIRDCLEF_W86265,C032,C033,C035,H015",
+    "revisit_trigger": "Only a preregistered specialist experiment with sufficient samples and independently reproduced gains across every frozen ROGII gate may revise this rule."
+  }
+}

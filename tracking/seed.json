@@ -19,7 +19,11 @@
     "discussion_messages_archived": "981",
     "public_intelligence_last_checked": "2026-07-22T14:59:00+05:30",
     "current_topic_count_observed": "137",
-    "discussion_archive_refresh_status": "new/recent delta audited; canonical 132/981 unchanged pending full recrawl"
+    "discussion_archive_refresh_status": "new/recent delta audited; canonical 132/981 unchanged pending full recrawl",
+    "public_leaderboard_percentage": "26",
+    "private_leaderboard_percentage": "74",
+    "leaderboard_split_verified_at": "2026-07-22",
+    "leaderboard_split_source": "S_META_KAGGLE_20260722"
   },
   "sources": [
     {
@@ -153,6 +157,30 @@
       "confidence": "exact Kaggle metadata and source/output audit; score causality limited",
       "last_checked": "2026-07-22",
       "notes": "Current top-ten leaderboard, all New/Recent discussion deltas since the prior check, DateRun/VoteCount notebook scan, and exact audits of P100, public 6.40/6.768, MHA well-bias, A23, GBDT gate, and Single CatBoost."
+    },
+    {
+      "source_id": "S_META_KAGGLE_20260722",
+      "title": "Official Meta Kaggle ROGII competition record",
+      "kind": "official_kaggle_dataset",
+      "url": "https://www.kaggle.com/datasets/kaggle/meta-kaggle",
+      "local_path": "archive/competition/knowledge_context_2026-07-22.md",
+      "accessibility": "public",
+      "license": "Apache 2.0",
+      "confidence": "confirmed exact row and file hash",
+      "last_checked": "2026-07-22",
+      "notes": "Competitions.csv SHA-256 acdc004d8f532ff7913c1b76b4ffd97bad3657c0651b77422ba819956e4a3576; competition 132265 has LeaderboardPercentage=26."
+    },
+    {
+      "source_id": "S_BIRDCLEF_W86265",
+      "title": "BirdCLEF+ 2026 first-place solution: Noisy Student Meets Distillation",
+      "kind": "winning_writeup",
+      "url": "https://doi.org/10.34740/KAGGLE/W/86265",
+      "local_path": "archive/competition/knowledge_context_2026-07-22.md",
+      "accessibility": "public",
+      "license": "author copyright",
+      "confidence": "official Kaggle topic and full first message verified",
+      "last_checked": "2026-07-22",
+      "notes": "Nikita Babych; BirdCLEF+ 2026; topic 704752; first message 3467343; official Kaggle MCP retrieval."
     }
   ],
   "claims": [
@@ -455,6 +483,56 @@
       "source_id": "S_PUBLIC_SCAN_20260722",
       "implication": "Preserve deterministic reproduction, report variance across seeds/hardware where relevant, and do not infer causality from public ensemble scores.",
       "status": "hypothesis"
+    },
+    {
+      "claim_id": "C031",
+      "category": "official",
+      "claim": "ROGII's public leaderboard scores exactly 26% of the test data and the private leaderboard scores the remaining 74%.",
+      "evidence_class": "official_meta_kaggle_exact_row",
+      "confidence": "confirmed",
+      "source_id": "S_META_KAGGLE_20260722",
+      "implication": "Public score is a minority-split diagnostic and may not authorize score-directed routing, well overrides, or final promotion without frozen local evidence.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C032",
+      "category": "external_solution",
+      "claim": "The BirdCLEF+ 2026 first-place system was a diverse ensemble combining global CNNs, native Perch, an Amphibia/Insecta specialist, and a genus specialist with distillation, controlled Noisy Student self-training, validation, and pipeline-specific post-processing.",
+      "evidence_class": "official_kaggle_writeup_full_message",
+      "confidence": "confirmed",
+      "source_id": "S_BIRDCLEF_W86265",
+      "implication": "Transfer the system-design principle only; no single component or public score is causal proof for ROGII.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C033",
+      "category": "specialists",
+      "claim": "The BirdCLEF Amphibia/Insecta specialist was a supervised-only restricted-label model whose masked outputs were scattered into the full ensemble; it was not the whole solution or a universal routing rule.",
+      "evidence_class": "official_kaggle_writeup_model_table",
+      "confidence": "confirmed",
+      "source_id": "S_BIRDCLEF_W86265",
+      "implication": "A ROGII regime expert must be narrow, bounded, legally routed, and evaluated only in final system placement against an exact global fallback.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C034",
+      "category": "pseudo_labels",
+      "claim": "The winning BirdCLEF self-training controlled noise by capping pseudo-label mass below focal-label mass, separating labeled-soundscape and pseudo-label injection, retaining clean labeled soundscapes, and stopping after the third iteration regressed.",
+      "evidence_class": "official_kaggle_writeup_training_ablation",
+      "confidence": "confirmed",
+      "source_id": "S_BIRDCLEF_W86265",
+      "implication": "Any future weak-label or self-training mechanism requires bounded influence, non-overlapping controls, iteration stopping rules, and negative controls before promotion.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C035",
+      "category": "validation",
+      "claim": "BirdCLEF specialists and diverse members were accepted only as parts of a complete system validated across complementary domain-tailored splits and separately tuned post-processing pipelines.",
+      "evidence_class": "official_kaggle_writeup_validation_and_ensemble",
+      "confidence": "confirmed structural lesson",
+      "source_id": "S_BIRDCLEF_W86265",
+      "implication": "ROGII specialist evidence must exceed global-model evidence: sufficient regime support, cross-fitted routing, complete-system improvement, subgroup stability, failed negative controls, and exact fallback identity.",
+      "status": "active"
     }
   ],
   "submissions": [

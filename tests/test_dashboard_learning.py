@@ -195,9 +195,17 @@ class LearningDashboardTests(unittest.TestCase):
         self.assertTrue(any(item["id"] == "B017" for item in content["breakthroughs"]))
         self.assertTrue(any(item["id"] == "B018" for item in content["breakthroughs"]))
         self.assertTrue(any(item["id"] == "B019" for item in content["breakthroughs"]))
+        self.assertTrue(any(item["id"] == "B020" for item in content["breakthroughs"]))
         self.assertTrue(any(item["signal"] == "coefficient learning" for item in content["idea_questions"]))
         self.assertTrue(any(item["signal"] == "PF branch uncertainty" for item in content["idea_questions"]))
         self.assertTrue(any(item["signal"] == "hidden-scale runtime" for item in content["idea_questions"]))
+        self.assertTrue(any(item["signal"] == "regime specialists" for item in content["idea_questions"]))
+        self.assertTrue(
+            any(
+                item["local_path"] == "archive/competition/knowledge_context_2026-07-22.md"
+                for item in content["sources"]
+            )
+        )
         self.assertIn("trend_transfer", html)
         self.assertIn("risk_action", html)
         self.assertIn("deployment_gap", html)
