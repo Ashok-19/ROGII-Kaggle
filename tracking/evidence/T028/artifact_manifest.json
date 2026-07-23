@@ -1,0 +1,31 @@
+{
+  "files": [
+    {
+      "bytes": 749,
+      "name": "REPRODUCTION_RECEIPT.json",
+      "sha256": "6353dcce5457b8696714b4b97b84e972c6504d9f3685d7d07e8a8aae1759e945"
+    },
+    {
+      "bytes": 2029,
+      "name": "RESULT.md",
+      "sha256": "548427fdd98584cbfc4f5bd0540e693453be7adca011ff04c7d1764de7909c0c"
+    },
+    {
+      "bytes": 1929,
+      "name": "WORTH_SCREEN_CONTRACT.md",
+      "sha256": "5804ff18833cde39095b78b52f23e69a6179786b413107e5617f21f9ae336b8a"
+    },
+    {
+      "bytes": 13097,
+      "name": "run_worth_audit.py",
+      "sha256": "7a01b87adad9b3db587fb19f407d40c29d6dfe7ece918f398d113671b553362c"
+    },
+    {
+      "bytes": 8503,
+      "name": "worth_audit.json",
+      "sha256": "5a5bc789b3e5b2e3db949e1a253236b280cf36afb215a8c03d95d4f7914c1832"
+    }
+  ],
+  "schema_version": 1,
+  "task_id": "T028"
+}

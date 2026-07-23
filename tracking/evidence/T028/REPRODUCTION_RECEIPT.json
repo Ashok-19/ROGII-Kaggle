@@ -1,0 +1,17 @@
+{
+  "byte_identical_rerun": true,
+  "corrected_audit_sha256": "7a01b87adad9b3db587fb19f407d40c29d6dfe7ece918f398d113671b553362c",
+  "decision_equal": true,
+  "gate_results_equal": true,
+  "notes": [
+    "The initial module-import failure occurred before data loading or metrics.",
+    "The first completed domain-oracle calculation double-counted the full population and was discarded before official evidence was written.",
+    "The corrected spatial/typewell-separated result reproduced byte-for-byte."
+  ],
+  "result_bytes": 8503,
+  "result_sha256": "5a5bc789b3e5b2e3db949e1a253236b280cf36afb215a8c03d95d4f7914c1832",
+  "schema_version": 1,
+  "source_commit": "d36e52d5b66571655f8033ab4345c5a873ea4b64",
+  "status": "PASS",
+  "task_id": "T028"
+}

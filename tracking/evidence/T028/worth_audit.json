@@ -1,0 +1,279 @@
+{
+  "baseline": {
+    "current_original_only_rmse": 12.45883303686926,
+    "current_weight": 0.5,
+    "e011_rmse": 12.550756295689673
+  },
+  "coefficient_residual": {
+    "maximum_domain_residual_mean_l2": 3.504537273681195,
+    "mean": [
+      -0.09696531252725818,
+      -0.06669557587889122,
+      0.08791176653845417,
+      0.10438438329672674
+    ],
+    "mean_l2": 0.18020862867098075,
+    "minimum_domain_residual_mean_l2": 1.1232153112011096,
+    "pooled_rmse": 14.169578249206195
+  },
+  "coverage": {
+    "rows": 3783989,
+    "unique_ids": 3783989,
+    "wells": 773
+  },
+  "decision": "close_h021_without_implementation",
+  "diagnostic_only": true,
+  "domain_diagnostics": [
+    {
+      "current_gain_vs_e011": 0.0597014200690964,
+      "first_derivative_at_zero": -5356070.181304821,
+      "group": 0,
+      "optimal_weight": 0.458415195449403,
+      "oracle_weight_gain_vs_e011": 0.060198010531827606,
+      "positive_weight_upper_bound": 0.916830390898806,
+      "residual_mean": [
+        -0.8737761350927287,
+        -0.6702339223455808,
+        -0.26073217546219923,
+        0.8764176153825063
+      ],
+      "residual_mean_l2": 1.4313585675135139,
+      "residual_rmse": 13.720251549099844,
+      "rows": 836580,
+      "scope": "spatial",
+      "wells": 155
+    },
+    {
+      "current_gain_vs_e011": 0.09050573583744992,
+      "first_derivative_at_zero": -5696313.9446154395,
+      "group": 1,
+      "optimal_weight": 0.5400408163588759,
+      "oracle_weight_gain_vs_e011": 0.09100786601020516,
+      "positive_weight_upper_bound": 1.0,
+      "residual_mean": [
+        -0.7201899408144701,
+        -0.6484235545973314,
+        0.44966518823001633,
+        0.9142671070296056
+      ],
+      "residual_mean_l2": 1.4061329174403139,
+      "residual_rmse": 14.30631542772621,
+      "rows": 680157,
+      "scope": "spatial",
+      "wells": 155
+    },
+    {
+      "current_gain_vs_e011": 0.10077655068342395,
+      "first_derivative_at_zero": -6343718.451167073,
+      "group": 2,
+      "optimal_weight": 0.6503026334111887,
+      "oracle_weight_gain_vs_e011": 0.10648881084490824,
+      "positive_weight_upper_bound": 1.0,
+      "residual_mean": [
+        0.7684545701581804,
+        -1.1164576845596208,
+        -1.0504771318458188,
+        -1.3364796391280922
+      ],
+      "residual_mean_l2": 2.1740929644668365,
+      "residual_rmse": 13.762812045231726,
+      "rows": 795791,
+      "scope": "spatial",
+      "wells": 154
+    },
+    {
+      "current_gain_vs_e011": -0.08381531596227276,
+      "first_derivative_at_zero": 609684.9168972813,
+      "group": 3,
+      "optimal_weight": 0.0,
+      "oracle_weight_gain_vs_e011": 0.0,
+      "positive_weight_upper_bound": 0.0,
+      "residual_mean": [
+        -0.2171258165131776,
+        2.436842302691694,
+        2.4752314268217614,
+        0.411906370320318
+      ],
+      "residual_mean_l2": 3.504537273681195,
+      "residual_rmse": 15.666602851948387,
+      "rows": 754213,
+      "scope": "spatial",
+      "wells": 155
+    },
+    {
+      "current_gain_vs_e011": 0.33566735398092007,
+      "first_derivative_at_zero": -15336352.260746215,
+      "group": 4,
+      "optimal_weight": 0.9932549016172489,
+      "oracle_weight_gain_vs_e011": 0.4476494887445046,
+      "positive_weight_upper_bound": 1.0,
+      "residual_mean": [
+        0.5676821619300519,
+        -0.3437652254757279,
+        -1.189715677259111,
+        -0.35645861467162876
+      ],
+      "residual_mean_l2": 1.4081632376644684,
+      "residual_rmse": 13.26187730192296,
+      "rows": 717248,
+      "scope": "spatial",
+      "wells": 154
+    },
+    {
+      "current_gain_vs_e011": 0.15273440330654786,
+      "first_derivative_at_zero": -8297712.187596083,
+      "group": 0,
+      "optimal_weight": 0.9297609636061449,
+      "oracle_weight_gain_vs_e011": 0.19453439786996363,
+      "positive_weight_upper_bound": 1.0,
+      "residual_mean": [
+        1.0613076072252046,
+        0.5591261028828227,
+        0.7309867441093555,
+        2.184351572215748
+      ],
+      "residual_mean_l2": 2.5970616564078775,
+      "residual_rmse": 14.83937089702347,
+      "rows": 735839,
+      "scope": "typewell",
+      "wells": 155
+    },
+    {
+      "current_gain_vs_e011": 0.15914731056515485,
+      "first_derivative_at_zero": -8332854.875603174,
+      "group": 1,
+      "optimal_weight": 0.9193871414609989,
+      "oracle_weight_gain_vs_e011": 0.20131145705825482,
+      "positive_weight_upper_bound": 1.0,
+      "residual_mean": [
+        -0.5115852205976307,
+        -0.10901860506182778,
+        0.03021008741288132,
+        -1.3838838072959516
+      ],
+      "residual_mean_l2": 1.4797471188216538,
+      "residual_rmse": 13.295125914368477,
+      "rows": 779705,
+      "scope": "typewell",
+      "wells": 155
+    },
+    {
+      "current_gain_vs_e011": 0.09722527691349825,
+      "first_derivative_at_zero": -7991576.159560056,
+      "group": 2,
+      "optimal_weight": 0.4535993107744074,
+      "oracle_weight_gain_vs_e011": 0.09825761327344651,
+      "positive_weight_upper_bound": 0.9071986215488148,
+      "residual_mean": [
+        -1.5394189121400657,
+        -1.6217933790004107,
+        -1.4435144288102717,
+        0.1547896180985924
+      ],
+      "residual_mean_l2": 2.666030398040995,
+      "residual_rmse": 13.864475042095807,
+      "rows": 763373,
+      "scope": "typewell",
+      "wells": 154
+    },
+    {
+      "current_gain_vs_e011": 0.17173119531009995,
+      "first_derivative_at_zero": -8794504.583224878,
+      "group": 3,
+      "optimal_weight": 0.8749919345667064,
+      "oracle_weight_gain_vs_e011": 0.21070130605608917,
+      "positive_weight_upper_bound": 1.0,
+      "residual_mean": [
+        1.4984836035548352,
+        0.47620100617894645,
+        1.3139106344082263,
+        -0.7086472677349495
+      ],
+      "residual_mean_l2": 2.1681242154654705,
+      "residual_rmse": 13.80946069684134,
+      "rows": 738961,
+      "scope": "typewell",
+      "wells": 155
+    },
+    {
+      "current_gain_vs_e011": -0.12178548767851005,
+      "first_derivative_at_zero": 1293877.8850479247,
+      "group": 4,
+      "optimal_weight": 0.0,
+      "oracle_weight_gain_vs_e011": 0.0,
+      "positive_weight_upper_bound": 0.0,
+      "residual_mean": [
+        -1.008802614235546,
+        0.3546927408551263,
+        -0.20379636135204324,
+        0.276749026217762
+      ],
+      "residual_mean_l2": 1.1232153112011096,
+      "residual_rmse": 14.969561588522161,
+      "rows": 766111,
+      "scope": "typewell",
+      "wells": 154
+    }
+  ],
+  "feature_contract": {
+    "features": 142,
+    "target_csv_max_delta": 0.0,
+    "wells": 773
+  },
+  "frozen_worth_gates": {
+    "material_domain_weight_gap": 0.1,
+    "maximum_simple_global_placement_gain_rmse": 0.02,
+    "minimum_additional_headroom_rmse": 0.05,
+    "minimum_domain_oracle_headroom_rmse": 0.05,
+    "minimum_material_domain_weight_gaps": 3
+  },
+  "gate_results": {
+    "additional_per_well_headroom": true,
+    "domain_conflict_headroom": false,
+    "material_domain_weight_heterogeneity": true,
+    "simple_global_placement_not_sufficient": true
+  },
+  "global_direction": {
+    "all_domains_negative_first_derivative": false,
+    "common_positive_interval_nonempty": false,
+    "common_positive_weight_interval": [
+      0.0,
+      0.0
+    ],
+    "gain_from_reoptimizing_weight": 0.0006439149267389865,
+    "gain_vs_e011_at_optimal_weight": 0.09256717374715251,
+    "linear": -16061384.960468136,
+    "optimal_rmse": 12.458189121942521,
+    "optimal_weight": 0.5454051778121776,
+    "quadratic": 29448537.736470174
+  },
+  "hypothesis_id": "H021",
+  "legal_warning": "Per-domain and per-well oracle weights use hidden labels and are forbidden at inference; they measure opportunity only.",
+  "material_domain_weight_gaps": 7,
+  "oracle_headroom": {
+    "domain_specific_weight_gain_vs_current": {
+      "spatial": 0.03978903099923414,
+      "typewell": 0.049402121267720034
+    },
+    "domain_specific_weight_rmse": {
+      "spatial": 12.419044005870026,
+      "typewell": 12.40943091560154
+    },
+    "per_well_weight_gain_vs_current": 0.5264020427668168,
+    "per_well_weight_quantiles": {
+      "0.0": 0.0,
+      "0.1": 0.0,
+      "0.25": 0.0,
+      "0.5": 0.28291671931625134,
+      "0.75": 1.0,
+      "0.9": 1.0,
+      "1.0": 1.0
+    },
+    "per_well_weight_rmse": 11.932430994102443,
+    "weakest_domain_specific_gain_vs_current": 0.03978903099923414
+  },
+  "schema_version": 1,
+  "source_commit": "d36e52d5b66571655f8033ab4345c5a873ea4b64",
+  "task_id": "T028",
+  "worth_screen_authorized": false
+}

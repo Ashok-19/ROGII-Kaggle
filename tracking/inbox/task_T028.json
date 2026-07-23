@@ -4,11 +4,11 @@
   "payload": {
     "task_id": "T028",
     "title": "Screen domain-robust original-view objectives",
-    "status": "queued",
+    "status": "completed",
     "priority": 1,
-    "phase": "domain_robust_original_view_worth_screen",
+    "phase": "worth_screen_rejected_before_implementation",
     "depends_on": "T027",
     "due_at": "2026-07-25",
-    "updated_at": "2026-07-23T18:15:53Z"
+    "updated_at": "2026-07-23T18:36:10Z"
   }
 }
