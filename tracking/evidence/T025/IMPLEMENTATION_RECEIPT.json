@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "task_id": "T025",
+  "recorded_at": "2026-07-23T13:23:00Z",
+  "score_observed_before_seal": false,
+  "implementation": {
+    "path": "tracking/evidence/T025/run_screen.py",
+    "bytes": 56539,
+    "sha256": "5a81e8993db05256c931c765494c598fb6aab7c81b227d88bf3f7d811938c23e"
+  },
+  "validation": {
+    "python_compile": "PASS",
+    "edge_only_status": "PASS",
+    "edge_groups": 16,
+    "real_project_hidden_targets_scored": false
+  },
+  "edge_groups": [
+    "spline_basis_rank",
+    "exact_support_boundary",
+    "one_two_row_rejection",
+    "constant_tvt",
+    "nonfinite_tvt",
+    "degenerate_spline_solve",
+    "contiguous_prefix",
+    "zero_variance_features",
+    "tiny_ridge_partition",
+    "knn_neighbor_clipping",
+    "coefficient_clipping",
+    "exact_zero_weight_fallback",
+    "deterministic_ties",
+    "fold_stress_membership",
+    "duplicate_oof_ids",
+    "nonfinite_predictions"
+  ],
+  "scientific_logic_frozen": true
+}
