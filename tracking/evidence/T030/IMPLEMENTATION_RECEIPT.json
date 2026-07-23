@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "task_id": "T030",
+  "source_commit_before_implementation": "c640c2c810531b6996036cd318d16d2477932c50",
+  "implementation_path": "tracking/evidence/T030/run_screen.py",
+  "implementation_bytes": 50253,
+  "implementation_sha256": "07b04bc3add0456018c917395eb933d5d9fa77a3d93458d254984c193563d566",
+  "score_observed_before_seal": false,
+  "compile_pass": true,
+  "edge_only_status": "PASS",
+  "edge_groups": 23,
+  "real_membership_status": "PASS",
+  "real_membership_contract": {
+    "wells": 773,
+    "features": 142,
+    "action_families": 12,
+    "outer_contexts": 35,
+    "inner_contexts": 150,
+    "inner_count_values": [4, 5],
+    "input_hash_files": 8
+  },
+  "score_independent_corrections": [
+    "Changed only the synthetic stress-domain fixture so each restricted v1 inner fold is nonempty.",
+    "Froze the explicit 23-group edge count after enumerating the registered checks.",
+    "Added grouped OOF reconstruction of actual row corrections so the 160-foot bound applies to emitted row actions, not only action parameters."
+  ],
+  "official_metric_run_started": false
+}
