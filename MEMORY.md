@@ -31,6 +31,7 @@ Public intelligence last checked: 2026-07-23 23:56 Asia/Kolkata
 - T026 tests 12,216 randomized long-horizon end-of-well mask tasks under exact outer-well isolation. All 76 candidates worsen E011; `ridge_all_combined_a1_well_equal__w0.25` is best at 12.6256511675, losing 0.0748948718 with 0/5 maps and 8/25 cells. It regresses three spatial and three typewell groups and four of five horizon quintiles. Mask augmentation improves its weak original-only comparator by 0.284538, but randomized targets differ from each source well's original-boundary target by 14.278922 coefficient RMSE. All controls, 665 isolation audits, 25 edge groups, and every substantive reproduction file pass exactly. D031 closes mask-local target pooling.
 - T027 preserves one original-boundary target across ten causal feature views and completes 21 branches, four placements, 35 contexts, 735 isolation audits, four controls, and 22 edge groups. Every augmented-view candidate worsens E011; the best eligible branch loses 0.041105 RMSE with 0/5 maps. The original-view-only ridge gains 0.091923 and improves every global slice, p90, and worst-5% share, but regresses spatial group 0 by 0.284090 and three typewell groups, including group 4 by 0.352838. Reproduction is exact. D033 closes feature-view augmentation and preserves only an objective-level original-view question.
 - T028 closes that objective-level question before implementation. Reoptimizing the global placement adds only 0.000644 RMSE; no nonzero weight improves all ten domains because spatial group 3 and typewell group 4 are adverse at zero. Illegal domain-specific placement adds 0.039789 spatial and 0.049402 typewell RMSE beyond the current candidate, below the frozen 0.05 worth floor. Per-well oracle gain is 0.526402 but requires hidden routing. The corrected audit reproduces byte-for-byte. D034 prohibits objective retuning.
+- T029 audits three verified positive legal actions. T025 and T016 directions are nearly orthogonal at row-centered correlation 0.018136. The frozen 0.40/0.60 diagnostic reaches 12.377388, gains 0.047540 versus T025, and is positive in all ten direct OOF domains; T027 receives zero selected weight. D035 selects H022/T030 for outer-isolated confirmation only.
 
 ## New durable understanding from exact public-source audits
 
@@ -73,7 +74,7 @@ Public intelligence last checked: 2026-07-23 23:56 Asia/Kolkata
 
 ## Exact next action
 
-Complete T029 as an evidence-first independent-mechanism selection. Audit remaining legal saved actions/candidates for unique covariance or materially new causal state before preregistration; do not reopen T016/T023/T025/T026/T027/T028 families, and do not implement a successor until a frozen preimplementation worth gate passes.
+Preregister and complete T030 as a fully outer-isolated confirmation of the complementary T025 pseudo-coefficient plus T016 datum ensemble. Regenerate/select both parents and blend weights inside every repeated and spatial/typewell context; include fixed, nested, minimax, ablation, shuffle/sign controls, tails, slices, and exact E011 fallback.
 
 ## Open risks
 

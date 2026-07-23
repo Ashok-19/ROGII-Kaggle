@@ -1,0 +1,14 @@
+{
+  "audit_sha256": "77c4c290cc02545450c9fa00eef6ad43cf24f32d0402bc17691e8b9836065f1f",
+  "byte_identical_rerun": true,
+  "parent_reproduction_controls": {
+    "maximum_t016_rmse_delta": 8.526512829121202e-14,
+    "maximum_t025_sse_delta": 0.0,
+    "maximum_t027_sse_delta": 0.0
+  },
+  "result_sha256": "af5a20a4eea7025399e605562f87f2c937bef4b6ba2267030a19685eae1cbceb",
+  "schema_version": 1,
+  "source_commit": "edc45e1eb7467f0ec4dd68b83db619f7a5d03602",
+  "status": "PASS",
+  "task_id": "T029"
+}

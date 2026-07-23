@@ -449,9 +449,23 @@
       "visual": "residual_action_gate",
       "summary": "T028 finds that global placement retuning adds only 0.000644 RMSE and no nonzero weight improves all ten domains. Illegal domain-oracle gains are 0.039789 spatial and 0.049402 typewell, below the frozen 0.05 floor.",
       "why_it_matters": "The project avoids a full GroupDRO/CVaR/robust-loss search with insufficient headroom. Large per-well oracle opportunity still requires hidden routing and cannot authorize a legal objective. D034 forces the next task to find an independent mechanism."
+    },
+    {
+      "id": "B032",
+      "date": "2026-07-24",
+      "title": "A nearly orthogonal datum leg complements pseudo-coefficients",
+      "evidence": "reproduced_covariance_worth_screen",
+      "visual": "ensemble_paths",
+      "summary": "T029 finds row-centered correlation 0.018136 between T025 pseudo-coefficient and T016 datum actions. A 0.40/0.60 diagnostic reaches 12.377388 and improves all ten direct OOF domains.",
+      "why_it_matters": "The next experiment combines independently verified actions instead of reopening a failed target, view, router, or objective. Full-label weights remain diagnostic until T030 confirms them inside untouched contexts."
     }
   ],
   "idea_questions": [
+    {
+      "signal": "complementary coefficient-datum ensemble",
+      "question": "Can the pseudo-coefficient and datum legs retain their covariance gain under exact outer isolation?",
+      "falsifier": "Reject if context-local parent regeneration or weight selection removes the gain, any spatial/typewell group regresses, tails worsen, controls retain gain, or the selected blend collapses to one parent."
+    },
     {
       "signal": "independent mechanism selection",
       "question": "Which remaining legal signal is causally or covariantly independent of the closed families?",
@@ -722,6 +736,11 @@
     {
       "title": "T028 rejected domain-objective worth screen",
       "local_path": "tracking/evidence/T028/RESULT.md",
+      "url": ""
+    },
+    {
+      "title": "T029 complementary saved-action covariance selection",
+      "local_path": "tracking/evidence/T029/RESULT.md",
       "url": ""
     }
   ]

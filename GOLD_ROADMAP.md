@@ -107,6 +107,12 @@ The globally optimal placement is 0.545405 and improves the frozen 0.50 placemen
 
 D034 closes H021/T028 before implementation. The next task is mechanism selection, not objective retuning. It must demonstrate independent covariance or materially new causal state and pass a new frozen worth gate.
 
+### 14. A nearly orthogonal datum leg complements pseudo-coefficients
+
+T029 exactly reproduces T025, T027, and T016 saved OOF actions and evaluates every single, pair, triple, and 12,341 simplex points. T025 and T016 directions have only 0.018136 row-centered correlation. A 0.40/0.60 diagnostic reaches 12.377388, beats T025 by 0.047540, and is positive in all ten direct OOF domains; T027 receives zero weight.
+
+D035 selects H022/T030, but the full-data weights are oracle diagnostics. T030 must regenerate or select both parent actions and their blend inside every untouched repeated and stress context.
+
 ## Score objectives
 
 These are campaign targets, not promises or medal definitions:
@@ -375,7 +381,8 @@ These defaults may be revised only through a recorded decision before seeing the
 20. **H019/T026 — Randomized long-horizon mask-task coefficient meta-learning — completed and rejected 2026-07-23.** All 76 candidates worsen E011; the best scores 12.625651, loses 0.074895, wins 0/5 maps and 8/25 cells, and fails broad spatial/typewell/horizon transfer. Mask augmentation helps its weak original-only comparator, but mask-local targets differ from the real original target by 14.278922 coefficient RMSE. All controls, isolation audits, edge groups, and exact reproduction pass; D031 closes retuning.
 21. **H020/T027 — Target-preserving causal prefix-view learning — completed and rejected 2026-07-23.** Every augmented-view candidate worsens E011; the best eligible branch loses 0.041105 with 0/5 maps. The positive original-only comparator gains 0.091923 but fails spatial/typewell transfer. D033 closes view augmentation.
 22. **H021/T028 — Domain-robust original-view coefficient learning — completed and rejected before implementation 2026-07-24.** No common positive placement exists; domain-oracle gains of 0.039789 spatial and 0.049402 typewell miss the 0.05 worth floor. D034 closes objective retuning.
-23. **T029 — Select the next independent legal mechanism — queued next.** Audit remaining saved legal candidate/action covariance and causal-state evidence; freeze a worth gate before naming or implementing a successor hypothesis.
+23. **T029 — Select the next independent legal mechanism — completed 2026-07-24.** T025+T016 passes the frozen covariance worth gate; T027 receives zero weight. D035 selects formal outer-isolated confirmation.
+24. **H022/T030 — Complementary pseudo-coefficient and datum ensemble — queued next.** Regenerate/select parent actions and simplex weights inside every repeated and spatial/typewell context; require all tails, controls, and exact reproduction.
 
 ## Explicitly rejected behavior
 
@@ -402,4 +409,4 @@ Foundation is complete only when:
 - legacy roadmap is preserved;
 - no training run is falsely presented as completed.
 
-Foundation, E010 coverage measurement, E011 statistical/deployment verification, E012 specialist rejection, the July 23 intelligence refreshes, T022 uncertainty routing, T023 residual sequence-state screening, T016 wide-datum placement, T024 mechanism selection, T025 coefficient transport, T026 mask-task screening, T027 target-preserving view screening, and T028 objective screening are complete. E011 remains deployment primary. D023, D025, D027, D029, D031, D033, and D034 close the tested routing, sequence-profile, wide-datum, four-cut transport, mask-local target, feature-view, and domain-objective spaces. The current exact next action is T029 evidence-first selection of a genuinely independent legal mechanism.
+Foundation, E010 coverage measurement, E011 statistical/deployment verification, E012 specialist rejection, the July 23 intelligence refreshes, T022 uncertainty routing, T023 residual sequence-state screening, T016 wide-datum placement, T024 mechanism selection, T025 coefficient transport, T026 mask-task screening, T027 target-preserving view screening, and T028 objective screening are complete. E011 remains deployment primary. D023, D025, D027, D029, D031, D033, and D034 close the tested routing, sequence-profile, wide-datum, four-cut transport, mask-local target, feature-view, and domain-objective spaces. The current exact next action is preregistration and complete outer-isolated execution of T030, the complementary T025 pseudo-coefficient plus T016 datum ensemble.

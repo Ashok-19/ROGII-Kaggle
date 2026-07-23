@@ -4,11 +4,11 @@
   "payload": {
     "task_id": "T029",
     "title": "Select the next independent legal mechanism",
-    "status": "queued",
+    "status": "completed",
     "priority": 1,
-    "phase": "evidence_first_mechanism_selection",
+    "phase": "independent_mechanism_selected",
     "depends_on": "T028",
     "due_at": "2026-07-25",
-    "updated_at": "2026-07-23T18:36:10Z"
+    "updated_at": "2026-07-23T18:49:28Z"
   }
 }

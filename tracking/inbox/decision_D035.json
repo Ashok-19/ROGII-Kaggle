@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-23T18:49:28Z",
+  "payload": {
+    "decision_id": "D035",
+    "decided_at": "2026-07-24",
+    "title": "Select complementary pseudo-coefficient and datum ensemble",
+    "decision": "Advance H022/T030 to a fully outer-isolated confirmation of T025 pseudo-coefficient action plus T016 nested datum action; retain T027 only as a zero-weight comparator.",
+    "rationale": "The reproduced T029 audit exactly recovers all three parent actions. T025 and T016 correction directions have row-centered correlation 0.018136. A 0.40/0.60 simplex diagnostic reaches 12.3773876809, gains 0.1733686147 versus E011 and 0.0475399275 versus T025, and is positive in all ten direct OOF domains.",
+    "source_ids": "T029,T025,T016,T027,tracking/evidence/T029/RESULT.md,S_T029_VERIFIED_20260724",
+    "revisit_trigger": "The diagnostic weights use full labels and are not promotable. T030 must regenerate/select parent actions and blend weights inside every untouched repeated and spatial/typewell context, pass tails/slices/controls, and reproduce exactly."
+  }
+}
