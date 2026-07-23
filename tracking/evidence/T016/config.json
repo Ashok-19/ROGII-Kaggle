@@ -33,6 +33,14 @@
     "wide64_path24_blend_50",
     "wide64_path24_blend_75"
   ],
+  "action_family_definitions": {
+    "mean_of_six": "arithmetic mean of the six saved E009 ridge action columns",
+    "median_of_six": "median of the six saved E009 ridge action columns",
+    "median_of_wide64_path24_wide32": "median of ridge_all_a25_f64, ridge_path_evidence_a25_f24, and ridge_all_a25_f32",
+    "wide64_path24_blend_25": "0.75 * ridge_all_a25_f64 + 0.25 * ridge_path_evidence_a25_f24",
+    "wide64_path24_blend_50": "0.50 * ridge_all_a25_f64 + 0.50 * ridge_path_evidence_a25_f24",
+    "wide64_path24_blend_75": "0.25 * ridge_all_a25_f64 + 0.75 * ridge_path_evidence_a25_f24"
+  },
   "placement_grid": {
     "scales": [-1.0, -0.75, -0.5, -0.25, 0.0, 0.1, 0.25, 0.5, 0.75, 1.0],
     "caps_ft": [5.0, 10.0, 20.0, 30.0],
@@ -53,9 +61,9 @@
     }
   },
   "negative_controls": [
-    "deterministically shuffled well actions with seed 16016, using the same nested placement grid",
-    "sign-flipped wide64 action using the same nested placement grid",
-    "deterministically permuted action-family columns with seed 26016, using the same nested placement grid"
+    "apply one deterministic seed-16016 permutation of well rows to the complete 12-family action matrix, preserving each permuted row's cross-family structure, then use the same nested placement grid",
+    "invert the already selected real nested correction in each repeated and stress context without re-selecting family, scale, or cap",
+    "for each well independently permute its 12 action-family values with seed 26016, then use the same nested placement grid"
   ],
   "advancement_gate_for_full_stability_refit": {
     "minimum_gain_vs_e011": 0.03,

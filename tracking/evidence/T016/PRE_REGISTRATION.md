@@ -20,6 +20,8 @@ The special slices reuse the exact T023 definitions: hidden-row count at or abov
 
 For every placement, the emitted correction is `clip(scale × raw family action, -cap, +cap)`. Shuffled-well and action-family permutation controls use fixed seeds 16016 and 26016 and receive the same nested placement search as the real families.
 
+Blend suffixes denote the path-evidence weight: 25 means 75% wide64 plus 25% path24, 50 is equal weight, and 75 means 25% wide64 plus 75% path24. The sign control does not receive a symmetric re-search; it negates each already selected real nested correction without changing its selected family, scale, or cap. This avoids a mathematically duplicate control.
+
 ## Gates
 
 A full stability refit is allowed only if the nested placed system gains at least 0.03 RMSE over E011, wins at least 4/5 maps and 17/25 cells, preserves tails, improves every spatial and typewell holdout and all three special slices, defeats three negative controls, reproduces exactly, and passes all edge groups.
