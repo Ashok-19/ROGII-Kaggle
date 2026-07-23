@@ -5,10 +5,10 @@
     "hypothesis_id": "H019",
     "title": "Randomized long-horizon coefficient meta-learning",
     "statement": "Thousands of legal mask tasks generated only from outer-training wells, with horizons spanning the real hidden-suffix distribution, can teach a mask-conditioned nonlinear coefficient predictor that transfers better than four fixed within-well pseudo-cut summaries.",
-    "status": "queued",
+    "status": "testing",
     "priority": 1,
-    "evidence_for": "T025 proves pseudo coefficient dynamics are unique and useful: +0.125829 best aggregate gain, +0.200703 incremental value over the same-target E011-only comparator, and every corrupted control loses. The target oracle is 4.113743. Expanding the training unit from 773 wells to many causal mask tasks directly addresses sample size and horizon mismatch.",
-    "evidence_against": "T025 still fails spatial group 0 and typewell group 4. Random tasks can leak well identity, overweight short horizons, or learn domain-specific trajectory patterns unless outer-well isolation and horizon balancing are exact.",
-    "next_test": "Pre-register T026 as a bounded many-task worth screen with complete outer-well isolation, long-horizon matching, simple model families before neural escalation, reversed-horizon and well-permutation controls, and every repeated/spatial/typewell gate."
+    "evidence_for": "T025 proves pseudo coefficient dynamics are unique and useful: +0.125829 best aggregate gain, +0.200703 incremental value over the same-target E011-only comparator, and every corrupted control loses. The target oracle is 4.113743. Score-blind support analysis freezes 12,216 end-of-well tasks with median horizon 4,878 versus the real 4,840-row median.",
+    "evidence_against": "T025 fails spatial group 0 and typewell group 4. Random tasks can leak well identity, overweight repeated source wells, or learn horizon-specific artifacts unless outer isolation, per-well weighting, horizon balancing, and corrupted controls are exact.",
+    "next_test": "Complete T026 under tracking/evidence/T026/PRE_REGISTRATION.md and config.json."
   }
 }

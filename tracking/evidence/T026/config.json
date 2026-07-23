@@ -1,0 +1,79 @@
+{
+  "task_id": "T026",
+  "hypothesis_id": "H019",
+  "source_commit": "e19fa84d3ce8d18a714584c16655f825ea26adf9",
+  "expected_wells": 773,
+  "expected_hidden_rows": 3783989,
+  "data_dir": "data/train",
+  "e011_oof_path": "artifacts/E011/oof_predictions.csv.gz",
+  "compact_path": "artifacts/E011/compact_stats_v1.npz",
+  "fold_files": ["folds/v1.json", "folds/v2.json", "folds/v3.json", "folds/v4.json", "folds/v5.json"],
+  "mask_pool": {
+    "seed": 26023,
+    "jitter_rows": 64,
+    "base_prefix_grid": [900, 1180, 1346, 1423, 1504, 1565, 1650, 1703, 1745, 1802, 1860, 1945, 2053, 2214, 2350],
+    "minimum_prefix_rows": 851,
+    "minimum_horizon_rows": 407,
+    "expected_tasks": 12216,
+    "minimum_tasks_per_well": 8,
+    "maximum_tasks_per_well": 16,
+    "include_original_boundary": true
+  },
+  "spline": {
+    "knots": [0.25, 0.5, 0.75, 1.0],
+    "outputs": 4,
+    "coefficient_absolute_bound_ft": 80.0,
+    "history_horizon_fractions": [0.4, 0.6, 0.8, 1.0],
+    "minimum_history_rows": 128
+  },
+  "raw_features": {
+    "visible_slope_windows": [32, 128, 512],
+    "visible_backtest_fractions": [0.5, 0.7, 0.85]
+  },
+  "task_weighting": {
+    "joint_bins": 5,
+    "original_boost": 4.0,
+    "long_horizon_threshold_rows": 3830,
+    "horizon_expert_minimum_tasks": 128
+  },
+  "branches": [
+    {"name": "history_latest_identity", "family": "analytic", "feature_set": "history", "training_regime": "none", "eligible": true},
+    {"name": "history_log_extrapolation", "family": "analytic", "feature_set": "history", "training_regime": "none", "eligible": true},
+    {"name": "ridge_original_combined_a10", "family": "ridge", "alpha": 10.0, "feature_set": "combined", "training_regime": "original_only", "eligible": false},
+    {"name": "ridge_masks_combined_a10", "family": "ridge", "alpha": 10.0, "feature_set": "combined", "training_regime": "masks_only", "eligible": true},
+    {"name": "ridge_all_raw_a10_well_equal", "family": "ridge", "alpha": 10.0, "feature_set": "raw", "training_regime": "all_well_equal", "eligible": true},
+    {"name": "ridge_all_history_a10_well_equal", "family": "ridge", "alpha": 10.0, "feature_set": "history", "training_regime": "all_well_equal", "eligible": true},
+    {"name": "ridge_all_combined_a1_well_equal", "family": "ridge", "alpha": 1.0, "feature_set": "combined", "training_regime": "all_well_equal", "eligible": true},
+    {"name": "ridge_all_combined_a10_well_equal", "family": "ridge", "alpha": 10.0, "feature_set": "combined", "training_regime": "all_well_equal", "eligible": true},
+    {"name": "ridge_all_combined_a100_well_equal", "family": "ridge", "alpha": 100.0, "feature_set": "combined", "training_regime": "all_well_equal", "eligible": true},
+    {"name": "ridge_all_combined_a10_joint_balanced", "family": "ridge", "alpha": 10.0, "feature_set": "combined", "training_regime": "all_joint_balanced", "eligible": true},
+    {"name": "ridge_all_combined_a10_original_boost4", "family": "ridge", "alpha": 10.0, "feature_set": "combined", "training_regime": "all_original_boost4", "eligible": true},
+    {"name": "ridge_delta_history_a10_well_equal", "family": "ridge_delta", "alpha": 10.0, "feature_set": "combined", "training_regime": "all_well_equal", "eligible": true},
+    {"name": "ridge_long_combined_a10_well_equal", "family": "ridge", "alpha": 10.0, "feature_set": "combined", "training_regime": "long_only", "eligible": true},
+    {"name": "ridge_short_combined_a10_well_equal", "family": "ridge", "alpha": 10.0, "feature_set": "combined", "training_regime": "short_only", "eligible": false},
+    {"name": "ridge_horizon_expert_a10", "family": "horizon_expert", "alpha": 10.0, "feature_set": "combined", "training_regime": "all_well_equal", "eligible": true},
+    {"name": "extra_trees_combined_well_equal", "family": "extra_trees", "feature_set": "combined", "training_regime": "all_well_equal", "eligible": true},
+    {"name": "hist_gradient_combined_well_equal", "family": "hist_gradient", "feature_set": "combined", "training_regime": "all_well_equal", "eligible": true},
+    {"name": "knn25_combined", "family": "knn", "neighbors": 25, "feature_set": "combined", "training_regime": "all_well_equal", "eligible": true},
+    {"name": "ridge_horizon_only_a10", "family": "ridge", "alpha": 10.0, "feature_set": "horizon_only", "training_regime": "all_well_equal", "eligible": false}
+  ],
+  "placements": [0.25, 0.5, 0.75, 1.0],
+  "controls": ["permuted_source_well_targets", "shuffled_task_targets", "reversed_history_horizons", "permuted_horizon_features", "exact_fallback"],
+  "promotion": {
+    "maximum_oracle_rmse": 5.0,
+    "minimum_gain_vs_e011": 0.15,
+    "minimum_gain_vs_t025_best": 0.03,
+    "minimum_map_wins": 4,
+    "minimum_outer_cell_wins": 17,
+    "maximum_p90_deterioration": 0.25,
+    "maximum_worst5_share_increase": 0.02,
+    "minimum_every_spatial_gain": 0.0,
+    "minimum_every_typewell_gain": 0.0,
+    "minimum_every_special_slice_gain": 0.0,
+    "minimum_every_horizon_quintile_gain": 0.0,
+    "minimum_gain_vs_best_original_only": 0.05,
+    "maximum_negative_control_gain": 0.03,
+    "t025_best_rmse": 12.42492760849511,
+    "e011_rmse": 12.550756295689673
+  }
+}
