@@ -1,0 +1,19 @@
+{
+  "horizon_edges": [
+    3830.0,
+    4549.2,
+    5145.0,
+    5929.4
+  ],
+  "original_tasks": 773,
+  "randomized_median_task_coefficient_rmse": 3.799603340924991,
+  "randomized_output_correlations": [
+    0.5681194325580603,
+    0.735351361838283,
+    0.7708000098865017,
+    0.8224550299318867
+  ],
+  "randomized_target_vs_source_original_rmse": 14.27892245676846,
+  "randomized_tasks": 11443,
+  "tasks": 12216
+}

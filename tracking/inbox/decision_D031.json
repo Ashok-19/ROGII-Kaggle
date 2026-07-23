@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-23T16:30:00Z",
+  "payload": {
+    "decision_id": "D031",
+    "decided_at": "2026-07-23",
+    "title": "Close end-of-well mask-task target pooling",
+    "decision": "Reject H019/T026 as tested and retain E011 unchanged. Do not retune the 12,216-task end-of-well mask pool, mask-local coefficient target, feature family, weighting regimes, model settings, or placement grid. Queue a distinct target-preserving causal prefix-view worth screen that predicts each source well's original-boundary spline target with full E011 feature parity.",
+    "rationale": "All 76 T026 candidates worsen E011. The best reaches 12.625651 RMSE, loses 0.074895, wins 0/5 maps and 8/25 cells, and fails three spatial, three typewell, four horizon-quintile, catastrophe, and long-suffix checks. Mask augmentation improves its weak original-only comparator by 0.284538, but randomized targets are 14.278922 coefficient-RMSE away from the same source well's original target. All controls, 665 isolation audits, 25 edge groups, and exact reproduction pass.",
+    "source_ids": "T026,H019,D030,tracking/evidence/T026/RESULT.md,tracking/evidence/T026/REPRODUCTION_RECEIPT.json",
+    "revisit_trigger": "Do not reopen T026's mask-local target. A future screen must preserve the original-boundary target, generate only causal outer-training-well views, retain exact held-out-well isolation and full E011 feature parity, and pass every repeated/spatial/typewell/horizon/control gate."
+  }
+}

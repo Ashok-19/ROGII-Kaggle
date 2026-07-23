@@ -422,13 +422,27 @@
       "visual": "coefficient_transport_gate",
       "summary": "T025 confirms a 4.1137 last-known spline oracle and a unique legal pseudo-trajectory signal. The best aggregate candidate gains 0.125829 RMSE, but the conservative transfer-eligible placement regresses spatial group 0 and typewell group 4.",
       "why_it_matters": "The next route should expand the supervised task distribution to many outer-well-isolated long-horizon masks, not retune four fixed pseudo-cut summaries."
+    },
+    {
+      "id": "B029",
+      "date": "2026-07-23",
+      "title": "Long-horizon masks expose target mismatch",
+      "evidence": "complete_reproduced_worth_screen",
+      "visual": "mask_target_mismatch_gate",
+      "summary": "T026 completes 12,216 causal end-of-well tasks and 76 candidates. Every candidate is worse than E011; the best loses 0.074895 RMSE with 0/5 maps. Randomized task coefficients remain correlated with the real target but differ by 14.278922 pooled coefficient RMSE.",
+      "why_it_matters": "More causal views help a weak original-only comparator, but view-local targets are not interchangeable with the competition-boundary target. The next route must preserve one target across views rather than enlarge the model or retune mask horizons."
     }
   ],
   "idea_questions": [
     {
+      "signal": "target-preserving causal prefix views",
+      "question": "Can multiple causal views improve prediction of one unchanged original-boundary spline target?",
+      "falsifier": "Reject if view augmentation fails to beat the original-view-only comparator and E011, inflates source-well effective sample size, depends on view position, or regresses any spatial/typewell/horizon/control group."
+    },
+    {
       "signal": "randomized long-horizon mask tasks",
       "question": "Can many outer-training-well mask tasks predict nonlinear coefficients across real hidden horizons?",
-      "falsifier": "Reject if the best fixed model fails material gain, every spatial/typewell group, horizon controls, or well-permutation/reversed-horizon controls."
+      "falsifier": "T026 triggers the falsifier: all 76 candidates worsen E011, the best wins 0/5 maps, and broad spatial/typewell/horizon transfer fails. Do not retune mask-local targets or escalate them to neural models."
     },
     {
       "signal": "stable wide datum action",
@@ -650,6 +664,16 @@
     {
       "title": "T025 rejected multi-cut coefficient dynamics screen",
       "local_path": "tracking/evidence/T025/RESULT.md",
+      "url": ""
+    },
+    {
+      "title": "July 23 19:34 public-intelligence delta",
+      "local_path": "archive/competition/public_intelligence_delta_2026-07-23_1934.md",
+      "url": ""
+    },
+    {
+      "title": "T026 rejected randomized mask-task screen",
+      "local_path": "tracking/evidence/T026/RESULT.md",
       "url": ""
     }
   ]

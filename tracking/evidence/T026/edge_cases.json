@@ -1,0 +1,31 @@
+{
+  "edge_groups": 25,
+  "passed": [
+    "deterministic_jitter_limits",
+    "duplicate_cut_removal",
+    "prefix_horizon_boundaries",
+    "contiguous_visibility",
+    "strict_md_order",
+    "history_support_128_127",
+    "constant_tvt",
+    "rank_deficient_spline",
+    "zero_variance_features",
+    "well_equal_total_weight",
+    "joint_bin_edges",
+    "tree_sample_weight",
+    "knn_neighbor_clipping",
+    "coefficient_clipping",
+    "exact_e011_fallback",
+    "deterministic_ties",
+    "context_membership",
+    "nonfinite_tvt_rejection",
+    "nonfinite_geometry_rejection",
+    "nonfinite_typewell_rejection",
+    "missing_gr_accepted",
+    "empty_tiny_bins",
+    "heldout_task_exclusion",
+    "nonfinite_prediction_rejection",
+    "duplicate_oof_id_rejection"
+  ],
+  "status": "PASS"
+}

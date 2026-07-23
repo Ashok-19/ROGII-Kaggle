@@ -3,10 +3,11 @@
   "recorded_at": "2026-07-23T14:04:00Z",
   "payload": {
     "decision_id": "D030",
+    "decided_at": "2026-07-23",
     "title": "Freeze randomized long-horizon mask-task worth screen",
-    "status": "accepted",
     "decision": "Execute T026 exactly as preregistered before any neural or formal sequence implementation.",
     "rationale": "T025 proves unique legal coefficient-dynamics signal and a 4.113743 oracle, but four fixed short pseudo-cuts fail spatial/typewell transfer. Score-blind metadata supports 12,216 causal end-of-well tasks whose median horizon matches the real hidden horizon. The next evidence question is whether task augmentation and horizon balancing improve transfer, not whether a larger architecture can fit the same 773 labels.",
-    "constraints": "No held-out-well task may enter fitting or transforms. Complete all 19 branches, four placements, 35 contexts, controls, edge cases, and reproduction. Apply the pre-score control alignment and exact-E011 scoring definitions in tracking/evidence/T026/PRE_SCORE_AMENDMENT.md. No neural model, Kaggle execution, package, or submission is authorized."
+    "source_ids": "T025,H018,D029,tracking/evidence/T026/PRE_REGISTRATION.md,tracking/evidence/T026/PRE_SCORE_AMENDMENT.md",
+    "revisit_trigger": "No held-out-well task may enter fitting or transforms. Complete all 19 branches, four placements, 35 contexts, controls, edge cases, and reproduction. Apply the pre-score control alignment and exact-E011 scoring definitions in tracking/evidence/T026/PRE_SCORE_AMENDMENT.md. No neural model, Kaggle execution, package, or submission is authorized."
   }
 }

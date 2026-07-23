@@ -5,10 +5,10 @@
     "hypothesis_id": "H019",
     "title": "Randomized long-horizon coefficient meta-learning",
     "statement": "Thousands of legal mask tasks generated only from outer-training wells, with horizons spanning the real hidden-suffix distribution, can teach a mask-conditioned nonlinear coefficient predictor that transfers better than four fixed within-well pseudo-cut summaries.",
-    "status": "testing",
+    "status": "rejected",
     "priority": 1,
-    "evidence_for": "T025 proves pseudo coefficient dynamics are unique and useful: +0.125829 best aggregate gain, +0.200703 incremental value over the same-target E011-only comparator, and every corrupted control loses. The target oracle is 4.113743. Score-blind support analysis freezes 12,216 end-of-well tasks with median horizon 4,878 versus the real 4,840-row median.",
-    "evidence_against": "T025 fails spatial group 0 and typewell group 4. Random tasks can leak well identity, overweight repeated source wells, or learn horizon-specific artifacts unless outer isolation, per-well weighting, horizon balancing, and corrupted controls are exact.",
-    "next_test": "Complete T026 under tracking/evidence/T026/PRE_REGISTRATION.md and config.json."
+    "evidence_for": "T026 confirms that many legal masks add within-family information: the best mask-trained candidate improves the weak original-only comparator by 0.284538 RMSE. The last-known spline oracle remains 4.113743, and all corrupted controls lose.",
+    "evidence_against": "Every one of 76 fixed candidates is worse than exact E011. The best scores 12.625651, loses 0.074895, wins 0/5 maps and 8/25 cells, regresses three spatial and three typewell groups, and fails four of five horizon quintiles. Randomized targets differ from the source well's original target by 14.278922 pooled coefficient RMSE.",
+    "next_test": "Closed by D031. Do not retune mask-local end-of-well targets. Test a distinct target-preserving causal prefix-view mechanism under H020/T027."
   }
 }

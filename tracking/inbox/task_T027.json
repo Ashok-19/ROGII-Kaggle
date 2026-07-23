@@ -1,0 +1,14 @@
+{
+  "type": "task",
+  "recorded_at": "2026-07-23T16:30:00Z",
+  "payload": {
+    "task_id": "T027",
+    "title": "Screen target-preserving causal prefix views",
+    "status": "queued",
+    "priority": 1,
+    "phase": "preimplementation_worth_screen",
+    "depends_on": "T026",
+    "due_at": "2026-07-25",
+    "updated_at": "2026-07-23T16:30:00Z"
+  }
+}

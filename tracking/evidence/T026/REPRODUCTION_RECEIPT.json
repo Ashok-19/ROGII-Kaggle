@@ -1,0 +1,69 @@
+{
+  "all_substantive_files_byte_equal": true,
+  "checks": {
+    "authorization_gates.csv": {
+      "byte_equal": true,
+      "bytes": 17330,
+      "sha256": "f7b2596bc99a7a7056c6989d32b46d1a82adafec5cd0a80dd3331c0f7aa1b5fe"
+    },
+    "candidate_metrics.csv": {
+      "byte_equal": true,
+      "bytes": 21697,
+      "sha256": "62f1a112c15cd327e9a5d1b6bcc63d524e2badce71db5b4280dfc52118babf07"
+    },
+    "context_metrics.csv": {
+      "byte_equal": true,
+      "bytes": 697947,
+      "sha256": "047fa4b53e64472f4ad483f16f44dc7a9fbf89323521a9f5245a377d804bc1ad"
+    },
+    "edge_cases.json": {
+      "byte_equal": true,
+      "bytes": 792,
+      "sha256": "8ad902263e70eed9ae2d7d11acf0b423269ef50de62164337b8ed4f8ee858630"
+    },
+    "isolation_audit.csv": {
+      "byte_equal": true,
+      "bytes": 36580,
+      "sha256": "a91039bcd285d181d36e2dbbab80f629646b626345e4f1b3daf5200ad56a8d12"
+    },
+    "map_metrics.csv": {
+      "byte_equal": true,
+      "bytes": 90254,
+      "sha256": "6c8b5da23e87490c032d061c1e9a6f754952270284d6c0e7e790ac669e06049c"
+    },
+    "negative_control_metrics.csv": {
+      "byte_equal": true,
+      "bytes": 5203,
+      "sha256": "f38a5d3c29b4df0def3d0e18fbd89b7867928d710322096334e0f0088967d963"
+    },
+    "selected_well_metrics.csv": {
+      "byte_equal": true,
+      "bytes": 254727,
+      "sha256": "3739917837065349cf06cf446adaf0901e55512f5091ad27a047b80d9556b8d0"
+    },
+    "slice_metrics.csv": {
+      "byte_equal": true,
+      "bytes": 130607,
+      "sha256": "243687427e849abe1012c5b3753827db8217147a7b7e7a4e9f5a191328722b80"
+    },
+    "task_diagnostics.csv": {
+      "byte_equal": true,
+      "bytes": 2909,
+      "sha256": "537d419e12d6ce96a3951ae27109213da71cde7c60fac3cf7c991a613ffc9c47"
+    },
+    "task_diagnostics_summary.json": {
+      "byte_equal": true,
+      "bytes": 415,
+      "sha256": "2581b5a6c5170e05241c79e118e41d6b881e3189d4dc1377b2ba4facd672e448"
+    }
+  },
+  "excluded_contaminated_directory": "scratch/agents/t026-mask-task-meta-20260723/main",
+  "exclusion_reason": "An older implementation worker and the definitive worker briefly shared that directory; both were terminated and the directory was deleted before any metric was used.",
+  "implementation_commit": "71ac3e456e71e9a2a6149b2cf85538ef09c9d6bd",
+  "normalized_summary_equal": true,
+  "official_runtime_seconds": 2141.1545559799997,
+  "reproduction_runtime_seconds": 2425.660141680004,
+  "schema_version": 1,
+  "status": "PASS",
+  "task_id": "T026"
+}

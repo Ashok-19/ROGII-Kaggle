@@ -4,11 +4,11 @@
   "payload": {
     "task_id": "T026",
     "title": "Screen randomized long-horizon mask tasks",
-    "status": "in_progress",
+    "status": "completed",
     "priority": 1,
-    "phase": "randomized_mask_task_worth_screen",
+    "phase": "worth_screen_rejected",
     "depends_on": "T025",
     "due_at": "2026-07-25",
-    "updated_at": "2026-07-23T14:04:00Z"
+    "updated_at": "2026-07-23T16:30:00Z"
   }
 }
