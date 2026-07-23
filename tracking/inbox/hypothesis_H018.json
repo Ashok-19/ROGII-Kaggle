@@ -5,10 +5,10 @@
     "hypothesis_id": "H018",
     "title": "Within-well multi-cut coefficient dynamics",
     "statement": "Four-control spline targets fitted on several observed pseudo-tails inside a well's known prefix form a coefficient trajectory that predicts the well's final hidden-tail nonlinear coefficients and adds stable value to E011.",
-    "status": "active",
+    "status": "rejected",
     "priority": 1,
-    "evidence_for": "E010 bank oracle is 4.7511, E011 spline4 oracle is 4.0810, and 90.46% of E010 regret is coefficient estimation/aggregation. Every well has at least 851 known rows, allowing four supported legal pseudo-cut tasks. E011 uses only 15 aggregate backtest summaries, not pseudo-cut coefficient targets.",
-    "evidence_against": "Pseudo-tail dynamics may not extrapolate across the much longer final hidden suffix; generic smooth movement can pass weak controls, as T023 showed; spatial/typewell transfer may still fail.",
-    "next_test": "Complete T025 across every frozen analytic, ridge, tree, KNN, comparator, placement, stress, negative-control, and edge-case branch before authorizing a formal experiment."
+    "evidence_for": "T025 confirms a real pseudo-specific signal. The best aggregate candidate reaches 12.424928 RMSE, gaining 0.125829 with 5/5 maps; all corrupted pseudo controls lose. The last-known spline oracle is 4.113743.",
+    "evidence_against": "The best aggregate placement wins only 16/25 cells. The only preliminary candidate gains 0.098800 but regresses spatial group 0 by 0.132383 and typewell group 4 by 0.245275, and it misses the 0.15 authorization floor.",
+    "next_test": "Closed by D029. Do not retune the four-cut vector. Test a distinct many-task, long-horizon, outer-well-isolated coefficient meta-learning mechanism under T026."
   }
 }

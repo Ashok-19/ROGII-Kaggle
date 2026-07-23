@@ -1,0 +1,87 @@
+{
+  "files": [
+    {
+      "bytes": 961,
+      "name": "IMPLEMENTATION_RECEIPT.json",
+      "sha256": "4dc81d12c2de95cf8b4d00236942139f8d41189428484388cb9bc3bc7f34bdbc"
+    },
+    {
+      "bytes": 4235,
+      "name": "PRE_REGISTRATION.md",
+      "sha256": "92d5072b0b851a3ccf153a251cc4644c23930005774496acc544d22d227a4f31"
+    },
+    {
+      "bytes": 1858,
+      "name": "REPRODUCTION_RECEIPT.json",
+      "sha256": "5fb519c69d3ae8d9598960cd8d81680253916f5286e62b0776facc2e172e0120"
+    },
+    {
+      "bytes": 3796,
+      "name": "RESULT.md",
+      "sha256": "7f8bca88e3914e9120aa99dfa05ce27398ee034254359800ebbd0d5f1ee4a359"
+    },
+    {
+      "bytes": 5895,
+      "name": "authorization_gates.csv",
+      "sha256": "7f88c3f01e9af906d9550333c96f2b2f90376f5aa286025929ac19893e5f80f2"
+    },
+    {
+      "bytes": 13154,
+      "name": "candidate_metrics.csv",
+      "sha256": "9c45d8f1ffa1358d9150b05b186c7af338f672b1629a56dcb814790dba220cf7"
+    },
+    {
+      "bytes": 3530,
+      "name": "config.json",
+      "sha256": "80eec66f671c59d50b6364a36d93aa5775b846d8a358bb5f0674f2126b741f01"
+    },
+    {
+      "bytes": 312782,
+      "name": "context_metrics.csv",
+      "sha256": "59df88e87c9180cfaab3525e5a038d3d843698be64cf076064ec47e479a361ba"
+    },
+    {
+      "bytes": 502,
+      "name": "edge_cases.json",
+      "sha256": "838bc7eefec1cd63d30dcb3f2772c051f00507463d60bbba3f410e8925c2bc19"
+    },
+    {
+      "bytes": 56230,
+      "name": "map_metrics.csv",
+      "sha256": "9379fbfb2d23dcbf6fd568da7cdf71f06873b27ebeb562a030691c2fdda7ee02"
+    },
+    {
+      "bytes": 18851,
+      "name": "negative_control_metrics.csv",
+      "sha256": "47899f04313bd8b7f0e515c286326fc7b8006ee2f02c3c19e39a9193c60dc8c1"
+    },
+    {
+      "bytes": 56539,
+      "name": "run_screen.py",
+      "sha256": "5a81e8993db05256c931c765494c598fb6aab7c81b227d88bf3f7d811938c23e"
+    },
+    {
+      "bytes": 235436,
+      "name": "selected_well_metrics.csv",
+      "sha256": "14066f66644b1f7f584f720c8b4ca9368365119e83656856f1d4ed0bf286111e"
+    },
+    {
+      "bytes": 1320,
+      "name": "special_slice_metrics.csv",
+      "sha256": "d738ae6f807cc1bf13ee37b59803bfeae650328c8781cc0a412a6c0b5f06249e"
+    },
+    {
+      "bytes": 4158,
+      "name": "stress_metrics.csv",
+      "sha256": "391627849bb2d4332593d7b207ca468626cad0a7db2806e335e675e416a3c169"
+    },
+    {
+      "bytes": 19465,
+      "name": "summary.json",
+      "sha256": "a0749584e9b5d5ab30913c1959cc94d351ad2ff1cc20796dfbb8fe352ce70837"
+    }
+  ],
+  "implementation_commit": "281f4eb4da15928a45b74ff6c6a688fa3861d9e4",
+  "schema_version": 1,
+  "task_id": "T025"
+}

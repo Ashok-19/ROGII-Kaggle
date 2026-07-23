@@ -1,0 +1,22 @@
+{
+  "edge_groups": 16,
+  "passed": [
+    "spline_basis_rank",
+    "exact_support_boundary",
+    "one_two_row_rejection",
+    "constant_tvt",
+    "nonfinite_tvt",
+    "degenerate_spline_solve",
+    "contiguous_prefix",
+    "zero_variance_features",
+    "tiny_ridge_partition",
+    "knn_neighbor_clipping",
+    "coefficient_clipping",
+    "exact_zero_weight_fallback",
+    "deterministic_ties",
+    "fold_stress_membership",
+    "duplicate_oof_ids",
+    "nonfinite_predictions"
+  ],
+  "status": "PASS"
+}

@@ -1,0 +1,14 @@
+{
+  "type": "task",
+  "recorded_at": "2026-07-23T13:35:00Z",
+  "payload": {
+    "task_id": "T026",
+    "title": "Screen randomized long-horizon mask tasks",
+    "status": "queued",
+    "priority": 1,
+    "phase": "preimplementation_mask_task_meta_learning",
+    "depends_on": "T025",
+    "due_at": "2026-07-25",
+    "updated_at": "2026-07-23T13:35:00Z"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "all_substantive_files_byte_equal": true,
+  "checks": {
+    "authorization_gates.csv": {
+      "byte_equal": true,
+      "bytes": 5895,
+      "sha256": "7f88c3f01e9af906d9550333c96f2b2f90376f5aa286025929ac19893e5f80f2"
+    },
+    "candidate_metrics.csv": {
+      "byte_equal": true,
+      "bytes": 13154,
+      "sha256": "9c45d8f1ffa1358d9150b05b186c7af338f672b1629a56dcb814790dba220cf7"
+    },
+    "context_metrics.csv": {
+      "byte_equal": true,
+      "bytes": 312782,
+      "sha256": "59df88e87c9180cfaab3525e5a038d3d843698be64cf076064ec47e479a361ba"
+    },
+    "edge_cases.json": {
+      "byte_equal": true,
+      "bytes": 502,
+      "sha256": "838bc7eefec1cd63d30dcb3f2772c051f00507463d60bbba3f410e8925c2bc19"
+    },
+    "map_metrics.csv": {
+      "byte_equal": true,
+      "bytes": 56230,
+      "sha256": "9379fbfb2d23dcbf6fd568da7cdf71f06873b27ebeb562a030691c2fdda7ee02"
+    },
+    "negative_control_metrics.csv": {
+      "byte_equal": true,
+      "bytes": 18851,
+      "sha256": "47899f04313bd8b7f0e515c286326fc7b8006ee2f02c3c19e39a9193c60dc8c1"
+    },
+    "selected_well_metrics.csv": {
+      "byte_equal": true,
+      "bytes": 235436,
+      "sha256": "14066f66644b1f7f584f720c8b4ca9368365119e83656856f1d4ed0bf286111e"
+    },
+    "special_slice_metrics.csv": {
+      "byte_equal": true,
+      "bytes": 1320,
+      "sha256": "d738ae6f807cc1bf13ee37b59803bfeae650328c8781cc0a412a6c0b5f06249e"
+    },
+    "stress_metrics.csv": {
+      "byte_equal": true,
+      "bytes": 4158,
+      "sha256": "391627849bb2d4332593d7b207ca468626cad0a7db2806e335e675e416a3c169"
+    }
+  },
+  "implementation_commit": "281f4eb4da15928a45b74ff6c6a688fa3861d9e4",
+  "normalized_summary_equal": true,
+  "official_runtime_seconds": 149.16350900399993,
+  "reproduction_runtime_seconds": 147.51238969800033,
+  "schema_version": 1,
+  "status": "PASS",
+  "task_id": "T025"
+}

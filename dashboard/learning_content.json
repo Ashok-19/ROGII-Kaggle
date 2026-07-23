@@ -413,9 +413,23 @@
       "visual": "residual_action_gate",
       "summary": "T016 places twelve saved cross-fitted E009 datum-action families on exact E011. Nested placement reaches 12.4930 RMSE, gaining 0.05779 with 5/5 maps and 21/25 cells, but regresses spatial group 3 and typewell group 0.",
       "why_it_matters": "A small signed datum signal remains, and all controls lose, but repeated aggregate gain cannot override every-group transfer failures. D027 closes the action space without a new refit or subgroup routing."
+    },
+    {
+      "id": "B028",
+      "date": "2026-07-23",
+      "title": "Pseudo coefficient dynamics are real but domain-unstable",
+      "evidence": "complete_reproduced_worth_screen",
+      "visual": "coefficient_transport_gate",
+      "summary": "T025 confirms a 4.1137 last-known spline oracle and a unique legal pseudo-trajectory signal. The best aggregate candidate gains 0.125829 RMSE, but the conservative transfer-eligible placement regresses spatial group 0 and typewell group 4.",
+      "why_it_matters": "The next route should expand the supervised task distribution to many outer-well-isolated long-horizon masks, not retune four fixed pseudo-cut summaries."
     }
   ],
   "idea_questions": [
+    {
+      "signal": "randomized long-horizon mask tasks",
+      "question": "Can many outer-training-well mask tasks predict nonlinear coefficients across real hidden horizons?",
+      "falsifier": "Reject if the best fixed model fails material gain, every spatial/typewell group, horizon controls, or well-permutation/reversed-horizon controls."
+    },
     {
       "signal": "stable wide datum action",
       "question": "Did saved E009 cross-fitted datum actions retain stable value on top of E011?",
@@ -621,6 +635,21 @@
     {
       "title": "T016 rejected stable wide datum worth screen",
       "local_path": "tracking/evidence/T016/RESULT.md",
+      "url": ""
+    },
+    {
+      "title": "July 23 18:35 public-intelligence delta",
+      "local_path": "archive/competition/public_intelligence_delta_2026-07-23_1835.md",
+      "url": ""
+    },
+    {
+      "title": "T024 independent-mechanism selection",
+      "local_path": "tracking/evidence/T024/RESULT.md",
+      "url": ""
+    },
+    {
+      "title": "T025 rejected multi-cut coefficient dynamics screen",
+      "local_path": "tracking/evidence/T025/RESULT.md",
       "url": ""
     }
   ]

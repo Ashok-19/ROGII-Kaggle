@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-23T13:35:00Z",
+  "payload": {
+    "decision_id": "D029",
+    "decided_at": "2026-07-23",
+    "title": "Close four-cut coefficient transport",
+    "decision": "Reject H018/T025 as tested and retain E011 unchanged. Do not retune the four fixed pseudo-cuts, shallow mapping families, ridge alphas, placement weights, tree settings, or KNN neighborhood. Queue a distinct randomized long-horizon mask-task coefficient meta-learning screen that changes the training unit and matches real hidden horizons.",
+    "rationale": "T025 independently reproduces a real pseudo-specific signal: the best aggregate candidate gains 0.125829 RMSE and all corrupted controls lose, while the last-known spline oracle reaches 4.113743. The only preliminary candidate gains 0.098800 with 5/5 maps and 20/25 cells but regresses spatial group 0 by 0.132383 and typewell group 4 by 0.245275. Four summarized cuts are therefore insufficient for domain-stable transfer.",
+    "source_ids": "T025,H018,D028,tracking/evidence/T025/RESULT.md,tracking/evidence/T025/REPRODUCTION_RECEIPT.json",
+    "revisit_trigger": "Do not reopen T025. A future screen must generate many outer-training-well mask tasks, include long horizons comparable to the real hidden suffix, isolate held-out wells completely, and pass every repeated/spatial/typewell/control gate."
+  }
+}

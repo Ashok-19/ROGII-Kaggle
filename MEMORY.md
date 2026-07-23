@@ -1,14 +1,14 @@
 # ROGII Project Memory
 
 Last updated: 2026-07-23
-Public intelligence last checked: 2026-07-23 17:04 Asia/Kolkata
+Public intelligence last checked: 2026-07-23 18:35 Asia/Kolkata
 
 ## Mission state
 
 - Deadline: 2026-08-05 23:59 UTC / 2026-08-06 05:29 Asia/Kolkata.
 - Current public leaderboard snapshot: 4.859 at rank 1, 4.905 at rank 2, 5.265 at rank 5, and 5.511 at rank 10. Official Meta Kaggle verifies that the public leaderboard covers exactly 26% of the test data and the private leaderboard the remaining 74%. Best Kaggle-MCP-verified account submission remains 7.119 (ref 54754431, 2026-07-16); user-reported best remains 6.888 with reference unverified.
 - E001 is frozen; E002, E005, E007, E008, and E009 are rejected; E003 is promoted only as nondeployable surface-assisted understanding; E011 is the promoted deployment-ready primary, E006 is the secondary fallback, and E004 is the exact fallback.
-- E010 is completed and rejected. Its 130,252-path legal bank oracle reaches 4.7510768278 RMSE, but the best legal selector reaches 14.7802528528, fails spatial group 1/high-GR-missingness transfer, and uses 17,528,436 KB RSS versus the frozen 3 GB cap. E011/H014 is independently reproduced at 12.5507562957 RMSE and is deployment-ready after saved Kaggle version 1 passed review. E012/H015 is completed and rejected: 226 worth-screen branches had zero positive pooled gains, and the best formal KNN expert gained only 0.013698 RMSE while failing cell/spatial/typewell gates. T022/H016, T023/H017, and T016/H012 are closed negatively after exact reproduction. E011 remains primary, E006 secondary fallback, and E004 exact fallback.
+- E010 is completed and rejected. Its 130,252-path legal bank oracle reaches 4.7510768278 RMSE, but the best legal selector reaches 14.7802528528, fails spatial group 1/high-GR-missingness transfer, and uses 17,528,436 KB RSS versus the frozen 3 GB cap. E011/H014 is independently reproduced at 12.5507562957 RMSE and is deployment-ready after saved Kaggle version 1 passed review. E012/H015 is completed and rejected: 226 worth-screen branches had zero positive pooled gains, and the best formal KNN expert gained only 0.013698 RMSE while failing cell/spatial/typewell gates. T022/H016, T023/H017, T016/H012, and T025/H018 are closed negatively after exact reproduction. E011 remains primary, E006 secondary fallback, and E004 exact fallback.
 
 ## Verified project state
 
@@ -27,6 +27,7 @@ Public intelligence last checked: 2026-07-23 17:04 Asia/Kolkata
 - T022 verifies substantial hidden-label E011/E006 routing headroom: oracle fallback reaches 11.7920 and continuous blending 11.7172 versus E011 at 12.5508. Legal identification fails completely. Hard logistic is best at only +0.006868 RMSE, 2/5 maps and 5/25 cells, with near-random inner AUC and typewell/high-GR-missingness regressions; every continuous branch is negative. Ten candidates over 35 contexts reproduce at zero delta and all ten edge groups pass.
 - T023 verifies that E011 residuals are strongly sequential but does not authorize a new sequence model. Mean residual ACF is 0.999980 at lag 1 and 0.975232 at lag 64; 16/32-control hidden-label oracles reach 1.186785/0.638082 RMSE. `block_ridge_b32` gains 0.285655 with 5/5 maps and 24/25 cells but regresses spatial group 4 by 0.171137. A reversed-profile negative control gains 0.132948, above the 0.03 cap. Two clean-cache runs rebuild byte-identical 44,769,818-byte caches and match every result field except runtime; all 12 edge groups pass.
 - T016 tests whether E009's saved cross-fitted datum actions retain value on E011 before any refit. Nested placement reaches 12.4929660562 RMSE, a 0.0577902395 gain, with 5/5 maps and 21/25 cells. The selected action is usually a negative scale on the visible-geometry ridge, but spatial group 3 regresses by 0.091016 and typewell group 0 by 0.097205. All three negative controls lose, all 12 edge groups pass, and every substantive reproduction file is byte-identical. D027 closes the family without refit or retuning.
+- T025 tests actual four-control coefficient trajectories from four legal pseudo-cuts rather than E011's aggregate backtest summaries. The last-known spline oracle reaches 4.1137431295 RMSE. `ridge_pseudo_e011_a1__w0.50` is best at 12.4249276085, gaining 0.1258286872 with 5/5 maps but only 16/25 cells. The conservative `w0.25` placement gains 0.0988002080 with 20/25 cells but regresses spatial group 0 by 0.132383 and typewell group 4 by 0.245275. All corrupted controls lose, all 16 edge groups pass, and every substantive reproduction file is byte-identical. D029 closes the four-cut vector but preserves the unique pseudo coefficient signal.
 
 ## New durable understanding from exact public-source audits
 
@@ -59,11 +60,12 @@ Public intelligence last checked: 2026-07-23 17:04 Asia/Kolkata
 - D023 closes H016 without E013. Oracle headroom passes, but every legal branch fails gain, repeated-cell, and shift requirements. Do not retune uncertainty routing over the same E011/E006 well-level feature space; the next mechanism must generate new sequence or physical state evidence.
 - D025 closes H017 without escalation. Smooth residual oracle capacity is not sufficient: the best stable legal proxy fails spatial transfer and a reversed-profile control retains material gain. Do not retune the same residual-profile target or substitute a GRU/TCN/HMM/PF extension without materially different legal state evidence.
 - D027 closes H012 without a refit. The old wide actions retain +0.057790 RMSE on E011 but fail spatial group 3 and typewell group 0. Aggregate gain and failed controls do not override the every-group contract.
+- D029 closes H018/T025 without a formal experiment. Four fixed pseudo-cut coefficient summaries contain unique signal but do not transfer uniformly. Do not retune the vector; the next worth screen must change the training unit to many outer-well-isolated mask tasks with long horizons matching the real suffix.
 - Operational checks are now outcome-focused across all experiments. Do not require internet state, CPU/device/thread checks, repeated SHA verification, exact byte parity, or verbose manifests by default. Require only inputs needed to run, visible failures, correct rows/IDs, finite values, saved outputs, and experiment-specific scientific controls.
 
 ## Exact next action
 
-Complete T024, a campaign-level evidence review that must identify a materially independent legal mechanism before any new hypothesis or implementation. Do not reopen H012/H015-H017, retune their action spaces, run Kaggle, or submit without explicit authorization.
+Pre-register and complete T026, a bounded randomized long-horizon mask-task coefficient meta-learning worth screen. Generate tasks only from each outer training partition, match the real hidden-horizon distribution, test simple model families before neural escalation, and require every repeated/spatial/typewell/control gate. Do not retune T025, run Kaggle, or submit without explicit authorization.
 
 ## Open risks
 
@@ -71,7 +73,7 @@ Complete T024, a campaign-level evidence review that must identify a materially 
 - The public leaderboard covers only 26% of the test data. Score-directed tuning on that minority split has a high private-shakeup risk and cannot override frozen local validation.
 - HMM/DTW/PF can over-count autocorrelated GR, commit to repeated motifs, or smooth across faults. Posterior uncertainty must be calibrated OOF and a jump candidate must remain available.
 - E010 confirms that a below-5 bank does not imply a useful legal selector. The immediate risk is coefficient learnability under spatial shift; family classification alone cannot close the 9.07 RMSE coefficient/aggregation gap.
-- E011 resolves coefficient learnability and deployment positively. E012 rejects regime specialization, T022 rejects E011/E006 uncertainty routing, T023 rejects the tested residual sequence-state proxy, and T016 rejects the tested wide datum action space. The remaining risk is selecting a materially independent legal mechanism rather than recycling another parameterization of a closed family.
+- E011 resolves coefficient learnability and deployment positively. E012 rejects regime specialization, T022 rejects E011/E006 uncertainty routing, T023 rejects the tested residual sequence-state proxy, T016 rejects the tested wide datum action space, and T025 rejects four fixed pseudo-cut summaries. T025 nevertheless establishes unique legal coefficient-dynamics signal. The remaining risk is whether many outer-well-isolated long-horizon mask tasks can improve domain transfer without leaking well identity or overrepresenting short pseudo-horizons.
 - The current public topic list reports 138 topics while the frozen archive contains 132. New/Recent deltas are audited, but canonical topic/message counts remain unchanged until a complete recrawl verifies additions, removals, and message counts.
 - Every future finalist needs a runnable Kaggle notebook, correct IDs/order, finite predictions, complete output coverage, and a saved result that can be retrieved and reviewed.
 

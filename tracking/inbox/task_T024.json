@@ -6,11 +6,9 @@
     "title": "Select next independent mechanism",
     "status": "completed",
     "priority": 1,
-    "phase": "campaign_evidence_review",
+    "phase": "campaign_evidence_review_complete",
     "depends_on": "T016",
     "due_at": "2026-07-24",
-    "updated_at": "2026-07-23T13:05:19Z",
-    "result": "tracking/evidence/T024/RESULT.md",
-    "decision_id": "D028"
+    "updated_at": "2026-07-23T13:05:19Z"
   }
 }

@@ -241,6 +241,54 @@
       "confidence": "complete screen, exact reproduction, edge-tested",
       "last_checked": "2026-07-23",
       "notes": "Ten candidates, 25 repeated contexts, ten stress holdouts, 350 context rows, shuffled controls, exact reproduction and ten edge groups."
+    },
+    {
+      "source_id": "S_T023_VERIFIED_20260723",
+      "title": "T023 residual sequence-state rejection",
+      "kind": "official_local_diagnostic_verification",
+      "url": "",
+      "local_path": "tracking/evidence/T023/RESULT.md",
+      "accessibility": "repository-local",
+      "license": "project-generated",
+      "confidence": "complete screen and exact reproduction",
+      "last_checked": "2026-07-23",
+      "notes": "Large smooth oracle capacity; legal profile branches fail spatial/reversed-profile controls."
+    },
+    {
+      "source_id": "S_T016_VERIFIED_20260723",
+      "title": "T016 stable wide datum rejection",
+      "kind": "official_local_diagnostic_verification",
+      "url": "",
+      "local_path": "tracking/evidence/T016/RESULT.md",
+      "accessibility": "repository-local",
+      "license": "project-generated",
+      "confidence": "complete screen and exact reproduction",
+      "last_checked": "2026-07-23",
+      "notes": "Small E011-relative datum signal; spatial/typewell transfer fails."
+    },
+    {
+      "source_id": "S_PUBLIC_DELTA_20260723_1835",
+      "title": "ROGII July 23 18:35 public notebook delta audit",
+      "kind": "public_intelligence",
+      "url": "https://www.kaggle.com/competitions/rogii-wellbore-geology-prediction",
+      "local_path": "archive/competition/public_intelligence_delta_2026-07-23_1835.md",
+      "accessibility": "public source",
+      "license": "participant/author copyright; mixed external artifact licensing",
+      "confidence": "exact source audit; mechanism causality limited",
+      "last_checked": "2026-07-23",
+      "notes": "Six surfaced records resolved as composite/fixed-shift lineage, same-well target lookup, or HMM derivative."
+    },
+    {
+      "source_id": "S_T025_VERIFIED_20260723",
+      "title": "T025 multi-cut coefficient dynamics rejection",
+      "kind": "official_local_diagnostic_verification",
+      "url": "",
+      "local_path": "tracking/evidence/T025/RESULT.md",
+      "accessibility": "repository-local",
+      "license": "project-generated",
+      "confidence": "complete screen and exact independent reproduction",
+      "last_checked": "2026-07-23",
+      "notes": "4.113743 oracle; best legal gain 0.125829; transfer-eligible branch fails spatial group 0 and typewell group 4."
     }
   ],
   "claims": [
@@ -762,6 +810,76 @@
       "confidence": "confirmed",
       "source_id": "S_T022_VERIFIED_20260723",
       "implication": "The negative uncertainty-routing conclusion is complete and reproducible.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C053",
+      "category": "negative",
+      "claim": "T023 finds strong smooth residual capacity but no legal profile branch passes spatial and reversed-profile controls.",
+      "evidence_class": "complete_local_screen_and_reproduction",
+      "confidence": "confirmed",
+      "source_id": "S_T023_VERIFIED_20260723",
+      "implication": "Do not escalate the tested residual-profile target to GRU/TCN/HMM/PF without materially different legal state evidence.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C054",
+      "category": "negative",
+      "claim": "T016 gains 0.057790 RMSE from old datum actions on E011 but regresses spatial group 3 and typewell group 0.",
+      "evidence_class": "complete_local_screen_and_reproduction",
+      "confidence": "confirmed",
+      "source_id": "S_T016_VERIFIED_20260723",
+      "implication": "Do not refit or retune the tested wide-datum action space.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C055",
+      "category": "provenance",
+      "claim": "The six records surfaced after the 17:04 cutoff resolve to composite/fixed-visible-shift lineage, byte-identical same-well target lookup, or an 87.23%-overlap second-order HMM derivative.",
+      "evidence_class": "exact_public_source_comparison",
+      "confidence": "confirmed composition",
+      "source_id": "S_PUBLIC_DELTA_20260723_1835",
+      "implication": "No new public notebook changes the legal mechanism queue.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C056",
+      "category": "oracle_headroom",
+      "claim": "T025 last-known plus four-control hidden-label spline oracle reaches 4.1137431295 RMSE over all 773 wells.",
+      "evidence_class": "exact_full_data_sufficient_statistic_scoring",
+      "confidence": "confirmed diagnostic",
+      "source_id": "S_T025_VERIFIED_20260723",
+      "implication": "The nonlinear coefficient target retains verified sub-5 capacity.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C057",
+      "category": "coefficient_dynamics",
+      "claim": "T025 best legal pseudo+E011 placement reaches 12.4249276085, a 0.1258286872 gain, while every corrupted pseudo control loses.",
+      "evidence_class": "complete_repeated_screen_and_reproduction",
+      "confidence": "confirmed",
+      "source_id": "S_T025_VERIFIED_20260723",
+      "implication": "Within-well pseudo coefficient trajectories contain unique legal signal not supplied by E011-only features.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C058",
+      "category": "negative",
+      "claim": "T025 conservative transfer-eligible placement regresses spatial group 0 by 0.132383 and typewell group 4 by 0.245275.",
+      "evidence_class": "complete_spatial_typewell_screen",
+      "confidence": "confirmed",
+      "source_id": "S_T025_VERIFIED_20260723",
+      "implication": "Close four fixed pseudo-cut summaries; change the training unit to many outer-well-isolated long-horizon mask tasks.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C059",
+      "category": "verification",
+      "claim": "T025 reproduces every substantive CSV and edge file byte-for-byte and matches the normalized summary exactly.",
+      "evidence_class": "independent_clean_output_reproduction",
+      "confidence": "confirmed",
+      "source_id": "S_T025_VERIFIED_20260723",
+      "implication": "The T025 negative transfer decision is complete and deterministic.",
       "status": "accepted"
     }
   ],
