@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-23T08:20:00Z",
+  "payload": {
+    "decision_id": "D021",
+    "decided_at": "2026-07-23",
+    "title": "Reject E011 regime specialists",
+    "decision": "Reject H015/E012 and retain E011 unchanged as deployment primary. Two worth screens completed 226 branches with zero positive pooled gains. The formal nested confirmation completed nine representative branches; the best KNN residual expert gained only 0.013698 RMSE, won 15/25 cells, and regressed spatial groups 0/1 plus typewell group 0. E006 remains secondary fallback and E004 exact fallback. No package or submission is authorized.",
+    "rationale": "The strongest branch passed map direction and special-slice checks but failed the frozen minimum gain, outer-cell, spatial, and typewell gates. All controls and independent reproduction passed, so the rejection reflects model evidence rather than execution failure.",
+    "source_ids": "E012,H015,T021,D016,E011,experiments/E012/RESULT.md,experiments/E012/verification.json",
+    "revisit_trigger": "Reopen specialization only after a new legal mechanism demonstrates stable cross-fitted routing evidence not derivable from another partition or local smoother over the same E011 feature space."
+  }
+}

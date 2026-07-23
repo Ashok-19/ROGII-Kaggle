@@ -1,0 +1,80 @@
+{
+  "experiment_id": "E012",
+  "title": "Nested confirmation of regime-specialized coefficient experts",
+  "hypothesis": "Split-local legal regime experts may improve nonlinear E011 coefficient accuracy on distinct well regimes while unsupported wells return the exact E011 path.",
+  "status": "rejected",
+  "track": "nonlinear_coefficient_specialization",
+  "priority": 1,
+  "owner": "NNMax",
+  "parent_id": "E011",
+  "created_at": "2026-07-23T08:00:00Z",
+  "updated_at": "2026-07-23T08:18:00Z",
+  "config_path": "experiments/E012/config.json",
+  "decision_id": "D021",
+  "hypothesis_id": "H015",
+  "outputs": [
+    "experiments/E012/results/summary.json",
+    "experiments/E012/results/candidate_metrics.csv",
+    "experiments/E012/results/context_metrics.csv",
+    "experiments/E012/results/stress_metrics.csv",
+    "experiments/E012/results/support_metrics.csv",
+    "experiments/E012/results/special_slice_metrics.csv",
+    "experiments/E012/results/controls.csv"
+  ],
+  "pre_registration_path": "experiments/E012/PRE_REGISTRATION.md",
+  "reproduction": "experiments/E012/reproduction.json",
+  "result": {
+    "all_controls_pass": true,
+    "decision": "reject",
+    "deployment_ready": false,
+    "e011_rmse": 12.5507562957,
+    "gain_vs_e011": 0.0136982505934,
+    "map_wins": 5,
+    "outer_cell_wins": 15,
+    "reported_candidate": "knn25_distance_s025",
+    "reported_rmse": 12.5370580451,
+    "selected_candidate": null,
+    "submission_made": false
+  },
+  "result_path": "experiments/E012/RESULT.md",
+  "runs": [
+    {
+      "run_id": "R20260723-e012-official",
+      "runtime_seconds": 123.50791562700033,
+      "status": "complete"
+    },
+    {
+      "run_id": "R20260723-e012-reproduction",
+      "runtime_seconds": 116.44384882699887,
+      "status": "complete"
+    }
+  ],
+  "schema_version": 1,
+  "source_commit": "200fa40c8bdee8cebbd5a6514950e20ec0a1f81e",
+  "task_id": "T021",
+  "post_finalization_validation": {
+    "focused_tests": {
+      "command": "python3.12 -m unittest tests.test_regime_specialists tests.test_e011_coefficient_learning tests.test_dashboard_learning",
+      "passed": 34,
+      "failed": 0,
+      "wall_seconds": 52.664
+    },
+    "full_repository_tests": {
+      "command": "python3.12 -m unittest discover -s tests",
+      "passed": 176,
+      "failed": 0,
+      "wall_seconds": 83.117
+    },
+    "tracker_sync": {
+      "status": "ok",
+      "manifests": 12,
+      "runs": 13,
+      "events": 48
+    },
+    "tracker_validate": "ok",
+    "sqlite_integrity": "ok",
+    "sqlite_foreign_key_violations": 0,
+    "git_diff_check": "pass",
+    "completed_at": "2026-07-23T08:18:00Z"
+  }
+}

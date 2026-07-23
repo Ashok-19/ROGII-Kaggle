@@ -397,8 +397,8 @@
     },
     {
       "signal": "regime specialists",
-      "question": "Can a legally routed coefficient expert improve a sufficiently large distinct regime while exact global fallback protects uncertain wells?",
-      "falsifier": "The regime is small or unstable, routing uses validation labels, complete-system subgroup gates fail, random/shuffled/sign-flipped routing retains gain, or fallback differs from the verified global path."
+      "question": "Did legally routed regime experts add stable value beyond E011?",
+      "falsifier": "E012 triggers the falsifier: 226 worth-screen branches produce zero positive pooled gains, and the best nested KNN expert misses the gain/cell/spatial/typewell gates. Do not retune this family."
     },
     {
       "signal": "deployment",
@@ -540,6 +540,11 @@
     {
       "title": "E011 verification and artifact receipts",
       "local_path": "experiments/E011/verification.json",
+      "url": ""
+    },
+    {
+      "title": "E012 rejected regime-specialist confirmation",
+      "local_path": "experiments/E012/RESULT.md",
       "url": ""
     }
   ]

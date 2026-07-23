@@ -59,7 +59,7 @@ E003 shows that risk and signed action are both learnable from legal evidence, b
 
 The official BirdCLEF+ 2026 first-place writeup used an Amphibia/Insecta specialist and a genus specialist, but only inside a diverse ensemble with global CNNs, native Perch, controlled self-training, complementary validation splits, masked restricted-label outputs, and pipeline-specific post-processing. The lesson is not that specialists win by default.
 
-For ROGII, a regime-specialized coefficient expert must have a legal cross-fitted regime definition, sufficient split-local support, bounded action, exact fallback to the strongest verified global path, full-system improvement, stable repeated/spatial/typewell/missingness/tail results, and negative controls that destroy the gain. E011 deployment is now verified, so H015 is unblocked and becomes the next preregistration target.
+For ROGII, a regime-specialized coefficient expert required legal cross-fitted regimes, sufficient support, bounded action, exact E011 fallback, full-system improvement, stable repeated/spatial/typewell/tail results, and negative controls. E012 completed that test and rejected specialization: 226 worth-screen branches had zero positive pooled gains, and the best formal KNN residual expert gained only 0.013698 RMSE while failing the outer-cell and spatial/typewell gates.
 
 ## Score objectives
 
@@ -228,7 +228,9 @@ Measured E009 outcome:
 
 E011/H014 is independently reproduced and statistically promoted. `spline4_ridge_equal_s075` reaches 12.5507562957 RMSE, improves all five maps, all 25 repeated cells, every spatial/typewell holdout, and every registered special slice, with all 21 controls passing. Oracle targets remained training-only inside folds.
 
-The E011 package reconstructs all 142 frozen legal columns across 773 wells, passes 13 edge-case groups and 167 repository tests, and processes the 200-well pseudo-hidden benchmark in about 75–76 seconds with about 353 MB RSS. Saved Kaggle version 1 (`scriptVersionId=337242364`) completed and produced a valid 14,151-row submission with exact sample ID order, finite predictions, a COMPLETE receipt, and three well diagnostics. E011 is now deployment primary, E006 secondary fallback, and E004 exact fallback. H015 is unblocked.
+The E011 package reconstructs all 142 frozen legal columns across 773 wells, passes 13 edge-case groups and 167 repository tests, and processes the 200-well pseudo-hidden benchmark in about 75–76 seconds with about 353 MB RSS. Saved Kaggle version 1 (`scriptVersionId=337242364`) completed and produced a valid 14,151-row submission with exact sample ID order, finite predictions, a COMPLETE receipt, and three well diagnostics. E011 is now deployment primary, E006 secondary fallback, and E004 exact fallback.
+
+E012/H015 is completed and rejected. Two preimplementation screens completed 226 hard, soft, local, latent, and partial-pooled branches with zero positive pooled gains. The frozen nested confirmation completed nine representative branches over all 25 repeated cells and ten stress holdouts. `knn25_distance_s025` is best at 12.5370580451, only 0.013698 better than E011; it wins 5/5 maps but only 15/25 cells and regresses spatial groups 0/1 and typewell group 0. All controls and independent reproduction pass. Do not package, submit, or retune this family.
 
 ### July 24–26 — Tabular residual and datum models
 
@@ -317,7 +319,9 @@ These defaults may be revised only through a recorded decision before seeing the
 10. **E010 — Nonlinear candidate coverage and selector regret — completed; rejected for deployment.** Bank oracle 4.7511 proves coverage; legal selector 14.7803 and 17.5 GB RSS fail the frozen contract.
 11. **E011 — Low-dimensional nonlinear coefficient learning — statistically and operationally promoted; deployment primary.** `spline4_ridge_equal_s075` reaches 12.5507562957 RMSE with 5/5 maps, 25/25 cells, positive spatial/typewell/slice transfer, all controls, and a successful saved Kaggle output review.
 12. **E012/T020 — E011 notebook run and output review — completed 2026-07-23.** Saved version 1 / `scriptVersionId=337242364` completed; all three expected outputs passed row, ID/order, finite-value, and readability checks. No competition submission was made.
-13. **H015 — Regime-specialized coefficient experts — next, unblocked.** Preregister under D016 with legal regimes, sufficient support, cross-fitted routing, bounded action, exact E011 fallback, full subgroup gates, and negative routing controls.
+13. **E012/H015 — Regime-specialized coefficient experts — completed and rejected 2026-07-23.** Two screens tested 226 branches with zero positive pooled gains. Formal KNN residual placement reaches 12.5371 but gains only 0.0137, wins 15/25 cells, and fails spatial/typewell transfer. Retain E011 unchanged; no package or submission.
+14. **T018 — Refresh Kaggle public intelligence — active and next.** Audit New/Recent discussions and newly run/high-vote notebooks since 2026-07-22, then preregister only a genuinely new legal mechanism.
+15. **H012/T016 — Stability-regularized wide residual datum model — queued, lower priority.** Do not make it the immediate next experiment because nonlinear oracle evidence and E012 both argue against another partition or refinement of the same low-order feature space.
 
 ## Explicitly rejected behavior
 
@@ -344,4 +348,4 @@ Foundation is complete only when:
 - legacy roadmap is preserved;
 - no training run is falsely presented as completed.
 
-Foundation, E010 coverage measurement, E011 statistical verification, runtime packaging, hidden-scale benchmarking, canonical notebook execution, and saved-output review are complete. E011 is the deployment primary. The current exact next action is to preregister H015 regime-specialized coefficient experts with exact E011 fallback and frozen cross-fitted routing controls.
+Foundation, E010 coverage measurement, E011 statistical/deployment verification, and E012 specialist rejection are complete. E011 remains deployment primary. The current exact next action is T018: refresh public intelligence and use that evidence to choose a new branch-uncertainty or physical-continuity mechanism rather than reopen H015 or immediately optimize H012.

@@ -8,7 +8,7 @@ Public intelligence last checked: 2026-07-22 14:59 Asia/Kolkata
 - Deadline: 2026-08-05 23:59 UTC / 2026-08-06 05:29 Asia/Kolkata.
 - Current public leaderboard snapshot: 4.859 at rank 1, 4.913 at rank 2, 5.265 at rank 5, and 5.523 at rank 10. Official Meta Kaggle verifies that the public leaderboard covers exactly 26% of the test data and the private leaderboard the remaining 74%. Best Kaggle-MCP-verified account submission remains 7.119 (ref 54754431, 2026-07-16); user-reported best remains 6.888 with reference unverified.
 - E001 is frozen; E002, E005, E007, E008, and E009 are rejected; E003 is promoted only as nondeployable surface-assisted understanding; E011 is the promoted deployment-ready primary, E006 is the secondary fallback, and E004 is the exact fallback.
-- E010 is completed and rejected. Its 130,252-path legal bank oracle reaches 4.7510768278 RMSE, but the best legal selector reaches 14.7802528528, fails spatial group 1/high-GR-missingness transfer, and uses 17,528,436 KB RSS versus the frozen 3 GB cap. E011/H014 is independently reproduced at 12.5507562957 RMSE and is now deployment-ready after saved Kaggle version 1 completed and its outputs passed review. E011 is primary, E006 secondary fallback, E004 exact fallback, and H015 is unblocked.
+- E010 is completed and rejected. Its 130,252-path legal bank oracle reaches 4.7510768278 RMSE, but the best legal selector reaches 14.7802528528, fails spatial group 1/high-GR-missingness transfer, and uses 17,528,436 KB RSS versus the frozen 3 GB cap. E011/H014 is independently reproduced at 12.5507562957 RMSE and is deployment-ready after saved Kaggle version 1 passed review. E012/H015 is completed and rejected: 226 worth-screen branches had zero positive pooled gains, and the best formal KNN expert gained only 0.013698 RMSE while failing cell/spatial/typewell gates. E011 remains primary, E006 secondary fallback, and E004 exact fallback.
 
 ## Verified project state
 
@@ -23,6 +23,7 @@ Public intelligence last checked: 2026-07-22 14:59 Asia/Kolkata
 - `spline4_ridge_equal_s075` reaches 12.5507562957 pooled RMSE versus E006 at 14.9331407872, gaining 2.3823844915. It wins 5/5 maps and 25/25 cells, improves every spatial/typewell holdout and all three special slices, reduces RMSE catastrophes at thresholds 12/20/30 from 291/95/31 to 233/59/11, and passes all 21 controls.
 - The original complete-looking invocation remains unregistered because no successful command/process/task/Codex/operation receipt could be linked to it. Its static identities and files are consistent, but process provenance is incomplete. The official result is the independently reproduced run.
 - E011 deployment is complete. Saved Kaggle notebook version 1 (`scriptVersionId=337242364`) finished with receipt status `COMPLETE` in 3.54 seconds and produced all three expected outputs. The 14,151-row submission matches the sample IDs/order, contains 14,151 finite predictions, and has three well diagnostics. E011 is deployment-ready and primary; E006 is the secondary fallback and E004 the exact fallback. No competition submission was made.
+- E012 formally rejects regime specialization. Nine nested branches completed all 25 repeated cells and ten spatial/typewell holdouts after two 226-branch worth screens. `knn25_distance_s025` is best at 12.5370580451 versus E011 at 12.5507562957, but its 0.013698 gain is below the 0.05 floor, it wins only 15/25 cells, and it regresses spatial groups 0/1 and typewell group 0. All controls and exact independent reproduction pass.
 
 ## New durable understanding from exact public-source audits
 
@@ -36,7 +37,7 @@ Public intelligence last checked: 2026-07-22 14:59 Asia/Kolkata
 - Reusable clean-room leads are PF seed-cloud branch mass/separation, bounded `U` continuity, and prefix-GR well-bias diagnostics. Unknown-license inputs, train-only formations, guarded same-well overlap, canary-decoded bias, score-directed shifts, and static/precomputed submissions remain excluded.
 - Hidden scoring scale is now an explicit deployment risk: a participant's 15-minute three-visible-well run implies roughly 17 hours over about 200 hidden wells. Finalists need a pseudo-hidden 200-well inference benchmark and a conservative visible-runtime target around five minutes.
 - Nikita Babych's official BirdCLEF+ 2026 first-place writeup is verified through Kaggle topic `704752`, first message `3467343`, DOI `10.34740/KAGGLE/W/86265`. The winner combined global SED/MLP models, native Perch, an Amphibia/Insecta specialist, and a genus specialist; distilled backbones before fine-tuning; bounded pseudo-label influence; validated on complementary domain splits; and blended pipeline-specific outputs.
-- The transferable lesson is conditional specialization, not "specialists win." H015 is queued only after E011 verification. Any regime expert needs legal cross-fitted routing, enough samples, bounded action, complete-system gains, failed negative controls, and exact fallback to the strongest verified global path.
+- The transferable lesson is conditional specialization, not "specialists win." E012 applied that stronger contract and rejected specialists. Local legal-feature similarity contains a tiny residual signal, but partitioning, local smoothing, latent routing, and partial pooling do not add stable complete-system value beyond E011.
 
 ## Decisions
 
@@ -49,12 +50,12 @@ Public intelligence last checked: 2026-07-22 14:59 Asia/Kolkata
 - D015 freezes the current public frontier as a mechanism catalogue, not an ingestible solution. Verify E011 first; only then preregister clean-room branch-uncertainty or continuity experiments if the verified E011 residuals justify them.
 - D016 gives specialists a higher evidence burden than global models; unsupported or uncertain regimes must use the exact verified global fallback.
 - D017 makes public notebooks and writeups permanent hypothesis generators rather than trusted pipelines. Their scores, artifacts, thresholds, and routing rules cannot enter official state without legal clean-room reconstruction and independent reproduction.
-- D018 statistically promoted E011 while retaining E006 during packaging. D020 closes that boundary: E011 is now the deployment primary after the saved Kaggle output review passed, and H015 is unblocked.
+- D018 statistically promoted E011 while retaining E006 during packaging. D020 closes that boundary: E011 is now deployment primary. D021 closes H015 negatively: no tested regime, local, latent, or partial-pooled expert passes complete-system gates, so E011 remains unchanged.
 - Operational checks are now outcome-focused across all experiments. Do not require internet state, CPU/device/thread checks, repeated SHA verification, exact byte parity, or verbose manifests by default. Require only inputs needed to run, visible failures, correct rows/IDs, finite values, saved outputs, and experiment-specific scientific controls.
 
 ## Exact next action
 
-Preregister the first H015 regime-specialized coefficient-expert experiment. Freeze legal regime definitions, minimum split-local sample support, cross-fitted routing, bounded coefficient actions, exact E011 global fallback, repeated/spatial/typewell/slice gates, and random/shuffled/sign-flipped routing controls before scoring.
+Complete T018 public-intelligence refresh for New/Recent discussions and newly run/high-vote notebooks since the 2026-07-22 audit. Use only source-audited legal mechanisms to choose the next preregistration. Prefer a genuinely new branch-uncertainty or physical-continuity mechanism if supported; do not immediately return to H012 datum-only wide-ridge tuning or reopen H015.
 
 ## Open risks
 
@@ -62,7 +63,7 @@ Preregister the first H015 regime-specialized coefficient-expert experiment. Fre
 - The public leaderboard covers only 26% of the test data. Score-directed tuning on that minority split has a high private-shakeup risk and cannot override frozen local validation.
 - HMM/DTW/PF can over-count autocorrelated GR, commit to repeated motifs, or smooth across faults. Posterior uncertainty must be calibrated OOF and a jump candidate must remain available.
 - E010 confirms that a below-5 bank does not imply a useful legal selector. The immediate risk is coefficient learnability under spatial shift; family classification alone cannot close the 9.07 RMSE coefficient/aggregation gap.
-- E011 resolves coefficient learnability and deployment positively. The remaining research risk is whether regime specialization adds stable cross-fitted gain beyond the global E011 model without repeating E007–E009 spatial/typewell failures.
+- E011 resolves coefficient learnability and deployment positively. E012 resolves regime specialization negatively. The remaining research risk is whether a genuinely new path-state mechanism—branch uncertainty, posterior continuity, or another source-audited physical signal—can improve E011 without repeating spatial/typewell failures.
 - The current public topic list reports 137 topics while the frozen archive contains 132. New/Recent deltas are audited, but canonical topic/message counts remain unchanged until a complete recrawl verifies additions, removals, and message counts.
 - Every future finalist needs a runnable Kaggle notebook, correct IDs/order, finite predictions, complete output coverage, and a saved result that can be retrieved and reviewed.
 

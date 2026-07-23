@@ -5,10 +5,10 @@
     "hypothesis_id": "H015",
     "title": "Regime-specialized coefficient experts",
     "statement": "After the E011 notebook run is reviewed, split-local legal regime experts may recover additional nonlinear coefficient accuracy on demonstrably distinct well regimes while a confidence gate falls back exactly to the strongest verified global path.",
-    "status": "active",
+    "status": "rejected",
     "priority": 1,
-    "evidence_for": "The official BirdCLEF+ 2026 first-place writeup shows that narrow specialists can add value inside a diverse validated ensemble. E010 shows that ROGII coefficient estimation and aggregation, not candidate coverage, explain 90.46% of selector regret. E011 saved Kaggle version 1 completed and its outputs passed the basic correctness review, so the deployment prerequisite is now satisfied.",
-    "evidence_against": "ROGII E007-E009 show that apparent regimes, model agreement, and aggregate gains can repeat shared spatial/typewell bias. Small regimes invite unstable routing and overfitting.",
-    "next_test": "Run preregistered E012: nine representative specialist/control branches under exact nested E011 reconstruction, all repeated and spatial/typewell contexts, special slices, support/fallback checks, and shuffled-routing control."
+    "evidence_for": "Two preimplementation screens tested 226 hard, soft, local, latent, and partial-pooled specialist branches. The formal nested KNN branch found a tiny 0.013698 RMSE signal and improved all three special slices.",
+    "evidence_against": "No worth-screen branch improved pooled RMSE. Formal E012 completed nine representative branches over 25 repeated and 10 stress contexts; the best KNN branch won only 15/25 cells, missed the 0.05 gain floor, and regressed spatial groups 0/1 and typewell group 0.",
+    "next_test": "Closed by E012. Do not retune regimes, KNN neighborhoods, latent routing, or partial pooling around E011. Reopen only if a genuinely new legal mechanism supplies independently validated routing evidence."
   }
 }

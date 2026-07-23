@@ -1,0 +1,11 @@
+control,pass,details
+branch_completion,True,"{""pass"": true, ""repeated_rows"": 250, ""stress_rows"": 100}"
+coefficient_bounds,True,"{""maximum_absolute_coefficient"": 80.0, ""pass"": true}"
+deterministic_rerun,True,"{""maximum_delta"": 0.0, ""pass"": true}"
+exact_fallback,True,"{""maximum_delta"": 0.0, ""pass"": true}"
+finite_predictions,True,"{""pass"": true}"
+membership,True,"{""contexts"": 35, ""pass"": true}"
+oof_coverage,True,"{""pass"": true, ""wells"": 773}"
+parent_e011_reconstruction,True,"{""expected"": 12.550756295689666, ""pass"": true, ""rmse"": 12.550756295690169}"
+shuffled_routing,True,"{""gain_vs_e011"": -0.006242630689499151, ""pass"": true}"
+submission_unauthorized,True,"{""pass"": true}"

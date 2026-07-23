@@ -1,0 +1,18 @@
+{
+  "all_exact": true,
+  "exact_files": [
+    "candidate_metrics.csv",
+    "context_metrics.csv",
+    "stress_metrics.csv",
+    "support_metrics.csv",
+    "special_slice_metrics.csv",
+    "controls.csv"
+  ],
+  "experiment_id": "E012",
+  "normalized_summary_equal": true,
+  "official_runtime_seconds": 123.50791562700033,
+  "reproduction_runtime_seconds": 116.44384882699887,
+  "schema_version": 1,
+  "source_commit": "200fa40c8bdee8cebbd5a6514950e20ec0a1f81e",
+  "status": "PASS"
+}
