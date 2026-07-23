@@ -1,0 +1,14 @@
+{
+  "type": "task",
+  "recorded_at": "2026-07-23T08:00:00Z",
+  "payload": {
+    "task_id": "T021",
+    "title": "Evaluate H015 regime specialists",
+    "status": "active",
+    "priority": 1,
+    "phase": "nested_confirmation",
+    "depends_on": "T020",
+    "due_at": null,
+    "updated_at": "2026-07-23T08:00:00Z"
+  }
+}

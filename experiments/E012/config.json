@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E012",
+  "hypothesis_id": "H015",
+  "title": "Nested confirmation of regime-specialized coefficient experts",
+  "parent_experiment": "E011",
+  "representation": "spline4",
+  "e011_shrinkage": 0.75,
+  "minimum_regime_support": 50,
+  "branches": [
+    {"name": "length3_mean_s025", "family": "length3_mean", "shrinkage": 0.25, "eligible": true},
+    {"name": "pseudo3_mean_s025", "family": "pseudo3_mean", "shrinkage": 0.25, "eligible": true},
+    {"name": "kmeans2_mean_s025", "family": "kmeans2_mean", "shrinkage": 0.25, "eligible": true},
+    {"name": "latent3_s025", "family": "latent3", "shrinkage": 0.25, "eligible": true},
+    {"name": "global_ridge_a10_s025", "family": "global_ridge", "shrinkage": 0.25, "alpha": 10.0, "eligible": true},
+    {"name": "extratrees_l20_d2_s025", "family": "extra_trees", "shrinkage": 0.25, "min_samples_leaf": 20, "max_depth": 2, "eligible": true},
+    {"name": "knn25_distance_s025", "family": "knn", "shrinkage": 0.25, "neighbors": 25, "weights": "distance", "eligible": true},
+    {"name": "partial_pseudo_a10_s025", "family": "partial_pseudo", "shrinkage": 0.25, "alpha": 10.0, "eligible": true},
+    {"name": "shuffled_length_mean_s100", "family": "shuffled_length_mean", "shrinkage": 1.0, "eligible": false, "negative_control": true}
+  ],
+  "features": {
+    "length": "hidden_rows",
+    "pseudo": "backtest_0p85_rmse"
+  },
+  "models": {
+    "extra_trees_estimators": 128,
+    "latent_classifier_estimators": 256,
+    "latent_classifier_depth": 6,
+    "latent_classifier_leaf": 12,
+    "random_state": 15015
+  },
+  "promotion": {
+    "minimum_gain_vs_e011": 0.05,
+    "minimum_map_wins": 4,
+    "minimum_outer_cell_wins": 17,
+    "maximum_p90_deterioration": 0.0,
+    "maximum_worst5_increase": 0.002,
+    "require_positive_every_spatial": true,
+    "require_positive_every_typewell": true,
+    "require_positive_special_slices": true,
+    "shuffled_routing_maximum_gain": 0.01
+  },
+  "screen_evidence": {
+    "hard_regime_branches": 109,
+    "soft_local_latent_branches": 117,
+    "positive_branches": 0,
+    "role": "preimplementation worth screen only; formal nested E012 results decide H015"
+  },
+  "expected_wells": 773,
+  "expected_hidden_rows": 3783989,
+  "submission_authorized": false
+}
