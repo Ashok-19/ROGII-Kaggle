@@ -1,0 +1,91 @@
+{
+  "task_id": "T027",
+  "hypothesis_id": "H020",
+  "source_commit": "349cb947b1ac2dfa3d3f268661e29b7cce9661ce",
+  "expected_wells": 773,
+  "expected_hidden_rows": 3783989,
+  "data_dir": "data/train",
+  "e011_oof_path": "artifacts/E011/oof_predictions.csv.gz",
+  "compact_path": "artifacts/E011/compact_stats_v1.npz",
+  "fold_files": ["folds/v1.json", "folds/v2.json", "folds/v3.json", "folds/v4.json", "folds/v5.json"],
+  "feature_contract": {
+    "expected_features": 142,
+    "backtest_blocks": ["backtest_0p5_", "backtest_0p7_", "backtest_0p85_"],
+    "window_suffixes": ["_w32", "_w128", "_w512"],
+    "view_indicators": true
+  },
+  "views": [
+    {"name": "original_full", "mask_backtests": [], "mask_windows": []},
+    {"name": "backtest_0p5_only", "mask_backtests": ["backtest_0p7_", "backtest_0p85_"], "mask_windows": []},
+    {"name": "backtest_0p7_only", "mask_backtests": ["backtest_0p5_", "backtest_0p85_"], "mask_windows": []},
+    {"name": "backtest_0p85_only", "mask_backtests": ["backtest_0p5_", "backtest_0p7_"], "mask_windows": []},
+    {"name": "backtest_0p5_0p7", "mask_backtests": ["backtest_0p85_"], "mask_windows": []},
+    {"name": "slope_w32_only", "mask_backtests": [], "mask_windows": ["_w128", "_w512"]},
+    {"name": "slope_w128_only", "mask_backtests": [], "mask_windows": ["_w32", "_w512"]},
+    {"name": "slope_w512_only", "mask_backtests": [], "mask_windows": ["_w32", "_w128"]},
+    {"name": "local_prefix", "mask_backtests": ["backtest_0p5_", "backtest_0p7_"], "mask_windows": ["_w512"]},
+    {"name": "long_prefix", "mask_backtests": ["backtest_0p85_"], "mask_windows": ["_w32", "_w128"]}
+  ],
+  "regimes": {
+    "original_only": ["original_full"],
+    "backtest_single": ["original_full", "backtest_0p5_only", "backtest_0p7_only", "backtest_0p85_only"],
+    "backtest_cumulative": ["original_full", "backtest_0p5_only", "backtest_0p5_0p7"],
+    "slope_single": ["original_full", "slope_w32_only", "slope_w128_only", "slope_w512_only"],
+    "local_long": ["original_full", "local_prefix", "long_prefix"],
+    "all_views": ["original_full", "backtest_0p5_only", "backtest_0p7_only", "backtest_0p85_only", "backtest_0p5_0p7", "slope_w32_only", "slope_w128_only", "slope_w512_only", "local_prefix", "long_prefix"]
+  },
+  "target": {
+    "knots": [0.25, 0.5, 0.75, 1.0],
+    "outputs": 4,
+    "coefficient_absolute_bound_ft": 80.0
+  },
+  "branches": [
+    {"name": "ridge_original_a1", "family": "ridge", "alpha": 1.0, "regime": "original_only", "eligible": false},
+    {"name": "ridge_original_a10", "family": "ridge", "alpha": 10.0, "regime": "original_only", "eligible": false},
+    {"name": "ridge_original_a100", "family": "ridge", "alpha": 100.0, "regime": "original_only", "eligible": false},
+    {"name": "ridge_backtest_single_a1", "family": "ridge", "alpha": 1.0, "regime": "backtest_single", "eligible": true},
+    {"name": "ridge_backtest_single_a10", "family": "ridge", "alpha": 10.0, "regime": "backtest_single", "eligible": true},
+    {"name": "ridge_backtest_cumulative_a1", "family": "ridge", "alpha": 1.0, "regime": "backtest_cumulative", "eligible": true},
+    {"name": "ridge_backtest_cumulative_a10", "family": "ridge", "alpha": 10.0, "regime": "backtest_cumulative", "eligible": true},
+    {"name": "ridge_slope_single_a1", "family": "ridge", "alpha": 1.0, "regime": "slope_single", "eligible": true},
+    {"name": "ridge_slope_single_a10", "family": "ridge", "alpha": 10.0, "regime": "slope_single", "eligible": true},
+    {"name": "ridge_local_long_a1", "family": "ridge", "alpha": 1.0, "regime": "local_long", "eligible": true},
+    {"name": "ridge_local_long_a10", "family": "ridge", "alpha": 10.0, "regime": "local_long", "eligible": true},
+    {"name": "ridge_all_views_a1", "family": "ridge", "alpha": 1.0, "regime": "all_views", "eligible": true},
+    {"name": "ridge_all_views_a10", "family": "ridge", "alpha": 10.0, "regime": "all_views", "eligible": true},
+    {"name": "ridge_all_views_a100", "family": "ridge", "alpha": 100.0, "regime": "all_views", "eligible": true},
+    {"name": "ridge_all_views_no_indicator_a1", "family": "ridge", "alpha": 1.0, "regime": "all_views", "indicators": false, "eligible": true},
+    {"name": "ridge_all_views_original_boost4_a1", "family": "ridge", "alpha": 1.0, "regime": "all_views", "original_boost": 4.0, "eligible": true},
+    {"name": "ridge_all_views_original_boost4_a10", "family": "ridge", "alpha": 10.0, "regime": "all_views", "original_boost": 4.0, "eligible": true},
+    {"name": "ridge_per_view_ensemble_a1", "family": "per_view_ensemble", "alpha": 1.0, "regime": "all_views", "eligible": true},
+    {"name": "extra_trees_all_views", "family": "extra_trees", "regime": "all_views", "eligible": true},
+    {"name": "hist_gradient_all_views", "family": "hist_gradient", "regime": "all_views", "eligible": true},
+    {"name": "knn25_all_views", "family": "knn", "neighbors": 25, "regime": "all_views", "eligible": true}
+  ],
+  "placements": [0.25, 0.5, 0.75, 1.0],
+  "controls": ["permuted_source_targets", "shuffled_task_targets", "permuted_view_indicators", "permuted_registered_blocks", "duplicate_original", "exact_fallback"],
+  "stress": {
+    "long_suffix_quantile": 0.8,
+    "high_gr_missingness_quantile": 0.8,
+    "e011_catastrophe_rmse": 12.0,
+    "horizon_quintiles": 5
+  },
+  "promotion": {
+    "maximum_oracle_rmse": 5.0,
+    "minimum_gain_vs_e011": 0.15,
+    "minimum_gain_vs_t025_best": 0.03,
+    "minimum_gain_vs_best_original_only": 0.05,
+    "minimum_map_wins": 4,
+    "minimum_outer_cell_wins": 17,
+    "maximum_p90_deterioration": 0.25,
+    "maximum_worst5_share_increase": 0.02,
+    "minimum_every_spatial_gain": 0.0,
+    "minimum_every_typewell_gain": 0.0,
+    "minimum_every_special_slice_gain": 0.0,
+    "minimum_every_horizon_quintile_gain": 0.0,
+    "maximum_negative_control_gain": 0.03,
+    "duplicate_original_tolerance": 1e-10,
+    "t025_best_rmse": 12.42492760849511,
+    "e011_rmse": 12.550756295689673
+  }
+}

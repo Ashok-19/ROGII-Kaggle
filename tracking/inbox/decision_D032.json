@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-23T16:45:00Z",
+  "payload": {
+    "decision_id": "D032",
+    "decided_at": "2026-07-23",
+    "title": "Freeze target-preserving causal feature-view screen",
+    "decision": "Execute T027 exactly as preregistered before any formal or neural view-learning implementation.",
+    "rationale": "T026 shows that additional causal views help within a weak family but fail because view-local targets differ materially from the original competition-boundary target. T027 preserves one target across deterministic subviews of the exact 142-feature E011 legal schema and tests several view pools, weighting regimes, and bounded model families under complete transfer controls.",
+    "source_ids": "T026,H019,D031,tracking/evidence/T026/RESULT.md,archive/competition/public_intelligence_delta_2026-07-23_2215.md,tracking/evidence/T027/PRE_REGISTRATION.md",
+    "revisit_trigger": "No score-directed retuning. Complete all 21 branches, four placements, 35 contexts, controls, slices, edge cases, and reproduction. No package, neural model, Kaggle execution, or submission is authorized."
+  }
+}

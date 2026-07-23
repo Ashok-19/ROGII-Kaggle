@@ -5,10 +5,10 @@
     "hypothesis_id": "H020",
     "title": "Target-preserving causal prefix-view learning",
     "statement": "Multiple causal prefix views from each outer-training well, all supervised against that well's same original competition-boundary four-control spline target and represented with full E011 feature parity, can regularize coefficient learning without the target mismatch that invalidated T026.",
-    "status": "queued",
+    "status": "testing",
     "priority": 1,
     "evidence_for": "T026 mask augmentation improves its weak original-only comparator by 0.284538 RMSE, proving extra causal views contain useful information. The spline target oracle remains 4.113743. T026's failure diagnosis is target mismatch rather than control failure or leakage.",
     "evidence_against": "The same source well contributes correlated views, which can overstate effective sample size or encode view-position artifacts. Earlier prefix views have less TVT history than the real boundary, and any benefit may disappear under spatial/typewell shifts unless source-well weighting, original-view anchoring, and negative controls are exact.",
-    "next_test": "Preregister T027 as a bounded target-preserving view-learning worth screen before implementation."
+    "next_test": "Complete T027 exactly under tracking/evidence/T027/PRE_REGISTRATION.md and config.json."
   }
 }
