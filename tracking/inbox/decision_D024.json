@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-23T10:12:50Z",
+  "payload": {
+    "decision_id": "D024",
+    "decided_at": "2026-07-23",
+    "title": "Freeze residual sequence-state worth screen",
+    "decision": "Run T023 only as the preregistered worth screen in tracking/evidence/T023/config.json. No GRU, TCN, HMM extension, PF extension, new path model, or deployment package may be implemented unless a legal sequence proxy passes the frozen advancement gates. Hidden-label oracle paths are diagnostic only.",
+    "rationale": "E011 leaves large path-bank headroom, but E012 and T022 show that well-level specialization and routing do not identify safe action. A materially new row-sequence representation must first demonstrate capacity, legal learnability, repeated-cell stability, shift transfer, and failed negative controls.",
+    "source_ids": "H017,T023,D023,E010,E011,E012,T022",
+    "revisit_trigger": "Only after T023 completes every registered repeated branch, required stress branch, control, edge group, and independent reproduction."
+  }
+}

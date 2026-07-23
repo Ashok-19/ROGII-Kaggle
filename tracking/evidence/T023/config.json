@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "task_id": "T023",
+  "hypothesis_id": "H017",
+  "decision_id": "D024",
+  "title": "Residual sequence-state evidence beyond E011",
+  "preregistered_at": "2026-07-23T15:42:50+05:30",
+  "source_commit": "f2a295606132a8a2f067c064823c71907d33c0bb",
+  "expected_wells": 773,
+  "expected_hidden_rows": 3783989,
+  "base_candidate": "spline4_ridge_equal_s075",
+  "base_rmse": 12.550756295689673,
+  "inputs": {
+    "e011_oof": "artifacts/E011/oof_predictions.csv.gz",
+    "e011_config": "experiments/E011/config.json",
+    "e011_compact": "artifacts/E011/compact_stats_v1.npz",
+    "train_dir": "data/train",
+    "fold_files": ["folds/v1.json", "folds/v2.json", "folds/v3.json", "folds/v4.json", "folds/v5.json"]
+  },
+  "legal_feature_contract": {
+    "allowed_row_inputs": ["MD", "Z", "GR", "TVT_input visible prefix only", "E011 prediction", "E006 prediction", "typewell TVT", "typewell GR"],
+    "forbidden_inputs": ["hidden TVT or residual as a feature", "formation surfaces", "Geology", "absolute X or Y", "spatial/typewell group IDs", "public overlap identity", "leaderboard scores", "unknown-license artifacts"],
+    "target_isolation": "Residual profile targets from target minus E011 may be constructed only for outer-training and inner-validation wells. Outer-test targets are scoring-only.",
+    "boundary_rule": "Every emitted correction is exactly zero at normalized hidden position 0 and is linearly interpolated between later controls."
+  },
+  "diagnostics": {
+    "residual_acf_lags": [1, 4, 16, 64, 256],
+    "oracle_control_counts": [4, 8, 16, 32, 64],
+    "minimum_b16_oracle_gain": 0.5,
+    "minimum_b32_incremental_gain_over_b16": 0.02,
+    "reported": ["pooled RMSE", "per-well ACF quantiles", "low-frequency energy", "mean/trend/shape SSE shares", "oracle RMSE by control count"]
+  },
+  "feature_channels": {
+    "local": ["normalized hidden position", "normalized MD", "Z level/slope/curvature", "GR level/std/slope/missingness", "E011 level/slope/curvature", "E006-E011 disagreement level/slope", "typewell GR mismatch at E011 and E006", "typewell GR local slope"],
+    "profile": "Global moments plus first four cosine coefficients of each legal local channel; no E008/E011 well-level feature table is reused.",
+    "typewell_subset": ["normalized hidden position", "GR", "GR missingness", "typewell mismatch at E011", "typewell mismatch at E006", "typewell local slope"],
+    "disagreement_subset": ["normalized hidden position", "E006-E011 disagreement level/slope/curvature", "E011 slope/curvature"]
+  },
+  "branches": [
+    {"name": "profile_ridge_b16", "family": "profile_ridge", "controls": 16},
+    {"name": "profile_ridge_b32", "family": "profile_ridge", "controls": 32},
+    {"name": "block_ridge_b16", "family": "block_ridge", "controls": 16},
+    {"name": "block_ridge_b32", "family": "block_ridge", "controls": 32},
+    {"name": "block_hgb_b16", "family": "block_hgb", "controls": 16},
+    {"name": "profile_knn_b16", "family": "profile_knn", "controls": 16},
+    {"name": "profile_knn_b32", "family": "profile_knn", "controls": 32},
+    {"name": "typewell_block_ridge_b16", "family": "typewell_block_ridge", "controls": 16},
+    {"name": "disagreement_block_ridge_b16", "family": "disagreement_block_ridge", "controls": 16},
+    {"name": "profile_ridge_b16_shuffled_wells", "family": "negative_shuffled_profile", "controls": 16, "negative_control": true},
+    {"name": "block_ridge_b16_reversed_targets", "family": "negative_reversed_profile", "controls": 16, "negative_control": true},
+    {"name": "typewell_block_ridge_b16_shuffled_gr", "family": "negative_shuffled_gr", "controls": 16, "negative_control": true}
+  ],
+  "model_grids": {
+    "ridge_alphas": [1.0, 10.0, 100.0, 1000.0],
+    "knn_neighbors": [10, 25, 50],
+    "hgb": [{"max_depth": 2, "max_iter": 120, "learning_rate": 0.04, "min_samples_leaf": 40}, {"max_depth": 3, "max_iter": 120, "learning_rate": 0.04, "min_samples_leaf": 40}],
+    "shrinkages": [0.25, 0.5, 0.75, 1.0],
+    "correction_caps_ft": [10.0, 20.0, 40.0],
+    "selection": "For each outer context and branch, choose model hyperparameters, shrinkage, and cap only by pooled inner-OOF RMSE on outer-training wells. Ties follow listed order."
+  },
+  "contexts": {
+    "repeated": 25,
+    "stress_if_preliminary_pass": 10,
+    "stress_scopes": ["five leave-spatial-group-out", "five leave-typewell-group-out"],
+    "final_prediction": "Average each well's five repeated-map predictions before pooled final scoring."
+  },
+  "preliminary_advancement": {
+    "minimum_gain_vs_e011": 0.05,
+    "minimum_map_wins": 4,
+    "minimum_outer_cell_wins": 17,
+    "maximum_p90_deterioration": 0.1,
+    "maximum_worst5_sse_share_increase": 0.005,
+    "negative_controls_may_not_advance": true
+  },
+  "authorization_gate_for_new_experiment": {
+    "minimum_gain_vs_e011": 0.1,
+    "minimum_map_wins": 4,
+    "minimum_outer_cell_wins": 17,
+    "maximum_p90_deterioration": 0.0,
+    "maximum_worst5_sse_share_increase": 0.005,
+    "require_positive_every_spatial_group": true,
+    "require_positive_every_typewell_group": true,
+    "require_positive_long_suffix": true,
+    "require_positive_high_gr_missingness": true,
+    "require_positive_e011_catastrophe": true,
+    "maximum_negative_control_gain": 0.03,
+    "require_exact_independent_reproduction": true,
+    "require_all_edge_groups": true
+  },
+  "controls": [
+    "source commit and input presence",
+    "773 wells and 3,783,989 ordered unique rows",
+    "outer/inner membership isolation",
+    "exact zero-correction E011 fallback",
+    "finite bounded corrections and metrics",
+    "pooled SSE direct recomputation",
+    "shuffled-well residual profiles",
+    "reversed residual profiles",
+    "shuffled GR/typewell sequence features",
+    "complete branch-context coverage",
+    "deterministic independent refit"
+  ],
+  "edge_groups": [
+    "one-row and two-row synthetic suffixes",
+    "all GR missing",
+    "constant GR",
+    "typewell outside predicted TVT range",
+    "duplicate typewell TVT values",
+    "non-monotone or duplicate MD rejected",
+    "missing or non-finite E011/E006 predictions rejected",
+    "zero-variance feature columns",
+    "constant target profile",
+    "tiny KNN training partition",
+    "correction cap and zero-boundary enforcement",
+    "real-data ID/order and block coverage"
+  ],
+  "prohibited_until_pass": ["GRU", "TCN", "HMM extension", "PF extension", "new path bank", "deployment notebook", "Kaggle execution", "competition submission"]
+}

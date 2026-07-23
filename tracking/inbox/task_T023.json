@@ -3,10 +3,10 @@
   "recorded_at": "2026-07-23T09:25:00Z",
   "payload": {
     "task_id": "T023",
-    "title": "Preregister residual sequence-state worth screen",
-    "status": "queued",
+    "title": "Residual sequence-state worth screen",
+    "status": "active",
     "priority": 1,
-    "phase": "preimplementation_design",
+    "phase": "preimplementation_screen",
     "depends_on": "T022",
     "due_at": "2026-07-24"
   }
