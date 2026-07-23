@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-23T11:34:19Z",
+  "payload": {
+    "decision_id": "D026",
+    "decided_at": "2026-07-23",
+    "title": "Freeze E011-relative T016 placement screen",
+    "decision": "Run only the preregistered T016 preimplementation placement screen in tracking/evidence/T016/config.json. Do not refit features or models unless existing cross-fitted E009 legal datum actions first demonstrate stable value when placed on exact E011.",
+    "rationale": "E009's wide ridge was measured against E006, while E011 is now 2.38 RMSE stronger. The July 23 17:04 public delta adds no independent mechanism evidence. Current worth must be established directly against E011 with nested scale/cap/family selection, shift gates, negative controls, edge tests, and exact reproduction.",
+    "source_ids": "H012,T016,E009,E011,D025,archive/competition/public_intelligence_delta_2026-07-23_1704.md",
+    "revisit_trigger": "Only after T016 completes every registered action family, placement, repeated/stress context, special slice, control, edge group, and independent reproduction."
+  }
+}

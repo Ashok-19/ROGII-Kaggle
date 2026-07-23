@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "task_id": "T016",
+  "hypothesis_id": "H012",
+  "decision_id": "D026",
+  "title": "E011-relative stable wide residual datum worth screen",
+  "preregistered_at": "2026-07-23T17:04:19+05:30",
+  "source_commit": "b47d620378d4b56eac7fd33d682ee03826440e25",
+  "base_candidate": "E011 spline4_ridge_equal_s075",
+  "base_rmse": 12.550756295689673,
+  "expected_wells": 773,
+  "expected_hidden_rows": 3783989,
+  "inputs": {
+    "e009_well_actions": "experiments/E009/results/model_predictions.csv",
+    "e009_feature_frequency": "experiments/E009/results/selected_feature_frequency.csv",
+    "e011_oof": "artifacts/E011/oof_predictions.csv.gz",
+    "e011_compact": "artifacts/E011/compact_stats_v1.npz",
+    "fold_files": ["folds/v1.json", "folds/v2.json", "folds/v3.json", "folds/v4.json", "folds/v5.json"]
+  },
+  "stage": "preimplementation_placement_screen_only",
+  "question": "Do already cross-fitted E009 legal datum actions retain stable residual value when placed on exact E011, before any new feature selection or model refit is implemented?",
+  "action_families": [
+    "ridge_all_a25_f32",
+    "ridge_all_a100_f32",
+    "ridge_all_a25_f64",
+    "ridge_no_e007_a25_f32",
+    "ridge_path_evidence_a25_f24",
+    "ridge_visible_geometry_a25_f32",
+    "mean_of_six",
+    "median_of_six",
+    "median_of_wide64_path24_wide32",
+    "wide64_path24_blend_25",
+    "wide64_path24_blend_50",
+    "wide64_path24_blend_75"
+  ],
+  "placement_grid": {
+    "scales": [-1.0, -0.75, -0.5, -0.25, 0.0, 0.1, 0.25, 0.5, 0.75, 1.0],
+    "caps_ft": [5.0, 10.0, 20.0, 30.0],
+    "selection": "For each untouched outer context, choose family, scale, and cap only by pooled row SSE on the complement wells. Ties follow the listed family, scale, and cap order.",
+    "final_prediction": "Average each well's five repeated-map placed corrections, then add them to exact E011."
+  },
+  "contexts": {
+    "repeated_cells": 25,
+    "map_summaries": 5,
+    "stress": ["five leave-spatial-group-out", "five leave-typewell-group-out"],
+    "special_slices": ["long_suffix", "high_gr_missingness", "e011_catastrophe"]
+  },
+  "negative_controls": [
+    "deterministically shuffled well actions",
+    "sign-flipped wide64 action",
+    "deterministically permuted action-family columns"
+  ],
+  "advancement_gate_for_full_stability_refit": {
+    "minimum_gain_vs_e011": 0.03,
+    "minimum_map_wins": 4,
+    "minimum_outer_cell_wins": 17,
+    "maximum_p90_deterioration": 0.05,
+    "maximum_worst5_sse_share_increase": 0.005,
+    "require_positive_every_spatial_group": true,
+    "require_positive_every_typewell_group": true,
+    "require_positive_long_suffix": true,
+    "require_positive_high_gr_missingness": true,
+    "require_positive_e011_catastrophe": true,
+    "maximum_negative_control_gain": 0.01,
+    "require_exact_independent_reproduction": true,
+    "require_all_edge_groups": true
+  },
+  "if_passed": "Write a second preregistration before any feature/model refit. The full stage must compare stable-core selection frequency, coefficient-sign stability, bootstrap/subsample stability, path-evidence-only models, training-only fixed blends, and exact E011 fallback.",
+  "if_failed": "Close H012/T016 without a new experiment and do not retune scales, caps, feature counts, or subgroup-specific rules around the same E009 actions.",
+  "controls": [
+    "exact input presence and source commit",
+    "773-well and 3,783,989-row ordered coverage",
+    "unique one-row-per-well action table",
+    "outer-complement-only placement selection",
+    "exact zero-action E011 fallback",
+    "finite bounded actions and metrics",
+    "direct pooled SSE recomputation",
+    "complete repeated and stress context coverage",
+    "negative controls",
+    "deterministic independent reproduction"
+  ],
+  "edge_groups": [
+    "missing or duplicate action wells rejected",
+    "unknown or duplicate OOF row IDs rejected",
+    "non-finite target, E011, or action rejected",
+    "constant and all-zero actions",
+    "one-well and empty selection partitions",
+    "exact scale and cap boundaries",
+    "deterministic tie ordering",
+    "negative and zero scales",
+    "very large raw action clipping",
+    "fold and stress membership completeness",
+    "final five-map averaging coverage",
+    "exact E011 fallback identity"
+  ],
+  "prohibited_until_pass": [
+    "new feature selection",
+    "new ridge or tree fitting",
+    "subgroup routing",
+    "deployment packaging",
+    "Kaggle execution",
+    "competition submission"
+  ]
+}

@@ -4,11 +4,11 @@
   "payload": {
     "hypothesis_id": "H012",
     "title": "Stability-regularized wide residual datum model",
-    "statement": "The large improvement of the legal 64-feature datum ridge reflects useful distributed evidence, and selecting a stable feature core or training-only blend across inner folds can retain that gain while reducing shift failures without subgroup routing.",
-    "status": "queued",
-    "priority": 3,
-    "evidence_for": "E009 ridge_all_a25_f64 reaches 14.6352733150 RMSE, gains 0.2978674723 over E006, wins all five maps, lowers p90 to 20.8077, and outperforms every consensus candidate. The path/evidence-only branch reaches 14.7464 and wins four maps, showing a second useful formulation.",
-    "evidence_against": "The wide ridge wins only 15/25 outer cells and regresses spatial group 1 plus typewell groups 2/3/4. The path/evidence branch wins 13/25 cells. Wider feature selection may amplify shared bias rather than improve transfer.",
-    "next_test": "After E010 candidate-coverage and selector-regret measurement, retain the frozen 64-feature ridge only as a legal comparator or later stability experiment. Do not use E009 subgroup outcomes as routing rules."
+    "statement": "Existing cross-fitted wide legal datum actions may retain a small stable signed correction on top of E011, and only then may inner-fold feature/coefficient stability justify a new refit.",
+    "status": "active",
+    "priority": 1,
+    "evidence_for": "E009 ridge_all_a25_f64 gained 0.297867 RMSE over E006 with 5/5 map wins and better p90; path/evidence action supplied a distinct second formulation.",
+    "evidence_against": "E009 won only 15/25 cells and failed spatial/typewell transfer. E011 is 2.38 RMSE stronger than E006, so E009-relative headroom may have disappeared. T023 also showed that generic smooth corrections can pass aggregate gates while failing signed controls and spatial transfer.",
+    "next_test": "Complete the frozen T016 E011-relative placement screen. No feature or model refit is allowed unless nested placement passes every repeated, tail, spatial/typewell, special-slice, negative-control, edge, and reproduction gate."
   }
 }
