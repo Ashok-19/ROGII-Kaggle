@@ -395,8 +395,7 @@
       "visual": "risk_action",
       "summary": "T022 finds E011/E006 oracle fallback and continuous-blend gains of 0.7587 and 0.8335 RMSE. Seven legal uncertainty families fail: hard logistic is best at only +0.00687, 2/5 maps and 5/25 cells, while continuous branches are negative.",
       "why_it_matters": "Risk or oracle opportunity is not safe action. D023 closes H016 without E013; the next useful mechanism must create new row-sequence or physical state evidence rather than route the same global paths."
-    }
-    ,
+    },
     {
       "id": "B026",
       "date": "2026-07-23",
@@ -405,9 +404,23 @@
       "visual": "trend_transfer",
       "summary": "T023 finds mean E011 residual ACF of 0.999980 at lag 1 and a 16-control oracle RMSE of 1.1868. The strongest preliminary legal proxy gains 0.2857 RMSE with 5/5 maps and 24/25 cells, but fails spatial group 4; a reversed-profile control still gains 0.1329.",
       "why_it_matters": "Sequence capacity and smoothness are not the same as legally identified signed state. D025 blocks GRU/TCN/HMM/PF or new-path escalation from this representation; future sequence work needs materially different causal evidence and must defeat reversed/shuffled plus spatial/typewell controls."
+    },
+    {
+      "id": "B027",
+      "date": "2026-07-23",
+      "title": "Wide datum actions retain signal but fail transfer",
+      "evidence": "complete_reproduced_worth_screen",
+      "visual": "residual_action_gate",
+      "summary": "T016 places twelve saved cross-fitted E009 datum-action families on exact E011. Nested placement reaches 12.4930 RMSE, gaining 0.05779 with 5/5 maps and 21/25 cells, but regresses spatial group 3 and typewell group 0.",
+      "why_it_matters": "A small signed datum signal remains, and all controls lose, but repeated aggregate gain cannot override every-group transfer failures. D027 closes the action space without a new refit or subgroup routing."
     }
   ],
   "idea_questions": [
+    {
+      "signal": "stable wide datum action",
+      "question": "Did saved E009 cross-fitted datum actions retain stable value on top of E011?",
+      "falsifier": "T016 triggers the falsifier: +0.05779 RMSE and 5/5 maps are real, but spatial group 3 and typewell group 0 regress. Do not refit or retune this action space."
+    },
     {
       "signal": "residual sequence state",
       "question": "Did coherent E011 residual structure produce a legally recoverable bounded state proxy?",
@@ -594,11 +607,20 @@
       "title": "T022 rejected uncertainty/fallback worth screen",
       "local_path": "tracking/evidence/T022/RESULT.md",
       "url": ""
-    }
-,
+    },
     {
       "title": "T023 rejected residual sequence-state worth screen",
       "local_path": "tracking/evidence/T023/RESULT.md",
+      "url": ""
+    },
+    {
+      "title": "July 23 17:04 public-intelligence delta",
+      "local_path": "archive/competition/public_intelligence_delta_2026-07-23_1704.md",
+      "url": ""
+    },
+    {
+      "title": "T016 rejected stable wide datum worth screen",
+      "local_path": "tracking/evidence/T016/RESULT.md",
       "url": ""
     }
   ]

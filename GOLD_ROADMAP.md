@@ -83,6 +83,14 @@ Legal identification still fails the complete-system contract. `block_ridge_b32`
 
 D025 closes H017 without escalation. Do not retune the same profile targets, swap in a neural architecture, or start a new path bank from this result. Future sequence work requires materially different causal evidence or a different legal state target that defeats reversed/shuffled controls and every spatial/typewell holdout.
 
+### 11. Old wide datum actions retain signal but not transfer
+
+T016 first tests the saved cross-fitted E009 well actions on exact E011 rather than assuming their old E006-relative gain survives. Twelve action families, 480 scale/cap placements, 25 repeated cells, ten stress holdouts, three special slices, and three negative controls complete without any model refit.
+
+Nested placement reaches 12.492966 RMSE, gaining 0.057790 over E011 with 5/5 maps and 21/25 cells. The selected branch is usually a negative scale on `ridge_visible_geometry_a25_f32`, showing that placement direction changes on the stronger baseline. Spatial group 3 regresses by 0.091016 and typewell group 0 by 0.097205, so the frozen every-group gates fail. All controls and 12 edge groups pass, and reproduction is exact.
+
+D027 closes H012/T016 without a stability refit. Do not search more feature counts, scales, caps, or subgroup rules around the same E009 action space.
+
 ## Score objectives
 
 These are campaign targets, not promises or medal definitions:
@@ -345,7 +353,8 @@ These defaults may be revised only through a recorded decision before seeing the
 14. **T018 — Refresh Kaggle public intelligence — completed for the 2026-07-23 cutoff; standing loop remains active.** Exact source/output audit rejects the current composite frontier as independent evidence.
 15. **H016/T022 — Continuous uncertainty-conditioned E011 placement — completed and rejected 2026-07-23.** Oracle headroom is 0.759–0.834 RMSE, but no legal branch gains 0.03 or transfers; no E013.
 16. **H017/T023 — Residual sequence-state evidence beyond E011 — completed and rejected 2026-07-23.** Large smooth oracle capacity exists, but no legal branch passes the final contract; `block_ridge_b32` fails spatial group 4 and a reversed-profile control retains +0.132948 RMSE. No neural/state/path escalation is authorized.
-17. **H012/T016 — Stability-regularized wide residual datum model — queued next, still lower confidence.** First refresh the standing public-intelligence delta, then preregister a bounded stability screen around the frozen E009 wide-ridge evidence. Do not use subgroup routing or reopen H015-H017.
+17. **H012/T016 — Stability-regularized wide residual datum model — completed and rejected 2026-07-23.** Nested placement gains 0.057790 RMSE with 5/5 maps and 21/25 cells, but regresses spatial group 3 and typewell group 0. Exact reproduction and all controls pass; no refit or retuning is authorized.
+18. **T024 — Select the next independent mechanism — queued.** Conduct a campaign-level evidence review across closed families, candidate diversity, legal inputs, and remaining deployment constraints. Do not preregister another model until the mechanism is materially distinct from H012/H015-H017 and T022.
 
 ## Explicitly rejected behavior
 
@@ -372,4 +381,4 @@ Foundation is complete only when:
 - legacy roadmap is preserved;
 - no training run is falsely presented as completed.
 
-Foundation, E010 coverage measurement, E011 statistical/deployment verification, E012 specialist rejection, the July 23 T018 intelligence refresh, T022 uncertainty routing, and T023 residual sequence-state screening are complete. E011 remains deployment primary. D023 prohibits E013 and D025 prohibits neural or new state/path escalation from the tested T023 representation. The current exact next action is to refresh the standing public-intelligence delta, then preregister H012/T016 as a bounded stability-regularized wide residual datum screen without subgroup routing.
+Foundation, E010 coverage measurement, E011 statistical/deployment verification, E012 specialist rejection, the July 23 intelligence refreshes, T022 uncertainty routing, T023 residual sequence-state screening, and T016 wide-datum placement are complete. E011 remains deployment primary. D023, D025, and D027 close the tested routing, sequence-profile, and wide-datum action spaces. The current exact next action is T024: select a materially independent legal mechanism through campaign-level evidence review before any new preregistration.

@@ -1,0 +1,14 @@
+{
+  "type": "task",
+  "recorded_at": "2026-07-23T12:05:00Z",
+  "payload": {
+    "task_id": "T024",
+    "title": "Select next independent mechanism",
+    "status": "queued",
+    "priority": 1,
+    "phase": "campaign_evidence_review",
+    "depends_on": "T016",
+    "due_at": "2026-07-24",
+    "updated_at": "2026-07-23T12:05:00Z"
+  }
+}

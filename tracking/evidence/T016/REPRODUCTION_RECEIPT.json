@@ -1,0 +1,51 @@
+{
+  "implementation_commit": "9e0b2128b85b3e14ce6e31ba262dcb8b30f68a73",
+  "main_runtime_seconds": 14.769652181999845,
+  "normalized_summary_equal": true,
+  "reproduction_runtime_seconds": 14.849600659999851,
+  "schema_version": 1,
+  "status": "PASS",
+  "substantive_files": {
+    "candidate_grid_metrics.csv": {
+      "byte_equal": true,
+      "bytes": 149462,
+      "sha256": "d627ae972cf91f0f5039bd95543b7c472809615b317710a854a59aef80788ade"
+    },
+    "context_metrics.csv": {
+      "byte_equal": true,
+      "bytes": 59168,
+      "sha256": "89964cdeb764f32b596cbe3aa485767c4b6281cc7842fc191286e79a9106a2ee"
+    },
+    "edge_cases.json": {
+      "byte_equal": true,
+      "bytes": 409,
+      "sha256": "6072d345886ac12cb776bfe66fe7e4804ffef705729d9a154facd273152f7ee6"
+    },
+    "map_metrics.csv": {
+      "byte_equal": true,
+      "bytes": 11046,
+      "sha256": "b01876f10b11268b6b20097fd6dabcd7a52c4160cb12c2546f5ec7c2de197caf"
+    },
+    "per_well_final.csv": {
+      "byte_equal": true,
+      "bytes": 138836,
+      "sha256": "7b85131562f75d3ef416ed2ddebc4249a46e3b1b8646d7044a77e595168e993c"
+    },
+    "selected_placements.csv": {
+      "byte_equal": true,
+      "bytes": 12035,
+      "sha256": "7956adf21e62a53f7ae46457987b197280be35901d0e70e27dbb9a3f51e68b16"
+    },
+    "special_slice_metrics.csv": {
+      "byte_equal": true,
+      "bytes": 4543,
+      "sha256": "33d3bd1f6351e3c9fb489e178d602711b068158ae7f963bdf8a295d2e6ebdd28"
+    },
+    "stress_metrics.csv": {
+      "byte_equal": true,
+      "bytes": 23272,
+      "sha256": "11c8788f0934a006dac708473c65023a187eef88133378495c27bb0bf46c88a2"
+    }
+  },
+  "task_id": "T016"
+}

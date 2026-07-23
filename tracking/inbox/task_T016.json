@@ -4,11 +4,11 @@
   "payload": {
     "task_id": "T016",
     "title": "Test stable wide residual model",
-    "status": "active",
+    "status": "completed",
     "priority": 1,
-    "phase": "preimplementation_placement_screen",
+    "phase": "worth_screen_rejected",
     "depends_on": "T023",
     "due_at": "2026-07-25",
-    "updated_at": "2026-07-23T11:34:19Z"
+    "updated_at": "2026-07-23T12:05:00Z"
   }
 }

@@ -1,0 +1,18 @@
+{
+  "edge_groups": 12,
+  "passed": [
+    "missing_duplicate_action_wells",
+    "unknown_duplicate_oof_ids",
+    "nonfinite_inputs",
+    "constant_zero_actions",
+    "one_well_empty_partitions",
+    "scale_cap_boundaries",
+    "deterministic_ties",
+    "negative_zero_scales",
+    "large_action_clipping",
+    "context_membership",
+    "five_map_averaging",
+    "exact_e011_fallback"
+  ],
+  "status": "PASS"
+}

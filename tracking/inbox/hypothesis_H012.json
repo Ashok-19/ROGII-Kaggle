@@ -5,10 +5,10 @@
     "hypothesis_id": "H012",
     "title": "Stability-regularized wide residual datum model",
     "statement": "Existing cross-fitted wide legal datum actions may retain a small stable signed correction on top of E011, and only then may inner-fold feature/coefficient stability justify a new refit.",
-    "status": "active",
+    "status": "rejected",
     "priority": 1,
-    "evidence_for": "E009 ridge_all_a25_f64 gained 0.297867 RMSE over E006 with 5/5 map wins and better p90; path/evidence action supplied a distinct second formulation.",
-    "evidence_against": "E009 won only 15/25 cells and failed spatial/typewell transfer. E011 is 2.38 RMSE stronger than E006, so E009-relative headroom may have disappeared. T023 also showed that generic smooth corrections can pass aggregate gates while failing signed controls and spatial transfer.",
-    "next_test": "Complete the frozen T016 E011-relative placement screen. No feature or model refit is allowed unless nested placement passes every repeated, tail, spatial/typewell, special-slice, negative-control, edge, and reproduction gate."
+    "evidence_for": "Nested placement gains 0.057790 RMSE over E011, wins 5/5 maps and 21/25 cells, improves all three special slices, and defeats shuffled, permuted-family, and sign-flipped controls.",
+    "evidence_against": "The placed system regresses spatial group 3 by 0.091016 RMSE and typewell group 0 by 0.097205. P90 also rises by 0.031040. Exact reproduction confirms the failures.",
+    "next_test": "Closed by T016/D027. Do not refit or retune the same E009 action space. A future residual experiment requires a materially independent causal representation and a fresh preregistration."
   }
 }

@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-23T12:05:00Z",
+  "payload": {
+    "decision_id": "D027",
+    "decided_at": "2026-07-23",
+    "title": "Close stable wide residual datum screen",
+    "decision": "Reject H012 and close T016 without a new feature/model refit. Preserve E011 unchanged. Do not retune the tested E009 action families, scales, caps, feature counts, or subgroup-specific placement rules.",
+    "rationale": "Nested E009 actions retain a real +0.057790 RMSE gain over E011 with 5/5 maps and 21/25 cells, but regress spatial group 3 by 0.091016 and typewell group 0 by 0.097205. All controls and 12 edge groups pass, and independent reproduction is exact. The frozen every-spatial and every-typewell gates therefore fail.",
+    "source_ids": "H012,T016,D026,E009,E011,tracking/evidence/T016/RESULT.md",
+    "revisit_trigger": "Only materially new evidence or a new causal representation outside the tested E009 action space may justify another residual-datum experiment."
+  }
+}
