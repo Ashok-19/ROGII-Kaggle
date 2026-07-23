@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "task_id": "T027",
+  "hypothesis_id": "H020",
+  "preregistration_commit": "8349a91ff5379ef12dfe97ba51bf71b8adc65ad1",
+  "implementation_path": "tracking/evidence/T027/run_screen.py",
+  "implementation_bytes": 52900,
+  "implementation_sha256": "14a19d2527c684ffe4258d7dccfb882f47187f8aac1e8bd35cc06d6d32e07c6c",
+  "score_observed_before_seal": false,
+  "validation": {
+    "py_compile": "PASS",
+    "edge_status": "PASS",
+    "edge_groups": 22,
+    "feature_schema": 142,
+    "view_catalog": 10,
+    "branch_count": 21,
+    "placements": 4,
+    "source_weight_contract": "each source well total weight one; original boost changes only within-source allocation"
+  },
+  "scientific_contract_changed_after_preregistration": false,
+  "notes": "Static review corrected a pre-score sample-weight normalization that would have made ridge regularization depend on view count. The correction enforces the preregistered source-well-total-weight contract. No target metric was computed before this receipt."
+}
