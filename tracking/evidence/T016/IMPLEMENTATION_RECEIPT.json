@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "task_id": "T016",
+  "recorded_at": "2026-07-23T11:50:00Z",
+  "preregistration_commits": [
+    "8a04263d11093c7b639409adff041c3bc120880e",
+    "76f3a9b76bbbc43131ccca9ddfbaf748c4492908",
+    "6195a95160e0d49061433a843c766d2bf33f5870",
+    "7d880fb3383d0f8d2ac2ef7869e067770505468c"
+  ],
+  "implementation_path": "tracking/evidence/T016/run_screen.py",
+  "implementation_bytes": 37279,
+  "implementation_sha256": "2cf6513887c3809d92db27f14970e0a73264c3d2b628d4d2f333e992e9c54327",
+  "score_observed_before_freeze": false,
+  "score_blind_validation": {
+    "py_compile": "pass",
+    "config_json": "pass",
+    "action_families": 12,
+    "placement_grid": 480,
+    "negative_scale": "pass",
+    "zero_scale": "pass",
+    "cap_boundary": "pass",
+    "deterministic_tie": "pass",
+    "edge_groups": 12,
+    "edge_status": "PASS",
+    "malformed_action_and_oof_loaders_exercised": true
+  }
+}
