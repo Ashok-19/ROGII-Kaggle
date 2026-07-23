@@ -43,7 +43,12 @@
     "repeated_cells": 25,
     "map_summaries": 5,
     "stress": ["five leave-spatial-group-out", "five leave-typewell-group-out"],
-    "special_slices": ["long_suffix", "high_gr_missingness", "e011_catastrophe"]
+    "special_slices": ["long_suffix", "high_gr_missingness", "e011_catastrophe"],
+    "special_slice_definitions": {
+      "long_suffix": "well hidden-row count at or above the all-well 80th percentile",
+      "high_gr_missingness": "well hidden-GR missing fraction at or above the all-well 80th percentile",
+      "e011_catastrophe": "well E011 RMSE at or above 12.0"
+    }
   },
   "negative_controls": [
     "deterministically shuffled well actions",

@@ -16,6 +16,8 @@ H012 was originally motivated by a 64-feature ridge that improved E006. E011 is 
 
 The screen completes all six saved E009 action families, mean/median robust ensembles, a stable three-action median, and three fixed wide64/path-evidence blends. Every family is tested across frozen positive, zero, and negative scales and four action caps. For each repeated or stress context, family, scale, and cap are selected only on complement wells.
 
+The special slices reuse the exact T023 definitions: hidden-row count at or above the 80th percentile, hidden-GR missing fraction at or above the 80th percentile, and E011 well RMSE at or above 12.0.
+
 ## Gates
 
 A full stability refit is allowed only if the nested placed system gains at least 0.03 RMSE over E011, wins at least 4/5 maps and 17/25 cells, preserves tails, improves every spatial and typewell holdout and all three special slices, defeats three negative controls, reproduces exactly, and passes all edge groups.
