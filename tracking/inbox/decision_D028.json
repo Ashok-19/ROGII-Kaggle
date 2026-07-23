@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-23T13:05:19Z",
+  "payload": {
+    "decision_id": "D028",
+    "decided_at": "2026-07-23",
+    "title": "Select multi-cut coefficient dynamics",
+    "decision": "Complete T024 by selecting within-well multi-cut nonlinear coefficient dynamics for a bounded T025 worth screen. Reject the newly surfaced public composite, fixed-shift, same-well target-lookup, and second-order HMM derivative sources as independent evidence. Do not authorize a formal model until every T025 gate passes.",
+    "rationale": "E010 proves a 4.7511 legal path-bank oracle and attributes 90.46% of selector regret to coefficient estimation/aggregation. E011's four-control spline oracle is 4.0810, but its legal model uses only aggregate pseudo-cut summaries. Actual pseudo-cut coefficient trajectories have not been tested and can be formed entirely from the observed prefix. Competing new public sources are derivative, visibly tuned, leaked, or already rejected on full data.",
+    "source_ids": "T024,E010,E011,D021,D023,D025,D027,archive/competition/public_intelligence_delta_2026-07-23_1835.md,tracking/evidence/T024/RESULT.md",
+    "revisit_trigger": "A T025 pass authorizes a separately preregistered formal experiment; a T025 failure closes H018 as tested."
+  }
+}

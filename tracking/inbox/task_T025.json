@@ -1,0 +1,16 @@
+{
+  "type": "task",
+  "recorded_at": "2026-07-23T13:05:19Z",
+  "payload": {
+    "task_id": "T025",
+    "title": "Screen multi-cut coefficient dynamics",
+    "status": "active",
+    "priority": 1,
+    "phase": "preimplementation_coefficient_transport",
+    "depends_on": "T024",
+    "due_at": "2026-07-24",
+    "updated_at": "2026-07-23T13:05:19Z",
+    "hypothesis_id": "H018",
+    "pre_registration": "tracking/evidence/T025/PRE_REGISTRATION.md"
+  }
+}

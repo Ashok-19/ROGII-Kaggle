@@ -4,11 +4,13 @@
   "payload": {
     "task_id": "T024",
     "title": "Select next independent mechanism",
-    "status": "queued",
+    "status": "completed",
     "priority": 1,
     "phase": "campaign_evidence_review",
     "depends_on": "T016",
     "due_at": "2026-07-24",
-    "updated_at": "2026-07-23T12:05:00Z"
+    "updated_at": "2026-07-23T13:05:19Z",
+    "result": "tracking/evidence/T024/RESULT.md",
+    "decision_id": "D028"
   }
 }

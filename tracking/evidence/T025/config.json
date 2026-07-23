@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "task_id": "T025",
+  "hypothesis_id": "H018",
+  "title": "Multi-cut spline coefficient dynamics worth screen",
+  "baseline": "E011 spline4_ridge_equal_s075 OOF",
+  "expected_wells": 773,
+  "expected_hidden_rows": 3783989,
+  "data_dir": "data/train",
+  "e011_oof": "artifacts/E011/oof_predictions.csv.gz",
+  "e011_compact": "artifacts/E011/compact_stats_v1.npz",
+  "fold_files": ["folds/v1.json", "folds/v2.json", "folds/v3.json", "folds/v4.json", "folds/v5.json"],
+  "pseudo_cut_fractions": [0.4, 0.55, 0.7, 0.85],
+  "minimum_pseudo_segment_rows": 128,
+  "spline_knots": [0.25, 0.5, 0.75, 1.0],
+  "coefficient_absolute_bound_ft": 80.0,
+  "path_absolute_bound_ft": 80.0,
+  "placement_weights": [0.25, 0.5, 0.75, 1.0],
+  "branches": [
+    {"name": "latest_cut_identity", "family": "analytic", "feature_set": "pseudo"},
+    {"name": "linear_cut_extrapolation", "family": "analytic", "feature_set": "pseudo"},
+    {"name": "ridge_pseudo_a1", "family": "ridge", "feature_set": "pseudo", "alpha": 1.0},
+    {"name": "ridge_pseudo_a10", "family": "ridge", "feature_set": "pseudo", "alpha": 10.0},
+    {"name": "ridge_pseudo_a100", "family": "ridge", "feature_set": "pseudo", "alpha": 100.0},
+    {"name": "ridge_pseudo_e011_a1", "family": "ridge", "feature_set": "pseudo_e011", "alpha": 1.0},
+    {"name": "ridge_pseudo_e011_a10", "family": "ridge", "feature_set": "pseudo_e011", "alpha": 10.0},
+    {"name": "ridge_pseudo_e011_a100", "family": "ridge", "feature_set": "pseudo_e011", "alpha": 100.0},
+    {"name": "extra_trees_pseudo", "family": "extra_trees", "feature_set": "pseudo", "n_estimators": 200, "min_samples_leaf": 8, "max_features": 0.75, "random_state": 20260723},
+    {"name": "hist_gradient_pseudo", "family": "hist_gradient", "feature_set": "pseudo", "max_iter": 200, "max_leaf_nodes": 15, "learning_rate": 0.05, "l2_regularization": 10.0, "random_state": 20260723},
+    {"name": "knn25_pseudo", "family": "knn", "feature_set": "pseudo", "n_neighbors": 25, "weights": "distance"},
+    {"name": "ridge_e011_only_a10", "family": "ridge", "feature_set": "e011", "alpha": 10.0, "comparator": true},
+    {"name": "ridge_e011_only_a100", "family": "ridge", "feature_set": "e011", "alpha": 100.0, "comparator": true}
+  ],
+  "negative_controls": {
+    "well_permutation_seed": 20260724,
+    "target_shuffle_seed": 20260725,
+    "reversed_cut_order": true,
+    "maximum_gain_vs_e011": 0.03
+  },
+  "stress": {
+    "spatial_groups": 5,
+    "typewell_groups": 5,
+    "long_suffix_quantile": 0.8,
+    "high_gr_missingness_quantile": 0.8,
+    "e011_catastrophe_rmse": 12.0
+  },
+  "preliminary": {
+    "minimum_gain_vs_e011": 0.05,
+    "minimum_map_wins": 4,
+    "minimum_outer_cell_wins": 17,
+    "maximum_p90_deterioration": 0.25,
+    "maximum_worst5_share_increase": 0.02
+  },
+  "authorization": {
+    "maximum_oracle_rmse": 5.0,
+    "minimum_gain_vs_e011": 0.15,
+    "minimum_map_wins": 4,
+    "minimum_outer_cell_wins": 17,
+    "maximum_p90_deterioration": 0.25,
+    "maximum_worst5_share_increase": 0.02,
+    "require_nonnegative_every_spatial_group": true,
+    "require_nonnegative_every_typewell_group": true,
+    "require_nonnegative_every_special_slice": true,
+    "minimum_incremental_gain_vs_best_e011_only": 0.05,
+    "require_all_controls": true,
+    "require_independent_reproduction": true
+  },
+  "deployment": {
+    "formal_experiment_authorized_only_after_all_gates": true,
+    "package_authorized": false,
+    "kaggle_execution_authorized": false,
+    "submission_authorized": false
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "hypothesis",
+  "recorded_at": "2026-07-23T13:05:19Z",
+  "payload": {
+    "hypothesis_id": "H018",
+    "title": "Within-well multi-cut coefficient dynamics",
+    "statement": "Four-control spline targets fitted on several observed pseudo-tails inside a well's known prefix form a coefficient trajectory that predicts the well's final hidden-tail nonlinear coefficients and adds stable value to E011.",
+    "status": "active",
+    "priority": 1,
+    "evidence_for": "E010 bank oracle is 4.7511, E011 spline4 oracle is 4.0810, and 90.46% of E010 regret is coefficient estimation/aggregation. Every well has at least 851 known rows, allowing four supported legal pseudo-cut tasks. E011 uses only 15 aggregate backtest summaries, not pseudo-cut coefficient targets.",
+    "evidence_against": "Pseudo-tail dynamics may not extrapolate across the much longer final hidden suffix; generic smooth movement can pass weak controls, as T023 showed; spatial/typewell transfer may still fail.",
+    "next_test": "Complete T025 across every frozen analytic, ridge, tree, KNN, comparator, placement, stress, negative-control, and edge-case branch before authorizing a formal experiment."
+  }
+}
