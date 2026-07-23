@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "task_id": "T023",
+  "recorded_at": "2026-07-23T10:25:00Z",
+  "preregistration_commit": "121146dcf5d95bd8d50440cb8967ea5c3c83b79a",
+  "implementation_path": "tracking/evidence/T023/run_screen.py",
+  "implementation_bytes": 58160,
+  "implementation_sha256": "9c0b4b53053a5e038e13d5ca3ed56cf42a1bd2c1719be28baacc02e2587b51d5",
+  "score_observed_before_freeze": false,
+  "score_blind_validation": {
+    "py_compile": "pass",
+    "synthetic_basis_shape": [2, 16],
+    "synthetic_channel_shape": [3, 17],
+    "all_missing_gr": "pass",
+    "zero_variance_preprocessing": "pass",
+    "real_md_files_checked": 773,
+    "real_md_decreases": 0,
+    "real_md_duplicates": 0
+  }
+}
