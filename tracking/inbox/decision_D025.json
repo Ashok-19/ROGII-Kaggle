@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-23T11:05:28Z",
+  "payload": {
+    "decision_id": "D025",
+    "decided_at": "2026-07-23",
+    "title": "Close residual sequence-state screen without escalation",
+    "decision": "Reject H017 as tested and do not authorize a GRU, TCN, HMM extension, PF extension, new path bank, deployment notebook, Kaggle execution, or competition submission from T023. Preserve E011 unchanged as deployment primary. Do not retune the same residual-profile targets or merely swap model families around the registered profile/block representation.",
+    "rationale": "T023 proves large smooth residual oracle capacity, but no legal branch passes the frozen complete-system contract. block_ridge_b32 gains 0.285655 RMSE with 5/5 maps and 24/25 cells yet regresses spatial group 4 by 0.171137. A reversed-profile negative control still gains 0.132948, above the 0.03 cap, so part of the apparent benefit is generic smooth bounded movement rather than correctly recovered signed state. All metrics, selections, stress results, controls, edge cases, and the closure decision reproduce exactly outside measured runtime.",
+    "source_ids": "H017,T023,D024,tracking/evidence/T023/RESULT.md,E010,E011,E012,T022",
+    "revisit_trigger": "Only materially different causal sequence evidence or a different legal state target may reopen sequence escalation, and it must defeat reversed/shuffled controls plus every spatial and typewell holdout before implementation of a neural or new path model."
+  }
+}

@@ -5,10 +5,10 @@
     "hypothesis_id": "H017",
     "title": "Residual sequence-state evidence beyond E011",
     "statement": "Legal within-well row-sequence and typewell-consistency features may predict a bounded higher-resolution residual profile around E011 that transfers across repeated whole-well, spatial, and typewell holdouts.",
-    "status": "active",
+    "status": "rejected",
     "priority": 1,
-    "evidence_for": "E010 proves a 4.7511 legal path-bank oracle and E011 remains at 12.5508. E011 residuals retain trend and shape error, while T022 rules out the existing well-level uncertainty feature space rather than row-sequence evidence.",
-    "evidence_against": "E010 legal selection, E012 specialists, and T022 routing all fail. Sequence models can overfit autocorrelated GR, repeated motifs, boundary artifacts, or target-profile smoothness.",
-    "next_test": "Complete the frozen T023 screen: residual autocorrelation and spline-oracle capacity; twelve legal or negative-control sequence branches over 25 repeated contexts; stress validation for every preliminary passer; exact reproduction and edge tests."
+    "evidence_for": "E011 residuals are extremely persistent: mean ACF is 0.999980 at lag 1 and 0.975232 at lag 64, with 98.28% mean low-frequency energy. Hidden-label 16-control and 32-control spline oracles reach 1.186785 and 0.638082 RMSE, confirming very large sequence capacity. Several legal branches gain 0.12-0.38 RMSE on repeated contexts.",
+    "evidence_against": "No legal branch passes the frozen final contract. block_ridge_b32 is the strongest preliminary passer at +0.285655 RMSE, 5/5 maps and 24/25 cells, but loses spatial group 4 by 0.171137. A reversed-profile negative control gains 0.132948, above the 0.03 cap, and the other passers fail spatial/typewell and/or zero-p90-deterioration gates.",
+    "next_test": "Closed by T023/D025. Do not start or retune a GRU, TCN, HMM/PF extension, new path bank, or the same residual-profile proxy. Revisit only with materially different causal sequence evidence or a different legal state target that defeats all negative and shift controls."
   }
 }

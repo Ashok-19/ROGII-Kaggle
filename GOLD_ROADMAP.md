@@ -75,6 +75,14 @@ Seven legal cross-fitted model families fail to identify it. Hard logistic is be
 
 D023 closes H016 without E013. The campaign must generate new sequence/state evidence rather than add another router around E011 and E006.
 
+### 10. Smooth residual capacity is not identified signed state
+
+T023 freezes and completes a preimplementation sequence-state screen before any GRU, TCN, HMM/PF extension, or new path model. E011 residuals are highly persistent: mean ACF is 0.999980 at lag 1 and 0.975232 at lag 64, with 98.28% mean low-frequency energy. Hidden-label control-point oracles reach 1.1868 RMSE with 16 controls and 0.6381 with 32, so sequence capacity is unquestionably present.
+
+Legal identification still fails the complete-system contract. `block_ridge_b32` gains 0.285655 RMSE, wins 5/5 maps and 24/25 cells, and improves all typewell holdouts and special slices, but regresses spatial group 4 by 0.171137. The best raw profile ridge gains 0.377114 but worsens p90 and worst-5% concentration. Most importantly, a reversed-profile negative control gains 0.132948, above the frozen 0.03 cap. The legal proxy improvement therefore contains generic smooth bounded movement that is not unique evidence of correctly signed residual state.
+
+D025 closes H017 without escalation. Do not retune the same profile targets, swap in a neural architecture, or start a new path bank from this result. Future sequence work requires materially different causal evidence or a different legal state target that defeats reversed/shuffled controls and every spatial/typewell holdout.
+
 ## Score objectives
 
 These are campaign targets, not promises or medal definitions:
@@ -336,8 +344,8 @@ These defaults may be revised only through a recorded decision before seeing the
 13. **E012/H015 — Regime-specialized coefficient experts — completed and rejected 2026-07-23.** Two screens tested 226 branches with zero positive pooled gains. Formal KNN residual placement reaches 12.5371 but gains only 0.0137, wins 15/25 cells, and fails spatial/typewell transfer. Retain E011 unchanged; no package or submission.
 14. **T018 — Refresh Kaggle public intelligence — completed for the 2026-07-23 cutoff; standing loop remains active.** Exact source/output audit rejects the current composite frontier as independent evidence.
 15. **H016/T022 — Continuous uncertainty-conditioned E011 placement — completed and rejected 2026-07-23.** Oracle headroom is 0.759–0.834 RMSE, but no legal branch gains 0.03 or transfers; no E013.
-16. **H017/T023 — Residual sequence-state evidence beyond E011 — queued next.** Preregister a worth screen before any sequence/state implementation.
-17. **H012/T016 — Stability-regularized wide residual datum model — queued, lower priority.** Do not make it the immediate next experiment because nonlinear oracle evidence and E012 both argue against another partition or refinement of the same low-order feature space.
+16. **H017/T023 — Residual sequence-state evidence beyond E011 — completed and rejected 2026-07-23.** Large smooth oracle capacity exists, but no legal branch passes the final contract; `block_ridge_b32` fails spatial group 4 and a reversed-profile control retains +0.132948 RMSE. No neural/state/path escalation is authorized.
+17. **H012/T016 — Stability-regularized wide residual datum model — queued next, still lower confidence.** First refresh the standing public-intelligence delta, then preregister a bounded stability screen around the frozen E009 wide-ridge evidence. Do not use subgroup routing or reopen H015-H017.
 
 ## Explicitly rejected behavior
 
@@ -364,4 +372,4 @@ Foundation is complete only when:
 - legacy roadmap is preserved;
 - no training run is falsely presented as completed.
 
-Foundation, E010 coverage measurement, E011 statistical/deployment verification, E012 specialist rejection, the July 23 T018 intelligence refresh, and T022 uncertainty routing screen are complete. E011 remains deployment primary. D023 prohibits E013. The current exact next action is to preregister T023/H017, a residual sequence-state worth screen that must prove simple legal sequence evidence before any neural or new state-path implementation.
+Foundation, E010 coverage measurement, E011 statistical/deployment verification, E012 specialist rejection, the July 23 T018 intelligence refresh, T022 uncertainty routing, and T023 residual sequence-state screening are complete. E011 remains deployment primary. D023 prohibits E013 and D025 prohibits neural or new state/path escalation from the tested T023 representation. The current exact next action is to refresh the standing public-intelligence delta, then preregister H012/T016 as a bounded stability-regularized wide residual datum screen without subgroup routing.

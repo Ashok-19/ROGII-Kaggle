@@ -1,0 +1,34 @@
+{
+  "comparison": {
+    "cache_byte_identical": true,
+    "candidate_summaries_equal": true,
+    "controls_equal": true,
+    "decision_equal": true,
+    "edge_cases_equal": true,
+    "result_equal_excluding_runtime_seconds": true,
+    "selections_equal": true,
+    "stress_rows_equal": true
+  },
+  "implementation_commit": "f3a350411735b664d1bc48ef94d9d089110e38d5",
+  "implementation_sha256": "9c0b4b53053a5e038e13d5ca3ed56cf42a1bd2c1719be28baacc02e2587b51d5",
+  "main": {
+    "cache_bytes": 44769818,
+    "cache_path": "scratch/agents/t023-sequence-screen-20260723/sequence_cache.pkl.gz",
+    "cache_sha256": "f7486e680ac3967bb507ebd6b9165dbe449535d2c8406a606bf4ff090c1f4a7a",
+    "result_path": "scratch/agents/t023-sequence-screen-20260723/main/screen_result.json",
+    "result_sha256": "4b18292f066b3c6a6a4d5577dc4be01056bb113515d064daf6c5dedea3f11ff5",
+    "runtime_seconds": 612.8145921390023
+  },
+  "preregistration_commit": "121146dcf5d95bd8d50440cb8967ea5c3c83b79a",
+  "recorded_at": "2026-07-23T11:05:28Z",
+  "reproduction": {
+    "cache_bytes": 44769818,
+    "cache_path": "scratch/agents/t023-sequence-screen-20260723/sequence_cache_reproduction.pkl.gz",
+    "cache_sha256": "f7486e680ac3967bb507ebd6b9165dbe449535d2c8406a606bf4ff090c1f4a7a",
+    "result_path": "scratch/agents/t023-sequence-screen-20260723/reproduction/screen_result.json",
+    "result_sha256": "c822d80a85918038f44f26ddaa3bc23d23ac5786570c46e68564134869d820c0",
+    "runtime_seconds": 597.6826071310024
+  },
+  "schema_version": 1,
+  "task_id": "T023"
+}

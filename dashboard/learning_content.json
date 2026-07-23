@@ -396,12 +396,22 @@
       "summary": "T022 finds E011/E006 oracle fallback and continuous-blend gains of 0.7587 and 0.8335 RMSE. Seven legal uncertainty families fail: hard logistic is best at only +0.00687, 2/5 maps and 5/25 cells, while continuous branches are negative.",
       "why_it_matters": "Risk or oracle opportunity is not safe action. D023 closes H016 without E013; the next useful mechanism must create new row-sequence or physical state evidence rather than route the same global paths."
     }
+    ,
+    {
+      "id": "B026",
+      "date": "2026-07-23",
+      "title": "Smooth residuals did not prove recoverable signed state",
+      "evidence": "complete_reproduced_sequence_worth_screen",
+      "visual": "trend_transfer",
+      "summary": "T023 finds mean E011 residual ACF of 0.999980 at lag 1 and a 16-control oracle RMSE of 1.1868. The strongest preliminary legal proxy gains 0.2857 RMSE with 5/5 maps and 24/25 cells, but fails spatial group 4; a reversed-profile control still gains 0.1329.",
+      "why_it_matters": "Sequence capacity and smoothness are not the same as legally identified signed state. D025 blocks GRU/TCN/HMM/PF or new-path escalation from this representation; future sequence work needs materially different causal evidence and must defeat reversed/shuffled plus spatial/typewell controls."
+    }
   ],
   "idea_questions": [
     {
       "signal": "residual sequence state",
-      "question": "Does E011 leave coherent row-sequence residual structure that a simple legal bounded proxy can recover before any neural or new state model is implemented?",
-      "falsifier": "Oracle sequence capacity is small, residual structure does not transfer from visible pseudo-cuts, a simple proxy fails repeated/spatial/typewell gates, or shuffled/reversed sequence controls retain the gain."
+      "question": "Did coherent E011 residual structure produce a legally recoverable bounded state proxy?",
+      "falsifier": "T023 triggers the falsifier: oracle capacity is very large, but the strongest stable branch regresses spatial group 4 and a reversed-profile control retains +0.1329 RMSE. Do not escalate this representation to neural or new path models."
     },
     {
       "signal": "continuous uncertainty placement",
@@ -583,6 +593,12 @@
     {
       "title": "T022 rejected uncertainty/fallback worth screen",
       "local_path": "tracking/evidence/T022/RESULT.md",
+      "url": ""
+    }
+,
+    {
+      "title": "T023 rejected residual sequence-state worth screen",
+      "local_path": "tracking/evidence/T023/RESULT.md",
       "url": ""
     }
   ]

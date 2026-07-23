@@ -4,10 +4,11 @@
   "payload": {
     "task_id": "T023",
     "title": "Residual sequence-state worth screen",
-    "status": "active",
+    "status": "completed",
     "priority": 1,
-    "phase": "preimplementation_screen",
+    "phase": "worth_screen_rejected",
     "depends_on": "T022",
-    "due_at": "2026-07-24"
+    "due_at": "2026-07-24",
+    "updated_at": "2026-07-23T11:05:28Z"
   }
 }

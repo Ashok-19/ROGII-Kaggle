@@ -1,0 +1,62 @@
+{
+  "files": [
+    {
+      "bytes": 696,
+      "path": "IMPLEMENTATION_RECEIPT.json"
+    },
+    {
+      "bytes": 2110,
+      "path": "PRE_REGISTRATION.md"
+    },
+    {
+      "bytes": 1535,
+      "path": "REPRODUCTION_RECEIPT.json"
+    },
+    {
+      "bytes": 7095,
+      "path": "RESULT.md"
+    },
+    {
+      "bytes": 5207,
+      "path": "candidate_metrics.csv"
+    },
+    {
+      "bytes": 6507,
+      "path": "config.json"
+    },
+    {
+      "bytes": 98969,
+      "path": "context_metrics.csv"
+    },
+    {
+      "bytes": 18385,
+      "path": "map_metrics.csv"
+    },
+    {
+      "bytes": 1665,
+      "path": "oracle_metrics.csv"
+    },
+    {
+      "bytes": 58160,
+      "path": "run_screen.py"
+    },
+    {
+      "bytes": 34230,
+      "path": "selected_hyperparameters.csv"
+    },
+    {
+      "bytes": 11691,
+      "path": "special_slice_metrics.csv"
+    },
+    {
+      "bytes": 14709,
+      "path": "stress_metrics.csv"
+    },
+    {
+      "bytes": 507309,
+      "path": "summary.json"
+    }
+  ],
+  "schema_version": 1,
+  "task_id": "T023"
+}
