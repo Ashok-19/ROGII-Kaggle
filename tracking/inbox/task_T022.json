@@ -4,10 +4,11 @@
   "payload": {
     "task_id": "T022",
     "title": "Screen E011 uncertainty and fallback headroom",
-    "status": "active",
+    "status": "completed",
     "priority": 1,
-    "phase": "preimplementation_diagnostic",
+    "phase": "worth_screen_rejected",
     "depends_on": "T021",
-    "due_at": "2026-07-24"
+    "due_at": "2026-07-24",
+    "updated_at": "2026-07-23T09:25:00Z"
   }
 }

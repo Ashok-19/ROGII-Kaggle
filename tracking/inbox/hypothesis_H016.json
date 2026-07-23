@@ -5,10 +5,10 @@
     "hypothesis_id": "H016",
     "title": "Continuous uncertainty-conditioned E011 placement",
     "statement": "Legal continuous uncertainty features may identify when a bounded blend or exact fallback from E011 toward E006 reduces catastrophic error more safely than hard regime specialists.",
-    "status": "active",
+    "status": "rejected",
     "priority": 1,
-    "evidence_for": "Public participant evidence points to PF posterior spread and branch mass/separation as risk signals; exact public sources expose stochastic disagreement and branch statistics; E011 and E006 provide verified global paths with identical OOF membership.",
-    "evidence_against": "E009 consensus uncertainty and E012 hard/local specialists failed transfer. E011 already improves every registered context, so fallback may have little learnable value and can easily discard a strong correction.",
-    "next_test": "Before E013 implementation, measure per-well oracle E011/E006 choice and continuous-blend headroom, prevalence/support, feature-target association, and at least three cross-fitted legal screening families across all 25 repeated cells with shuffled-label and exact-fallback controls. Close H016 if D022 worth thresholds fail."
+    "evidence_for": "Oracle per-well E011/E006 fallback gains 0.758726 RMSE and continuous blending gains 0.833518, so material hidden-label headroom exists.",
+    "evidence_against": "All legal cross-fitted placements fail. Hard logistic is best at only +0.006868 RMSE, 2/5 maps and 5/25 cells, with typewell-0 and high-GR-missingness regressions; continuous branches are negative; inner AUC is near random.",
+    "next_test": "Closed by T022/D023. Do not preregister E013 or retune fallback classifiers around the same legal feature space. A future experiment must generate new sequence/state evidence rather than route E011 versus E006."
   }
 }

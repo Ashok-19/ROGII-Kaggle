@@ -386,13 +386,27 @@
       "visual": "cv_lb_split",
       "summary": "Four newly prominent notebooks share 93.1%–99.95% source similarity and the same overlap/model-package profile. Their PF branch and U-continuity layers act materially only on visible well 00e12e8b; a 100-well selector retains 68.61% worst-decile SSE, and the stochastic-TTA gate fails its own OOF threshold.",
       "why_it_matters": "Do not infer independent causality from titles or public scores. D022 allows only a clean preimplementation screen for continuous E011 uncertainty/fallback placement; no public constants, artifacts, or score-directed well moves may enter the project."
+    },
+    {
+      "id": "B025",
+      "date": "2026-07-23",
+      "title": "Oracle fallback exists, but legal uncertainty cannot find it",
+      "evidence": "complete_cross_fitted_worth_screen",
+      "visual": "risk_action",
+      "summary": "T022 finds E011/E006 oracle fallback and continuous-blend gains of 0.7587 and 0.8335 RMSE. Seven legal uncertainty families fail: hard logistic is best at only +0.00687, 2/5 maps and 5/25 cells, while continuous branches are negative.",
+      "why_it_matters": "Risk or oracle opportunity is not safe action. D023 closes H016 without E013; the next useful mechanism must create new row-sequence or physical state evidence rather than route the same global paths."
     }
   ],
   "idea_questions": [
     {
+      "signal": "residual sequence state",
+      "question": "Does E011 leave coherent row-sequence residual structure that a simple legal bounded proxy can recover before any neural or new state model is implemented?",
+      "falsifier": "Oracle sequence capacity is small, residual structure does not transfer from visible pseudo-cuts, a simple proxy fails repeated/spatial/typewell gates, or shuffled/reversed sequence controls retain the gain."
+    },
+    {
       "signal": "continuous uncertainty placement",
       "question": "Is there enough E011-versus-E006 oracle fallback or blend headroom, and can legal uncertainty proxies recover it cross-fitted without hard routing?",
-      "falsifier": "Oracle headroom is below 0.20 RMSE, every legal screen gains less than 0.03, wins fewer than 4/5 maps or 17/25 cells, worsens p90/shift groups, or shuffled labels retain the gain."
+      "falsifier": "T022 triggers the falsifier: headroom is large, but the best legal gate gains only 0.00687, wins 2/5 maps and 5/25 cells, and fails typewell/high-GR-missingness transfer. Do not retune this family."
     },
     {
       "signal": "PF branch uncertainty",
@@ -564,6 +578,11 @@
     {
       "title": "July 23 public frontier source and output audit",
       "local_path": "archive/competition/public_intelligence_2026-07-23.md",
+      "url": ""
+    },
+    {
+      "title": "T022 rejected uncertainty/fallback worth screen",
+      "local_path": "tracking/evidence/T022/RESULT.md",
       "url": ""
     }
   ]

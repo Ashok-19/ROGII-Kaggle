@@ -1,0 +1,14 @@
+{
+  "type": "hypothesis",
+  "recorded_at": "2026-07-23T09:25:00Z",
+  "payload": {
+    "hypothesis_id": "H017",
+    "title": "Residual sequence-state evidence beyond E011",
+    "statement": "After well-level routing and specialization fail, legal row-sequence or physical state evidence may recover E011 residual shape without relying on train-only surfaces or public-well overrides.",
+    "status": "queued",
+    "priority": 1,
+    "evidence_for": "E010 proves a 4.7511 legal path-bank oracle and E011 remains at 12.5508, leaving substantial nonlinear path-state headroom. E011 residual decomposition retains material trend and shape structure. Public-source audits independently highlight posterior continuity and branch state, although their corrections are not valid evidence.",
+    "evidence_against": "E010 legal selection, E012 specialists, and T022 uncertainty routing all fail to identify safe action. HMM and DTW screens have not yet shown unique full-data wins. A sequence model can overfit autocorrelated GR or repeated motifs.",
+    "next_test": "Preregister a preimplementation sequence-state worth screen before any GRU/TCN or new path implementation. Quantify residual autocorrelation and oracle sequence capacity, then require a simple legal cross-fitted bounded sequence proxy to show repeatable gain and shift stability before neural or state-model code is allowed."
+  }
+}

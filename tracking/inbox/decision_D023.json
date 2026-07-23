@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-23T09:25:00Z",
+  "payload": {
+    "decision_id": "D023",
+    "decided_at": "2026-07-23",
+    "title": "Close E011 uncertainty routing without E013",
+    "decision": "Reject H016 and do not preregister E013. Preserve E011 unchanged as deployment primary. Do not retune hard/soft fallback, blending, local weighting, or additional classifiers over the same legal E011/E006 uncertainty feature space.",
+    "rationale": "Oracle fallback/blend headroom is large, but legal identification fails across seven model families, 25 repeated cells, ten spatial/typewell holdouts, special slices, and shuffled controls. The best branch gains only 0.006868 RMSE, wins 2/5 maps and 5/25 cells, has near-random inner AUC, and regresses typewell group 0 and high-GR-missingness wells. Exact deterministic reproduction and ten edge groups pass.",
+    "source_ids": "T022,H016,D022,tracking/evidence/T022/RESULT.md,E011,E006,E012",
+    "revisit_trigger": "Only materially new sequence/state evidence that is not a reparameterization of the same 151 legal well-level features may reopen uncertainty-conditioned placement."
+  }
+}

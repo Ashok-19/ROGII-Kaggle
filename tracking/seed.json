@@ -229,6 +229,18 @@
       "confidence": "exact Kaggle metadata/source/output audit; participant claims separated",
       "last_checked": "2026-07-23",
       "notes": "Top-ten snapshot, topic count 138, discussion deltas, source hashes and clone similarity, PF branch/U-cont outputs, selector CV100, TTA gate, and unavailable geographic source."
+    },
+    {
+      "source_id": "S_T022_VERIFIED_20260723",
+      "title": "T022 E011 uncertainty and fallback worth screen",
+      "kind": "official_local_diagnostic_verification",
+      "url": "",
+      "local_path": "tracking/evidence/T022/verification.json",
+      "accessibility": "repository-local",
+      "license": "project-generated",
+      "confidence": "complete screen, exact reproduction, edge-tested",
+      "last_checked": "2026-07-23",
+      "notes": "Ten candidates, 25 repeated contexts, ten stress holdouts, 350 context rows, shuffled controls, exact reproduction and ten edge groups."
     }
   ],
   "claims": [
@@ -720,6 +732,36 @@
       "confidence": "confirmed unavailability",
       "source_id": "S_PUBLIC_SCAN_20260723",
       "implication": "No technical, validation, or causality claim may be made from its title or score.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C050",
+      "category": "oracle_headroom",
+      "claim": "Per-well oracle choice between E011 and E006 reaches 11.7920 RMSE and continuous per-well blending reaches 11.7172, gains of 0.7587 and 0.8335 versus E011.",
+      "evidence_class": "exact_oof_quadratic_recomputation",
+      "confidence": "confirmed diagnostic",
+      "source_id": "S_T022_VERIFIED_20260723",
+      "implication": "Fallback opportunity exists with hidden knowledge, but oracle headroom alone cannot authorize routing.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C051",
+      "category": "negative",
+      "claim": "Seven legal cross-fitted uncertainty families fail to recover E011/E006 oracle headroom; hard logistic is best at +0.006868 RMSE, 2/5 maps and 5/25 cells, with transfer failures.",
+      "evidence_class": "complete_repeated_and_stress_screen",
+      "confidence": "confirmed",
+      "source_id": "S_T022_VERIFIED_20260723",
+      "implication": "Reject H016/E013 and do not retune fallback or blend models over the same legal well-level feature space.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C052",
+      "category": "verification",
+      "claim": "T022 reproduces all ten candidate outputs over 35 contexts at zero metric delta; all controls and ten edge groups pass.",
+      "evidence_class": "deterministic_refit_and_edge_suite",
+      "confidence": "confirmed",
+      "source_id": "S_T022_VERIFIED_20260723",
+      "implication": "The negative uncertainty-routing conclusion is complete and reproducible.",
       "status": "accepted"
     }
   ],

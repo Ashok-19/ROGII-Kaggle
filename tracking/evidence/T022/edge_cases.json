@@ -1,0 +1,16 @@
+{
+  "edge_groups": 10,
+  "passed": [
+    "identical_path_quadratic",
+    "invalid_negative_sse_rejected",
+    "missing_weight_rejected",
+    "nonfinite_weight_rejected",
+    "missing_constant_features",
+    "constant_logistic_target",
+    "tiny_knn_partition",
+    "nonfinite_raw_prediction_rejected",
+    "weight_clipping",
+    "real_coverage_and_membership"
+  ],
+  "status": "PASS"
+}

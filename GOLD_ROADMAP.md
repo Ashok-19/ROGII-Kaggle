@@ -67,6 +67,14 @@ The July 23 refresh pulled exact source for Full-Stack Selector CV100, Contact-G
 
 D022 therefore permits only a bounded worth screen for continuous E011 uncertainty/fallback placement. It does not authorize cloning the stack, importing its constants, or starting E013.
 
+### 9. Oracle fallback headroom is not legally identifiable
+
+T022 computes exact E011/E006 per-well quadratic blend headroom before any E013 implementation. Oracle fallback reaches 11.7920 RMSE and continuous blending 11.7172, versus E011 at 12.5508. E006 wins 281/773 wells, so opportunity exists with hidden labels.
+
+Seven legal cross-fitted model families fail to identify it. Hard logistic is best at only +0.006868 RMSE, 2/5 maps and 5/25 cells; median inner AUC is about 0.510, typewell group 0 regresses by about 0.1795, and high-GR-missingness regresses by about 0.0285. All continuous branches are negative, shuffled controls lose, and all outputs reproduce exactly.
+
+D023 closes H016 without E013. The campaign must generate new sequence/state evidence rather than add another router around E011 and E006.
+
 ## Score objectives
 
 These are campaign targets, not promises or medal definitions:
@@ -327,8 +335,9 @@ These defaults may be revised only through a recorded decision before seeing the
 12. **E012/T020 — E011 notebook run and output review — completed 2026-07-23.** Saved version 1 / `scriptVersionId=337242364` completed; all three expected outputs passed row, ID/order, finite-value, and readability checks. No competition submission was made.
 13. **E012/H015 — Regime-specialized coefficient experts — completed and rejected 2026-07-23.** Two screens tested 226 branches with zero positive pooled gains. Formal KNN residual placement reaches 12.5371 but gains only 0.0137, wins 15/25 cells, and fails spatial/typewell transfer. Retain E011 unchanged; no package or submission.
 14. **T018 — Refresh Kaggle public intelligence — completed for the 2026-07-23 cutoff; standing loop remains active.** Exact source/output audit rejects the current composite frontier as independent evidence.
-15. **H016/T022 — Continuous uncertainty-conditioned E011 placement — active preimplementation screen.** Measure oracle headroom and cross-fitted learnability before any E013 code is allowed.
-16. **H012/T016 — Stability-regularized wide residual datum model — queued, lower priority.** Do not make it the immediate next experiment because nonlinear oracle evidence and E012 both argue against another partition or refinement of the same low-order feature space.
+15. **H016/T022 — Continuous uncertainty-conditioned E011 placement — completed and rejected 2026-07-23.** Oracle headroom is 0.759–0.834 RMSE, but no legal branch gains 0.03 or transfers; no E013.
+16. **H017/T023 — Residual sequence-state evidence beyond E011 — queued next.** Preregister a worth screen before any sequence/state implementation.
+17. **H012/T016 — Stability-regularized wide residual datum model — queued, lower priority.** Do not make it the immediate next experiment because nonlinear oracle evidence and E012 both argue against another partition or refinement of the same low-order feature space.
 
 ## Explicitly rejected behavior
 
@@ -355,4 +364,4 @@ Foundation is complete only when:
 - legacy roadmap is preserved;
 - no training run is falsely presented as completed.
 
-Foundation, E010 coverage measurement, E011 statistical/deployment verification, E012 specialist rejection, and the July 23 T018 intelligence refresh are complete. E011 remains deployment primary. The current exact next action is T022: complete the frozen E011/E006 uncertainty/fallback worth screen. E013 remains prohibited unless D022 headroom, cross-fitted gain, map/cell, tail, shift, and negative-control thresholds pass.
+Foundation, E010 coverage measurement, E011 statistical/deployment verification, E012 specialist rejection, the July 23 T018 intelligence refresh, and T022 uncertainty routing screen are complete. E011 remains deployment primary. D023 prohibits E013. The current exact next action is to preregister T023/H017, a residual sequence-state worth screen that must prove simple legal sequence evidence before any neural or new state-path implementation.

@@ -1,0 +1,58 @@
+{
+  "all_controls_pass": true,
+  "decision": "close_h016_without_e013",
+  "edge_cases": {
+    "edge_groups": 10,
+    "passed": [
+      "identical_path_quadratic",
+      "invalid_negative_sse_rejected",
+      "missing_weight_rejected",
+      "nonfinite_weight_rejected",
+      "missing_constant_features",
+      "constant_logistic_target",
+      "tiny_knn_partition",
+      "nonfinite_raw_prediction_rejected",
+      "weight_clipping",
+      "real_coverage_and_membership"
+    ],
+    "status": "PASS"
+  },
+  "expected_files": [
+    "RESULT.md",
+    "candidate_metrics.csv",
+    "context_metrics.csv",
+    "edge_cases.json",
+    "reproduction.json",
+    "run_screen.py",
+    "selected_hyperparameters.csv",
+    "special_slice_metrics.csv",
+    "summary.json",
+    "verification.json"
+  ],
+  "hypothesis_id": "H016",
+  "reproduction": {
+    "candidates_reproduced": 10,
+    "contexts_reproduced": 35,
+    "max_context_rmse_delta": 0.0,
+    "max_context_sse_relative_delta": 0.0,
+    "max_final_mean_weight_delta": 0.0,
+    "max_final_rmse_delta": 0.0,
+    "max_oracle_rmse_delta": 0.0,
+    "status": "PASS"
+  },
+  "schema_version": 1,
+  "screen_status": "worth_screen_reject",
+  "source_commit": "33e2de77dc044832f71de294f69430f3b5d2e79c",
+  "status": "PASS_REJECT_H016",
+  "submission_made": false,
+  "task_id": "T022",
+  "validation": {
+    "focused_tests_passed": 15,
+    "full_repository_tests_passed": 176,
+    "preserved_screen_py_compile": "pass",
+    "sqlite_foreign_key_violations": 0,
+    "sqlite_integrity": "ok",
+    "tracker_sync": "ok",
+    "tracker_validate": "ok"
+  }
+}

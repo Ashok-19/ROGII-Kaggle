@@ -1,0 +1,10 @@
+{
+  "candidates_reproduced": 10,
+  "contexts_reproduced": 35,
+  "max_context_rmse_delta": 0.0,
+  "max_context_sse_relative_delta": 0.0,
+  "max_final_mean_weight_delta": 0.0,
+  "max_final_rmse_delta": 0.0,
+  "max_oracle_rmse_delta": 0.0,
+  "status": "PASS"
+}
