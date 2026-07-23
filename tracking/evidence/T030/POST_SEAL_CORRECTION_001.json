@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "task_id": "T030",
+  "correction_id": "POST_SEAL_CORRECTION_001",
+  "recorded_at": "2026-07-24T00:00:00+05:30",
+  "failed_implementation_commit": "b978c7bd9219b3986a255a4240f7efa1487c55c9",
+  "failed_source_sha256": "07b04bc3add0456018c917395eb933d5d9fa77a3d93458d254984c193563d566",
+  "exception": "DataValidationError: candidate_metrics.csv: inconsistent schema",
+  "exception_log": {"bytes": 1445, "sha256": "9533be1df4993bdfbc1c8dcadd39b37daa4c289f22f7d5d409d04bab0502de38"},
+  "partial_output": {"path": "scratch/agents/t030-complementary-ensemble-20260724/main/candidate_metrics.csv", "bytes": 328, "sha256": "5d7b4d59826fe6c0468a5d1b57d144b246af9548c9560f27fc8f222f63879699", "treated_as_evidence": false, "parsed_or_inspected": false, "deleted_before_rerun": true},
+  "root_cause": "The strict CSV serializer required every row to contain the same keys in the same insertion order. The E011 comparator legitimately lacks candidate-only gate columns and repeated candidate rows add the map field at a different insertion point.",
+  "correction": "Replace only the CSV serializer with a deterministic first-seen union of columns and emit blanks for fields absent from a row.",
+  "scientific_changes": false,
+  "unchanged": ["inputs", "parent fits", "outer and inner memberships", "branches", "grids", "selection objectives", "controls", "scoring", "gates", "row-bound audit"],
+  "corrected_source": {"bytes": 50344, "sha256": "7a89554bedef075f705e1e3e74928cb7006a208d889b59e23d0a0839bc042d4b"},
+  "validation": {"py_compile": true, "edge_groups": 23, "edge_status": "PASS", "heterogeneous_row_serializer_test": "PASS"}
+}

@@ -74,15 +74,18 @@ def _write_json(path: Path, value: Any) -> None:
 def _write_csv(path: Path, rows: Sequence[Mapping[str, Any]]) -> None:
     if not rows:
         raise DataValidationError(f"refusing to write empty CSV {path.name}")
-    fields = list(rows[0])
+    fields: list[str] = []
+    seen: set[str] = set()
+    for row in rows:
+        for field in row:
+            if field not in seen:
+                seen.add(field); fields.append(field)
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=fields, lineterminator="\n")
         writer.writeheader()
         for row in rows:
-            if list(row) != fields:
-                raise DataValidationError(f"{path.name}: inconsistent schema")
-            writer.writerow(row)
+            writer.writerow({field: row.get(field, "") for field in fields})
 
 
 def _sha256(path: Path) -> str:
