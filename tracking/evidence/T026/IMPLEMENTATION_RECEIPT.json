@@ -1,43 +1,23 @@
 {
-  "schema_version": 1,
   "task_id": "T026",
   "hypothesis_id": "H019",
-  "preregistration_commit": "1146e897ef402c54101d866fff88f603d342bf66",
-  "pre_score_amendment_commit": "98aa963bce6aaf8abd1dec51de616c6c6d8ac92d",
-  "frozen_at": "2026-07-23T14:25:13Z",
-  "source_path": "tracking/evidence/T026/run_screen.py",
-  "source_bytes": 68272,
-  "source_sha256": "47e06d8873f4a8e337542b69f178cb90f7e9a07b680177b3f7ca93efcac050aa",
-  "score_blind_validation": {
+  "source_boundary_commit": "98aa963bce6aaf8abd1dec51de616c6c6d8ac92d",
+  "implementation_path": "tracking/evidence/T026/run_screen.py",
+  "implementation_bytes": 65828,
+  "implementation_sha256": "b0e3886bafbb760f09acac0d773da52c66b1202b369fc5789a5c5eb967b671c7",
+  "pre_score_validation": {
     "py_compile": "PASS",
     "edge_status": "PASS",
-    "edge_groups": 36,
-    "synthetic_all_registered_families": "PASS",
-    "synthetic_all_registered_controls": "PASS",
-    "outer_heldout_task_exclusion": "PASS",
-    "global_best_original_only_comparator": "PASS",
-    "ordered_rank_interpolated_source_block_control": "PASS"
+    "edge_groups": 25,
+    "real_target_metrics_computed": false,
+    "real_branch_scores_computed": false
   },
-  "amendment_alignment": {
-    "source_block_seed_26031": true,
-    "source_block_linear_interpolation": true,
-    "task_shuffle_seed_26033": true,
-    "reversed_history_support_order": true,
-    "horizon_feature_seed_26039": true,
-    "complete_history_conditioned_block": true,
-    "heldout_test_horizon_features_unpermuted": true,
-    "exact_e011_from_oof": true,
-    "global_best_original_only_comparator": true
+  "frozen_scope": {
+    "branches": 19,
+    "placements": 4,
+    "contexts": 35,
+    "negative_control_modes": 4,
+    "expected_tasks": 12216
   },
-  "static_scan": {
-    "forbidden_public_well_constants": 0,
-    "train_only_formation_columns": 0,
-    "network_or_kaggle_execution_calls": 0,
-    "raw_features_use_only_tvt_before_cut": true,
-    "context_source_filter_before_fit_and_transform": true
-  },
-  "real_target_metrics_observed_before_freeze": false,
-  "kaggle_executed": false,
-  "submission_created": false,
-  "submission_made": false
+  "notes": "Implementation was compiled and exercised only in score-blind synthetic edge mode before this receipt. No T026 target coefficient, correlation, RMSE, map, cell, stress, slice, horizon-quintile, or control score was observed."
 }

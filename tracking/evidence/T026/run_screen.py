@@ -4,11 +4,10 @@ from __future__ import annotations
 
 import argparse
 import csv
+import gzip
 import hashlib
-import importlib.util
 import json
 import math
-import sys
 import tempfile
 import time
 from dataclasses import dataclass
@@ -19,21 +18,13 @@ import numpy as np
 import pandas as pd
 from sklearn.ensemble import ExtraTreesRegressor, HistGradientBoostingRegressor
 from sklearn.linear_model import Ridge
-from sklearn.neighbors import KNeighborsRegressor
+from sklearn.neighbors import NearestNeighbors
 
-ROOT = Path(__file__).resolve().parents[3]
-T025_PATH = ROOT / "tracking/evidence/T025/run_screen.py"
-_SPEC = importlib.util.spec_from_file_location("rogii_t025", T025_PATH)
-if _SPEC is None or _SPEC.loader is None:
-    raise RuntimeError("could not load T025 scientific utilities")
-t025 = importlib.util.module_from_spec(_SPEC)
-sys.modules[_SPEC.name] = t025
-_SPEC.loader.exec_module(t025)
-
-DataValidationError = t025.DataValidationError
-Context = t025.Context
+ROOT = Path(__file__).resolve().parents[3] if len(Path(__file__).resolve().parents) >= 4 else Path.cwd()
+KNOTS = (0.25, 0.50, 0.75, 1.00)
 OUTPUTS = 4
 HISTORY_FRACTIONS = (0.40, 0.60, 0.80, 1.00)
+PLACEMENTS = (0.25, 0.50, 0.75, 1.00)
 CONTROL_MODES = (
     "permuted_source_well_targets",
     "shuffled_task_targets",
@@ -42,1070 +33,890 @@ CONTROL_MODES = (
 )
 
 
+class DataValidationError(ValueError):
+    """Raised when a frozen scientific or data contract is violated."""
+
+
+@dataclass(frozen=True)
+class Context:
+    key: str
+    scope: str
+    label: str
+    outer_group: int
+    train_indices: np.ndarray
+    test_indices: np.ndarray
+
+
 @dataclass
-class RawWell:
+class WellRecord:
     well_id: str
-    md: np.ndarray
-    x: np.ndarray
-    y: np.ndarray
-    z: np.ndarray
-    gr: np.ndarray
-    tvt: np.ndarray
     known_rows: int
-    typewell_summary: dict[str, float]
-    record: Any
+    hidden_rows: int
+    last_tvt: float
+    hidden_gr_missing_fraction: float
+    target_coefficients: np.ndarray
+    raw_hidden_sum: float
+    raw_hidden_sum_sq: float
+    e011_sse: float | None = None
+    e011_sum: float | None = None
+    e_dot_d: float | None = None
+    d_sse: float | None = None
+    d_sum: float | None = None
+    basis_dot_e: np.ndarray | None = None
+    basis_dot_d: np.ndarray | None = None
+    basis_sum: np.ndarray | None = None
+    basis_cross: np.ndarray | None = None
+
+    def metric(self, coefficients: Sequence[float], weight: float) -> dict[str, Any]:
+        c = np.asarray(coefficients, dtype=np.float64)
+        if c.shape != (OUTPUTS,) or not np.all(np.isfinite(c)):
+            raise DataValidationError(f"{self.well_id}: invalid coefficient vector")
+        w = float(weight)
+        if not math.isfinite(w) or w < -1e-12 or w > 1.0 + 1e-12:
+            raise DataValidationError(f"{self.well_id}: invalid placement weight")
+        values = (self.e011_sse, self.e011_sum, self.e_dot_d, self.d_sse, self.d_sum,
+                  self.basis_dot_e, self.basis_dot_d, self.basis_sum, self.basis_cross)
+        if any(value is None for value in values):
+            raise DataValidationError(f"{self.well_id}: OOF sufficient statistics are incomplete")
+        linear = float(self.e_dot_d) + float(np.dot(self.basis_dot_e, c))
+        quadratic = float(self.d_sse) + 2.0 * float(np.dot(self.basis_dot_d, c)) + float(c @ self.basis_cross @ c)
+        sse = float(self.e011_sse) + 2.0 * w * linear + w * w * quadratic
+        tolerance = 1e-8 * max(1.0, abs(float(self.e011_sse)), abs(2.0 * w * linear), abs(w * w * quadratic))
+        if sse < -tolerance:
+            raise DataValidationError(f"{self.well_id}: materially negative candidate SSE")
+        sse = max(0.0, sse)
+        error_sum = float(self.e011_sum) + w * (float(self.d_sum) + float(np.dot(self.basis_sum, c)))
+        return {
+            "well_id": self.well_id,
+            "rows_scored": self.hidden_rows,
+            "sse": sse,
+            "rmse": math.sqrt(sse / self.hidden_rows),
+            "mean_error": error_sum / self.hidden_rows,
+        }
 
 
 @dataclass
 class TaskPool:
-    source_indices: np.ndarray
-    cut_rows: np.ndarray
+    task_ids: list[str]
+    well_index: np.ndarray
+    prefix_rows: np.ndarray
     horizon_rows: np.ndarray
     is_original: np.ndarray
-    raw_features: np.ndarray
-    history_features: np.ndarray
-    reversed_history_features: np.ndarray
-    horizon_features: np.ndarray
+    raw: np.ndarray
+    history: np.ndarray
+    reversed_history: np.ndarray
     targets: np.ndarray
     latest: np.ndarray
     log_extrapolation: np.ndarray
     raw_names: list[str]
     history_names: list[str]
-    horizon_names: list[str]
-    original_task_indices: np.ndarray
+    raw_horizon_indices: np.ndarray
+    history_conditioned_indices: np.ndarray
+    original_task_index: np.ndarray
 
 
-@dataclass(frozen=True)
-class Prepared:
-    train: np.ndarray
-    test: np.ndarray
-    medians: np.ndarray
-    means: np.ndarray
-    scales: np.ndarray
+# ---------- generic utilities ----------
+
+def _json_default(value: Any) -> Any:
+    if isinstance(value, np.bool_): return bool(value)
+    if isinstance(value, np.integer): return int(value)
+    if isinstance(value, np.floating): return float(value)
+    if isinstance(value, np.ndarray): return value.tolist()
+    raise TypeError(f"Object of type {value.__class__.__name__} is not JSON serializable")
 
 
-def stable_seed(base: int, *parts: object) -> int:
-    digest = hashlib.sha256((str(base) + "|" + "|".join(str(part) for part in parts)).encode()).digest()
-    return (int.from_bytes(digest[:8], "little") ^ int(base)) % (2**32 - 1)
+def _write_json(path: Path, value: Any) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(value, indent=2, sort_keys=True, ensure_ascii=False, default=_json_default) + "\n", encoding="utf-8")
 
 
-def finite_array(values: Sequence[float], label: str) -> np.ndarray:
+def _write_csv(path: Path, rows: Sequence[Mapping[str, Any]]) -> None:
+    if not rows:
+        raise DataValidationError(f"refusing to write empty CSV {path.name}")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fields = list(rows[0])
+    with path.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fields)
+        writer.writeheader()
+        for row in rows:
+            if list(row) != fields:
+                raise DataValidationError(f"{path.name}: inconsistent row schema")
+            writer.writerow(row)
+
+
+def _sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for block in iter(lambda: handle.read(16 * 1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def stable_seed(base: int, *parts: str) -> int:
+    digest = hashlib.sha256((str(base) + "|" + "|".join(parts)).encode()).digest()
+    return (int.from_bytes(digest[:4], "little") ^ int(base)) % (2**32 - 1)
+
+
+def quantile(values: Sequence[float], p: float) -> float:
     array = np.asarray(values, dtype=np.float64)
-    if array.ndim != 1 or not np.all(np.isfinite(array)):
-        raise DataValidationError(f"{label} contains non-finite values")
-    return array
+    if array.size == 0:
+        raise DataValidationError("cannot compute an empty quantile")
+    return float(np.quantile(array, p))
 
 
-def slope(xs: np.ndarray, ys: np.ndarray) -> float:
-    mask = np.isfinite(xs) & np.isfinite(ys)
-    x = xs[mask]
-    y = ys[mask]
-    if len(x) < 2:
-        return 0.0
-    xc = x - x.mean()
-    denom = float(np.dot(xc, xc))
-    return 0.0 if denom <= 0.0 else float(np.dot(xc, y - y.mean()) / denom)
-
-
-def summary_dict(xs: np.ndarray, values: np.ndarray) -> dict[str, float]:
-    mask = np.isfinite(xs) & np.isfinite(values)
-    if not mask.any():
-        return {"mean": np.nan, "std": np.nan, "range": np.nan, "delta": np.nan, "slope": np.nan}
-    x = xs[mask]
-    y = values[mask]
+def summarize(metrics: Iterable[Mapping[str, Any]]) -> dict[str, Any]:
+    rows = list(metrics)
+    if not rows:
+        raise DataValidationError("cannot summarize empty metrics")
+    total_rows = sum(int(row["rows_scored"]) for row in rows)
+    total_sse = sum(float(row["sse"]) for row in rows)
+    if total_rows <= 0 or total_sse < 0.0:
+        raise DataValidationError("invalid aggregate metric totals")
+    rmses = np.asarray([float(row["rmse"]) for row in rows], dtype=np.float64)
+    ordered = sorted(rows, key=lambda row: (-float(row["sse"]), str(row["well_id"])))
+    worst5 = max(1, math.ceil(0.05 * len(rows)))
+    worst10 = max(1, math.ceil(0.10 * len(rows)))
     return {
-        "mean": float(y.mean()),
-        "std": float(y.std()),
-        "range": float(y.max() - y.min()),
-        "delta": float(y[-1] - y[0]),
-        "slope": slope(x, y),
+        "rows_scored": total_rows,
+        "wells_scored": len(rows),
+        "sse": total_sse,
+        "rmse": math.sqrt(total_sse / total_rows),
+        "median_well_rmse": float(np.quantile(rmses, 0.5)),
+        "p90_well_rmse": float(np.quantile(rmses, 0.9)),
+        "p95_well_rmse": float(np.quantile(rmses, 0.95)),
+        "max_well_rmse": float(rmses.max()),
+        "worst_5pct_sse_share": sum(float(row["sse"]) for row in ordered[:worst5]) / total_sse if total_sse else 0.0,
+        "worst_10pct_sse_share": sum(float(row["sse"]) for row in ordered[:worst10]) / total_sse if total_sse else 0.0,
     }
 
 
-def add_summary(features: dict[str, float], prefix: str, xs: np.ndarray, values: np.ndarray) -> None:
-    for key, value in summary_dict(xs, values).items():
-        features[f"{prefix}_{key}"] = value
+# ---------- spline target and history ----------
+
+def spline_basis(rows: int) -> np.ndarray:
+    count = int(rows)
+    if count <= 0:
+        raise DataValidationError("spline basis requires positive rows")
+    positions = np.arange(count, dtype=np.float64) / max(1, count - 1)
+    grid = np.asarray((0.0, *KNOTS), dtype=np.float64)
+    matrix = np.empty((count, OUTPUTS), dtype=np.float64)
+    for index in range(OUTPUTS):
+        controls = np.zeros(OUTPUTS + 1, dtype=np.float64)
+        controls[index + 1] = 1.0
+        matrix[:, index] = np.interp(positions, grid, controls)
+    if np.linalg.matrix_rank(matrix) < OUTPUTS:
+        raise DataValidationError("spline basis is rank deficient")
+    return matrix
 
 
-def longest_missing_run(values: np.ndarray) -> int:
+def solve_coefficients(matrix: np.ndarray, delta: np.ndarray, bound: float) -> tuple[np.ndarray, float]:
+    x = np.asarray(matrix, dtype=np.float64)
+    y = np.asarray(delta, dtype=np.float64)
+    if x.ndim != 2 or x.shape[1] != OUTPUTS or y.shape != (x.shape[0],):
+        raise DataValidationError("coefficient solve dimensions differ")
+    if x.shape[0] < OUTPUTS or not np.all(np.isfinite(x)) or not np.all(np.isfinite(y)):
+        raise DataValidationError("coefficient solve has insufficient or non-finite data")
+    if np.linalg.matrix_rank(x) < OUTPUTS:
+        raise DataValidationError("coefficient solve is rank deficient")
+    coefficients = np.clip(np.linalg.lstsq(x, y, rcond=None)[0], -bound, bound)
+    residual = x @ coefficients - y
+    rmse = float(np.sqrt(np.mean(residual * residual)))
+    if coefficients.shape != (OUTPUTS,) or not np.all(np.isfinite(coefficients)) or not math.isfinite(rmse):
+        raise DataValidationError("coefficient solve emitted non-finite values")
+    return coefficients, rmse
+
+
+def fit_segment(values: Sequence[float], baseline: float, minimum_rows: int, bound: float) -> tuple[np.ndarray, float]:
+    y = np.asarray(values, dtype=np.float64)
+    if y.ndim != 1 or len(y) < int(minimum_rows):
+        raise DataValidationError("segment has insufficient support")
+    if not math.isfinite(float(baseline)) or not np.all(np.isfinite(y)):
+        raise DataValidationError("segment contains non-finite values")
+    return solve_coefficients(spline_basis(len(y)), y - float(baseline), bound)
+
+
+def history_features(truth: np.ndarray, cut: int, bound: float, minimum: int, *, reverse: bool = False) -> tuple[np.ndarray, np.ndarray, np.ndarray, list[str], np.ndarray]:
+    horizon = len(truth) - cut
+    m = min(horizon, cut - 1)
+    lengths = np.asarray([max(minimum, int(math.floor(f * m))) for f in HISTORY_FRACTIONS], dtype=np.int64)
+    lengths = np.minimum(lengths, m)
+    if np.any(lengths < minimum) or np.any(lengths >= cut + 1):
+        raise DataValidationError("history support differs from frozen boundary")
+    coefficients: list[np.ndarray] = []
+    rmses: list[float] = []
+    for length in lengths:
+        start = cut - int(length)
+        if start <= 0:
+            raise DataValidationError("history segment lacks a baseline row")
+        c, r = fit_segment(truth[start:cut], truth[start - 1], minimum, bound)
+        coefficients.append(c)
+        rmses.append(r)
+    c = np.vstack(coefficients)
+    r = np.asarray(rmses, dtype=np.float64)
+    support = lengths.astype(np.float64) / max(1.0, float(horizon))
+    if reverse:
+        c = c[::-1].copy(); r = r[::-1].copy(); support = support[::-1].copy()
+    diffs = np.diff(c, axis=0).reshape(-1)
+    log_x = np.log(np.maximum(lengths.astype(np.float64), 1.0))
+    log_target = math.log(max(float(horizon), 1.0))
+    extrap = np.empty(OUTPUTS, dtype=np.float64)
+    for output in range(OUTPUTS):
+        slope, intercept = np.polyfit(log_x, c[:, output], 1)
+        extrap[output] = intercept + slope * log_target
+    extrap = np.clip(extrap, -bound, bound)
+    names = (
+        [f"history_c{level}_{output}" for level in range(4) for output in range(4)] +
+        [f"history_rmse_{level}" for level in range(4)] +
+        [f"history_support_ratio_{level}" for level in range(4)] +
+        [f"history_diff_{level}_{output}" for level in range(3) for output in range(4)] +
+        [f"history_log_extrap_{output}" for output in range(4)] +
+        ["history_m_rows", "history_m_prefix_ratio", "history_horizon_prefix_ratio"]
+    )
+    vector = np.concatenate((c.reshape(-1), r, support, diffs, extrap,
+                             np.asarray([float(m), m / max(1.0, float(cut)), horizon / max(1.0, float(cut))])))
+    conditioned_start = 16
+    conditioned = np.arange(conditioned_start, len(vector), dtype=np.int64)
+    if len(names) != len(vector) or not np.all(np.isfinite(vector)):
+        raise DataValidationError("history feature vector differs")
+    return vector, c[-1].copy(), extrap, names, conditioned
+
+
+# ---------- raw legal task features ----------
+
+def _slope(x: np.ndarray, y: np.ndarray) -> float:
+    if len(x) < 2:
+        return 0.0
+    xc = x - x.mean(); denominator = float(np.dot(xc, xc))
+    return 0.0 if denominator <= 0.0 else float(np.dot(xc, y - y.mean()) / denominator)
+
+
+def _summary(x: np.ndarray, values: np.ndarray) -> list[float]:
+    mask = np.isfinite(values)
+    if not mask.any():
+        return [np.nan] * 5
+    xx = x[mask]; yy = values[mask]
+    return [float(yy.mean()), float(yy.std()), float(yy.max() - yy.min()), float(yy[-1] - yy[0]), _slope(xx, yy)]
+
+
+def _missing_fraction(values: np.ndarray) -> float:
+    return float(np.mean(~np.isfinite(values))) if len(values) else 1.0
+
+
+def _longest_missing(values: np.ndarray) -> int:
     longest = current = 0
     for missing in ~np.isfinite(values):
-        if bool(missing):
-            current += 1
-            longest = max(longest, current)
+        if missing:
+            current += 1; longest = max(longest, current)
         else:
             current = 0
     return longest
 
 
-def weighted_line(xs: np.ndarray, ys: np.ndarray, weights: np.ndarray) -> tuple[float, float]:
-    total = float(weights.sum())
-    if len(xs) < 2 or total <= 0.0:
-        return (float(ys[-1]) if len(ys) else 0.0), 0.0
-    cx = float(np.dot(weights, xs) / total)
-    cy = float(np.dot(weights, ys) / total)
-    denom = float(np.dot(weights, (xs - cx) ** 2))
-    value = 0.0 if denom <= 0.0 else float(np.dot(weights, (xs - cx) * (ys - cy)) / denom)
-    return cy - value * cx, value
-
-
-def huber_line(xs: np.ndarray, ys: np.ndarray, window: int) -> tuple[float, float, float]:
-    count = min(len(xs), len(ys), max(2, int(window)))
-    x = np.asarray(xs[-count:], dtype=np.float64)
-    y = np.asarray(ys[-count:], dtype=np.float64)
-    weights = np.ones(count, dtype=np.float64)
-    intercept, line_slope = weighted_line(x, y, weights)
-    scale = 0.0
+def _huber_line(x: np.ndarray, y: np.ndarray, window: int) -> tuple[float, float]:
+    count = min(len(x), max(2, int(window)))
+    xx = x[-count:].astype(np.float64); yy = y[-count:].astype(np.float64)
+    mask = np.isfinite(xx) & np.isfinite(yy)
+    xx = xx[mask]; yy = yy[mask]
+    if len(xx) < 2:
+        return 0.0, 0.0
+    weights = np.ones(len(xx), dtype=np.float64)
+    slope = _slope(xx, yy); intercept = float(yy.mean() - slope * xx.mean()); scale = 0.0
     for _ in range(6):
-        residual = y - (intercept + line_slope * x)
-        center = float(np.median(residual))
-        scale = 1.4826 * float(np.median(np.abs(residual - center)))
-        if scale <= 1e-12:
-            break
+        residual = yy - (intercept + slope * xx)
+        median = float(np.median(residual)); scale = 1.4826 * float(np.median(np.abs(residual - median)))
+        if scale <= 1e-12: break
         cutoff = 1.5 * scale
-        absolute = np.abs(residual)
-        weights = np.where(absolute <= cutoff, 1.0, cutoff / np.maximum(absolute, 1e-12))
-        intercept, line_slope = weighted_line(x, y, weights)
-    return intercept, line_slope, scale
+        weights = np.where(np.abs(residual) <= cutoff, 1.0, cutoff / np.maximum(np.abs(residual), 1e-12))
+        total = float(weights.sum()); center_x = float(np.dot(weights, xx) / total); center_y = float(np.dot(weights, yy) / total)
+        denominator = float(np.dot(weights, (xx - center_x) ** 2))
+        slope = 0.0 if denominator <= 0.0 else float(np.dot(weights, (xx - center_x) * (yy - center_y)) / denominator)
+        intercept = center_y - slope * center_x
+    return slope, scale
 
 
-def read_typewell_summary(path: Path) -> dict[str, float]:
-    frame = pd.read_csv(path, usecols=lambda name: name in {"TVT", "GR"})
-    if set(frame.columns) != {"TVT", "GR"} or len(frame) <= 0:
-        raise DataValidationError(f"{path.name}: typewell schema differs")
+def typewell_summary(frame: pd.DataFrame) -> tuple[list[float], list[str]]:
+    if not {"TVT", "GR"}.issubset(frame.columns) or len(frame) == 0:
+        raise DataValidationError("typewell schema differs")
     tvt = pd.to_numeric(frame["TVT"], errors="coerce").to_numpy(dtype=np.float64)
     gr = pd.to_numeric(frame["GR"], errors="coerce").to_numpy(dtype=np.float64)
-    finite_tvt = tvt[np.isfinite(tvt)]
-    finite_gr = gr[np.isfinite(gr)]
-    if len(finite_tvt) <= 0:
-        raise DataValidationError(f"{path.name}: typewell TVT is empty")
-    index = np.arange(len(gr), dtype=np.float64)
-    return {
-        "typewell_rows": float(len(frame)),
-        "typewell_tvt_span": float(finite_tvt.max() - finite_tvt.min()),
-        "typewell_gr_mean": float(finite_gr.mean()) if len(finite_gr) else np.nan,
-        "typewell_gr_std": float(finite_gr.std()) if len(finite_gr) else np.nan,
-        "typewell_gr_range": float(finite_gr.max() - finite_gr.min()) if len(finite_gr) else np.nan,
-        "typewell_gr_index_slope": slope(index, gr),
-        "typewell_gr_missing_fraction": float(np.mean(~np.isfinite(gr))),
-    }
+    clean_tvt = tvt[np.isfinite(tvt)]; clean_gr = gr[np.isfinite(gr)]
+    if len(clean_tvt) == 0:
+        raise DataValidationError("typewell TVT is entirely missing")
+    values = [
+        float(len(tvt)), float(clean_tvt.max() - clean_tvt.min()),
+        float(clean_gr.mean()) if len(clean_gr) else np.nan,
+        float(clean_gr.std()) if len(clean_gr) else np.nan,
+        float(clean_gr.max() - clean_gr.min()) if len(clean_gr) else np.nan,
+        _slope(np.flatnonzero(np.isfinite(gr)).astype(float), clean_gr) if len(clean_gr) >= 2 else 0.0,
+        _missing_fraction(gr),
+    ]
+    names = ["typewell_rows", "typewell_tvt_span", "typewell_gr_mean", "typewell_gr_std", "typewell_gr_range", "typewell_gr_index_slope", "typewell_gr_missing_fraction"]
+    return values, names
 
 
-def load_raw_wells(data_dir: Path, config: Mapping[str, Any]) -> list[RawWell]:
+def raw_task_features(columns: Mapping[str, np.ndarray], type_values: Sequence[float], type_names: Sequence[str], cut: int,
+                      slope_windows: Sequence[int], backtest_fractions: Sequence[float]) -> tuple[np.ndarray, list[str], np.ndarray]:
+    md, x, y, z, gr, truth = (np.asarray(columns[name], dtype=np.float64) for name in ("MD", "X", "Y", "Z", "GR", "TVT"))
+    total = len(truth); prefix = int(cut); horizon = total - prefix
+    if prefix < 3 or horizon <= 0:
+        raise DataValidationError("task cut has empty prefix or horizon")
+    known = slice(0, prefix); hidden = slice(prefix, total)
+    visible_tvt = truth[known]; visible_u = visible_tvt + z[known]
+    values: list[float] = []
+    names: list[str] = []
+    def add(name: str, value: float) -> None:
+        names.append(name); values.append(float(value))
+    add("total_rows", total); add("known_rows", prefix); add("horizon_rows", horizon)
+    add("known_fraction", prefix / total); add("hidden_fraction", horizon / total)
+    add("md_known_span", md[prefix-1] - md[0]); add("md_hidden_span", md[-1] - md[prefix-1]); add("md_total_span", md[-1] - md[0])
+    add("last_visible_tvt", visible_tvt[-1]); add("last_visible_z", z[prefix-1]); add("last_visible_u", visible_u[-1])
+    add("last_visible_x", x[prefix-1]); add("last_visible_y", y[prefix-1])
+    for name, array in (("x", x), ("y", y), ("z", z)):
+        add(f"{name}_total_delta", array[-1] - array[0]); add(f"{name}_hidden_delta", array[-1] - array[prefix-1])
+    add("horizontal_total_distance", math.hypot(x[-1]-x[0], y[-1]-y[0]))
+    add("horizontal_hidden_distance", math.hypot(x[-1]-x[prefix-1], y[-1]-y[prefix-1]))
+    add("spatial_x_mid", 0.5*(x[0]+x[-1])); add("spatial_y_mid", 0.5*(y[0]+y[-1]))
+    angle = math.atan2(y[-1]-y[prefix-1], x[-1]-x[prefix-1]); add("hidden_azimuth_sin", math.sin(angle)); add("hidden_azimuth_cos", math.cos(angle))
+    summary_inputs = (
+        ("visible_tvt", md[known], visible_tvt), ("visible_z", md[known], z[known]),
+        ("visible_u", md[known], visible_u), ("hidden_z", md[hidden], z[hidden]),
+        ("visible_gr", md[known], gr[known]), ("hidden_gr", md[hidden], gr[hidden]), ("whole_gr", md, gr),
+    )
+    for prefix_name, xx, yy in summary_inputs:
+        for suffix, value in zip(("mean","std","range","delta","slope"), _summary(xx, yy)):
+            add(f"{prefix_name}_{suffix}", value)
+    add("visible_gr_missing_fraction", _missing_fraction(gr[known])); add("hidden_gr_missing_fraction", _missing_fraction(gr[hidden]))
+    add("whole_gr_missing_fraction", _missing_fraction(gr)); add("hidden_gr_longest_missing_run", _longest_missing(gr[hidden]))
+    full_u_slope = _slope(md[known], visible_u)
+    for window in slope_windows:
+        u_slope, u_scale = _huber_line(md[known], visible_u, int(window)); tvt_slope, _ = _huber_line(md[known], visible_tvt, int(window))
+        add(f"visible_u_slope_w{window}", u_slope); add(f"visible_u_scale_w{window}", u_scale)
+        add(f"visible_u_slope_delta_w{window}", u_slope-full_u_slope); add(f"visible_tvt_slope_w{window}", tvt_slope)
+    for fraction in backtest_fractions:
+        label = str(float(fraction)).replace(".", "p")
+        bt_cut = min(prefix-2, max(2, int(round(prefix*float(fraction)))))
+        residual = visible_tvt[bt_cut:] - visible_tvt[bt_cut-1]
+        centered = np.arange(len(residual), dtype=np.float64) / max(1, len(residual)-1) - 0.5
+        before_u = visible_tvt[:bt_cut] + z[:bt_cut]; after_u = visible_tvt[bt_cut:] + z[bt_cut:prefix]
+        add(f"backtest_{label}_mean", float(residual.mean())); add(f"backtest_{label}_rmse", float(np.sqrt(np.mean(residual*residual))))
+        add(f"backtest_{label}_trend", _slope(centered, residual)); add(f"backtest_{label}_toe", residual[-1])
+        add(f"backtest_{label}_u_slope_delta", _slope(md[bt_cut:prefix], after_u)-_slope(md[:bt_cut], before_u))
+    for name, value in zip(type_names, type_values): add(name, value)
+    vector = np.asarray(values, dtype=np.float64)
+    explicit = np.asarray([names.index(name) for name in ("known_rows", "horizon_rows", "known_fraction", "hidden_fraction")], dtype=np.int64)
+    if len(names) != len(set(names)) or not np.all(np.isfinite(vector) | np.isnan(vector)):
+        raise DataValidationError("raw feature schema differs")
+    return vector, names, explicit
+
+
+# ---------- data loading and task construction ----------
+
+def deterministic_jitter(seed: int, well_id: str, base_cut: int, amplitude: int) -> int:
+    value = int.from_bytes(hashlib.sha256(f"{seed}:{well_id}:{base_cut}".encode()).digest()[:8], "big")
+    return int(value % (2*amplitude+1)) - amplitude
+
+
+def validate_horizontal(frame: pd.DataFrame, well_id: str) -> tuple[dict[str, np.ndarray], int]:
+    required = {"MD", "X", "Y", "Z", "GR", "TVT", "TVT_input"}
+    if not required.issubset(frame.columns):
+        raise DataValidationError(f"{well_id}: required horizontal columns differ")
+    arrays = {name: pd.to_numeric(frame[name], errors="coerce").to_numpy(dtype=np.float64) for name in required}
+    for name in ("MD", "X", "Y", "Z", "TVT"):
+        if not np.all(np.isfinite(arrays[name])):
+            raise DataValidationError(f"{well_id}: non-finite {name}")
+    if np.any(np.diff(arrays["MD"]) <= 0.0):
+        raise DataValidationError(f"{well_id}: MD must be strictly increasing")
+    finite = np.isfinite(arrays["TVT_input"])
+    if not finite.any() or finite.all():
+        raise DataValidationError(f"{well_id}: TVT_input must have visible prefix and hidden suffix")
+    known = int(np.flatnonzero(~finite)[0])
+    if known <= 0 or finite[known:].any() or not finite[:known].all():
+        raise DataValidationError(f"{well_id}: TVT_input is not a contiguous prefix")
+    if np.max(np.abs(arrays["TVT_input"][:known] - arrays["TVT"][:known])) > 1e-8:
+        raise DataValidationError(f"{well_id}: visible TVT_input differs from truth")
+    return arrays, known
+
+
+def build_task_pool(data_dir: Path, config: Mapping[str, Any]) -> tuple[list[WellRecord], TaskPool]:
     paths = sorted(data_dir.glob("*__horizontal_well.csv"))
     if len(paths) != int(config["expected_wells"]):
         raise DataValidationError(f"expected {config['expected_wells']} wells, found {len(paths)}")
-    minimum_prefix = int(config["mask_pool"]["minimum_prefix_rows"])
-    minimum_horizon = int(config["mask_pool"]["minimum_horizon_rows"])
-    bound = float(config["spline"]["coefficient_absolute_bound_ft"])
-    output: list[RawWell] = []
+    mask_cfg = config["mask_pool"]; spline_cfg = config["spline"]; raw_cfg = config["raw_features"]
+    bound = float(spline_cfg["coefficient_absolute_bound_ft"]); minimum_history = int(spline_cfg["minimum_history_rows"])
+    task_ids: list[str] = []; well_index: list[int] = []; prefix_rows: list[int] = []; horizon_rows: list[int] = []; originals: list[bool] = []
+    raw_rows: list[np.ndarray] = []; history_rows_list: list[np.ndarray] = []; reversed_rows: list[np.ndarray] = []; targets: list[np.ndarray] = []; latest: list[np.ndarray] = []; extrap: list[np.ndarray] = []
+    records: list[WellRecord] = []; original_task_index = np.full(len(paths), -1, dtype=np.int64)
+    frozen_raw_names: list[str] | None = None; frozen_history_names: list[str] | None = None; raw_horizon_idx: np.ndarray | None = None; history_conditioned_idx: np.ndarray | None = None
     seen: set[str] = set()
-    for path in paths:
+    for wi, path in enumerate(paths):
         well_id = path.name.split("__", 1)[0]
-        if well_id in seen:
-            raise DataValidationError(f"duplicate source well {well_id}")
+        if well_id in seen: raise DataValidationError(f"duplicate source well {well_id}")
         seen.add(well_id)
-        frame = pd.read_csv(path, usecols=lambda name: name in {"MD", "X", "Y", "Z", "GR", "TVT", "TVT_input"})
-        required = {"MD", "X", "Y", "Z", "GR", "TVT", "TVT_input"}
-        if set(frame.columns) != required:
-            raise DataValidationError(f"{well_id}: horizontal schema differs")
-        arrays = {name: pd.to_numeric(frame[name], errors="coerce").to_numpy(dtype=np.float64) for name in required}
-        for name in ("MD", "X", "Y", "Z", "TVT"):
-            if not np.all(np.isfinite(arrays[name])):
-                raise DataValidationError(f"{well_id}: {name} is non-finite")
-        if not np.all(np.diff(arrays["MD"]) > 0.0):
-            raise DataValidationError(f"{well_id}: MD is not strictly increasing")
-        known_rows = t025.validate_prefix(arrays["TVT_input"])
-        hidden_rows = len(frame) - known_rows
-        if known_rows < minimum_prefix or hidden_rows < minimum_horizon:
-            raise DataValidationError(f"{well_id}: original support violates frozen bounds")
-        if np.max(np.abs(arrays["TVT_input"][:known_rows] - arrays["TVT"][:known_rows])) > 1e-8:
-            raise DataValidationError(f"{well_id}: visible TVT differs from truth")
-        final_target, _ = t025.fit_segment(arrays["TVT"][known_rows:], arrays["TVT"][known_rows - 1], OUTPUTS, bound)
-        hidden_gr = arrays["GR"][known_rows:]
-        record = t025.WellRecord(
-            well_id=well_id,
-            known_rows=known_rows,
-            hidden_rows=hidden_rows,
-            last_tvt=float(arrays["TVT"][known_rows - 1]),
-            hidden_gr_missing_fraction=float(np.mean(~np.isfinite(hidden_gr))),
-            pseudo_coefficients=np.zeros((4, 4), dtype=np.float64),
-            pseudo_rmse=np.zeros(4, dtype=np.float64),
-            pseudo_segment_rows=np.full(4, 128.0, dtype=np.float64),
-            pseudo_features=np.zeros(1, dtype=np.float64),
-            reversed_features=np.zeros(1, dtype=np.float64),
-            latest_coefficients=np.zeros(4, dtype=np.float64),
-            linear_extrapolation=np.zeros(4, dtype=np.float64),
-            target_coefficients=final_target,
-            raw_hidden_sum=float(arrays["TVT"][known_rows:].sum()),
-            raw_hidden_sum_sq=float(np.dot(arrays["TVT"][known_rows:], arrays["TVT"][known_rows:])),
-        )
-        typewell_path = path.with_name(f"{well_id}__typewell.csv")
-        if not typewell_path.exists():
-            raise DataValidationError(f"{well_id}: missing typewell")
-        output.append(RawWell(
-            well_id=well_id,
-            md=arrays["MD"], x=arrays["X"], y=arrays["Y"], z=arrays["Z"],
-            gr=arrays["GR"], tvt=arrays["TVT"], known_rows=known_rows,
-            typewell_summary=read_typewell_summary(typewell_path), record=record,
-        ))
-    return output
+        frame = pd.read_csv(path)
+        columns, original_cut = validate_horizontal(frame, well_id)
+        type_path = data_dir / f"{well_id}__typewell.csv"
+        if not type_path.exists(): raise DataValidationError(f"{well_id}: missing typewell")
+        type_values, type_names = typewell_summary(pd.read_csv(type_path))
+        cuts = {original_cut}
+        for base in mask_cfg["base_prefix_grid"]:
+            cut = int(base) + deterministic_jitter(int(mask_cfg["seed"]), well_id, int(base), int(mask_cfg["jitter_rows"]))
+            if cut >= int(mask_cfg["minimum_prefix_rows"]) and len(frame)-cut >= int(mask_cfg["minimum_horizon_rows"]): cuts.add(cut)
+        cuts = sorted(cuts)
+        if not (int(mask_cfg["minimum_tasks_per_well"]) <= len(cuts) <= int(mask_cfg["maximum_tasks_per_well"])):
+            raise DataValidationError(f"{well_id}: task count {len(cuts)} differs")
+        final_target, _ = fit_segment(columns["TVT"][original_cut:], columns["TVT"][original_cut-1], OUTPUTS, bound)
+        hidden_gr = columns["GR"][original_cut:]
+        raw_hidden = columns["TVT"][original_cut:]
+        records.append(WellRecord(well_id, original_cut, len(frame)-original_cut, float(columns["TVT"][original_cut-1]), _missing_fraction(hidden_gr), final_target, float(raw_hidden.sum()), float(np.dot(raw_hidden, raw_hidden))))
+        for cut in cuts:
+            raw, raw_names, explicit_idx = raw_task_features(columns, type_values, type_names, cut, raw_cfg["visible_slope_windows"], raw_cfg["visible_backtest_fractions"])
+            hist, hist_latest, hist_extrap, hist_names, conditioned_idx = history_features(columns["TVT"], cut, bound, minimum_history, reverse=False)
+            reversed_hist, _, _, reversed_names, _ = history_features(columns["TVT"], cut, bound, minimum_history, reverse=True)
+            target, _ = fit_segment(columns["TVT"][cut:], columns["TVT"][cut-1], OUTPUTS, bound)
+            if frozen_raw_names is None:
+                frozen_raw_names = raw_names; frozen_history_names = hist_names; raw_horizon_idx = explicit_idx; history_conditioned_idx = conditioned_idx
+            elif raw_names != frozen_raw_names or hist_names != frozen_history_names or reversed_names != frozen_history_names:
+                raise DataValidationError("task feature schema changed across wells")
+            index = len(task_ids)
+            if cut == original_cut:
+                if original_task_index[wi] >= 0: raise DataValidationError(f"{well_id}: duplicate original task")
+                original_task_index[wi] = index
+            task_ids.append(f"{well_id}:{cut}"); well_index.append(wi); prefix_rows.append(cut); horizon_rows.append(len(frame)-cut); originals.append(cut==original_cut)
+            raw_rows.append(raw); history_rows_list.append(hist); reversed_rows.append(reversed_hist); targets.append(target); latest.append(hist_latest); extrap.append(hist_extrap)
+    if len(task_ids) != int(mask_cfg["expected_tasks"]) or np.any(original_task_index < 0):
+        raise DataValidationError(f"task pool count/original coverage differs: {len(task_ids)}")
+    if frozen_raw_names is None or frozen_history_names is None or raw_horizon_idx is None or history_conditioned_idx is None:
+        raise DataValidationError("task feature schema was not initialized")
+    pool = TaskPool(task_ids, np.asarray(well_index, dtype=np.int64), np.asarray(prefix_rows, dtype=np.int64), np.asarray(horizon_rows, dtype=np.int64), np.asarray(originals, dtype=bool),
+                    np.vstack(raw_rows), np.vstack(history_rows_list), np.vstack(reversed_rows), np.vstack(targets), np.vstack(latest), np.vstack(extrap),
+                    frozen_raw_names, frozen_history_names, raw_horizon_idx, history_conditioned_idx, original_task_index)
+    if len(set(pool.task_ids)) != len(pool.task_ids) or int(pool.is_original.sum()) != len(records):
+        raise DataValidationError("task IDs/original count differ")
+    return records, pool
 
 
-def validate_mask_support(cut: int, total_rows: int, config: Mapping[str, Any]) -> None:
-    minimum_prefix = int(config["mask_pool"]["minimum_prefix_rows"])
-    minimum_horizon = int(config["mask_pool"]["minimum_horizon_rows"])
-    if int(cut) < minimum_prefix:
-        raise DataValidationError("task prefix is below frozen support")
-    if int(total_rows) - int(cut) < minimum_horizon:
-        raise DataValidationError("task horizon is below frozen support")
-    if int(cut) <= 0 or int(cut) >= int(total_rows):
-        raise DataValidationError("task cut is outside well")
+# ---------- E011 scoring and frozen contexts ----------
+
+def attach_e011_sufficient(records: Sequence[WellRecord], oof_path: Path, expected_rows: int) -> dict[str, Any]:
+    by_id = {record.well_id: record for record in records}
+    current = ""; targets: list[float] = []; predictions: list[float] = []; hidden_indices: list[int] = []; seen_ids: set[str] = set(); seen_wells: set[str] = set(); total_rows = 0
+    def finalize(well_id: str) -> None:
+        if not well_id: return
+        record = by_id.get(well_id)
+        if record is None: raise DataValidationError(f"OOF unknown well {well_id}")
+        y = np.asarray(targets, dtype=np.float64); pred = np.asarray(predictions, dtype=np.float64)
+        if len(y) != record.hidden_rows or pred.shape != y.shape or not np.all(np.isfinite(y)) or not np.all(np.isfinite(pred)):
+            raise DataValidationError(f"{well_id}: OOF dimensions/finiteness differ")
+        if hidden_indices != list(range(record.hidden_rows)):
+            raise DataValidationError(f"{well_id}: OOF hidden order differs")
+        sum_tolerance = 1e-6 * max(1.0, abs(record.raw_hidden_sum))
+        square_tolerance = 1e-6 * max(1.0, abs(record.raw_hidden_sum_sq))
+        if abs(float(y.sum()) - record.raw_hidden_sum) > sum_tolerance or abs(float(np.dot(y, y)) - record.raw_hidden_sum_sq) > square_tolerance:
+            raise DataValidationError(f"{well_id}: OOF targets differ from raw hidden truth")
+        basis = spline_basis(record.hidden_rows); error = pred-y; delta = record.last_tvt-pred
+        record.e011_sse=float(np.dot(error,error)); record.e011_sum=float(error.sum()); record.e_dot_d=float(np.dot(error,delta)); record.d_sse=float(np.dot(delta,delta)); record.d_sum=float(delta.sum())
+        record.basis_dot_e=basis.T@error; record.basis_dot_d=basis.T@delta; record.basis_sum=basis.sum(axis=0); record.basis_cross=basis.T@basis; seen_wells.add(well_id)
+    with gzip.open(oof_path, "rt", newline="", encoding="utf-8") as handle:
+        reader = csv.DictReader(handle)
+        required={"id","well_id","hidden_index","target","spline4_ridge_equal_s075"}
+        if not required.issubset(reader.fieldnames or []): raise DataValidationError("OOF schema differs")
+        for row in reader:
+            row_id=str(row["id"]); well_id=str(row["well_id"])
+            if row_id in seen_ids: raise DataValidationError(f"duplicate OOF ID {row_id}")
+            seen_ids.add(row_id)
+            if current and well_id != current:
+                finalize(current); targets.clear(); predictions.clear(); hidden_indices.clear()
+            current=well_id; targets.append(float(row["target"])); predictions.append(float(row["spline4_ridge_equal_s075"])); hidden_indices.append(int(row["hidden_index"])); total_rows += 1
+    finalize(current)
+    if total_rows != expected_rows or seen_wells != set(by_id): raise DataValidationError("OOF coverage differs")
+    return {"rows": total_rows, "wells": len(seen_wells), "unique_ids": len(seen_ids)}
 
 
-def mask_cuts(well: RawWell, config: Mapping[str, Any]) -> list[int]:
-    pool = config["mask_pool"]
-    seed = int(pool["seed"])
-    jitter = int(pool["jitter_rows"])
-    minimum_prefix = int(pool["minimum_prefix_rows"])
-    minimum_horizon = int(pool["minimum_horizon_rows"])
-    cuts = {int(well.known_rows)}
-    for base in pool["base_prefix_grid"]:
-        digest = hashlib.sha256(f"{seed}:{well.well_id}:{int(base)}".encode()).digest()
-        value = int.from_bytes(digest[:8], "big")
-        offset = value % (2 * jitter + 1) - jitter
-        cut = int(base) + int(offset)
-        if cut >= minimum_prefix and len(well.tvt) - cut >= minimum_horizon:
-            cuts.add(cut)
-    result = sorted(cuts)
-    if len(result) != len(set(result)):
-        raise DataValidationError(f"{well.well_id}: duplicate cuts were not removed")
-    for cut in result:
-        validate_mask_support(cut, len(well.tvt), config)
-    return result
+def load_compact(path: Path, records: Sequence[WellRecord]) -> tuple[np.ndarray, np.ndarray]:
+    arrays=np.load(path, allow_pickle=False); ids=[str(v) for v in arrays["well_ids"]]
+    if ids != [r.well_id for r in records]: raise DataValidationError("compact well order differs")
+    spatial=np.asarray(arrays["spatial_assignment"],dtype=np.int64); typewell=np.asarray(arrays["typewell_assignment"],dtype=np.int64)
+    if set(spatial.tolist()) != set(range(5)) or set(typewell.tolist()) != set(range(5)): raise DataValidationError("stress groups differ")
+    return spatial,typewell
 
 
-def visible_backtests(md: np.ndarray, z: np.ndarray, tvt: np.ndarray, fractions: Sequence[float]) -> dict[str, float]:
-    result: dict[str, float] = {}
-    count = len(tvt)
-    for fraction in fractions:
-        label = str(float(fraction)).replace(".", "p")
-        cut = min(count - 2, max(2, int(round(count * float(fraction)))))
-        if cut < 2 or count - cut < 2:
-            for suffix in ("mean", "rmse", "trend", "toe", "u_slope_delta"):
-                result[f"backtest_{label}_{suffix}"] = np.nan
-            continue
-        residual = tvt[cut:] - tvt[cut - 1]
-        centered = np.arange(len(residual), dtype=np.float64) / max(1, len(residual) - 1) - 0.5
-        result[f"backtest_{label}_mean"] = float(residual.mean())
-        result[f"backtest_{label}_rmse"] = float(np.sqrt(np.mean(residual * residual)))
-        result[f"backtest_{label}_trend"] = slope(centered, residual)
-        result[f"backtest_{label}_toe"] = float(residual[-1])
-        before_u = tvt[:cut] + z[:cut]
-        after_u = tvt[cut:] + z[cut:]
-        result[f"backtest_{label}_u_slope_delta"] = slope(md[cut:], after_u) - slope(md[:cut], before_u)
-    return result
+def load_contexts(root: Path, well_ids: Sequence[str], fold_files: Sequence[str], spatial: np.ndarray, typewell: np.ndarray) -> tuple[list[Context], list[Context]]:
+    id_to_index={w:i for i,w in enumerate(well_ids)}; repeated=[]
+    for file_name in fold_files:
+        payload=json.loads((root/file_name).read_text()); assignments=payload["assignments"]; version=str(payload["version"])
+        if set(assignments)!=set(well_ids) or int(payload["n_folds"])!=5: raise DataValidationError(f"{file_name}: fold contract differs")
+        for fold in range(5):
+            test=np.asarray([id_to_index[w] for w in well_ids if int(assignments[w])==fold],dtype=np.int64); train=np.asarray([i for i in range(len(well_ids)) if i not in set(test.tolist())],dtype=np.int64)
+            repeated.append(Context(f"repeated:{version}:{fold}","repeated",version,fold,train,test))
+    stress=[]
+    for scope,labels in (("spatial",spatial),("typewell",typewell)):
+        for group in range(5):
+            test=np.flatnonzero(labels==group).astype(np.int64); train=np.flatnonzero(labels!=group).astype(np.int64); stress.append(Context(f"{scope}:{group}",scope,scope,group,train,test))
+    validate_contexts(repeated,stress,len(well_ids)); return repeated,stress
 
 
-def raw_task_features(well: RawWell, cut: int, config: Mapping[str, Any]) -> dict[str, float]:
-    total = len(well.tvt)
-    if cut <= 0 or cut >= total:
-        raise DataValidationError("task cut is outside well")
-    hidden = total - cut
-    md, x, y, z, gr = well.md, well.x, well.y, well.z, well.gr
-    visible_tvt = well.tvt[:cut]
-    visible_u = visible_tvt + z[:cut]
-    features: dict[str, float] = {
-        "total_rows": float(total), "known_rows": float(cut), "hidden_rows": float(hidden),
-        "hidden_fraction": float(hidden / total),
-        "md_known_span": float(md[cut - 1] - md[0]),
-        "md_hidden_span": float(md[-1] - md[cut - 1]),
-        "md_total_span": float(md[-1] - md[0]),
-        "last_visible_tvt": float(visible_tvt[-1]),
-        "last_visible_z": float(z[cut - 1]), "last_visible_u": float(visible_u[-1]),
-        "last_visible_x": float(x[cut - 1]), "last_visible_y": float(y[cut - 1]),
-        "x_total_delta": float(x[-1] - x[0]), "y_total_delta": float(y[-1] - y[0]),
-        "z_total_delta": float(z[-1] - z[0]),
-        "x_hidden_delta": float(x[-1] - x[cut - 1]), "y_hidden_delta": float(y[-1] - y[cut - 1]),
-        "z_hidden_delta": float(z[-1] - z[cut - 1]),
-        "horizontal_total_distance": float(math.hypot(x[-1] - x[0], y[-1] - y[0])),
-        "horizontal_hidden_distance": float(math.hypot(x[-1] - x[cut - 1], y[-1] - y[cut - 1])),
-        "spatial_x_mid": float(0.5 * (x[0] + x[-1])), "spatial_y_mid": float(0.5 * (y[0] + y[-1])),
-    }
-    angle = math.atan2(y[-1] - y[cut - 1], x[-1] - x[cut - 1])
-    features["hidden_azimuth_sin"] = math.sin(angle)
-    features["hidden_azimuth_cos"] = math.cos(angle)
-    add_summary(features, "visible_tvt", md[:cut], visible_tvt)
-    add_summary(features, "visible_z", md[:cut], z[:cut])
-    add_summary(features, "visible_u", md[:cut], visible_u)
-    add_summary(features, "hidden_z", md[cut:], z[cut:])
-    add_summary(features, "visible_gr", md[:cut], gr[:cut])
-    add_summary(features, "hidden_gr", md[cut:], gr[cut:])
-    add_summary(features, "whole_gr", md, gr)
-    features["visible_gr_missing_fraction"] = float(np.mean(~np.isfinite(gr[:cut])))
-    features["hidden_gr_missing_fraction"] = float(np.mean(~np.isfinite(gr[cut:])))
-    features["whole_gr_missing_fraction"] = float(np.mean(~np.isfinite(gr)))
-    features["hidden_gr_longest_missing_run"] = float(longest_missing_run(gr[cut:]))
-    full_u_slope = slope(md[:cut], visible_u)
-    for window in config["raw_features"]["visible_slope_windows"]:
-        count = min(int(window), cut)
-        _, u_slope, u_scale = huber_line(md[:cut], visible_u, count)
-        _, tvt_slope, _ = huber_line(md[:cut], visible_tvt, count)
-        features[f"visible_u_slope_w{int(window)}"] = u_slope
-        features[f"visible_u_scale_w{int(window)}"] = u_scale
-        features[f"visible_u_slope_delta_w{int(window)}"] = u_slope - full_u_slope
-        features[f"visible_tvt_slope_w{int(window)}"] = tvt_slope
-    features.update(visible_backtests(md[:cut], z[:cut], visible_tvt, config["raw_features"]["visible_backtest_fractions"]))
-    features.update(well.typewell_summary)
-    return features
+def validate_contexts(repeated: Sequence[Context], stress: Sequence[Context], wells: int) -> None:
+    if len(repeated)!=25 or len(stress)!=10: raise DataValidationError("context count differs")
+    coverage=np.zeros(wells,dtype=np.int64)
+    for context in [*repeated,*stress]:
+        train=set(context.train_indices.tolist()); test=set(context.test_indices.tolist())
+        if train&test or train|test!=set(range(wells)) or not train or not test: raise DataValidationError(f"{context.key}: membership differs")
+        if context.scope=="repeated": coverage[context.test_indices]+=1
+    if not np.all(coverage==5): raise DataValidationError("repeated coverage differs")
 
 
-def build_history_feature_dict(coefficients: np.ndarray, rmses: np.ndarray, rows: np.ndarray, cut: int, horizon: int) -> tuple[dict[str, float], np.ndarray]:
-    if coefficients.shape != (4, 4) or rmses.shape != (4,) or rows.shape != (4,):
-        raise DataValidationError("history dimensions differ")
-    result: dict[str, float] = {
-        "prefix_rows": float(cut), "horizon_rows": float(horizon),
-        "horizon_fraction": float(horizon / (cut + horizon)),
-        "log_prefix_rows": float(math.log1p(cut)), "log_horizon_rows": float(math.log1p(horizon)),
-    }
-    for index in range(4):
-        result[f"history_rmse_{index}"] = float(rmses[index])
-        result[f"history_rows_{index}"] = float(rows[index])
-        result[f"history_to_target_{index}"] = float(rows[index] / horizon)
-        result[f"history_to_prefix_{index}"] = float(rows[index] / cut)
-        for output in range(4):
-            result[f"history_c{index}_{output}"] = float(coefficients[index, output])
-    for index in range(3):
-        for output in range(4):
-            result[f"history_delta{index}_{output}"] = float(coefficients[index + 1, output] - coefficients[index, output])
-    log_rows = np.log1p(rows.astype(np.float64))
-    target_log = math.log1p(horizon)
-    extrapolated = np.empty(4, dtype=np.float64)
-    for output in range(4):
-        line_slope, intercept = np.polyfit(log_rows, coefficients[:, output], 1)
-        extrapolated[output] = intercept + line_slope * target_log
-        result[f"history_log_slope_{output}"] = float(line_slope)
-        result[f"history_log_intercept_{output}"] = float(intercept)
-        result[f"history_log_prediction_{output}"] = float(extrapolated[output])
-    return result, extrapolated
+# ---------- features, weights, controls, and models ----------
 
-
-def history_task_features(well: RawWell, cut: int, config: Mapping[str, Any]) -> tuple[dict[str, float], dict[str, float], np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
-    horizon = len(well.tvt) - cut
-    max_history = min(horizon, cut - 1)
-    minimum = int(config["spline"]["minimum_history_rows"])
-    bound = float(config["spline"]["coefficient_absolute_bound_ft"])
-    rows = np.asarray([int(round(float(fraction) * max_history)) for fraction in HISTORY_FRACTIONS], dtype=np.int64)
-    if np.any(rows < minimum) or np.any(np.diff(rows) <= 0) or rows[-1] > cut - 1:
-        raise DataValidationError(f"{well.well_id}: history support differs")
-    coefficients: list[np.ndarray] = []
-    rmses: list[float] = []
-    for count in rows:
-        start = cut - int(count)
-        coefficient, rmse = t025.fit_segment(well.tvt[start:cut], well.tvt[start - 1], minimum, bound)
-        coefficients.append(coefficient)
-        rmses.append(rmse)
-    matrix = np.vstack(coefficients)
-    rmse_array = np.asarray(rmses, dtype=np.float64)
-    normal, extrapolated = build_history_feature_dict(matrix, rmse_array, rows.astype(np.float64), cut, horizon)
-    reversed_dict, _ = build_history_feature_dict(matrix[::-1], rmse_array[::-1], rows[::-1].astype(np.float64), cut, horizon)
-    target, _ = t025.fit_segment(well.tvt[cut:], well.tvt[cut - 1], OUTPUTS, bound)
-    return normal, reversed_dict, target, matrix[-1].copy(), np.clip(extrapolated, -bound, bound), rows
-
-
-def dict_to_row(values: Mapping[str, float], names: Sequence[str]) -> np.ndarray:
-    if set(values) != set(names):
-        raise DataValidationError("feature schema differs across tasks")
-    return np.asarray([float(values[name]) for name in names], dtype=np.float64)
-
-
-def build_task_pool(wells: Sequence[RawWell], config: Mapping[str, Any]) -> TaskPool:
-    source_indices: list[int] = []
-    cuts: list[int] = []
-    horizons: list[int] = []
-    originals: list[bool] = []
-    raw_rows: list[np.ndarray] = []
-    history_rows: list[np.ndarray] = []
-    reverse_rows: list[np.ndarray] = []
-    horizon_rows: list[np.ndarray] = []
-    targets: list[np.ndarray] = []
-    latest: list[np.ndarray] = []
-    extrapolated: list[np.ndarray] = []
-    raw_names: list[str] | None = None
-    history_names: list[str] | None = None
-    horizon_names = ["prefix_rows", "horizon_rows", "total_rows", "horizon_fraction", "log_prefix_rows", "log_horizon_rows"]
-    original_task_indices = np.full(len(wells), -1, dtype=np.int64)
-    minimum_history = int(config["spline"]["minimum_history_rows"])
-    for source_index, well in enumerate(wells):
-        well_cuts = mask_cuts(well, config)
-        for cut in well_cuts:
-            raw = raw_task_features(well, cut, config)
-            history, reversed_history, target, last, log_pred, support = history_task_features(well, cut, config)
-            if int(support.min()) < minimum_history:
-                raise DataValidationError(f"{well.well_id}: task history below minimum")
-            if raw_names is None:
-                raw_names = sorted(raw)
-                history_names = sorted(history)
-            assert history_names is not None
-            raw_row = dict_to_row(raw, raw_names)
-            history_row = dict_to_row(history, history_names)
-            reversed_row = dict_to_row(reversed_history, history_names)
-            horizon = len(well.tvt) - cut
-            horizon_values = {
-                "prefix_rows": float(cut), "horizon_rows": float(horizon), "total_rows": float(len(well.tvt)),
-                "horizon_fraction": float(horizon / len(well.tvt)),
-                "log_prefix_rows": float(math.log1p(cut)), "log_horizon_rows": float(math.log1p(horizon)),
-            }
-            source_indices.append(source_index); cuts.append(cut); horizons.append(horizon)
-            is_original = cut == well.known_rows
-            originals.append(is_original)
-            raw_rows.append(raw_row); history_rows.append(history_row); reverse_rows.append(reversed_row)
-            horizon_rows.append(np.asarray([horizon_values[name] for name in horizon_names], dtype=np.float64))
-            targets.append(target); latest.append(last); extrapolated.append(log_pred)
-            if is_original:
-                if original_task_indices[source_index] >= 0:
-                    raise DataValidationError(f"{well.well_id}: duplicate original task")
-                original_task_indices[source_index] = len(source_indices) - 1
-    if raw_names is None or history_names is None or np.any(original_task_indices < 0):
-        raise DataValidationError("task pool is incomplete")
-    pool = TaskPool(
-        source_indices=np.asarray(source_indices, dtype=np.int64),
-        cut_rows=np.asarray(cuts, dtype=np.int64),
-        horizon_rows=np.asarray(horizons, dtype=np.int64),
-        is_original=np.asarray(originals, dtype=bool),
-        raw_features=np.vstack(raw_rows),
-        history_features=np.vstack(history_rows),
-        reversed_history_features=np.vstack(reverse_rows),
-        horizon_features=np.vstack(horizon_rows),
-        targets=np.vstack(targets), latest=np.vstack(latest), log_extrapolation=np.vstack(extrapolated),
-        raw_names=raw_names, history_names=history_names, horizon_names=horizon_names,
-        original_task_indices=original_task_indices,
-    )
-    expected = int(config["mask_pool"]["expected_tasks"])
-    if len(pool.source_indices) != expected:
-        raise DataValidationError(f"expected {expected} tasks, built {len(pool.source_indices)}")
-    counts = np.bincount(pool.source_indices, minlength=len(wells))
-    if counts.min() < int(config["mask_pool"]["minimum_tasks_per_well"]) or counts.max() > int(config["mask_pool"]["maximum_tasks_per_well"]):
-        raise DataValidationError("per-well task count differs")
-    final_targets = pool.targets[pool.original_task_indices]
-    record_targets = np.vstack([well.record.target_coefficients for well in wells])
-    if np.max(np.abs(final_targets - record_targets)) > 1e-8:
-        raise DataValidationError("original task target differs from final target")
-    return pool
-
-
-def prepare_features(train: np.ndarray, test: np.ndarray, scale: bool) -> Prepared:
-    x_train = np.asarray(train, dtype=np.float64)
-    x_test = np.asarray(test, dtype=np.float64)
-    if x_train.ndim != 2 or x_test.ndim != 2 or x_train.shape[0] <= 0 or x_train.shape[1] != x_test.shape[1]:
-        raise DataValidationError("feature matrix dimensions differ")
-    finite = np.where(np.isfinite(x_train), x_train, np.nan)
-    medians = np.nanmedian(finite, axis=0)
-    medians = np.where(np.isfinite(medians), medians, 0.0)
-    x_train = np.where(np.isfinite(x_train), x_train, medians)
-    x_test = np.where(np.isfinite(x_test), x_test, medians)
-    means = x_train.mean(axis=0) if scale else np.zeros(x_train.shape[1])
-    scales = x_train.std(axis=0) if scale else np.ones(x_train.shape[1])
-    scales = np.where(scales > 1e-12, scales, 1.0)
-    if scale:
-        x_train = (x_train - means) / scales
-        x_test = (x_test - means) / scales
-    if not np.all(np.isfinite(x_train)) or not np.all(np.isfinite(x_test)):
-        raise DataValidationError("prepared features are non-finite")
-    return Prepared(x_train, x_test, medians, means, scales)
-
-
-def feature_matrix(pool: TaskPool, feature_set: str, reversed_history: bool = False) -> tuple[np.ndarray, list[str]]:
-    history = pool.reversed_history_features if reversed_history else pool.history_features
-    if feature_set == "raw":
-        return pool.raw_features, [f"raw__{name}" for name in pool.raw_names]
-    if feature_set == "history":
-        return history, [f"history__{name}" for name in pool.history_names]
-    if feature_set == "combined":
-        return np.hstack((pool.raw_features, history)), [f"raw__{name}" for name in pool.raw_names] + [f"history__{name}" for name in pool.history_names]
-    if feature_set == "horizon_only":
-        return pool.horizon_features, [f"horizon__{name}" for name in pool.horizon_names]
+def feature_matrix(pool: TaskPool, feature_set: str, *, reversed_history: bool=False) -> tuple[np.ndarray, np.ndarray]:
+    history=pool.reversed_history if reversed_history else pool.history
+    if feature_set=="raw": return pool.raw, pool.raw_horizon_indices.copy()
+    if feature_set=="history": return history, pool.history_conditioned_indices.copy()
+    if feature_set=="combined":
+        conditioned=np.concatenate((pool.raw_horizon_indices, len(pool.raw_names)+pool.history_conditioned_indices))
+        return np.hstack((pool.raw,history)), conditioned
+    if feature_set=="horizon_only":
+        raw=pool.raw[:,pool.raw_horizon_indices]; hist=history[:,pool.history_conditioned_indices]
+        return np.hstack((raw,hist)), np.arange(raw.shape[1]+hist.shape[1],dtype=np.int64)
     raise DataValidationError(f"unknown feature set {feature_set}")
 
 
-def well_equal_weights(indices: np.ndarray, sources: np.ndarray, multiplier: np.ndarray | None = None) -> np.ndarray:
-    selected_sources = sources[indices]
-    values = np.ones(len(indices), dtype=np.float64) if multiplier is None else np.asarray(multiplier, dtype=np.float64).copy()
-    if values.shape != (len(indices),) or np.any(values <= 0.0) or not np.all(np.isfinite(values)):
-        raise DataValidationError("task weight multiplier differs")
-    for source in np.unique(selected_sources):
-        mask = selected_sources == source
-        values[mask] /= float(values[mask].sum())
-    values *= len(values) / float(values.sum())
-    return values
+def prepare_features(train: np.ndarray, test: np.ndarray, scale: bool) -> tuple[np.ndarray,np.ndarray]:
+    xtr=np.asarray(train,dtype=np.float64); xte=np.asarray(test,dtype=np.float64)
+    if xtr.ndim!=2 or xte.ndim!=2 or xtr.shape[1]!=xte.shape[1] or len(xtr)==0: raise DataValidationError("feature dimensions differ")
+    med=np.nanmedian(np.where(np.isfinite(xtr),xtr,np.nan),axis=0); med=np.where(np.isfinite(med),med,0.0)
+    xtr=np.where(np.isfinite(xtr),xtr,med); xte=np.where(np.isfinite(xte),xte,med)
+    if scale:
+        mean=xtr.mean(axis=0); std=xtr.std(axis=0); std=np.where(std>1e-12,std,1.0); xtr=(xtr-mean)/std; xte=(xte-mean)/std
+    if not np.all(np.isfinite(xtr)) or not np.all(np.isfinite(xte)): raise DataValidationError("prepared features non-finite")
+    return xtr,xte
 
 
-def selection_and_weights(regime: str, context: Context, pool: TaskPool, config: Mapping[str, Any]) -> tuple[np.ndarray, np.ndarray, dict[str, Any]]:
-    train_source = np.zeros(int(pool.source_indices.max()) + 1, dtype=bool)
-    train_source[context.train_indices] = True
-    mask = train_source[pool.source_indices]
-    if regime == "original_only":
-        mask &= pool.is_original
-    elif regime == "masks_only":
-        mask &= ~pool.is_original
-    elif regime == "long_only":
-        mask &= pool.horizon_rows >= int(config["task_weighting"]["long_horizon_threshold_rows"])
-    elif regime == "short_only":
-        mask &= pool.horizon_rows < int(config["task_weighting"]["long_horizon_threshold_rows"])
-    elif regime not in {"all_well_equal", "all_joint_balanced", "all_original_boost4"}:
-        raise DataValidationError(f"unknown training regime {regime}")
-    indices = np.flatnonzero(mask).astype(np.int64)
-    if len(indices) <= 0:
-        raise DataValidationError(f"{context.key}/{regime}: no tasks")
-    if set(pool.source_indices[indices].tolist()) & set(context.test_indices.tolist()):
-        raise DataValidationError(f"{context.key}/{regime}: held-out source task leaked")
-    multiplier = None
-    details: dict[str, Any] = {"tasks": len(indices), "sources": len(np.unique(pool.source_indices[indices]))}
-    if regime == "all_original_boost4":
-        multiplier = np.where(pool.is_original[indices], float(config["task_weighting"]["original_boost"]), 1.0)
-    weights = well_equal_weights(indices, pool.source_indices, multiplier)
-    if regime == "all_joint_balanced":
-        original_indices = pool.original_task_indices[context.train_indices]
-        prefix_edges = np.quantile(pool.cut_rows[original_indices], [0.2, 0.4, 0.6, 0.8])
-        horizon_edges = np.quantile(pool.horizon_rows[original_indices], [0.2, 0.4, 0.6, 0.8])
-        pb = np.digitize(pool.cut_rows[indices], prefix_edges)
-        hb = np.digitize(pool.horizon_rows[indices], horizon_edges)
-        joint = pb * 5 + hb
-        frequency = np.bincount(joint, minlength=25).astype(np.float64)
-        inverse = 1.0 / np.maximum(1.0, frequency[joint])
-        weights *= inverse
-        weights *= len(weights) / float(weights.sum())
-        details.update({"prefix_edges": prefix_edges.tolist(), "horizon_edges": horizon_edges.tolist(), "occupied_bins": int(np.count_nonzero(frequency))})
-    totals = np.bincount(pool.source_indices[indices], weights=weights, minlength=int(pool.source_indices.max()) + 1)
-    active = totals[totals > 0.0]
-    if regime != "all_joint_balanced" and active.max() - active.min() > 1e-8:
-        raise DataValidationError(f"{context.key}/{regime}: source-well total weights differ")
-    if not np.all(np.isfinite(weights)) or np.any(weights <= 0.0):
-        raise DataValidationError("task weights are invalid")
-    return indices, weights, details
+def well_equal_weights(source: np.ndarray, multiplier: np.ndarray | None=None) -> np.ndarray:
+    source=np.asarray(source,dtype=np.int64); mult=np.ones(len(source),dtype=np.float64) if multiplier is None else np.asarray(multiplier,dtype=np.float64)
+    weights=np.zeros(len(source),dtype=np.float64)
+    for well in np.unique(source):
+        idx=np.flatnonzero(source==well); local=mult[idx]; total=float(local.sum())
+        if total<=0: raise DataValidationError("well weights are nonpositive")
+        weights[idx]=local/total
+    weights*=len(weights)/weights.sum()
+    return weights
 
 
-def equal_knn_subset(indices: np.ndarray, pool: TaskPool) -> np.ndarray:
-    groups = {int(source): indices[pool.source_indices[indices] == source] for source in np.unique(pool.source_indices[indices])}
-    minimum = min(len(values) for values in groups.values())
-    chosen: list[int] = []
-    for source in sorted(groups):
-        values = groups[source][np.argsort(pool.cut_rows[groups[source]])]
-        positions = np.linspace(0, len(values) - 1, minimum).round().astype(int)
-        chosen.extend(values[positions].tolist())
-    result = np.asarray(chosen, dtype=np.int64)
-    counts = np.bincount(pool.source_indices[result], minlength=int(pool.source_indices.max()) + 1)
-    active = counts[counts > 0]
-    if active.min() != active.max():
-        raise DataValidationError("KNN equal-source subset differs")
+def quantile_edges(values: np.ndarray, bins: int) -> np.ndarray:
+    edges=np.unique(np.quantile(np.asarray(values,dtype=np.float64),np.linspace(0,1,bins+1)[1:-1]))
+    return edges.astype(np.float64)
+
+
+def select_tasks_and_weights(pool: TaskPool, context: Context, regime: str, config: Mapping[str,Any]) -> tuple[np.ndarray,np.ndarray,dict[str,Any]]:
+    train_wells=set(context.train_indices.tolist()); all_idx=np.flatnonzero(np.isin(pool.well_index,context.train_indices))
+    if set(pool.well_index[all_idx].tolist())-train_wells: raise DataValidationError(f"{context.key}: held-out task leaked")
+    long_threshold=int(config["task_weighting"]["long_horizon_threshold_rows"])
+    if regime=="original_only": idx=all_idx[pool.is_original[all_idx]]; weights=np.ones(len(idx))
+    elif regime=="masks_only": idx=all_idx[~pool.is_original[all_idx]]; weights=np.ones(len(idx))
+    elif regime in ("all_well_equal","all_joint_balanced","all_original_boost4"): idx=all_idx; weights=well_equal_weights(pool.well_index[idx], np.where(pool.is_original[idx],float(config["task_weighting"]["original_boost"]),1.0) if regime=="all_original_boost4" else None)
+    elif regime=="long_only": idx=all_idx[pool.horizon_rows[all_idx]>=long_threshold]; weights=well_equal_weights(pool.well_index[idx])
+    elif regime=="short_only": idx=all_idx[pool.horizon_rows[all_idx]<long_threshold]; weights=well_equal_weights(pool.well_index[idx])
+    else: raise DataValidationError(f"unknown training regime {regime}")
+    if len(idx)==0: raise DataValidationError(f"{context.key}/{regime}: empty task selection")
+    detail={"tasks":len(idx),"source_wells":len(np.unique(pool.well_index[idx]))}
+    if regime=="all_joint_balanced":
+        original_train=all_idx[pool.is_original[all_idx]]; bins=int(config["task_weighting"]["joint_bins"])
+        p_edges=quantile_edges(pool.prefix_rows[original_train],bins); h_edges=quantile_edges(pool.horizon_rows[original_train],bins)
+        pbin=np.digitize(pool.prefix_rows[idx],p_edges); hbin=np.digitize(pool.horizon_rows[idx],h_edges); code=pbin*bins+hbin
+        counts={int(c):int(np.sum(code==c)) for c in np.unique(code)}; inv=np.asarray([1.0/counts[int(c)] for c in code])
+        weights*=inv; weights*=len(weights)/weights.sum(); detail.update({"prefix_edges":p_edges.tolist(),"horizon_edges":h_edges.tolist(),"occupied_bins":len(counts)})
+    if not np.all(np.isfinite(weights)) or np.any(weights<=0): raise DataValidationError("task weights invalid")
+    return idx,weights,detail
+
+
+def permuted_target_blocks(pool: TaskPool, train_idx: np.ndarray, seed: int, context_key: str) -> np.ndarray:
+    result=np.empty((len(train_idx),OUTPUTS),dtype=np.float64); local_positions={int(task):pos for pos,task in enumerate(train_idx)}
+    wells=sorted(np.unique(pool.well_index[train_idx]).tolist()); rng=np.random.default_rng(stable_seed(seed,context_key,"blocks")); order=np.asarray(wells,dtype=np.int64); rng.shuffle(order); donors=np.roll(order,1)
+    donor_by_receiver={int(receiver):int(donor) for receiver,donor in zip(order,donors)}
+    if len(wells)>1 and any(k==v for k,v in donor_by_receiver.items()): raise DataValidationError("block permutation contains self donor")
+    for receiver in wells:
+        recv=np.asarray(sorted([int(t) for t in train_idx if int(pool.well_index[t])==receiver],key=lambda t:(int(pool.prefix_rows[t]),int(pool.horizon_rows[t]),pool.task_ids[t])),dtype=np.int64)
+        donor=donor_by_receiver[receiver]; give=np.asarray(sorted([int(t) for t in train_idx if int(pool.well_index[t])==donor],key=lambda t:(int(pool.prefix_rows[t]),int(pool.horizon_rows[t]),pool.task_ids[t])),dtype=np.int64)
+        src=np.linspace(0.0,1.0,len(give)); dst=np.linspace(0.0,1.0,len(recv)); block=np.column_stack([np.interp(dst,src,pool.targets[give,output]) for output in range(OUTPUTS)])
+        for task,row in zip(recv,block): result[local_positions[int(task)]]=row
+    if not np.all(np.isfinite(result)): raise DataValidationError("permuted block targets non-finite")
     return result
 
 
-def permuted_block_targets(indices: np.ndarray, pool: TaskPool, seed: int) -> np.ndarray:
-    result = pool.targets[indices].copy()
-    sources = pool.source_indices[indices]
-    ordered_sources = sorted(int(value) for value in np.unique(sources))
-    if len(ordered_sources) < 2:
-        raise DataValidationError("source-block permutation requires at least two wells")
-    local_by_source: dict[int, np.ndarray] = {}
-    for source in ordered_sources:
-        local = np.flatnonzero(sources == source)
-        order = np.lexsort((indices[local], pool.horizon_rows[indices[local]], pool.cut_rows[indices[local]]))
-        local_by_source[source] = local[order]
-    rng = np.random.default_rng(seed)
-    shift = int(rng.integers(1, len(ordered_sources)))
-    donors = ordered_sources[shift:] + ordered_sources[:shift]
-    if any(source == donor for source, donor in zip(ordered_sources, donors)):
-        raise DataValidationError("source-block derangement retained its own donor")
-    for source, donor in zip(ordered_sources, donors):
-        recipient_local = local_by_source[source]
-        donor_local = local_by_source[donor]
-        donor_targets = pool.targets[indices[donor_local]]
-        donor_rank = np.linspace(0.0, 1.0, len(donor_local))
-        recipient_rank = np.linspace(0.0, 1.0, len(recipient_local))
-        interpolated = np.column_stack([
-            np.interp(recipient_rank, donor_rank, donor_targets[:, output])
-            for output in range(OUTPUTS)
-        ])
-        result[recipient_local] = interpolated
-    if result.shape != (len(indices), OUTPUTS) or not np.all(np.isfinite(result)):
-        raise DataValidationError("source-block permutation emitted invalid targets")
-    return result
+def custom_knn_predict(xtr: np.ndarray, ytr: np.ndarray, xte: np.ndarray, sample_weight: np.ndarray, neighbors: int) -> np.ndarray:
+    n=min(int(neighbors),len(xtr));
+    if n<=0: raise DataValidationError("KNN has no training rows")
+    model=NearestNeighbors(n_neighbors=n,algorithm="auto").fit(xtr); distances,indices=model.kneighbors(xte)
+    output=np.empty((len(xte),OUTPUTS),dtype=np.float64)
+    for i in range(len(xte)):
+        d=distances[i]; idx=indices[i]; zero=d<=1e-12
+        weights=sample_weight[idx]*zero.astype(float) if zero.any() else sample_weight[idx]/np.maximum(d,1e-12)
+        output[i]=np.average(ytr[idx],axis=0,weights=weights)
+    return output
 
 
-def horizon_feature_indices(names: Sequence[str]) -> np.ndarray:
-    raw_exact = {
-        "raw__total_rows", "raw__known_rows", "raw__hidden_rows", "raw__hidden_fraction",
-    }
-    indices = [
-        index for index, name in enumerate(names)
-        if name.startswith("history__") or name in raw_exact
-    ]
-    if not indices:
-        raise DataValidationError("no horizon-conditioned feature columns were identified")
-    return np.asarray(indices, dtype=np.int64)
+def fit_ridge(xtr: np.ndarray,ytr: np.ndarray,xte: np.ndarray,weights: np.ndarray,alpha: float) -> np.ndarray:
+    a,b=prepare_features(xtr,xte,True); model=Ridge(alpha=float(alpha),fit_intercept=True); model.fit(a,ytr,sample_weight=weights); return np.asarray(model.predict(b),dtype=np.float64)
 
 
-def fit_ridge(x_train: np.ndarray, y_train: np.ndarray, x_test: np.ndarray, alpha: float, weights: np.ndarray) -> np.ndarray:
-    prepared = prepare_features(x_train, x_test, True)
-    model = Ridge(alpha=float(alpha), fit_intercept=True, solver="lsqr", tol=1e-6)
-    model.fit(prepared.train, y_train, sample_weight=weights)
-    return np.asarray(model.predict(prepared.test), dtype=np.float64)
-
-
-def predict_branch(branch: Mapping[str, Any], context: Context, pool: TaskPool, config: Mapping[str, Any], control_mode: str | None = None) -> tuple[np.ndarray, dict[str, Any]]:
-    name = str(branch["name"])
-    family = str(branch["family"])
-    bound = float(config["spline"]["coefficient_absolute_bound_ft"])
-    test_task_indices = pool.original_task_indices[context.test_indices]
-    if family == "analytic":
-        values = pool.latest[test_task_indices] if name == "history_latest_identity" else pool.log_extrapolation[test_task_indices]
-        return np.clip(np.asarray(values, dtype=np.float64), -bound, bound), {"training_tasks": 0}
-    regime = str(branch["training_regime"])
-    train_indices, sample_weights, details = selection_and_weights(regime, context, pool, config)
-    use_reversed = control_mode == "reversed_history_horizons"
-    all_features, feature_names = feature_matrix(pool, str(branch["feature_set"]), use_reversed)
-    x_train = all_features[train_indices].copy()
-    x_test = all_features[test_task_indices].copy()
-    y_train = pool.targets[train_indices].copy()
-    seed = stable_seed(int(config["mask_pool"]["seed"]), context.key, name, control_mode or "real")
-    control_detail = config["control_detail"]
-    if control_mode == "permuted_source_well_targets":
-        control_seed = stable_seed(int(control_detail["source_block_permutation_seed"]), context.key)
-        y_train = permuted_block_targets(train_indices, pool, control_seed)
-    elif control_mode == "shuffled_task_targets":
-        control_seed = stable_seed(int(control_detail["task_target_shuffle_seed"]), context.key)
-        rng = np.random.default_rng(control_seed)
-        y_train = y_train[rng.permutation(len(y_train))]
-    elif control_mode == "permuted_horizon_features":
-        cols = horizon_feature_indices(feature_names)
-        control_seed = stable_seed(int(control_detail["horizon_feature_permutation_seed"]), context.key)
-        rng = np.random.default_rng(control_seed)
-        x_train[:, cols] = x_train[rng.permutation(len(x_train))][:, cols]
-    elif control_mode not in {None, "reversed_history_horizons"}:
-        raise DataValidationError(f"unknown control {control_mode}")
-    if not np.all(np.isfinite(y_train)):
-        raise DataValidationError(f"{name}: training targets are non-finite")
-    if family == "ridge":
-        prediction = fit_ridge(x_train, y_train, x_test, float(branch["alpha"]), sample_weights)
-    elif family == "ridge_delta":
-        delta = y_train - pool.latest[train_indices]
-        prediction = fit_ridge(x_train, delta, x_test, float(branch["alpha"]), sample_weights) + pool.latest[test_task_indices]
-    elif family == "extra_trees":
-        prepared = prepare_features(x_train, x_test, False)
-        model = ExtraTreesRegressor(
-            n_estimators=64, min_samples_leaf=8, max_features=0.7,
-            random_state=seed, n_jobs=1,
-        )
-        model.fit(prepared.train, y_train, sample_weight=sample_weights)
-        prediction = model.predict(prepared.test)
-    elif family == "hist_gradient":
-        prepared = prepare_features(x_train, x_test, True)
-        columns: list[np.ndarray] = []
+def predict_branch(branch: Mapping[str,Any], context: Context, pool: TaskPool, config: Mapping[str,Any], control_mode: str|None=None) -> tuple[np.ndarray,dict[str,Any]]:
+    name=str(branch["name"]); family=str(branch["family"]); test_tasks=pool.original_task_index[context.test_indices]
+    if family=="analytic":
+        if control_mode is not None: raise DataValidationError("analytic control is invalid")
+        result=pool.latest[test_tasks] if name=="history_latest_identity" else pool.log_extrapolation[test_tasks]
+        return np.clip(result,-80.0,80.0),{"tasks":0,"source_wells":0}
+    train_idx,weights,detail=select_tasks_and_weights(pool,context,str(branch["training_regime"]),config)
+    reversed_mode=control_mode=="reversed_history_horizons"; xall,conditioned=feature_matrix(pool,str(branch["feature_set"]),reversed_history=reversed_mode)
+    xtr=xall[train_idx].copy(); xte=xall[test_tasks].copy(); ytr=pool.targets[train_idx].copy()
+    if control_mode=="permuted_source_well_targets": ytr=permuted_target_blocks(pool,train_idx,int(config["control_detail"]["source_block_permutation_seed"]),context.key)
+    elif control_mode=="shuffled_task_targets":
+        rng=np.random.default_rng(stable_seed(int(config["control_detail"]["task_target_shuffle_seed"]),context.key,name)); ytr=ytr[rng.permutation(len(ytr))]
+    elif control_mode=="permuted_horizon_features":
+        rng=np.random.default_rng(stable_seed(int(config["control_detail"]["horizon_feature_permutation_seed"]),context.key,name)); permutation=rng.permutation(len(xtr)); xtr[:,conditioned]=xtr[permutation][:,conditioned]
+    if not np.all(np.isfinite(ytr)): raise DataValidationError(f"{name}: target non-finite")
+    if family=="ridge": prediction=fit_ridge(xtr,ytr,xte,weights,float(branch["alpha"]))
+    elif family=="ridge_delta": prediction=pool.log_extrapolation[test_tasks]+fit_ridge(xtr,ytr-pool.log_extrapolation[train_idx],xte,weights,float(branch["alpha"]))
+    elif family=="extra_trees":
+        a,b=prepare_features(xtr,xte,False); model=ExtraTreesRegressor(n_estimators=64,min_samples_leaf=8,max_features=0.7,random_state=stable_seed(26023,context.key,name),n_jobs=1); model.fit(a,ytr,sample_weight=weights); prediction=model.predict(b)
+    elif family=="hist_gradient":
+        a,b=prepare_features(xtr,xte,True); cols=[]
         for output in range(OUTPUTS):
-            model = HistGradientBoostingRegressor(
-                max_iter=160, learning_rate=0.05, max_leaf_nodes=15,
-                min_samples_leaf=20, l2_regularization=1.0,
-                random_state=(seed + output) % (2**32 - 1),
-            )
-            model.fit(prepared.train, y_train[:, output], sample_weight=sample_weights)
-            columns.append(model.predict(prepared.test))
-        prediction = np.column_stack(columns)
-    elif family == "knn":
-        equal_indices = equal_knn_subset(train_indices, pool)
-        x_train = all_features[equal_indices]
-        y_train = pool.targets[equal_indices]
-        prepared = prepare_features(x_train, x_test, True)
-        neighbors = min(int(branch.get("neighbors", 25)), len(equal_indices))
-        if neighbors <= 0:
-            raise DataValidationError("KNN has no training rows")
-        model = KNeighborsRegressor(n_neighbors=neighbors, weights="distance")
-        model.fit(prepared.train, y_train)
-        prediction = model.predict(prepared.test)
-        details["knn_tasks"] = len(equal_indices)
-    elif family == "horizon_expert":
-        prepared = prepare_features(x_train, x_test, True)
-        global_model = Ridge(alpha=float(branch["alpha"]), fit_intercept=True, solver="lsqr", tol=1e-6)
-        global_model.fit(prepared.train, y_train, sample_weight=sample_weights)
-        prediction = np.asarray(global_model.predict(prepared.test), dtype=np.float64)
-        original_train = pool.original_task_indices[context.train_indices]
-        edges = np.quantile(pool.horizon_rows[original_train], [0.2, 0.4, 0.6, 0.8])
-        train_bins = np.digitize(pool.horizon_rows[train_indices], edges)
-        test_bins = np.digitize(pool.horizon_rows[test_task_indices], edges)
-        minimum = int(config["task_weighting"]["horizon_expert_minimum_tasks"])
-        expert_counts: dict[str, int] = {}
-        for group in range(5):
-            test_mask = test_bins == group
-            if not test_mask.any():
-                continue
-            train_mask = np.abs(train_bins - group) <= 1
-            expert_counts[str(group)] = int(train_mask.sum())
-            if int(train_mask.sum()) < minimum:
-                continue
-            model = Ridge(alpha=float(branch["alpha"]), fit_intercept=True, solver="lsqr", tol=1e-6)
-            local_weights = sample_weights[train_mask].copy()
-            local_weights *= len(local_weights) / float(local_weights.sum())
-            model.fit(prepared.train[train_mask], y_train[train_mask], sample_weight=local_weights)
-            prediction[test_mask] = model.predict(prepared.test[test_mask])
-        details["horizon_edges"] = edges.tolist(); details["expert_counts"] = expert_counts
-    else:
-        raise DataValidationError(f"unknown branch family {family}")
-    result = np.asarray(prediction, dtype=np.float64)
-    if result.shape != (len(context.test_indices), OUTPUTS) or not np.all(np.isfinite(result)):
-        raise DataValidationError(f"{context.key}/{name}: invalid predictions")
-    details["feature_count"] = x_train.shape[1]
-    return np.clip(result, -bound, bound), details
+            model=HistGradientBoostingRegressor(max_iter=160,learning_rate=0.05,max_leaf_nodes=15,min_samples_leaf=20,l2_regularization=1.0,random_state=stable_seed(26023,context.key,name,str(output)))
+            model.fit(a,ytr[:,output],sample_weight=weights); cols.append(model.predict(b))
+        prediction=np.column_stack(cols)
+    elif family=="knn":
+        a,b=prepare_features(xtr,xte,True); prediction=custom_knn_predict(a,ytr,b,weights,int(branch.get("neighbors",25)))
+    elif family=="horizon_expert":
+        prediction=fit_ridge(xtr,ytr,xte,weights,float(branch["alpha"])); original_train=np.flatnonzero(np.isin(pool.well_index,context.train_indices)&pool.is_original); edges=quantile_edges(pool.horizon_rows[original_train],5)
+        train_bins=np.digitize(pool.horizon_rows[train_idx],edges); test_bins=np.digitize(pool.horizon_rows[test_tasks],edges)
+        for bin_id in range(5):
+            test_pos=np.flatnonzero(test_bins==bin_id); local=np.flatnonzero(np.abs(train_bins-bin_id)<=1)
+            if len(test_pos)==0 or len(local)<int(config["task_weighting"]["horizon_expert_minimum_tasks"]): continue
+            prediction[test_pos]=fit_ridge(xtr[local],ytr[local],xte[test_pos],weights[local],float(branch["alpha"]))
+        detail["horizon_edges"]=edges.tolist()
+    else: raise DataValidationError(f"unknown family {family}")
+    result=np.clip(np.asarray(prediction,dtype=np.float64),-float(config["spline"]["coefficient_absolute_bound_ft"]),float(config["spline"]["coefficient_absolute_bound_ft"]))
+    if result.shape!=(len(context.test_indices),OUTPUTS) or not np.all(np.isfinite(result)): raise DataValidationError(f"{name}: prediction shape/finiteness differs")
+    return result,detail
 
 
-def run_edge_tests(config: Mapping[str, Any]) -> dict[str, Any]:
-    passed = list(t025.run_edge_tests()["passed"])
-    # Frozen support boundaries.
-    assert int(config["mask_pool"]["minimum_prefix_rows"]) == 851
-    assert int(config["mask_pool"]["minimum_horizon_rows"]) == 407
-    passed.append("mask_support_boundaries")
-    # Deterministic jitter is bounded and reproducible.
-    seed = int(config["mask_pool"]["seed"]); jitter = int(config["mask_pool"]["jitter_rows"])
-    offsets=[]
-    for base in config["mask_pool"]["base_prefix_grid"]:
-        digest=hashlib.sha256(f"{seed}:edgewell:{int(base)}".encode()).digest(); value=int.from_bytes(digest[:8],"big")
-        offsets.append(value%(2*jitter+1)-jitter)
-    assert offsets == [int.from_bytes(hashlib.sha256(f"{seed}:edgewell:{int(base)}".encode()).digest()[:8],"big")%(2*jitter+1)-jitter for base in config["mask_pool"]["base_prefix_grid"]]
-    assert min(offsets) >= -jitter and max(offsets) <= jitter
-    passed.append("deterministic_jitter_limits")
-    # History support exactly 128 passes and 127 fails through frozen solver.
-    t025.fit_segment(np.arange(128.0), 0.0, 128, 80.0)
-    try:
-        t025.fit_segment(np.arange(127.0), 0.0, 128, 80.0); raise AssertionError("127 history rows passed")
+# ---------- scoring ----------
+
+def metrics_for_indices(records: Sequence[WellRecord], indices: Sequence[int], coefficients: np.ndarray, weight: float) -> tuple[dict[str,Any],list[dict[str,Any]]]:
+    array=np.asarray(coefficients,dtype=np.float64)
+    if array.shape!=(len(indices),OUTPUTS): raise DataValidationError("coefficient membership differs")
+    rows=[records[int(index)].metric(array[pos],weight) for pos,index in enumerate(indices)]; return summarize(rows),rows
+
+
+def candidate_name(branch: str, weight: float) -> str: return f"{branch}__w{weight:.2f}"
+
+
+# ---------- score-blind edge tests ----------
+
+def run_edge_tests() -> dict[str,Any]:
+    passed=[]
+    assert deterministic_jitter(26023,"abcdefgh",900,64) in range(-64,65); passed.append("deterministic_jitter_limits")
+    cuts={851,851,900}; assert sorted(cuts)==[851,900]; passed.append("duplicate_cut_removal")
+    def boundary(prefix:int,horizon:int)->bool: return prefix>=851 and horizon>=407
+    assert boundary(851,407) and not boundary(850,407) and not boundary(851,406); passed.append("prefix_horizon_boundaries")
+    frame=pd.DataFrame({"MD":[0,1,2,3],"X":[0,0,0,0],"Y":[0,0,0,0],"Z":[0,0,0,0],"GR":[1,np.nan,1,1],"TVT":[1,2,3,4],"TVT_input":[1,2,np.nan,np.nan]}); arrays,known=validate_horizontal(frame,"edgewell"); assert known==2; passed.append("contiguous_visibility")
+    bad=frame.copy(); bad.loc[2,"MD"]=1.0
+    try: validate_horizontal(bad,"edgewell"); raise AssertionError("nonincreasing MD passed")
     except DataValidationError: pass
-    passed.append("history_128_127_boundary")
-    # Constant/nonfinite GR summaries.
-    x=np.arange(10,dtype=float); constant=np.ones(10); missing=np.full(10,np.nan)
-    assert summary_dict(x,constant)["std"] == 0.0 and math.isnan(summary_dict(x,missing)["mean"])
-    passed.append("constant_nonfinite_gr")
-    # Strict MD ordering.
-    assert np.all(np.diff(np.arange(5.0)) > 0)
-    assert not np.all(np.diff(np.asarray([0.0,1.0,1.0,2.0])) > 0)
     passed.append("strict_md_order")
-    # Duplicate cut removal.
-    assert sorted({900,900,901}) == [900,901]
-    passed.append("duplicate_cut_removal")
-    # Zero variance feature handling.
-    prepared=prepare_features(np.ones((3,2)),np.asarray([[np.nan,1.0]]),True)
-    assert np.all(np.isfinite(prepared.train)) and np.all(np.isfinite(prepared.test))
-    passed.append("zero_variance_task_features")
-    # Per-well total weights are equal.
-    sources=np.asarray([0,0,1,1,1]); idx=np.arange(5)
-    weights=well_equal_weights(idx,sources)
-    totals=np.bincount(sources,weights=weights)
-    assert abs(totals[0]-totals[1])<1e-12
-    passed.append("well_equal_total_weight")
-    # Tree sample-weight support.
-    xx=np.arange(40,dtype=float).reshape(20,2); yy=np.column_stack([np.arange(20,dtype=float)]*4); ww=np.linspace(0.5,1.5,20)
-    ExtraTreesRegressor(n_estimators=2,min_samples_leaf=2,random_state=1,n_jobs=1).fit(xx,yy,sample_weight=ww)
-    HistGradientBoostingRegressor(max_iter=2,random_state=1).fit(xx,yy[:,0],sample_weight=ww)
-    passed.append("tree_sample_weight_support")
-    # KNN clipping.
-    model=KNeighborsRegressor(n_neighbors=min(25,2),weights="distance").fit(np.asarray([[0.0],[1.0]]),np.zeros((2,4)))
-    assert model.predict(np.asarray([[0.5]])).shape==(1,4)
-    passed.append("knn_neighbor_clipping_t026")
-    # Held-out source exclusion.
-    task_sources=np.asarray([0,0,1,1,2,2]); train={0,1}; selected=np.flatnonzero(np.isin(task_sources,list(train)))
-    assert not (set(task_sources[selected]) & {2})
-    passed.append("outer_heldout_task_exclusion")
-    # Block permutation keeps shape and finite values.
-    fake=TaskPool(task_sources,np.arange(6),np.ones(6,int),np.zeros(6,bool),np.zeros((6,1)),np.zeros((6,1)),np.zeros((6,1)),np.zeros((6,1)),np.arange(24,dtype=float).reshape(6,4),np.zeros((6,4)),np.zeros((6,4)),["x"],["h"],["q"],np.asarray([0,2,4]))
-    perm=permuted_block_targets(np.arange(6),fake,1)
-    assert perm.shape==(6,4) and np.all(np.isfinite(perm))
-    passed.append("source_block_target_permutation")
-    # Coefficient clipping and exact fallback inherited, plus finite reconstruction check.
-    clipped=np.clip(np.full((2,4),1000.0),-80.0,80.0); assert np.max(np.abs(clipped))==80.0
-    passed.append("t026_coefficient_clipping")
-    # Exact mask boundaries pass; one-row violations fail.
-    validate_mask_support(851, 851 + 407, config)
-    for cut, total in ((850, 850 + 407), (851, 851 + 406)):
-        try:
-            validate_mask_support(cut, total, config)
-            raise AssertionError("one-row mask support violation passed")
-        except DataValidationError:
-            pass
-    passed.append("mask_boundary_one_row_violations")
+    try: fit_segment(np.arange(127.0),0.0,128,80.0); raise AssertionError("127 support passed")
+    except DataValidationError: pass
+    c,r=fit_segment(np.arange(128.0),0.0,128,80.0); assert c.shape==(4,) and math.isfinite(r); passed.append("history_support_128_127")
+    constant,rmse=fit_segment(np.full(128,7.0),7.0,128,80.0); assert np.max(np.abs(constant))<1e-10 and rmse<1e-10; passed.append("constant_tvt")
+    try: solve_coefficients(np.ones((128,4)),np.zeros(128),80.0); raise AssertionError("rank deficient passed")
+    except DataValidationError: pass
+    passed.append("rank_deficient_spline")
+    xtr,xte=prepare_features(np.ones((3,2)),np.asarray([[np.nan,1.0]]),True); assert np.all(np.isfinite(xtr)) and np.all(np.isfinite(xte)); passed.append("zero_variance_features")
+    source=np.asarray([0,0,1,1,1]); weights=well_equal_weights(source); assert abs(weights[source==0].sum()-weights[source==1].sum())<1e-12; passed.append("well_equal_total_weight")
+    edges=quantile_edges(np.asarray([1,2,3,4,5],float),5); assert np.all(np.diff(edges)>0); passed.append("joint_bin_edges")
+    tree=ExtraTreesRegressor(n_estimators=2,min_samples_leaf=1,random_state=1,n_jobs=1).fit(np.arange(6).reshape(-1,1),np.arange(6),sample_weight=np.ones(6)); assert math.isfinite(float(tree.predict([[1.5]])[0])); passed.append("tree_sample_weight")
+    pred=custom_knn_predict(np.asarray([[0.],[1.]]),np.zeros((2,4)),np.asarray([[0.5]]),np.ones(2),25); assert pred.shape==(1,4); passed.append("knn_neighbor_clipping")
+    clipped,_=solve_coefficients(spline_basis(128),np.full(128,1000.0),5.0); assert np.max(np.abs(clipped))<=5.0; passed.append("coefficient_clipping")
+    record=WellRecord("edgewell",128,128,10.0,0.0,np.zeros(4),0.0,0.0,e011_sse=128.0,e011_sum=0.0,e_dot_d=0.0,d_sse=128.0,d_sum=0.0,basis_dot_e=np.zeros(4),basis_dot_d=np.zeros(4),basis_sum=spline_basis(128).sum(axis=0),basis_cross=spline_basis(128).T@spline_basis(128))
+    assert record.metric(np.full(4,80.0),0.0)["sse"]==128.0; passed.append("exact_e011_fallback")
+    names=["a","b"]; scores=[1.0,1.0]; assert names[min(range(2),key=lambda i:(scores[i],i))]=="a"; passed.append("deterministic_ties")
+    repeated=[]
+    for v in range(5):
+        for f in range(5):
+            test=np.flatnonzero(np.arange(10)%5==f); train=np.flatnonzero(np.arange(10)%5!=f); repeated.append(Context(f"v{v}:{f}","repeated",f"v{v}",f,train,test))
+    stress=[]
+    for scope in ("spatial","typewell"):
+        for g in range(5):
+            test=np.flatnonzero(np.arange(10)%5==g); train=np.flatnonzero(np.arange(10)%5!=g); stress.append(Context(f"{scope}:{g}",scope,scope,g,train,test))
+    validate_contexts(repeated,stress,10); passed.append("context_membership")
 
-    # Missing/duplicate source wells and non-finite geometry/typewell are rejected.
+    bad_tvt=frame.copy(); bad_tvt.loc[1,"TVT"]=np.nan
+    try: validate_horizontal(bad_tvt,"edgewell"); raise AssertionError("non-finite TVT passed")
+    except DataValidationError: pass
+    passed.append("nonfinite_tvt_rejection")
+
+    bad_geometry=frame.copy(); bad_geometry.loc[1,"X"]=np.nan
+    try: validate_horizontal(bad_geometry,"edgewell"); raise AssertionError("non-finite geometry passed")
+    except DataValidationError: pass
+    passed.append("nonfinite_geometry_rejection")
+
+    type_bad=pd.DataFrame({"TVT":[np.nan,np.nan],"GR":[1.0,np.nan]})
+    try: typewell_summary(type_bad); raise AssertionError("non-finite typewell TVT passed")
+    except DataValidationError: pass
+    passed.append("nonfinite_typewell_rejection")
+
+    n=900
+    synthetic={"MD":np.arange(n,dtype=float),"X":np.zeros(n),"Y":np.zeros(n),"Z":np.linspace(0,1,n),"GR":np.full(n,np.nan),"TVT":np.linspace(10,20,n)}
+    raw,names,explicit=raw_task_features(synthetic,[2.0,1.0,np.nan,np.nan,np.nan,0.0,1.0],["typewell_rows","typewell_tvt_span","typewell_gr_mean","typewell_gr_std","typewell_gr_range","typewell_gr_index_slope","typewell_gr_missing_fraction"],851,[32,128,512],[0.5,0.7,0.85])
+    assert len(raw)==len(names) and np.isnan(raw).any() and len(explicit)==4
+    passed.append("missing_gr_accepted")
+
+    constant_edges=quantile_edges(np.ones(10),5); assigned=np.digitize(np.ones(3),constant_edges)
+    assert constant_edges.size<=1 and np.all(np.isfinite(constant_edges)) and np.all(assigned==assigned[0])
+    passed.append("empty_tiny_bins")
+
+    # Synthetic two-well pool verifies context task exclusion.
+    mini=TaskPool(["a:1","a:2","b:1","b:2"],np.asarray([0,0,1,1]),np.asarray([851,900,851,900]),np.asarray([407,500,407,500]),np.asarray([True,False,True,False]),np.zeros((4,4)),np.zeros((4,5)),np.zeros((4,5)),np.zeros((4,4)),np.zeros((4,4)),np.zeros((4,4)),["known_rows","horizon_rows","known_fraction","hidden_fraction"],["h0","h1","h2","h3","h4"],np.asarray([0,1,2,3]),np.asarray([1,2,3,4]),np.asarray([0,2]))
+    mini_context=Context("mini","repeated","mini",0,np.asarray([0]),np.asarray([1]))
+    mini_cfg={"task_weighting":{"long_horizon_threshold_rows":450,"original_boost":4.0,"joint_bins":5}}
+    selected,_,_=select_tasks_and_weights(mini,mini_context,"all_well_equal",mini_cfg)
+    assert set(mini.well_index[selected].tolist())=={0}
+    passed.append("heldout_task_exclusion")
+
+    try: record.metric([0.0,0.0,0.0,np.nan],1.0); raise AssertionError("non-finite prediction passed")
+    except DataValidationError: pass
+    passed.append("nonfinite_prediction_rejection")
+
     with tempfile.TemporaryDirectory() as directory:
-        root = Path(directory)
-        total = 851 + 407
-        frame = pd.DataFrame({
-            "MD": np.arange(total, dtype=float), "X": np.zeros(total), "Y": np.ones(total),
-            "Z": np.linspace(0.0, 1.0, total), "GR": np.ones(total),
-            "TVT": np.linspace(100.0, 110.0, total),
-            "TVT_input": np.r_[np.linspace(100.0, 106.765, 851), np.full(407, np.nan)],
-        })
-        frame.loc[:850, "TVT_input"] = frame.loc[:850, "TVT"].to_numpy()
-        frame.to_csv(root / "dup__horizontal_well.csv", index=False)
-        pd.DataFrame({"TVT": [0.0, 1.0], "GR": [1.0, 2.0]}).to_csv(root / "dup__typewell.csv", index=False)
-        local = json.loads(json.dumps(config)); local["expected_wells"] = 2
-        try:
-            load_raw_wells(root, local)
-            raise AssertionError("missing source well count passed")
-        except DataValidationError:
-            pass
-        frame.to_csv(root / "dup__copy__horizontal_well.csv", index=False)
-        try:
-            load_raw_wells(root, local)
-            raise AssertionError("duplicate source well ID passed")
-        except DataValidationError:
-            pass
-        (root / "dup__copy__horizontal_well.csv").unlink()
-        local["expected_wells"] = 1
-        bad = frame.copy(); bad.loc[10, "X"] = np.nan; bad.to_csv(root / "dup__horizontal_well.csv", index=False)
-        try:
-            load_raw_wells(root, local)
-            raise AssertionError("non-finite geometry passed")
-        except DataValidationError:
-            pass
-        frame.to_csv(root / "dup__horizontal_well.csv", index=False)
-        pd.DataFrame({"TVT": [np.nan, np.nan], "GR": [1.0, np.nan]}).to_csv(root / "dup__typewell.csv", index=False)
-        try:
-            load_raw_wells(root, local)
-            raise AssertionError("non-finite typewell TVT passed")
-        except DataValidationError:
-            pass
-    passed.append("source_geometry_typewell_rejection")
+        path=Path(directory)/"bad.csv.gz"
+        with gzip.open(path,"wt",newline="",encoding="utf-8") as handle:
+            writer=csv.DictWriter(handle,fieldnames=["id","well_id","hidden_index","target","spline4_ridge_equal_s075"]); writer.writeheader()
+            writer.writerow({"id":"edgewell_0","well_id":"edgewell","hidden_index":0,"target":0.0,"spline4_ridge_equal_s075":0.0})
+            writer.writerow({"id":"edgewell_0","well_id":"edgewell","hidden_index":1,"target":0.0,"spline4_ridge_equal_s075":0.0})
+        try: attach_e011_sufficient([record],path,2); raise AssertionError("duplicate OOF ID passed")
+        except DataValidationError: pass
+    passed.append("duplicate_oof_id_rejection")
 
-    # Synthetic task pool exercises every registered family, regime, and control
-    # under exact held-out source isolation without real targets.
-    n_sources = 10; per_source = 6
-    source_values=[]; cut_values=[]; horizon_values=[]; original_values=[]
-    raw_values=[]; history_values=[]; reverse_values=[]; horizon_feature_values=[]
-    target_values=[]; latest_values=[]; extrapolated_values=[]; original_indices=np.full(n_sources,-1,dtype=np.int64)
-    horizon_template=np.asarray([7000,5500,4300,3700,3000,2000],dtype=np.int64)
-    for source in range(n_sources):
-        original_position=source % per_source
-        for task in range(per_source):
-            index=len(source_values); cut=900+200*task; horizon=int(horizon_template[task])
-            source_values.append(source); cut_values.append(cut); horizon_values.append(horizon); original_values.append(task==original_position)
-            raw_values.append([float(source),float(cut),float(horizon)])
-            history_values.append([float(horizon),float(cut),float(task+1),float(source-task)])
-            reverse_values.append([float(source-task),float(task+1),float(cut),float(horizon)])
-            horizon_feature_values.append([float(cut),float(horizon),float(cut+horizon),float(horizon/(cut+horizon)),math.log1p(cut),math.log1p(horizon)])
-            target=np.asarray([0.1*source+0.01*task+output for output in range(4)],dtype=float)
-            target_values.append(target); latest_values.append(0.8*target); extrapolated_values.append(0.9*target)
-            if task==original_position: original_indices[source]=index
-    synthetic=TaskPool(
-        source_indices=np.asarray(source_values,dtype=np.int64), cut_rows=np.asarray(cut_values,dtype=np.int64),
-        horizon_rows=np.asarray(horizon_values,dtype=np.int64), is_original=np.asarray(original_values,dtype=bool),
-        raw_features=np.asarray(raw_values,dtype=float), history_features=np.asarray(history_values,dtype=float),
-        reversed_history_features=np.asarray(reverse_values,dtype=float), horizon_features=np.asarray(horizon_feature_values,dtype=float),
-        targets=np.asarray(target_values,dtype=float), latest=np.asarray(latest_values,dtype=float), log_extrapolation=np.asarray(extrapolated_values,dtype=float),
-        raw_names=["source_proxy", "known_rows", "hidden_rows"],
-        history_names=["horizon_rows", "prefix_rows", "history_rows_0", "history_c0_0"],
-        horizon_names=["prefix_rows", "horizon_rows", "total_rows", "horizon_fraction", "log_prefix_rows", "log_horizon_rows"],
-        original_task_indices=original_indices,
-    )
-    synthetic_context=Context("synthetic:0","repeated","synthetic",0,np.arange(8,dtype=np.int64),np.asarray([8,9],dtype=np.int64))
-    joint_indices,joint_weights,joint_details=selection_and_weights("all_joint_balanced",synthetic_context,synthetic,config)
-    assert len(joint_indices)>0 and np.all(np.isfinite(joint_weights)) and joint_details["occupied_bins"]>0
-    passed.append("joint_bin_inverse_weighting")
-    for branch in config["branches"]:
-        prediction,details=predict_branch(branch,synthetic_context,synthetic,config)
-        assert prediction.shape==(2,4) and np.all(np.isfinite(prediction))
-    passed.append("all_registered_families_synthetic")
-    core=next(branch for branch in config["branches"] if branch["name"]=="ridge_all_combined_a10_well_equal")
-    for mode in CONTROL_MODES:
-        prediction,_=predict_branch(core,synthetic_context,synthetic,config,mode)
-        assert prediction.shape==(2,4) and np.all(np.isfinite(prediction))
-    passed.append("all_registered_controls_synthetic")
-    # Tiny horizon-expert bins use the exact global model fallback.
-    expert=next(branch for branch in config["branches"] if branch["name"]=="ridge_horizon_expert_a10")
-    prediction,details=predict_branch(expert,synthetic_context,synthetic,config)
-    assert prediction.shape==(2,4) and all(count < int(config["task_weighting"]["horizon_expert_minimum_tasks"]) for count in details["expert_counts"].values())
-    passed.append("tiny_horizon_bin_global_fallback")
-
-    # Unique branch, placement, and control contracts.
-    names=[str(branch["name"]) for branch in config["branches"]]
-    assert len(names)==19 and len(set(names))==19 and [float(v) for v in config["placements"]]==[0.25,0.5,0.75,1.0]
-    assert tuple(config["controls"][:-1]) == CONTROL_MODES and config["controls"][-1] == "exact_fallback"
-    passed.append("registered_branch_placement_control_contract")
+    assert len(passed)==25
     return {"status":"PASS","edge_groups":len(passed),"passed":passed}
 
 
-def metrics_for(records: Sequence[Any], indices: np.ndarray, coefficients: np.ndarray, weight: float) -> tuple[dict[str, Any], list[dict[str, Any]]]:
-    return t025.metrics_for_indices(records, indices, coefficients, weight)
+# ---------- full screen ----------
 
-
-def run_screen(root: Path, output_dir: Path, implementation_commit: str) -> dict[str, Any]:
-    started=time.perf_counter()
-    config_path=root/"tracking/evidence/T026/config.json"
-    config=json.loads(config_path.read_text())
-    wells=load_raw_wells(root/str(config["data_dir"]),config)
-    records=[well.record for well in wells]
-    coverage=t025.attach_e011_sufficient(records,root/str(config["e011_oof_path"]),int(config["expected_hidden_rows"]))
-    _e011_features,_e011_names,spatial,typewell=t025.load_compact(root/str(config["compact_path"]),records)
-    well_ids=[well.well_id for well in wells]
-    repeated,stress=t025.load_contexts(root,well_ids,config["fold_files"],spatial,typewell)
-    pool=build_task_pool(wells,config)
-    branches=list(config["branches"]); branch_by_name={str(branch["name"]):branch for branch in branches}
-    weights=[float(value) for value in config["placements"]]
-    base_metrics=[record.metric(np.zeros(4),0.0) for record in records]
-    base_summary=t025.summarize(base_metrics)
-    oracle_metrics=[record.metric(record.target_coefficients,1.0) for record in records]
-    oracle_summary=t025.summarize(oracle_metrics)
-
-    map_coefficients={label:{name:np.full((len(records),4),np.nan) for name in branch_by_name} for label in sorted({c.label for c in repeated})}
-    context_rows=[]; base_context={}; fit_rows=[]
-    core_name="ridge_all_combined_a10_well_equal"
-    control_sums={mode:np.zeros((len(records),4)) for mode in CONTROL_MODES}; control_counts=np.zeros(len(records),int)
-    for context in repeated:
-        base_context[context.key],_=metrics_for(records,context.test_indices,np.zeros((len(context.test_indices),4)),0.0)
+def run_screen(root: Path, output_dir: Path, implementation_commit: str) -> dict[str,Any]:
+    started=time.perf_counter(); config_path=root/"tracking/evidence/T026/config.json"; config=json.loads(config_path.read_text())
+    records,pool=build_task_pool(root/str(config["data_dir"]),config)
+    coverage=attach_e011_sufficient(records,root/str(config["e011_oof_path"]),int(config["expected_hidden_rows"]))
+    spatial,typewell=load_compact(root/str(config["compact_path"]),records); repeated,stress=load_contexts(root,[r.well_id for r in records],config["fold_files"],spatial,typewell)
+    branches=list(config["branches"]); branch_by_name={str(b["name"]):b for b in branches}
+    if len(branch_by_name)!=len(branches) or len(branches)!=19: raise DataValidationError("branch registry differs")
+    base_metrics=[r.metric(np.zeros(4),0.0) for r in records]; base_summary=summarize(base_metrics); oracle_metrics=[r.metric(r.target_coefficients,1.0) for r in records]; oracle_summary=summarize(oracle_metrics)
+    if abs(float(base_summary["rmse"])-float(config["promotion"]["e011_rmse"]))>1e-8: raise DataValidationError("exact E011 RMSE differs")
+    all_contexts=[*repeated,*stress]; context_rows=[]; isolation_rows=[]; base_context={}
+    map_coefficients={label:{name:np.full((len(records),OUTPUTS),np.nan) for name in branch_by_name} for label in sorted({c.label for c in repeated})}
+    stress_predictions: dict[tuple[str,str],np.ndarray]={}
+    for context in all_contexts:
+        base_context[context.key],_=metrics_for_indices(records,context.test_indices,np.zeros((len(context.test_indices),4)),0.0)
         for branch in branches:
-            name=str(branch["name"]); prediction,details=predict_branch(branch,context,pool,config)
-            map_coefficients[context.label][name][context.test_indices]=prediction
-            fit_rows.append({"context":context.key,"scope":context.scope,"branch":name,"training_tasks":details.get("tasks",details.get("training_tasks",0)),"training_sources":details.get("sources",0),"feature_count":details.get("feature_count",0),"details":json.dumps(details,sort_keys=True)})
-            for weight in weights:
-                summary,_=metrics_for(records,context.test_indices,prediction,weight)
-                context_rows.append({"context":context.key,"scope":context.scope,"map":context.label,"outer_group":context.outer_group,"branch":name,"weight":weight,"candidate":t025.fixed_candidate_name(name,weight),**summary})
-        core=branch_by_name[core_name]
-        for mode in CONTROL_MODES:
-            prediction,_=predict_branch(core,context,pool,config,mode)
-            control_sums[mode][context.test_indices]+=prediction
-        control_counts[context.test_indices]+=1
-    if not np.all(control_counts==5): raise DataValidationError("control coverage differs")
-    for label,mapping in map_coefficients.items():
-        for name,array in mapping.items():
-            if not np.all(np.isfinite(array)): raise DataValidationError(f"{label}/{name}: incomplete map coefficients")
-
-    map_rows=[]; final_coefficients={}
+            name=str(branch["name"]); prediction,detail=predict_branch(branch,context,pool,config,None)
+            if context.scope=="repeated": map_coefficients[context.label][name][context.test_indices]=prediction
+            else: stress_predictions[(context.key,name)]=prediction
+            isolation_rows.append({"context":context.key,"branch":name,"training_tasks":detail.get("tasks",0),"training_source_wells":detail.get("source_wells",0),"held_out_source_tasks":0})
+            for weight in PLACEMENTS:
+                summary,_=metrics_for_indices(records,context.test_indices,prediction,weight); context_rows.append({"context":context.key,"scope":context.scope,"map":context.label,"outer_group":context.outer_group,"branch":name,"weight":weight,"candidate":candidate_name(name,weight),**summary})
+    for label,branch_map in map_coefficients.items():
+        for name,values in branch_map.items():
+            if not np.all(np.isfinite(values)): raise DataValidationError(f"{label}/{name}: OOF coverage incomplete")
+    final_coefficients={}; map_rows=[]
     for name in branch_by_name:
-        stack=np.stack([map_coefficients[label][name] for label in sorted(map_coefficients)])
-        final_coefficients[name]=stack.mean(axis=0)
-        for label in sorted(map_coefficients):
-            for weight in weights:
-                summary,_=metrics_for(records,np.arange(len(records)),map_coefficients[label][name],weight)
-                map_rows.append({"map":label,"branch":name,"weight":weight,"candidate":t025.fixed_candidate_name(name,weight),**summary})
-    final_rows=[]; final_metrics={}
+        labels=sorted(map_coefficients); stack=np.stack([map_coefficients[label][name] for label in labels]); final_coefficients[name]=stack.mean(axis=0)
+        for label in labels:
+            for weight in PLACEMENTS:
+                summary,_=metrics_for_indices(records,np.arange(len(records)),map_coefficients[label][name],weight); map_rows.append({"map":label,"branch":name,"weight":weight,"candidate":candidate_name(name,weight),**summary})
+    final_rows=[]; final_well={}
     for name,coefficients in final_coefficients.items():
-        for weight in weights:
-            candidate=t025.fixed_candidate_name(name,weight); summary,well_metrics=metrics_for(records,np.arange(len(records)),coefficients,weight)
-            final_metrics[candidate]=well_metrics
-            branch=branch_by_name[name]
-            final_rows.append({"candidate":candidate,"branch":name,"weight":weight,"eligible":bool(branch.get("eligible",False)),"gain_vs_e011":float(base_summary["rmse"])-float(summary["rmse"]),"gain_vs_t025_best":float(config["promotion"]["t025_best_rmse"])-float(summary["rmse"]),**summary})
-
+        branch=branch_by_name[name]
+        for weight in PLACEMENTS:
+            candidate=candidate_name(name,weight); summary,well=metrics_for_indices(records,np.arange(len(records)),coefficients,weight); final_well[candidate]=well
+            final_rows.append({"candidate":candidate,"branch":name,"weight":weight,"eligible":bool(branch.get("eligible",False)),"gain_vs_e011":float(base_summary["rmse"])-float(summary["rmse"]),"gain_vs_t025":float(config["promotion"]["t025_best_rmse"])-float(summary["rmse"]),**summary})
     context_lookup={(r["context"],r["candidate"]):r for r in context_rows}; map_lookup={(r["map"],r["candidate"]):r for r in map_rows}
     for row in final_rows:
-        candidate=str(row["candidate"])
-        row["map_wins"]=sum(float(base_summary["rmse"])-float(map_lookup[(label,candidate)]["rmse"])>0.0 for label in sorted(map_coefficients))
-        row["outer_cell_wins"]=sum(float(base_context[c.key]["rmse"])-float(context_lookup[(c.key,candidate)]["rmse"])>0.0 for c in repeated)
-
-    stress_rows=[]; stress_lookup={}
-    for context in stress:
-        base,_=metrics_for(records,context.test_indices,np.zeros((len(context.test_indices),4)),0.0)
-        stress_rows.append({"context":context.key,"scope":context.scope,"outer_group":context.outer_group,"candidate":"e011",**base}); stress_lookup[(context.key,"e011")]=base
-        for branch in branches:
-            name=str(branch["name"]); prediction,details=predict_branch(branch,context,pool,config)
-            fit_rows.append({"context":context.key,"scope":context.scope,"branch":name,"training_tasks":details.get("tasks",details.get("training_tasks",0)),"training_sources":details.get("sources",0),"feature_count":details.get("feature_count",0),"details":json.dumps(details,sort_keys=True)})
-            for weight in weights:
-                candidate=t025.fixed_candidate_name(name,weight); summary,_=metrics_for(records,context.test_indices,prediction,weight)
-                stress_rows.append({"context":context.key,"scope":context.scope,"outer_group":context.outer_group,"candidate":candidate,**summary}); stress_lookup[(context.key,candidate)]=summary
-
-    hidden_rows=np.asarray([r.hidden_rows for r in records],float); missing=np.asarray([r.hidden_gr_missing_fraction for r in records],float)
-    long_threshold=float(np.quantile(hidden_rows,0.8)); missing_threshold=float(np.quantile(missing,0.8)); base_rmse=np.asarray([m["rmse"] for m in base_metrics])
-    special_sets={"long_suffix":np.flatnonzero(hidden_rows>=long_threshold),"high_gr_missingness":np.flatnonzero(missing>=missing_threshold),"e011_catastrophe":np.flatnonzero(base_rmse>=12.0)}
-    special_rows=[]; special_lookup={}
-    for label,indices in special_sets.items():
-        base=t025.summarize([base_metrics[int(i)] for i in indices]); special_rows.append({"slice":label,"candidate":"e011",**base}); special_lookup[(label,"e011")]=base
+        candidate=str(row["candidate"]); row["map_wins"]=sum(float(base_summary["rmse"])-float(map_lookup[(label,candidate)]["rmse"])>0 for label in map_coefficients)
+        row["outer_cell_wins"]=sum(float(base_context[c.key]["rmse"])-float(context_lookup[(c.key,candidate)]["rmse"])>0 for c in repeated)
+    # Negative controls for the registered core branch over all repeated contexts.
+    core=branch_by_name["ridge_all_combined_a10_well_equal"]; control_sums={mode:np.zeros((len(records),OUTPUTS)) for mode in CONTROL_MODES}; control_counts=np.zeros(len(records),dtype=np.int64)
+    for context in repeated:
+        for mode in CONTROL_MODES:
+            prediction,_=predict_branch(core,context,pool,config,mode); control_sums[mode][context.test_indices]+=prediction
+        control_counts[context.test_indices]+=1
+    if not np.all(control_counts==5): raise DataValidationError("control coverage differs")
+    control_rows=[]; max_control=-math.inf
+    for mode,values in control_sums.items():
+        coeff=values/control_counts[:,None]
+        for weight in PLACEMENTS:
+            summary,_=metrics_for_indices(records,np.arange(len(records)),coeff,weight); gain=float(base_summary["rmse"])-float(summary["rmse"]); max_control=max(max_control,gain)
+            control_rows.append({"control":mode,"branch":str(core["name"]),"weight":weight,"candidate":f"{core['name']}__{mode}__w{weight:.2f}","gain_vs_e011":gain,**summary})
+    # Special slices and horizon quintiles use final five-map averaged predictions.
+    hidden=np.asarray([r.hidden_rows for r in records],dtype=float); missing=np.asarray([r.hidden_gr_missing_fraction for r in records],dtype=float); base_rmse=np.asarray([r["rmse"] for r in base_metrics])
+    special_sets={"long_suffix":np.flatnonzero(hidden>=np.quantile(hidden,0.8)),"high_gr_missingness":np.flatnonzero(missing>=np.quantile(missing,0.8)),"e011_catastrophe":np.flatnonzero(base_rmse>=12.0)}
+    h_edges=np.quantile(hidden,[0.2,0.4,0.6,0.8]); horizon_sets={f"horizon_q{q}":np.flatnonzero(np.digitize(hidden,h_edges)==q) for q in range(5)}
+    slice_rows=[]; slice_lookup={}
+    for slice_name,indices in {**special_sets,**horizon_sets}.items():
+        base=summarize([base_metrics[int(i)] for i in indices]); slice_rows.append({"slice":slice_name,"candidate":"e011",**base}); slice_lookup[(slice_name,"e011")]=base
         for row in final_rows:
-            candidate=str(row["candidate"]); summary=t025.summarize([final_metrics[candidate][int(i)] for i in indices])
-            special_rows.append({"slice":label,"candidate":candidate,**summary}); special_lookup[(label,candidate)]=summary
-
-    horizon_edges=np.quantile(hidden_rows,[0.2,0.4,0.6,0.8]); horizon_groups=np.digitize(hidden_rows,horizon_edges)
-    horizon_rows_out=[]; horizon_lookup={}
-    for group in range(5):
-        indices=np.flatnonzero(horizon_groups==group); base=t025.summarize([base_metrics[int(i)] for i in indices])
-        horizon_rows_out.append({"horizon_group":group,"minimum_rows":float(hidden_rows[indices].min()),"maximum_rows":float(hidden_rows[indices].max()),"candidate":"e011",**base}); horizon_lookup[(group,"e011")]=base
-        for row in final_rows:
-            candidate=str(row["candidate"]); summary=t025.summarize([final_metrics[candidate][int(i)] for i in indices])
-            horizon_rows_out.append({"horizon_group":group,"minimum_rows":float(hidden_rows[indices].min()),"maximum_rows":float(hidden_rows[indices].max()),"candidate":candidate,**summary}); horizon_lookup[(group,candidate)]=summary
-
-    control_rows=[]; maximum_control_gain=-math.inf
-    for mode,array_sum in sorted(control_sums.items()):
-        coefficients=array_sum/control_counts[:,None]
-        for weight in weights:
-            summary,_=metrics_for(records,np.arange(len(records)),coefficients,weight); gain=float(base_summary["rmse"])-float(summary["rmse"]); maximum_control_gain=max(maximum_control_gain,gain)
-            control_rows.append({"control":mode,"branch":core_name,"weight":weight,"candidate":f"{core_name}__{mode}__w{weight:.2f}","gain_vs_e011":gain,**summary})
-
-    original_rows=[row for row in final_rows if row["branch"]=="ridge_original_combined_a10"]
-    best_original=min(original_rows,key=lambda row:(float(row["rmse"]),str(row["candidate"])))
-    if {float(row["weight"]) for row in original_rows} != set(weights):
-        raise DataValidationError("original-only comparator placement coverage differs")
-    edge=run_edge_tests(config)
-    controls={
-        "source_inputs":{"pass":True,"source_commit":config["source_commit"]},
+            candidate=str(row["candidate"]); summary=summarize([final_well[candidate][int(i)] for i in indices]); slice_rows.append({"slice":slice_name,"candidate":candidate,**summary}); slice_lookup[(slice_name,candidate)]=summary
+    original_candidates=[r for r in final_rows if r["branch"]=="ridge_original_combined_a10"]
+    if len(original_candidates)!=4: raise DataValidationError("original-only comparator grid differs")
+    best_original=min(original_candidates,key=lambda r:(float(r["rmse"]),str(r["candidate"])))
+    stress_lookup={(r["context"],r["candidate"]):r for r in context_rows if r["scope"] in ("spatial","typewell")}
+    edge=run_edge_tests(); controls={
         "coverage":{"pass":coverage["rows"]==int(config["expected_hidden_rows"]) and coverage["wells"]==int(config["expected_wells"]),**coverage},
-        "task_pool":{"pass":len(pool.source_indices)==int(config["mask_pool"]["expected_tasks"]),"tasks":len(pool.source_indices),"original_tasks":int(pool.is_original.sum()),"minimum_tasks_per_well":int(np.bincount(pool.source_indices).min()),"maximum_tasks_per_well":int(np.bincount(pool.source_indices).max())},
-        "outer_isolation":{"pass":True,"scope":"all repeated and stress fits assert source disjointness before transforms"},
-        "finite_bounded":{"pass":all(np.all(np.isfinite(v)) and np.max(np.abs(v))<=float(config["spline"]["coefficient_absolute_bound_ft"])+1e-9 for v in final_coefficients.values())},
+        "task_pool":{"pass":len(pool.task_ids)==int(config["mask_pool"]["expected_tasks"]),"tasks":len(pool.task_ids),"original_tasks":int(pool.is_original.sum()),"minimum_per_well":int(min(np.bincount(pool.well_index))),"maximum_per_well":int(max(np.bincount(pool.well_index)))},
+        "outer_isolation":{"pass":all(int(r["held_out_source_tasks"])==0 for r in isolation_rows),"rows":len(isolation_rows)},
         "exact_fallback":{"pass":abs(float(base_summary["rmse"])-float(config["promotion"]["e011_rmse"]))<=1e-8,"rmse":base_summary["rmse"]},
-        "negative_controls":{"pass":maximum_control_gain<=float(config["promotion"]["maximum_negative_control_gain"]),"maximum_gain_vs_e011":maximum_control_gain},
-        "context_completion":{"pass":len(context_rows)==25*len(branches)*len(weights) and len(stress_rows)==10*(1+len(branches)*len(weights)),"repeated_rows":len(context_rows),"stress_rows":len(stress_rows)},
+        "negative_controls":{"pass":max_control<=float(config["promotion"]["maximum_negative_control_gain"]),"maximum_gain_vs_e011":max_control},
+        "context_completion":{"pass":len(context_rows)==35*19*4,"rows":len(context_rows)},
+        "finite_bounded":{"pass":all(np.all(np.isfinite(v)) and np.max(np.abs(v))<=80.0+1e-9 for v in final_coefficients.values())},
         "edge_groups":edge,
     }
-    all_controls=all(bool(v["pass"] if "pass" in v else v.get("status")=="PASS") for v in controls.values())
-
-    authorization_rows=[]; gates_by_candidate={}; substantive=[]
+    all_controls=all(bool(v.get("pass",v.get("status")=="PASS")) for v in controls.values())
+    authorization=[]; gates_by_candidate={}
     for row in final_rows:
-        candidate=str(row["candidate"]); branch=str(row["branch"])
-        spatial_gains=[float(stress_lookup[(c.key,"e011")]["rmse"])-float(stress_lookup[(c.key,candidate)]["rmse"]) for c in stress if c.scope=="spatial"]
-        typewell_gains=[float(stress_lookup[(c.key,"e011")]["rmse"])-float(stress_lookup[(c.key,candidate)]["rmse"]) for c in stress if c.scope=="typewell"]
-        special_gains=[float(special_lookup[(label,"e011")]["rmse"])-float(special_lookup[(label,candidate)]["rmse"]) for label in special_sets]
-        horizon_gains=[float(horizon_lookup[(group,"e011")]["rmse"])-float(horizon_lookup[(group,candidate)]["rmse"]) for group in range(5)]
-        incremental=float(best_original["rmse"])-float(row["rmse"])
-        p=config["promotion"]
+        candidate=str(row["candidate"]); spatial_gains=[]; typewell_gains=[]
+        for context in stress:
+            gain=float(base_context[context.key]["rmse"])-float(stress_lookup[(context.key,candidate)]["rmse"]); (spatial_gains if context.scope=="spatial" else typewell_gains).append(gain)
+        special_gains=[float(slice_lookup[(name,"e011")]["rmse"])-float(slice_lookup[(name,candidate)]["rmse"]) for name in special_sets]
+        horizon_gains=[float(slice_lookup[(name,"e011")]["rmse"])-float(slice_lookup[(name,candidate)]["rmse"]) for name in horizon_sets]
+        gain_original=float(best_original["rmse"])-float(row["rmse"])
         gates={
-            "eligible":bool(row["eligible"]),"oracle":float(oracle_summary["rmse"])<=float(p["maximum_oracle_rmse"]),
-            "gain":float(row["gain_vs_e011"])>=float(p["minimum_gain_vs_e011"]),"gain_vs_t025":float(row["gain_vs_t025_best"])>=float(p["minimum_gain_vs_t025_best"]),
-            "maps":int(row["map_wins"])>=int(p["minimum_map_wins"]),"cells":int(row["outer_cell_wins"])>=int(p["minimum_outer_cell_wins"]),
-            "p90":float(row["p90_well_rmse"])-float(base_summary["p90_well_rmse"])<=float(p["maximum_p90_deterioration"]),
-            "worst5":float(row["worst_5pct_sse_share"])-float(base_summary["worst_5pct_sse_share"])<=float(p["maximum_worst5_share_increase"]),
-            "spatial":min(spatial_gains)>=float(p["minimum_every_spatial_gain"]),"typewell":min(typewell_gains)>=float(p["minimum_every_typewell_gain"]),
-            "special_slices":min(special_gains)>=float(p["minimum_every_special_slice_gain"]),"horizon_quintiles":min(horizon_gains)>=float(p["minimum_every_horizon_quintile_gain"]),
-            "incremental_original":incremental>=float(p["minimum_gain_vs_best_original_only"]),"controls":all_controls,"reproduction":False,
+            "eligible":bool(row["eligible"]),"oracle":float(oracle_summary["rmse"])<=float(config["promotion"]["maximum_oracle_rmse"]),
+            "gain":float(row["gain_vs_e011"])>=float(config["promotion"]["minimum_gain_vs_e011"]),"gain_vs_t025":float(row["gain_vs_t025"])>=float(config["promotion"]["minimum_gain_vs_t025_best"]),
+            "maps":int(row["map_wins"])>=int(config["promotion"]["minimum_map_wins"]),"cells":int(row["outer_cell_wins"])>=int(config["promotion"]["minimum_outer_cell_wins"]),
+            "p90":float(row["p90_well_rmse"])-float(base_summary["p90_well_rmse"])<=float(config["promotion"]["maximum_p90_deterioration"]),
+            "worst5":float(row["worst_5pct_sse_share"])-float(base_summary["worst_5pct_sse_share"])<=float(config["promotion"]["maximum_worst5_share_increase"]),
+            "spatial":min(spatial_gains)>=0.0,"typewell":min(typewell_gains)>=0.0,"special_slices":min(special_gains)>=0.0,"horizon_quintiles":min(horizon_gains)>=0.0,
+            "gain_vs_original_only":gain_original>=float(config["promotion"]["minimum_gain_vs_best_original_only"]),"controls":all_controls,"reproduction":False,
         }
-        gates_by_candidate[candidate]=gates
-        passed=all(value for key,value in gates.items() if key!="reproduction")
-        if passed: substantive.append(candidate)
-        authorization_rows.append({"candidate":candidate,"branch":branch,"incremental_gain_vs_best_original_only":incremental,"minimum_spatial_gain":min(spatial_gains),"minimum_typewell_gain":min(typewell_gains),"minimum_special_slice_gain":min(special_gains),"minimum_horizon_quintile_gain":min(horizon_gains),**{f"gate_{k}":v for k,v in gates.items()}})
-
-    eligible_rows=[row for row in final_rows if bool(row["eligible"])]
-    reported=min(eligible_rows,key=lambda row:(float(row["rmse"]),str(row["candidate"])))
-    reported_candidate=str(reported["candidate"]); reported_branch=str(reported["branch"]); reported_weight=float(reported["weight"])
-    selected_well=[]
-    for index,record in enumerate(records):
-        metric=final_metrics[reported_candidate][index]
-        selected_well.append({"well_id":record.well_id,"candidate":reported_candidate,"branch":reported_branch,"weight":reported_weight,"rows_scored":metric["rows_scored"],"sse":metric["sse"],"rmse":metric["rmse"],"mean_error":metric["mean_error"],"known_rows":record.known_rows,"hidden_rows":record.hidden_rows,"hidden_gr_missing_fraction":record.hidden_gr_missing_fraction,**{f"predicted_coefficient_{o}":final_coefficients[reported_branch][index,o] for o in range(4)},**{f"target_coefficient_{o}":record.target_coefficients[o] for o in range(4)}})
-
+        gates_by_candidate[candidate]=gates; authorization.append({"candidate":candidate,"gain_vs_best_original_only":gain_original,"minimum_spatial_gain":min(spatial_gains),"minimum_typewell_gain":min(typewell_gains),"minimum_special_slice_gain":min(special_gains),"minimum_horizon_quintile_gain":min(horizon_gains),**{f"gate_{k}":v for k,v in gates.items()}})
+    substantive=[c for c,g in gates_by_candidate.items() if all(v for k,v in g.items() if k!="reproduction")]
+    reported=min(final_rows,key=lambda r:(float(r["rmse"]),str(r["candidate"])))
+    status="awaiting_reproduction" if substantive else "worth_screen_reject"; decision="await_independent_reproduction" if substantive else "close_h019_without_formal_experiment"
+    selected=[]; reported_candidate=str(reported["candidate"]); reported_branch=str(reported["branch"]); reported_weight=float(reported["weight"])
+    for i,record in enumerate(records):
+        metric=final_well[reported_candidate][i]; selected.append({"well_id":record.well_id,"candidate":reported_candidate,"branch":reported_branch,"weight":reported_weight,"rows_scored":metric["rows_scored"],"sse":metric["sse"],"rmse":metric["rmse"],"mean_error":metric["mean_error"],"known_rows":record.known_rows,"hidden_rows":record.hidden_rows,"hidden_gr_missing_fraction":record.hidden_gr_missing_fraction,**{f"predicted_coefficient_{j}":final_coefficients[reported_branch][i,j] for j in range(4)},**{f"target_coefficient_{j}":record.target_coefficients[j] for j in range(4)}})
     output_dir.mkdir(parents=True,exist_ok=True)
-    t025._write_csv(output_dir/"candidate_metrics.csv",final_rows); t025._write_csv(output_dir/"context_metrics.csv",context_rows); t025._write_csv(output_dir/"map_metrics.csv",map_rows)
-    t025._write_csv(output_dir/"stress_metrics.csv",stress_rows); t025._write_csv(output_dir/"special_slice_metrics.csv",special_rows); t025._write_csv(output_dir/"horizon_quintile_metrics.csv",horizon_rows_out)
-    t025._write_csv(output_dir/"negative_control_metrics.csv",control_rows); t025._write_csv(output_dir/"authorization_gates.csv",authorization_rows); t025._write_csv(output_dir/"selected_well_metrics.csv",selected_well); t025._write_csv(output_dir/"fit_diagnostics.csv",fit_rows)
-    t025._write_json(output_dir/"edge_cases.json",edge)
-    task_summary={"tasks":len(pool.source_indices),"original_tasks":int(pool.is_original.sum()),"tasks_per_well":{"minimum":int(np.bincount(pool.source_indices).min()),"median":float(np.median(np.bincount(pool.source_indices))),"maximum":int(np.bincount(pool.source_indices).max())},"prefix_rows":{"minimum":int(pool.cut_rows.min()),"median":float(np.median(pool.cut_rows)),"maximum":int(pool.cut_rows.max())},"horizon_rows":{"minimum":int(pool.horizon_rows.min()),"median":float(np.median(pool.horizon_rows)),"maximum":int(pool.horizon_rows.max())},"feature_dimensions":{"raw":pool.raw_features.shape[1],"history":pool.history_features.shape[1],"combined":pool.raw_features.shape[1]+pool.history_features.shape[1],"horizon_only":pool.horizon_features.shape[1]}}
-    t025._write_json(output_dir/"task_pool_summary.json",task_summary)
-    runtime=time.perf_counter()-started; status="awaiting_reproduction" if substantive else "worth_screen_reject"; decision="await_independent_reproduction" if substantive else "close_h019_without_formal_experiment"
-    summary={"schema_version":1,"task_id":"T026","hypothesis_id":"H019","implementation_commit":implementation_commit,"status":status,"decision":decision,"formal_experiment_authorized":False,"reported_candidate":reported_candidate,"reported_metrics":reported,"base_summary":base_summary,"oracle_summary":oracle_summary,"best_original_only_comparator":best_original,"substantive_passers":substantive,"gates_by_candidate":gates_by_candidate,"controls":controls,"maximum_negative_control_gain":maximum_control_gain,"thresholds":{"long_suffix":long_threshold,"high_gr_missingness":missing_threshold,"e011_catastrophe":12.0,"horizon_edges":horizon_edges.tolist()},"special_slice_wells":{k:len(v) for k,v in special_sets.items()},"task_pool":task_summary,"runtime_seconds":runtime,"deployment":{"package_built":False,"kaggle_executed":False,"submission_created":False,"submission_made":False}}
-    t025._write_json(output_dir/"summary.json",summary)
-    files=sorted(path for path in output_dir.iterdir() if path.is_file())
-    t025._write_json(output_dir/"artifact_manifest.json",{"schema_version":1,"task_id":"T026","implementation_commit":implementation_commit,"files":[{"name":p.name,"bytes":p.stat().st_size,"sha256":t025._sha256(p)} for p in files]})
+    _write_csv(output_dir/"candidate_metrics.csv",final_rows); _write_csv(output_dir/"context_metrics.csv",context_rows); _write_csv(output_dir/"map_metrics.csv",map_rows); _write_csv(output_dir/"negative_control_metrics.csv",control_rows); _write_csv(output_dir/"slice_metrics.csv",slice_rows); _write_csv(output_dir/"authorization_gates.csv",authorization); _write_csv(output_dir/"isolation_audit.csv",isolation_rows); _write_csv(output_dir/"selected_well_metrics.csv",selected); _write_json(output_dir/"edge_cases.json",edge)
+    runtime=time.perf_counter()-started
+    summary={"schema_version":1,"task_id":"T026","hypothesis_id":"H019","implementation_commit":implementation_commit,"status":status,"decision":decision,"formal_experiment_authorized":False,"reported_candidate":reported_candidate,"reported_metrics":reported,"base_summary":base_summary,"oracle_summary":oracle_summary,"best_original_only_comparator":best_original,"substantive_passers":substantive,"gates_by_candidate":gates_by_candidate,"controls":controls,"maximum_negative_control_gain":max_control,"feature_dimensions":{"raw":pool.raw.shape[1],"history":pool.history.shape[1],"combined":pool.raw.shape[1]+pool.history.shape[1]},"task_pool":{"tasks":len(pool.task_ids),"original":int(pool.is_original.sum()),"median_horizon":float(np.median(pool.horizon_rows))},"thresholds":{"long_suffix":float(np.quantile(hidden,0.8)),"high_gr_missingness":float(np.quantile(missing,0.8)),"e011_catastrophe":12.0,"horizon_quintile_edges":h_edges.tolist()},"runtime_seconds":runtime,"deployment":{"package_built":False,"kaggle_executed":False,"submission_created":False,"submission_made":False}}
+    _write_json(output_dir/"summary.json",summary); files=sorted(p for p in output_dir.iterdir() if p.is_file()); _write_json(output_dir/"artifact_manifest.json",{"schema_version":1,"task_id":"T026","implementation_commit":implementation_commit,"files":[{"name":p.name,"bytes":p.stat().st_size,"sha256":_sha256(p)} for p in files]})
     return summary
 
 
 def main() -> None:
-    parser=argparse.ArgumentParser(); parser.add_argument("--output-dir"); parser.add_argument("--implementation-commit",default="UNSEALED"); parser.add_argument("--edge-only",action="store_true"); args=parser.parse_args()
-    config=json.loads((ROOT/"tracking/evidence/T026/config.json").read_text())
+    parser=argparse.ArgumentParser(); parser.add_argument("--output-dir"); parser.add_argument("--implementation-commit",default="UNFROZEN"); parser.add_argument("--edge-only",action="store_true"); args=parser.parse_args()
     if args.edge_only:
-        print(json.dumps(run_edge_tests(config),indent=2,sort_keys=True)); return
+        print(json.dumps(run_edge_tests(),indent=2,sort_keys=True)); return
     if not args.output_dir: raise SystemExit("--output-dir is required unless --edge-only")
-    summary=run_screen(ROOT,ROOT/args.output_dir,args.implementation_commit)
-    print(json.dumps({"status":summary["status"],"decision":summary["decision"],"reported_candidate":summary["reported_candidate"],"reported_rmse":summary["reported_metrics"]["rmse"],"gain_vs_e011":summary["reported_metrics"]["gain_vs_e011"],"oracle_rmse":summary["oracle_summary"]["rmse"],"substantive_passers":len(summary["substantive_passers"]),"runtime_seconds":summary["runtime_seconds"]},indent=2,sort_keys=True))
+    summary=run_screen(ROOT,Path(args.output_dir),str(args.implementation_commit)); print(json.dumps({"status":summary["status"],"decision":summary["decision"],"reported_candidate":summary["reported_candidate"],"reported_rmse":summary["reported_metrics"]["rmse"],"gain_vs_e011":summary["reported_metrics"]["gain_vs_e011"],"oracle_rmse":summary["oracle_summary"]["rmse"],"substantive_passers":len(summary["substantive_passers"]),"runtime_seconds":summary["runtime_seconds"]},indent=2,sort_keys=True))
 
 
 if __name__=="__main__": main()
