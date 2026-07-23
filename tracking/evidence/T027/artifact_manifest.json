@@ -1,0 +1,92 @@
+{
+  "files": [
+    {
+      "bytes": 1025,
+      "name": "IMPLEMENTATION_RECEIPT.json",
+      "sha256": "598aaae3bd7ec3d2a5d2e787854bcc919203ec7a8ee67f81fa1676960fd97649"
+    },
+    {
+      "bytes": 8769,
+      "name": "PRE_REGISTRATION.md",
+      "sha256": "f8170c53ccef9bf61101c0bfbab557698c5472698655c63b41decf46c0d02012"
+    },
+    {
+      "bytes": 1853,
+      "name": "REPRODUCTION_RECEIPT.json",
+      "sha256": "5b4a164ce1909e34630424838858aba2d0f7f2020b75cc4414f97a6b91c1f2a3"
+    },
+    {
+      "bytes": 4116,
+      "name": "RESULT.md",
+      "sha256": "033489cec95ebc8397e87f451d9002d6d328c41555df9891e86ccb8e4484d2db"
+    },
+    {
+      "bytes": 18665,
+      "name": "authorization_gates.csv",
+      "sha256": "0969557aa6199a5ec35cdb4324b2b358ec5922fda3a09cd768474f04db208705"
+    },
+    {
+      "bytes": 22938,
+      "name": "candidate_metrics.csv",
+      "sha256": "3478cc77b849665d64c6ac020f2dd08e0f7b223233e2fac8c9bd86c55f9699be"
+    },
+    {
+      "bytes": 5953,
+      "name": "config.json",
+      "sha256": "f24d103f9ef6946e62bbcdd7eb2ece01109cde1c8dc0d258ecbc174f72afe587"
+    },
+    {
+      "bytes": 734420,
+      "name": "context_metrics.csv",
+      "sha256": "93ee3ad49a12863008f3d8513c310b9486c47f2a2d9dc45e7e06d27f9ae810b6"
+    },
+    {
+      "bytes": 774,
+      "name": "edge_cases.json",
+      "sha256": "fb1f0c0a1a79863be4711f2d44fa7e13474f2a3db3b46ee8841f550424406d1f"
+    },
+    {
+      "bytes": 50267,
+      "name": "isolation_audit.csv",
+      "sha256": "87c9e6370aea6d4c4e3b607d1b3da2271ad811ca7d43603c1cc212f9c38d1e61"
+    },
+    {
+      "bytes": 94381,
+      "name": "map_metrics.csv",
+      "sha256": "4c48e0a9eb3a670d6d1a1f5b22e6f286f523ba4de103dbc9758b7bb172dd8564"
+    },
+    {
+      "bytes": 4679,
+      "name": "negative_control_metrics.csv",
+      "sha256": "5b233702127a3ba8084235f086a8cc928b19b7eb85c2c3b3c8b7a17243b65ca8"
+    },
+    {
+      "bytes": 1710,
+      "name": "reconstructed_stress_gains.json",
+      "sha256": "5a70a50c599dce5a0ec1afc326a07a47f3dbabb4a84c32f052bfb47bd85dc3bf"
+    },
+    {
+      "bytes": 52900,
+      "name": "run_screen.py",
+      "sha256": "14a19d2527c684ffe4258d7dccfb882f47187f8aac1e8bd35cc06d6d32e07c6c"
+    },
+    {
+      "bytes": 230813,
+      "name": "selected_well_metrics.csv",
+      "sha256": "ced1dbfd5e8122cd70ebfa059774104095ae652192b8ccacd22cdadc17ce2987"
+    },
+    {
+      "bytes": 140026,
+      "name": "slice_metrics.csv",
+      "sha256": "9114b5ce142a9bebf06c3a4fb91947ffd51ebb962e50ee3761abf28e9c2dad1d"
+    },
+    {
+      "bytes": 40799,
+      "name": "summary.json",
+      "sha256": "ae008831526c079ebd80d4669c8273b7e2c6c4946eea8bcd712bbf3d76df0823"
+    }
+  ],
+  "implementation_commit": "f6bce2caa5e886723153ba9231e1c3cf1945f765",
+  "schema_version": 1,
+  "task_id": "T027"
+}

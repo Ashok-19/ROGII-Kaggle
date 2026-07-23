@@ -1,0 +1,28 @@
+{
+  "edge_groups": 22,
+  "passed": [
+    "feature_schema_and_block_counts",
+    "missing_duplicate_feature_names",
+    "view_catalog_and_indicators",
+    "unknown_view_rejection",
+    "registered_mask_application",
+    "all_missing_and_zero_variance",
+    "source_well_equal_weight",
+    "original_boost_normalization",
+    "heldout_view_exclusion",
+    "empty_missing_original_regime",
+    "tiny_ridge_partition",
+    "knn_neighbor_clipping",
+    "tree_sample_weight",
+    "nonfinite_target_rejection",
+    "coefficient_clipping",
+    "finite_spline_reconstruction",
+    "exact_e011_fallback",
+    "nonfinite_prediction_rejection",
+    "deterministic_ties",
+    "context_membership",
+    "branch_placement_contract",
+    "duplicate_oof_rejection"
+  ],
+  "status": "PASS"
+}

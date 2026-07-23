@@ -4,11 +4,11 @@
   "payload": {
     "task_id": "T027",
     "title": "Screen target-preserving causal prefix views",
-    "status": "in_progress",
+    "status": "completed",
     "priority": 1,
-    "phase": "target_preserving_view_worth_screen",
+    "phase": "target_preserving_view_worth_screen_rejected",
     "depends_on": "T026",
     "due_at": "2026-07-25",
-    "updated_at": "2026-07-23T16:45:00Z"
+    "updated_at": "2026-07-23T18:15:53Z"
   }
 }

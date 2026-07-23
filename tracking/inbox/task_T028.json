@@ -1,0 +1,14 @@
+{
+  "type": "task",
+  "recorded_at": "2026-07-23T18:15:53Z",
+  "payload": {
+    "task_id": "T028",
+    "title": "Screen domain-robust original-view objectives",
+    "status": "queued",
+    "priority": 1,
+    "phase": "domain_robust_original_view_worth_screen",
+    "depends_on": "T027",
+    "due_at": "2026-07-25",
+    "updated_at": "2026-07-23T18:15:53Z"
+  }
+}

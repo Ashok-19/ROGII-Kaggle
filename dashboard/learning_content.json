@@ -431,13 +431,27 @@
       "visual": "mask_target_mismatch_gate",
       "summary": "T026 completes 12,216 causal end-of-well tasks and 76 candidates. Every candidate is worse than E011; the best loses 0.074895 RMSE with 0/5 maps. Randomized task coefficients remain correlated with the real target but differ by 14.278922 pooled coefficient RMSE.",
       "why_it_matters": "More causal views help a weak original-only comparator, but view-local targets are not interchangeable with the competition-boundary target. The next route must preserve one target across views rather than enlarge the model or retune mask horizons."
+    },
+    {
+      "id": "B030",
+      "date": "2026-07-23",
+      "title": "Target-preserving views degrade the original signal",
+      "evidence": "complete_reproduced_worth_screen",
+      "visual": "mask_target_mismatch_gate",
+      "summary": "T027 fixes T026's target mismatch by supervising ten causal feature views with one unchanged original-boundary target. Every augmented candidate worsens E011; the best loses 0.041105 RMSE. The unaugmented comparator gains 0.091923 but fails spatial/typewell transfer.",
+      "why_it_matters": "The failure is now input covariate shift and information loss, not target mismatch. D033 closes feature masking. A successor may change only the training objective on one original view per well and may not route by domain at inference."
     }
   ],
   "idea_questions": [
     {
+      "signal": "domain-robust original-view objective",
+      "question": "Can one original feature vector per well retain coefficient signal while improving worst-domain transfer?",
+      "falsifier": "Reject if aggregate gain stays below the frozen floor, any spatial/typewell group regresses, objective selection leaks held-out groups, group identity enters inference, or shuffled/group-permuted controls retain gain."
+    },
+    {
       "signal": "target-preserving causal prefix views",
       "question": "Can multiple causal views improve prediction of one unchanged original-boundary spline target?",
-      "falsifier": "Reject if view augmentation fails to beat the original-view-only comparator and E011, inflates source-well effective sample size, depends on view position, or regresses any spatial/typewell/horizon/control group."
+      "falsifier": "T027 triggers the falsifier: every augmented-view candidate worsens E011, the best wins 0/5 maps, and broad spatial/typewell/horizon transfer fails. Do not retune masks, views, indicators, weighting, or model size."
     },
     {
       "signal": "randomized long-horizon mask tasks",
@@ -674,6 +688,16 @@
     {
       "title": "T026 rejected randomized mask-task screen",
       "local_path": "tracking/evidence/T026/RESULT.md",
+      "url": ""
+    },
+    {
+      "title": "July 23 22:15 public-intelligence delta",
+      "local_path": "archive/competition/public_intelligence_delta_2026-07-23_2215.md",
+      "url": ""
+    },
+    {
+      "title": "T027 rejected target-preserving feature-view screen",
+      "local_path": "tracking/evidence/T027/RESULT.md",
       "url": ""
     }
   ]

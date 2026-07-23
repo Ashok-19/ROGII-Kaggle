@@ -1,0 +1,14 @@
+{
+  "type": "hypothesis",
+  "recorded_at": "2026-07-23T18:15:53Z",
+  "payload": {
+    "hypothesis_id": "H021",
+    "title": "Domain-robust original-view coefficient learning",
+    "statement": "Using exactly one original 142-feature E011 vector per source well, a domain-balanced or distributionally robust training objective selected strictly inside outer-training partitions can preserve the original-only coefficient signal while improving worst spatial/typewell transfer without subgroup routing at inference.",
+    "status": "queued",
+    "priority": 1,
+    "evidence_for": "T027's original-view ridge reaches 12.4588330369, gains 0.0919232588 versus E011, improves all five horizon quintiles and all three special slices, and reduces p90 and worst-5% SSE share.",
+    "evidence_against": "The same comparator regresses spatial group 0 by 0.2840904830 and typewell groups 0, 2, and 4, including -0.3528384927 in typewell group 4. Optimizing evaluator groups can overfit their definitions and must never become inference routing.",
+    "next_test": "After the standing public-intelligence delta check, preregister T028 as a bounded original-view-only objective worth screen with all objective and selection rules frozen before scoring."
+  }
+}

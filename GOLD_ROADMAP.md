@@ -6,7 +6,7 @@ Time remaining at update: 13 days
 
 ## Objective and reality check
 
-The goal is a gold-medal-level final placement with an original, reproducible solution. A medal cannot be guaranteed. The current public leader is 4.859; the current rank-10 band is 5.511, while archived bands remain 6.199 at rank 25, 6.505 at rank 50, and 6.799 at rank 100. The account's best Kaggle-MCP-verified score is 7.119; the user-reported 6.888 score still needs a submission reference.
+The goal is a gold-medal-level final placement with an original, reproducible solution. A medal cannot be guaranteed. The current public leader is 4.859; rank 2 is 4.904 and the current rank-10 band is 5.511, while archived bands remain 6.199 at rank 25, 6.505 at rank 50, and 6.799 at rank 100. The account's best Kaggle-MCP-verified score is 7.119; the user-reported 6.888 score still needs a submission reference.
 
 The public board is not the final objective. Private-leaderboard robustness, legal provenance, and reproducibility determine whether a high public score is useful.
 
@@ -90,6 +90,14 @@ T016 first tests the saved cross-fitted E009 well actions on exact E011 rather t
 Nested placement reaches 12.492966 RMSE, gaining 0.057790 over E011 with 5/5 maps and 21/25 cells. The selected branch is usually a negative scale on `ridge_visible_geometry_a25_f32`, showing that placement direction changes on the stronger baseline. Spatial group 3 regresses by 0.091016 and typewell group 0 by 0.097205, so the frozen every-group gates fail. All controls and 12 edge groups pass, and reproduction is exact.
 
 D027 closes H012/T016 without a stability refit. Do not search more feature counts, scales, caps, or subgroup rules around the same E009 action space.
+
+### 12. Target preservation does not rescue duplicated feature views
+
+T027 supervises ten deterministic causal feature views with each source well's unchanged original-boundary four-control target, exact source-well total weighting, complete outer isolation, and four model families. This removes T026's target-mismatch confound.
+
+Every augmented-view candidate still worsens E011. The best eligible branch, `ridge_backtest_cumulative_a1__w0.25`, reaches 12.5918611025, loses 0.0411048068, wins 0/5 maps and 5/25 cells, and regresses every horizon/special slice plus four spatial and four typewell groups. The unaugmented `ridge_original_a1__w0.50` comparator reaches 12.4588330369 and improves global slices and tails, but fails spatial group 0 and typewell groups 0, 2, and 4 and does not beat T025. Exact reproduction and all controls pass.
+
+D033 closes H020/T027. The evidence-supported successor may alter only the training objective on one original view per well. It may use spatial/typewell groups inside training and model selection, but never as inference features or routing labels.
 
 ## Score objectives
 
@@ -357,7 +365,8 @@ These defaults may be revised only through a recorded decision before seeing the
 18. **T024 — Select the next independent mechanism — completed 2026-07-23.** Exact source audits reject the new public composite, fixed-shift, same-well target-lookup, and HMM-derivative records. D028 selects legal within-well coefficient dynamics for a bounded screen.
 19. **H018/T025 — Four-cut spline coefficient dynamics — completed and rejected 2026-07-23.** The target oracle reaches 4.1137. Best aggregate placement gains 0.125829 with 5/5 maps but 16/25 cells; the conservative placement gains 0.098800 with 20/25 cells but regresses spatial group 0 and typewell group 4. All controls and reproduction pass; D029 closes retuning.
 20. **H019/T026 — Randomized long-horizon mask-task coefficient meta-learning — completed and rejected 2026-07-23.** All 76 candidates worsen E011; the best scores 12.625651, loses 0.074895, wins 0/5 maps and 8/25 cells, and fails broad spatial/typewell/horizon transfer. Mask augmentation helps its weak original-only comparator, but mask-local targets differ from the real original target by 14.278922 coefficient RMSE. All controls, isolation audits, edge groups, and exact reproduction pass; D031 closes retuning.
-21. **H020/T027 — Target-preserving causal prefix-view learning — queued next.** Generate causal auxiliary views only inside each outer training partition, supervise every view against its source well's same original-boundary spline target, retain full E011 feature parity, and require source-well-equal weighting plus complete transfer/control gates.
+21. **H020/T027 — Target-preserving causal prefix-view learning — completed and rejected 2026-07-23.** Every augmented-view candidate worsens E011; the best eligible branch loses 0.041105 with 0/5 maps. The positive original-only comparator gains 0.091923 but fails spatial/typewell transfer. D033 closes view augmentation.
+22. **H021/T028 — Domain-robust original-view coefficient learning — queued next.** Use one original 142-feature vector and target per well; freeze training-only group-balanced/robust objectives and inner selection before scoring; prohibit inference routing and all T027 masks/views.
 
 ## Explicitly rejected behavior
 
@@ -384,4 +393,4 @@ Foundation is complete only when:
 - legacy roadmap is preserved;
 - no training run is falsely presented as completed.
 
-Foundation, E010 coverage measurement, E011 statistical/deployment verification, E012 specialist rejection, the July 23 intelligence refreshes, T022 uncertainty routing, T023 residual sequence-state screening, T016 wide-datum placement, T024 mechanism selection, T025 coefficient transport, and T026 mask-task screening are complete. E011 remains deployment primary. D023, D025, D027, D029, and D031 close the tested routing, sequence-profile, wide-datum, four-cut transport, and mask-local target spaces. The current exact next action is the standing public-intelligence delta check followed by a separately preregistered T027 target-preserving causal prefix-view worth screen.
+Foundation, E010 coverage measurement, E011 statistical/deployment verification, E012 specialist rejection, the July 23 intelligence refreshes, T022 uncertainty routing, T023 residual sequence-state screening, T016 wide-datum placement, T024 mechanism selection, T025 coefficient transport, T026 mask-task screening, and T027 target-preserving view screening are complete. E011 remains deployment primary. D023, D025, D027, D029, D031, and D033 close the tested routing, sequence-profile, wide-datum, four-cut transport, mask-local target, and feature-view spaces. The current exact next action is the standing public-intelligence delta check followed by a separately preregistered T028 original-view domain-robust objective worth screen.

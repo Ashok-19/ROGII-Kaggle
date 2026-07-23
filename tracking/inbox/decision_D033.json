@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-23T18:15:53Z",
+  "payload": {
+    "decision_id": "D033",
+    "decided_at": "2026-07-23",
+    "title": "Close target-preserving feature-view augmentation",
+    "decision": "Reject H020/T027 without a formal experiment; preserve E011 as deployment primary and queue only a separately preregistered original-view domain-robust objective screen.",
+    "rationale": "All target-preserving augmented-view candidates worsen E011. The strongest eligible branch loses 0.0411048068 RMSE and fails broad spatial/typewell/horizon transfer. The unaugmented original-view comparator gains 0.0919232588 and improves global slices, but misses the 0.15 gain, 17/25 cell, T025, and every-domain gates and regresses spatial group 0 plus three typewell groups.",
+    "source_ids": "T027,H020,D032,tracking/evidence/T027/RESULT.md,S_T027_VERIFIED_20260723",
+    "revisit_trigger": "Do not add or retune causal views, masks, indicators, source weighting, or larger models. Revisit only with a materially new causal input. A fresh objective-only screen may use one original view per well, training-only group information, exact outer isolation, and no inference routing."
+  }
+}
