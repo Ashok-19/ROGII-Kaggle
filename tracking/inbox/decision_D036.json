@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-07-23T19:00:00Z",
+  "payload": {
+    "decision_id": "D036",
+    "decided_at": "2026-07-24",
+    "title": "Freeze outer-isolated complementary-action confirmation",
+    "decision": "Execute T030 only under the committed parent-regeneration, inner-selection, branch, control, aggregation, slice, and promotion contract.",
+    "rationale": "T029 identifies a low-correlation T025/T016 opportunity, but its weights use full labels. T030 must distinguish genuine transferable complementarity from full-data placement optimism.",
+    "source_ids": "H022,T030,D035,tracking/evidence/T030/PRE_REGISTRATION.md,tracking/evidence/T030/config.json",
+    "revisit_trigger": "Do not add branches, alter grids or gates, or reuse held-out labels after the first T030 metric. Any score-independent implementation correction must be recorded before official output."
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "task_id": "T030",
+  "hypothesis_id": "H022",
+  "decision_id": "D036",
+  "title": "Outer-isolated complementary pseudo-coefficient and datum ensemble confirmation",
+  "source_commit": "35d0e505840dc7c2b949a3f51fac70d891c12e20",
+  "baseline": "E011 spline4_ridge_equal_s075 OOF",
+  "expected_wells": 773,
+  "expected_hidden_rows": 3783989,
+  "inputs": {
+    "data_dir": "data/train",
+    "e011_oof": "artifacts/E011/oof_predictions.csv.gz",
+    "e011_compact": "artifacts/E011/compact_stats_v1.npz",
+    "e009_actions": "experiments/E009/results/model_predictions.csv",
+    "t025_config": "tracking/evidence/T025/config.json",
+    "t025_source": "tracking/evidence/T025/run_screen.py",
+    "t016_config": "tracking/evidence/T016/config.json",
+    "t016_source": "tracking/evidence/T016/run_screen.py",
+    "t029_audit": "tracking/evidence/T029/covariance_worth_audit.json",
+    "fold_files": ["folds/v1.json", "folds/v2.json", "folds/v3.json", "folds/v4.json", "folds/v5.json"]
+  },
+  "input_identities": {
+    "artifacts/E011/compact_stats_v1.npz": {"bytes": 2574866, "sha256": "cb2788c602f718dc7a76f09a62bbb433c1d7cda7dd93d69ee8905524eb09156d"},
+    "artifacts/E011/oof_predictions.csv.gz": {"bytes": 78309663, "sha256": "6ad01b630c9a24eb5f4246639d6a85d974d3633493de90e04c393886f841679d"},
+    "experiments/E009/results/model_predictions.csv": {"bytes": 179250, "sha256": "3f4d4782555d255305fd6f08945f72cf09db47fc3f531fdefda44fb973f5e41f"},
+    "tracking/evidence/T016/config.json": {"bytes": 5819, "sha256": "f7b30258c5d9f7162af1c16b436150123834397f8f46374c620bab794a841a7f"},
+    "tracking/evidence/T016/run_screen.py": {"bytes": 37478, "sha256": "d71d413120f6b1d9333161d18af206c24caf5694fd432427b6211d5e629ac5a6"},
+    "tracking/evidence/T025/config.json": {"bytes": 3530, "sha256": "80eec66f671c59d50b6364a36d93aa5775b846d8a358bb5f0674f2126b741f01"},
+    "tracking/evidence/T025/run_screen.py": {"bytes": 56539, "sha256": "5a81e8993db05256c931c765494c598fb6aab7c81b227d88bf3f7d811938c23e"},
+    "tracking/evidence/T029/covariance_worth_audit.json": {"bytes": 7338, "sha256": "af5a20a4eea7025399e605562f87f2c937bef4b6ba2267030a19685eae1cbceb"}
+  },
+  "parent_contract": {
+    "t025_branch": {"name": "ridge_pseudo_e011_a1", "family": "ridge", "feature_set": "pseudo_e011", "alpha": 1.0, "coefficient_bound_ft": 80.0},
+    "t016_action_families": ["ridge_all_a25_f32", "ridge_all_a100_f32", "ridge_all_a25_f64", "ridge_no_e007_a25_f32", "ridge_path_evidence_a25_f24", "ridge_visible_geometry_a25_f32", "mean_of_six", "median_of_six", "median_of_wide64_path24_wide32", "wide64_path24_blend_25", "wide64_path24_blend_50", "wide64_path24_blend_75"],
+    "t016_scales": [-1.0, -0.75, -0.5, -0.25, 0.0, 0.1, 0.25, 0.5, 0.75, 1.0],
+    "t016_caps_ft": [5.0, 10.0, 20.0, 30.0],
+    "t027_comparator": {"family": "ridge", "feature_set": "e011", "alpha": 1.0, "coefficient_bound_ft": 80.0}
+  },
+  "contexts": {
+    "repeated": 25,
+    "maps": 5,
+    "stress": 10,
+    "inner_repeated": "For repeated outer vK:fold F, use the other four vK folds as inner validation partitions within the outer-training wells.",
+    "inner_stress": "For each spatial/typewell outer holdout, use v1 folds restricted to outer-training wells as five inner validation partitions.",
+    "held_out_use": "No outer-test well enters T025 fitting, T016 placement selection, blend selection, imputation, scaling, or tie-breaking."
+  },
+  "action_formula": "row_correction = alpha * (last_known_tvt - e011_prediction + spline_basis @ t025_coefficients) + beta * t016_datum_correction + gamma * (last_known_tvt - e011_prediction + spline_basis @ t027_coefficients)",
+  "final_repeated_aggregation": "Average each well's five repeated-map row-correction actions before final scoring.",
+  "real_branches": [
+    {"name": "t025_fixed_050", "selection": "fixed", "alpha": 0.5, "beta": 0.0, "gamma": 0.0},
+    {"name": "t016_fixed_100", "selection": "fixed", "alpha": 0.0, "beta": 1.0, "gamma": 0.0},
+    {"name": "fixed_all_domain_040_060", "selection": "fixed", "alpha": 0.4, "beta": 0.6, "gamma": 0.0},
+    {"name": "fixed_minimax_025_045", "selection": "fixed", "alpha": 0.25, "beta": 0.45, "gamma": 0.0},
+    {"name": "fixed_pair_box_046_090", "selection": "fixed", "alpha": 0.4623841380462943, "beta": 0.896042906654928, "gamma": 0.0},
+    {"name": "fixed_three_pooled_040_005_055", "selection": "fixed", "alpha": 0.4, "beta": 0.55, "gamma": 0.05},
+    {"name": "nested_simplex_pooled", "selection": "inner_pooled", "grid": "simplex"},
+    {"name": "nested_box_pooled", "selection": "inner_pooled", "grid": "box"},
+    {"name": "nested_simplex_minimax", "selection": "inner_maximum_minimum_domain_gain", "grid": "simplex"},
+    {"name": "nested_simplex_domain_safe", "selection": "inner_lowest_pooled_rmse_among_nonnegative_available_domains_else_zero", "grid": "simplex"}
+  ],
+  "blend_grids": {
+    "simplex": {"step": 0.05, "alpha_range": [0.0, 1.0], "beta_range": [0.0, 1.0], "constraint": "alpha + beta <= 1.0", "gamma": 0.0},
+    "box": {"step": 0.1, "alpha_range": [0.0, 1.0], "beta_range": [0.0, 1.0], "constraint": "none", "gamma": 0.0},
+    "tie_order": "lowest selection objective, then lowest pooled RMSE where applicable, then alpha, beta, gamma ascending"
+  },
+  "negative_controls": [
+    {"name": "joint_shuffled_targets_and_actions", "branch": "fixed_all_domain_040_060", "t025": "shuffle target coefficient rows inside every fit with deterministic seed 30031", "t016": "apply one deterministic seed-30032 permutation of well rows to the complete action matrix"},
+    {"name": "joint_sign_flip", "branch": "fixed_all_domain_040_060", "t025": "negate the complete fitted T025 row-correction direction", "t016": "negate the selected T016 correction"},
+    {"name": "independent_test_pair_permutation", "branch": "fixed_all_domain_040_060", "t025": "permute outer-test T025 actions with seed derived from 30033 and context", "t016": "independently permute outer-test T016 corrections with seed derived from 30034 and context"},
+    {"name": "shuffled_t025_and_sign_flipped_t016", "branch": "fixed_all_domain_040_060", "t025": "shuffle target coefficient rows inside every fit with deterministic seed 30035", "t016": "negate selected T016 correction"}
+  ],
+  "slices": {
+    "long_suffix_quantile": 0.8,
+    "high_gr_missingness_quantile": 0.8,
+    "e011_catastrophe_rmse": 12.0,
+    "horizon_quantiles": 5
+  },
+  "preliminary": {
+    "minimum_gain_vs_e011": 0.05,
+    "minimum_map_wins": 4,
+    "minimum_outer_cell_wins": 17,
+    "maximum_p90_deterioration": 0.1,
+    "maximum_worst5_share_increase": 0.005
+  },
+  "promotion": {
+    "minimum_gain_vs_e011": 0.15,
+    "minimum_incremental_gain_vs_t025": 0.03,
+    "minimum_map_wins": 5,
+    "minimum_outer_cell_wins": 17,
+    "maximum_p90_deterioration": 0.0,
+    "maximum_worst5_share_increase": 0.005,
+    "require_positive_every_spatial_group": true,
+    "require_positive_every_typewell_group": true,
+    "require_positive_long_suffix": true,
+    "require_positive_high_gr_missingness": true,
+    "require_positive_e011_catastrophe": true,
+    "require_positive_every_horizon_quintile": true,
+    "maximum_negative_control_gain_vs_e011": 0.03,
+    "minimum_nonzero_both_parent_contexts": 17,
+    "require_parent_reproduction": true,
+    "require_exact_fallback": true,
+    "require_all_edge_groups": true,
+    "require_independent_reproduction": true
+  },
+  "controls": {
+    "t025_parent_final_rmse": 12.42492760849511,
+    "t016_parent_final_rmse": 12.492966056189658,
+    "maximum_parent_metric_delta": 1e-9,
+    "maximum_parent_per_well_delta": 1e-8,
+    "maximum_correction_absolute_ft": 160.0,
+    "exact_e011_rmse": 12.550756295689673,
+    "complete_context_membership": true,
+    "finite_metrics": true,
+    "outer_isolation_audit": true
+  },
+  "edge_groups": [
+    "parent source and input hashes",
+    "773-well and 3,783,989-row ordered coverage",
+    "duplicate or missing well/action/OOF IDs rejected",
+    "strict context membership and held-out exclusion",
+    "empty and one-well inner partitions rejected",
+    "tiny ridge partition",
+    "non-finite features, targets, coefficients, actions, and weights rejected",
+    "zero-variance/all-missing feature imputation",
+    "T016 zero, constant, negative, and extreme actions",
+    "T016 scale and cap boundaries",
+    "simplex and box grid boundaries/counts",
+    "deterministic tie ordering",
+    "zero-weight exact E011 fallback",
+    "single-parent exact action identities",
+    "row-correction averaging rather than metric averaging",
+    "coefficient and datum cross-term symmetry",
+    "all five repeated-map coverage",
+    "all ten stress-context coverage",
+    "slice and horizon partition completeness",
+    "joint negative-control determinism",
+    "maximum correction bound enforcement",
+    "finite exact sufficient-statistic scoring"
+  ],
+  "outputs": ["candidate_metrics.csv", "context_metrics.csv", "map_metrics.csv", "stress_metrics.csv", "slice_metrics.csv", "selected_weights.csv", "negative_control_metrics.csv", "isolation_audit.csv", "selected_well_metrics.csv", "authorization_gates.csv", "edge_cases.json", "summary.json", "artifact_manifest.json"],
+  "deployment": {"package_authorized": false, "kaggle_execution_authorized": false, "submission_authorized": false}
+}

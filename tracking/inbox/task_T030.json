@@ -4,11 +4,11 @@
   "payload": {
     "task_id": "T030",
     "title": "Confirm complementary coefficient-datum ensemble",
-    "status": "queued",
+    "status": "active",
     "priority": 1,
-    "phase": "outer_isolated_action_ensemble_confirmation",
+    "phase": "preregistered_outer_isolated_confirmation",
     "depends_on": "T029",
     "due_at": "2026-07-25",
-    "updated_at": "2026-07-23T18:49:28Z"
+    "updated_at": "2026-07-23T19:00:00Z"
   }
 }
