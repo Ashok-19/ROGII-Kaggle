@@ -18,6 +18,8 @@ The screen completes all six saved E009 action families, mean/median robust ense
 
 The special slices reuse the exact T023 definitions: hidden-row count at or above the 80th percentile, hidden-GR missing fraction at or above the 80th percentile, and E011 well RMSE at or above 12.0.
 
+For every placement, the emitted correction is `clip(scale × raw family action, -cap, +cap)`. Shuffled-well and action-family permutation controls use fixed seeds 16016 and 26016 and receive the same nested placement search as the real families.
+
 ## Gates
 
 A full stability refit is allowed only if the nested placed system gains at least 0.03 RMSE over E011, wins at least 4/5 maps and 17/25 cells, preserves tails, improves every spatial and typewell holdout and all three special slices, defeats three negative controls, reproduces exactly, and passes all edge groups.

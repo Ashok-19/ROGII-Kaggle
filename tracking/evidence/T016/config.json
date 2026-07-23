@@ -38,6 +38,8 @@
     "caps_ft": [5.0, 10.0, 20.0, 30.0],
     "selection": "For each untouched outer context, choose family, scale, and cap only by pooled row SSE on the complement wells. Ties follow the listed family, scale, and cap order.",
     "final_prediction": "Average each well's five repeated-map placed corrections, then add them to exact E011."
+,
+    "formula": "correction = clip(scale * raw_family_action, -cap_ft, +cap_ft)"
   },
   "contexts": {
     "repeated_cells": 25,
@@ -51,9 +53,9 @@
     }
   },
   "negative_controls": [
-    "deterministically shuffled well actions",
-    "sign-flipped wide64 action",
-    "deterministically permuted action-family columns"
+    "deterministically shuffled well actions with seed 16016, using the same nested placement grid",
+    "sign-flipped wide64 action using the same nested placement grid",
+    "deterministically permuted action-family columns with seed 26016, using the same nested placement grid"
   ],
   "advancement_gate_for_full_stability_refit": {
     "minimum_gain_vs_e011": 0.03,
