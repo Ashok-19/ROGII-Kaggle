@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "task_id": "T016",
+  "recorded_at": "2026-07-23T11:53:00Z",
+  "parent_implementation_commit": "8627eb7ce119dc66109b6908e8a2ff5d1e45f030",
+  "failure_stage": "summary JSON serialization after all calculations",
+  "failure": "numpy.bool_ was not JSON serializable",
+  "result_files_emitted": 0,
+  "score_observed": false,
+  "allowed_change": "Convert NumPy scalar values to their Python scalar via .item() only during JSON serialization.",
+  "scoring_logic_changed": false,
+  "selection_logic_changed": false,
+  "branch_grid_changed": false,
+  "gate_logic_changed": false
+}
