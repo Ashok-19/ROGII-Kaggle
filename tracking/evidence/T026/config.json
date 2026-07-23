@@ -59,6 +59,13 @@
   ],
   "placements": [0.25, 0.5, 0.75, 1.0],
   "controls": ["permuted_source_well_targets", "shuffled_task_targets", "reversed_history_horizons", "permuted_horizon_features", "exact_fallback"],
+  "control_detail": {
+    "source_block_permutation_seed": 26031,
+    "task_target_shuffle_seed": 26033,
+    "horizon_feature_permutation_seed": 26039,
+    "source_block_alignment": "ordered_normalized_rank_linear_interpolation",
+    "horizon_control_scope": "explicit_horizon_metadata_and_complete_history_conditioned_subvector"
+  },
   "promotion": {
     "maximum_oracle_rmse": 5.0,
     "minimum_gain_vs_e011": 0.15,
