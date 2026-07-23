@@ -6,7 +6,7 @@ Time remaining at update: 13 days
 
 ## Objective and reality check
 
-The goal is a gold-medal-level final placement with an original, reproducible solution. A medal cannot be guaranteed. The current public leader is 4.859; archived score bands are 5.523 at rank 10, 6.199 at rank 25, 6.505 at rank 50, and 6.799 at rank 100. The account's best Kaggle-MCP-verified score is 7.119; the user-reported 6.888 score still needs a submission reference.
+The goal is a gold-medal-level final placement with an original, reproducible solution. A medal cannot be guaranteed. The current public leader is 4.859; the current rank-10 band is 5.511, while archived bands remain 6.199 at rank 25, 6.505 at rank 50, and 6.799 at rank 100. The account's best Kaggle-MCP-verified score is 7.119; the user-reported 6.888 score still needs a submission reference.
 
 The public board is not the final objective. Private-leaderboard robustness, legal provenance, and reproducibility determine whether a high public score is useful.
 
@@ -60,6 +60,12 @@ E003 shows that risk and signed action are both learnable from legal evidence, b
 The official BirdCLEF+ 2026 first-place writeup used an Amphibia/Insecta specialist and a genus specialist, but only inside a diverse ensemble with global CNNs, native Perch, controlled self-training, complementary validation splits, masked restricted-label outputs, and pipeline-specific post-processing. The lesson is not that specialists win by default.
 
 For ROGII, a regime-specialized coefficient expert required legal cross-fitted regimes, sufficient support, bounded action, exact E011 fallback, full-system improvement, stable repeated/spatial/typewell/tail results, and negative controls. E012 completed that test and rejected specialization: 226 worth-screen branches had zero positive pooled gains, and the best formal KNN residual expert gained only 0.013698 RMSE while failing the outer-cell and spatial/typewell gates.
+
+### 8. Current public frontier is one lineage, not four mechanisms
+
+The July 23 refresh pulled exact source for Full-Stack Selector CV100, Contact-Gated Stratigraphic Alignment, A27 Branch Shape, and the 6.213 New Strategy. Pairwise source similarity is 93.1%–99.95%; all activate the same overlap/visible-prefix/model-package stack and quarantined dependencies. Exact outputs show the PF midpoint hedge and U-continuity fade act materially only on visible well `00e12e8b`. The 100-well selector retains 68.61% of SSE in its worst decile with no bimodal activation, while the stochastic-TTA residual gate gains 0.00379 RMSE, worsens p90 by 0.06273, and disables itself.
+
+D022 therefore permits only a bounded worth screen for continuous E011 uncertainty/fallback placement. It does not authorize cloning the stack, importing its constants, or starting E013.
 
 ## Score objectives
 
@@ -320,8 +326,9 @@ These defaults may be revised only through a recorded decision before seeing the
 11. **E011 — Low-dimensional nonlinear coefficient learning — statistically and operationally promoted; deployment primary.** `spline4_ridge_equal_s075` reaches 12.5507562957 RMSE with 5/5 maps, 25/25 cells, positive spatial/typewell/slice transfer, all controls, and a successful saved Kaggle output review.
 12. **E012/T020 — E011 notebook run and output review — completed 2026-07-23.** Saved version 1 / `scriptVersionId=337242364` completed; all three expected outputs passed row, ID/order, finite-value, and readability checks. No competition submission was made.
 13. **E012/H015 — Regime-specialized coefficient experts — completed and rejected 2026-07-23.** Two screens tested 226 branches with zero positive pooled gains. Formal KNN residual placement reaches 12.5371 but gains only 0.0137, wins 15/25 cells, and fails spatial/typewell transfer. Retain E011 unchanged; no package or submission.
-14. **T018 — Refresh Kaggle public intelligence — active and next.** Audit New/Recent discussions and newly run/high-vote notebooks since 2026-07-22, then preregister only a genuinely new legal mechanism.
-15. **H012/T016 — Stability-regularized wide residual datum model — queued, lower priority.** Do not make it the immediate next experiment because nonlinear oracle evidence and E012 both argue against another partition or refinement of the same low-order feature space.
+14. **T018 — Refresh Kaggle public intelligence — completed for the 2026-07-23 cutoff; standing loop remains active.** Exact source/output audit rejects the current composite frontier as independent evidence.
+15. **H016/T022 — Continuous uncertainty-conditioned E011 placement — active preimplementation screen.** Measure oracle headroom and cross-fitted learnability before any E013 code is allowed.
+16. **H012/T016 — Stability-regularized wide residual datum model — queued, lower priority.** Do not make it the immediate next experiment because nonlinear oracle evidence and E012 both argue against another partition or refinement of the same low-order feature space.
 
 ## Explicitly rejected behavior
 
@@ -348,4 +355,4 @@ Foundation is complete only when:
 - legacy roadmap is preserved;
 - no training run is falsely presented as completed.
 
-Foundation, E010 coverage measurement, E011 statistical/deployment verification, and E012 specialist rejection are complete. E011 remains deployment primary. The current exact next action is T018: refresh public intelligence and use that evidence to choose a new branch-uncertainty or physical-continuity mechanism rather than reopen H015 or immediately optimize H012.
+Foundation, E010 coverage measurement, E011 statistical/deployment verification, E012 specialist rejection, and the July 23 T018 intelligence refresh are complete. E011 remains deployment primary. The current exact next action is T022: complete the frozen E011/E006 uncertainty/fallback worth screen. E013 remains prohibited unless D022 headroom, cross-fitted gain, map/cell, tail, shift, and negative-control thresholds pass.

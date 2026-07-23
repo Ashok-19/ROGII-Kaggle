@@ -377,9 +377,23 @@
       "visual": "risk_action",
       "summary": "D020 promotes E011 as the global deployment model. The next experiment may test regime-specific coefficient experts only with split-local legal routing and exact E011 fallback.",
       "why_it_matters": "E007–E009 showed that apparent regimes and agreement can repeat shared bias. H015 must improve the complete system under repeated and spatial/typewell gates, and shuffled or sign-flipped routing must lose the gain."
+    },
+    {
+      "id": "B024",
+      "date": "2026-07-23",
+      "title": "The refreshed public frontier is one composite lineage",
+      "evidence": "exact_source_and_saved_output_audit",
+      "visual": "cv_lb_split",
+      "summary": "Four newly prominent notebooks share 93.1%–99.95% source similarity and the same overlap/model-package profile. Their PF branch and U-continuity layers act materially only on visible well 00e12e8b; a 100-well selector retains 68.61% worst-decile SSE, and the stochastic-TTA gate fails its own OOF threshold.",
+      "why_it_matters": "Do not infer independent causality from titles or public scores. D022 allows only a clean preimplementation screen for continuous E011 uncertainty/fallback placement; no public constants, artifacts, or score-directed well moves may enter the project."
     }
   ],
   "idea_questions": [
+    {
+      "signal": "continuous uncertainty placement",
+      "question": "Is there enough E011-versus-E006 oracle fallback or blend headroom, and can legal uncertainty proxies recover it cross-fitted without hard routing?",
+      "falsifier": "Oracle headroom is below 0.20 RMSE, every legal screen gains less than 0.03, wins fewer than 4/5 maps or 17/25 cells, worsens p90/shift groups, or shuffled labels retain the gain."
+    },
     {
       "signal": "PF branch uncertainty",
       "question": "Can likelihood-weighted PF seed clouds expose branch mass, separation, entropy, and instability that predict when a bounded path move is safe?",
@@ -545,6 +559,11 @@
     {
       "title": "E012 rejected regime-specialist confirmation",
       "local_path": "experiments/E012/RESULT.md",
+      "url": ""
+    },
+    {
+      "title": "July 23 public frontier source and output audit",
+      "local_path": "archive/competition/public_intelligence_2026-07-23.md",
       "url": ""
     }
   ]

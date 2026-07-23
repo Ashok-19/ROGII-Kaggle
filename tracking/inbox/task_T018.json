@@ -6,8 +6,9 @@
     "title": "Refresh Kaggle public intelligence",
     "status": "active",
     "priority": 2,
-    "phase": "intelligence",
+    "phase": "intelligence_refresh_complete",
     "depends_on": "",
-    "due_at": "2026-08-05"
+    "due_at": "2026-08-05",
+    "updated_at": "2026-07-23T08:45:11Z"
   }
 }

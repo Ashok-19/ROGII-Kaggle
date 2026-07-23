@@ -7,19 +7,19 @@
     "final_deadline_ist": "2026-08-06T05:29:00+05:30",
     "leader_score": "4.859",
     "leader_team": "shu01",
-    "leaderboard_checked_at": "2026-07-22T14:59:00+05:30",
-    "second_place_score": "4.913",
+    "leaderboard_checked_at": "2026-07-23T14:15:11+05:30",
+    "second_place_score": "4.905",
     "fifth_place_score": "5.265",
-    "tenth_place_score": "5.523",
+    "tenth_place_score": "5.511",
     "verified_best_public_score": "7.119",
     "user_reported_best_score": "6.888",
     "train_wells": "773",
     "hidden_test_wells_approx": "200",
     "discussion_topics_archived": "132",
     "discussion_messages_archived": "981",
-    "public_intelligence_last_checked": "2026-07-22T14:59:00+05:30",
-    "current_topic_count_observed": "137",
-    "discussion_archive_refresh_status": "new/recent delta audited; canonical 132/981 unchanged pending full recrawl",
+    "public_intelligence_last_checked": "2026-07-23T14:15:11+05:30",
+    "current_topic_count_observed": "138",
+    "discussion_archive_refresh_status": "new/recent delta audited through 2026-07-23; canonical 132/981 unchanged pending full recrawl",
     "public_leaderboard_percentage": "26",
     "private_leaderboard_percentage": "74",
     "leaderboard_split_verified_at": "2026-07-22",
@@ -193,6 +193,42 @@
       "confidence": "independently reproduced and hash verified",
       "last_checked": "2026-07-22",
       "notes": "Official run R20260722-1537-e011-local-reproduction from c326a812; two threads; deterministic OOF and substantive result tables; original complete-looking invocation retained only as unregistered static evidence because its process provenance is incomplete."
+    },
+    {
+      "source_id": "S_E011_DEPLOYMENT_20260723",
+      "title": "E011 saved Kaggle output review and deployment promotion",
+      "kind": "kaggle_verified_deployment",
+      "url": "https://www.kaggle.com/code/ashok205/e011-spline4-deployment-kaggle?scriptVersionId=337242364",
+      "local_path": "experiments/E011/deployment/kaggle_output_review.json",
+      "accessibility": "repository-local and private Kaggle record",
+      "license": "project-generated",
+      "confidence": "confirmed saved-version outputs",
+      "last_checked": "2026-07-23",
+      "notes": "Saved version 1 completed; exact IDs/order, finite predictions, receipt and diagnostics passed review; no submission made."
+    },
+    {
+      "source_id": "S_E012_VERIFIED_20260723",
+      "title": "E012 nested regime-specialist rejection",
+      "kind": "official_local_experiment_verification",
+      "url": "",
+      "local_path": "experiments/E012/verification.json",
+      "accessibility": "repository-local",
+      "license": "project-generated",
+      "confidence": "complete nested run and exact independent reproduction",
+      "last_checked": "2026-07-23",
+      "notes": "Nine formal branches after two 226-branch worth screens; best gain 0.013698 and failed transfer gates."
+    },
+    {
+      "source_id": "S_PUBLIC_SCAN_20260723",
+      "title": "ROGII July 23 leaderboard, discussion, and public-notebook source/output audit",
+      "kind": "public_intelligence",
+      "url": "https://www.kaggle.com/competitions/rogii-wellbore-geology-prediction",
+      "local_path": "archive/competition/public_intelligence_2026-07-23.md",
+      "accessibility": "public source and saved outputs",
+      "license": "participant/author copyright; mixed external artifact licensing",
+      "confidence": "exact Kaggle metadata/source/output audit; participant claims separated",
+      "last_checked": "2026-07-23",
+      "notes": "Top-ten snapshot, topic count 138, discussion deltas, source hashes and clone similarity, PF branch/U-cont outputs, selector CV100, TTA gate, and unavailable geographic source."
     }
   ],
   "claims": [
@@ -573,8 +609,118 @@
       "evidence_class": "verified_missing_deployment_receipts",
       "confidence": "confirmed",
       "source_id": "S_E011_VERIFIED_20260722",
-      "implication": "Retain E006 as deployment primary and E004 as exact fallback; packaging and parity are the exact next action and H015 remains blocked.",
+      "implication": "Closed by D020 after the saved Kaggle version completed and its outputs passed review; E011 is deployment primary.",
+      "status": "superseded"
+    },
+    {
+      "claim_id": "C039",
+      "category": "deployment",
+      "claim": "E011 saved Kaggle version 1 completed and produced a valid 14,151-row submission, COMPLETE receipt, and three well diagnostics; E011 is deployment primary and no competition submission was made.",
+      "evidence_class": "saved_kaggle_version_output_review",
+      "confidence": "confirmed",
+      "source_id": "S_E011_DEPLOYMENT_20260723",
+      "implication": "Use E011 as the exact global primary for all subsequent research and deployment comparisons.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C040",
+      "category": "specialists",
+      "claim": "E012 tested 226 preliminary specialist branches and nine complete nested confirmation branches; the best formal branch gained only 0.013698 RMSE and failed cell/spatial/typewell gates.",
+      "evidence_class": "complete_local_experiment_and_reproduction",
+      "confidence": "confirmed",
+      "source_id": "S_E012_VERIFIED_20260723",
+      "implication": "Do not reopen hard regimes, local experts, latent routing, or partial pooling around E011 without a new mechanism.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C041",
+      "category": "leaderboard",
+      "claim": "On 2026-07-23 the public leaderboard was 4.859 at rank 1, 4.905 at rank 2, 5.265 at rank 5, and 5.511 at rank 10.",
+      "evidence_class": "kaggle_leaderboard_metadata",
+      "confidence": "confirmed snapshot",
+      "source_id": "S_PUBLIC_SCAN_20260723",
+      "implication": "The visible frontier continues to move, but score movement alone does not identify a causal mechanism.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C042",
+      "category": "archive",
+      "claim": "Kaggle New and Recent reported 138 competition topics on 2026-07-23 while the canonical archive remains 132 topics and 981 messages.",
+      "evidence_class": "kaggle_metadata_delta",
+      "confidence": "confirmed observed count; canonical delta incomplete",
+      "source_id": "S_PUBLIC_SCAN_20260723",
+      "implication": "Retain the canonical archive until a complete recrawl verifies all added or removed topics and message counts.",
       "status": "active"
+    },
+    {
+      "claim_id": "C043",
+      "category": "rules",
+      "claim": "The new AI coding-assistant discussion contains no organizer answer; its only reply links an unrelated writeup.",
+      "evidence_class": "exact_discussion_messages",
+      "confidence": "confirmed thread content; no rule conclusion",
+      "source_id": "S_PUBLIC_SCAN_20260723",
+      "implication": "Do not infer a disclosure or rule change from this thread; continue following official competition rules.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C044",
+      "category": "branch_uncertainty",
+      "claim": "A participant reports PF posterior spread correlation near +0.23 with error and a small five-seed PF gain, suggesting uncertainty may be more useful as a trust feature than as a direct predictor.",
+      "evidence_class": "participant_measurement",
+      "confidence": "unverified hypothesis",
+      "source_id": "S_PUBLIC_SCAN_20260723",
+      "implication": "Screen continuous uncertainty-conditioned placement locally; do not import reported constants or performance values.",
+      "status": "hypothesis"
+    },
+    {
+      "claim_id": "C045",
+      "category": "provenance",
+      "claim": "Four current frontier notebooks share 93.1%–99.95% source-sequence similarity, the same active composite profile, and the same quarantined artifact lineage.",
+      "evidence_class": "exact_source_pull_and_sequence_comparison",
+      "confidence": "confirmed composition",
+      "source_id": "S_PUBLIC_SCAN_20260723",
+      "implication": "Treat their titles and scores as one composite lineage, not independent mechanism evidence.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C046",
+      "category": "public_overlap",
+      "claim": "Exact PF branch-hedge and U-continuity outputs act materially only on visible overlap well 00e12e8b; the branch hedge adds +2.0 ft and continuity adds about 2.04 ft maximum.",
+      "evidence_class": "executed_public_notebook_outputs",
+      "confidence": "confirmed visible-test behavior",
+      "source_id": "S_PUBLIC_SCAN_20260723",
+      "implication": "Branch mass/separation and continuity are hypotheses only; the public thresholds and shifts are not unseen-well evidence.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C047",
+      "category": "validation",
+      "claim": "The public Full-Stack Selector CV100 reports 11.3803 pooled RMSE on 100 wells, worst-decile SSE share 68.61%, and zero bimodal or heel-calibration activations.",
+      "evidence_class": "executed_public_notebook_output",
+      "confidence": "confirmed within a small composite sample",
+      "source_id": "S_PUBLIC_SCAN_20260723",
+      "implication": "The report does not isolate a causal branch or establish full-data transfer; do not promote or reproduce the stack.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C048",
+      "category": "negative",
+      "claim": "The public stochastic-TTA GBDT gate improves OOF RMSE by only 0.00379 while worsening p90 by 0.06273, so its own gate remains inactive.",
+      "evidence_class": "executed_public_notebook_oof",
+      "confidence": "confirmed within that composite pipeline",
+      "source_id": "S_PUBLIC_SCAN_20260723",
+      "implication": "Do not copy the correction; stochastic disagreement may be retained only as a diagnostic hypothesis.",
+      "status": "accepted"
+    },
+    {
+      "claim_id": "C049",
+      "category": "unavailable",
+      "claim": "The geographic-restoration notebook declares no external datasets but Kaggle CLI returns a zero-byte source file.",
+      "evidence_class": "kaggle_metadata_and_source_retrieval",
+      "confidence": "confirmed unavailability",
+      "source_id": "S_PUBLIC_SCAN_20260723",
+      "implication": "No technical, validation, or causality claim may be made from its title or score.",
+      "status": "accepted"
     }
   ],
   "submissions": [
