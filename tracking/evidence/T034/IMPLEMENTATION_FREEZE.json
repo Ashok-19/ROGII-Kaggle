@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "task_id": "T034",
+  "hypothesis_id": "H026",
+  "frozen_at": "2026-07-24T23:46:58+05:30",
+  "source_commit": "0700085560bace47eb0d9d489914957cc9b3b988",
+  "script_sha256": "9c93ea22245b8444e57fd25096c6be37b0078131923dc8bacc6875ce6b5fb6db",
+  "config_sha256": "9feae3e7d53b8600fc02f0f747270810e124704fcf2adcc87e6b1bc4c6f59a40",
+  "branch_metrics_observed_before_freeze": false,
+  "known_reference_metrics_only": {
+    "e011_rmse": 12.550756295689673,
+    "spline7_oracle_rmse": 2.6251410709542142
+  },
+  "inputs": {
+    "wells": 773,
+    "contexts": 25,
+    "target_shape": [773, 7],
+    "summary_shape": [773, 142],
+    "raw_shape": [773, 4544],
+    "privileged_shape": [773, 12],
+    "compact_sha256": "cb2788c602f718dc7a76f09a62bbb433c1d7cda7dd93d69ee8905524eb09156d",
+    "oof_sha256": "6ad01b630c9a24eb5f4246639d6a85d974d3633493de90e04c393886f841679d",
+    "legal_features_sha256": "1700b3d4b03bb949ed362a3a66ca4c9c72177e0e4fd0087cbfb1a4a72f151fe2",
+    "t031_tensor_sha256": "421872a1963bbbe509cfdabcfe9cd9e7fddb86f930ebc6711005cf1634603959"
+  },
+  "selection": {
+    "outer_contexts": "five immutable maps times five folds",
+    "inner_validation": "same map fold=(outer fold+1)%5",
+    "selection_metric": "exact actual-row TVT RMSE",
+    "feature_ranking": "split-local sum of squared standardized feature/coefficient correlations",
+    "refit": "reselect features and refit on the full outer-training partition",
+    "aggregation": "average five map-specific coefficient predictions per well"
+  },
+  "models": {
+    "ridge": "median imputation, fold-only standardization, LSQR, frozen alpha grids",
+    "pls": "summary features, fold-only preprocessing, frozen component grid",
+    "knn": "summary features, fold-only target-aware ranking, Euclidean inverse-distance weighting",
+    "raw": "all 4544 T031 legal raw bins",
+    "combined": "142 summaries plus all 4544 raw bins",
+    "privileged": "six train-only formation-offset changes plus finite masks; diagnostic only"
+  },
+  "metrics": {
+    "tvt": "exact E006 plus spline7 sufficient-statistic SSE",
+    "coefficient_r2": "global Frobenius R2 around the seven target-dimension means",
+    "coefficient_pearson": "seven marginal Pearson correlations; frozen median",
+    "oracle_gain_retention": "(E011 RMSE - candidate RMSE)/(E011 RMSE - spline7 oracle RMSE)",
+    "neighbor_enrichment": "best frozen legal-space/k reduction versus deterministic suffix-length-quintile matched random pairs",
+    "stress": "legacy spatial, legacy typewell, legal covariate clusters, 2D spatial clusters, horizon quintiles"
+  },
+  "controls": {
+    "shuffled_target": "deterministic outer-training derangement; inner selection uses pseudo targets only",
+    "sign_flipped": "negative of the selected best legal averaged coefficient prediction",
+    "negative_control_gate": "maximum gain of either control must not exceed 0.03 RMSE"
+  },
+  "decision": {
+    "go": "all seven frozen legal gates pass",
+    "strong_privileged_mediation": "privileged RMSE <=5.5 while legal GO fails",
+    "stop": "all legal RMSE values exceed 10 or all legal multivariate R2 values are below 0.25",
+    "research_only": "partial signal outside GO and STOP"
+  },
+  "preflight": {
+    "synthetic_status": "PASS",
+    "real_data_status": "PREFLIGHT_PASS",
+    "static_contract_status": "PASS"
+  },
+  "post_metric_prohibitions": [
+    "branch additions",
+    "feature-count or hyperparameter additions",
+    "gate changes",
+    "metric-definition changes",
+    "neighbor comparator changes",
+    "privileged-feature promotion",
+    "Kaggle execution",
+    "deployment packaging",
+    "submission"
+  ]
+}
