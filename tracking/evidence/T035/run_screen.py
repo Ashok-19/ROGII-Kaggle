@@ -645,6 +645,7 @@ def run(config: dict[str, Any], output_dir: Path, preflight_only: bool = False) 
         item = branch_config["summary_extra_trees"]
         candidates = []
         candidate_index = 0
+        branch_seed = seed + 100
         for max_features in item["max_features"]:
             for leaf in item["min_samples_leaf"]:
                 prediction = extra_trees_predict(
@@ -654,7 +655,7 @@ def run(config: dict[str, Any], output_dir: Path, preflight_only: bool = False) 
                     n_estimators=item["n_estimators"],
                     max_features=max_features,
                     min_samples_leaf=leaf,
-                    seed=seed + 100 + candidate_index,
+                    seed=branch_seed,
                 )
                 candidates.append(
                     (
@@ -674,7 +675,7 @@ def run(config: dict[str, Any], output_dir: Path, preflight_only: bool = False) 
                 n_estimators=item["n_estimators"],
                 max_features=max_features,
                 min_samples_leaf=leaf,
-                seed=seed + 199,
+                seed=branch_seed,
             ),
             {
                 "max_features": max_features,
@@ -686,6 +687,7 @@ def run(config: dict[str, Any], output_dir: Path, preflight_only: bool = False) 
         item = branch_config["summary_hist_gradient_boosting"]
         candidates = []
         candidate_index = 0
+        branch_seed = seed + 200
         for leaves in item["max_leaf_nodes"]:
             for l2 in item["l2_regularization"]:
                 prediction = hist_predict(
@@ -696,7 +698,7 @@ def run(config: dict[str, Any], output_dir: Path, preflight_only: bool = False) 
                     l2=l2,
                     learning_rate=item["learning_rate"],
                     max_iter=item["max_iter"],
-                    seed=seed + 200 + candidate_index * 10,
+                    seed=branch_seed,
                 )
                 candidates.append(
                     (
@@ -717,7 +719,7 @@ def run(config: dict[str, Any], output_dir: Path, preflight_only: bool = False) 
                 l2=l2,
                 learning_rate=item["learning_rate"],
                 max_iter=item["max_iter"],
-                seed=seed + 299,
+                seed=branch_seed,
             ),
             {
                 "max_leaf_nodes": leaves,
@@ -729,6 +731,7 @@ def run(config: dict[str, Any], output_dir: Path, preflight_only: bool = False) 
         item = branch_config["summary_mlp"]
         candidates = []
         candidate_index = 0
+        branch_seed = seed + 300
         for hidden_values in item["hidden_layer_sizes"]:
             hidden = tuple(int(value) for value in hidden_values)
             for alpha_value in item["alphas"]:
@@ -740,7 +743,7 @@ def run(config: dict[str, Any], output_dir: Path, preflight_only: bool = False) 
                     alpha=alpha_value,
                     max_iter=item["max_iter"],
                     early_stopping=item["early_stopping"],
-                    seed=seed + 300 + candidate_index,
+                    seed=branch_seed,
                 )
                 candidates.append(
                     (
@@ -761,7 +764,7 @@ def run(config: dict[str, Any], output_dir: Path, preflight_only: bool = False) 
                 alpha=alpha_value,
                 max_iter=item["max_iter"],
                 early_stopping=item["early_stopping"],
-                seed=seed + 399,
+                seed=branch_seed,
             ),
             {
                 "hidden": "x".join(map(str, hidden)),
@@ -806,6 +809,7 @@ def run(config: dict[str, Any], output_dir: Path, preflight_only: bool = False) 
         item = branch_config["raw_pca_extra_trees"]
         candidates = []
         candidate_index = 0
+        branch_seed = seed + 400
         for components_count in item["components"]:
             for max_features in item["max_features"]:
                 for leaf in item["min_samples_leaf"]:
@@ -816,7 +820,7 @@ def run(config: dict[str, Any], output_dir: Path, preflight_only: bool = False) 
                         n_estimators=item["n_estimators"],
                         max_features=max_features,
                         min_samples_leaf=leaf,
-                        seed=seed + 400 + candidate_index,
+                        seed=branch_seed,
                     )
                     candidates.append(
                         (
@@ -837,7 +841,7 @@ def run(config: dict[str, Any], output_dir: Path, preflight_only: bool = False) 
                 n_estimators=item["n_estimators"],
                 max_features=max_features,
                 min_samples_leaf=leaf,
-                seed=seed + 499,
+                seed=branch_seed,
             ),
             {
                 "raw_components": components_count,
@@ -897,6 +901,7 @@ def run(config: dict[str, Any], output_dir: Path, preflight_only: bool = False) 
         item = branch_config["privileged_geology_extra_trees"]
         candidates = []
         candidate_index = 0
+        branch_seed = seed + 500
         for max_features in item["max_features"]:
             for leaf in item["min_samples_leaf"]:
                 prediction = extra_trees_predict(
@@ -906,7 +911,7 @@ def run(config: dict[str, Any], output_dir: Path, preflight_only: bool = False) 
                     n_estimators=item["n_estimators"],
                     max_features=max_features,
                     min_samples_leaf=leaf,
-                    seed=seed + 500 + candidate_index,
+                    seed=branch_seed,
                 )
                 candidates.append(
                     (
@@ -926,7 +931,7 @@ def run(config: dict[str, Any], output_dir: Path, preflight_only: bool = False) 
                 n_estimators=item["n_estimators"],
                 max_features=max_features,
                 min_samples_leaf=leaf,
-                seed=seed + 599,
+                seed=branch_seed,
             ),
             {
                 "max_features": max_features,
@@ -1177,6 +1182,17 @@ def run(config: dict[str, Any], output_dir: Path, preflight_only: bool = False) 
             )
         well_rows.append(row)
 
+    expected_context_rows = len(contexts) * len(RUN_BRANCHES)
+    expected_group_rows = len(ALL_BRANCHES) * len(features.groups) * 5
+    expected_map_rows = len(ALL_BRANCHES) * 5
+    all_coordinate_maps_finite = all(
+        np.isfinite(value).all() for value in coordinate_maps.values()
+    ) and np.isfinite(true_coordinate_maps).all()
+    all_basis_maps_finite = (
+        np.isfinite(basis_mean_maps).all()
+        and np.isfinite(basis_component_maps).all()
+    )
+
     edge_checks = {
         "wells_773": len(wells) == 773,
         "contexts_25": len(contexts) == 25,
@@ -1196,6 +1212,13 @@ def run(config: dict[str, Any], output_dir: Path, preflight_only: bool = False) 
         <= 1e-9,
         "e011_identity": abs(baseline["rmse"] - 12.550756295689673) <= 1e-9,
         "branch_count_11": len(branch_rows) == 11,
+        "context_rows_complete": len(context_rows) == expected_context_rows,
+        "hyperparameter_rows_complete": len(hyper_rows) == expected_context_rows,
+        "group_rows_complete": len(group_rows) == expected_group_rows,
+        "map_rows_complete": len(map_rows) == expected_map_rows,
+        "membership_rows_25": len(membership_rows) == 25,
+        "coordinate_maps_finite": all_coordinate_maps_finite,
+        "basis_maps_finite": all_basis_maps_finite,
         "stress_systems_complete": len(features.groups) == 5
         and all(set(map(int, np.unique(value))) == set(range(5)) for value in features.groups.values()),
         "same_well_exclusion": all(row["same_well_excluded"] for row in membership_rows),
@@ -1221,6 +1244,7 @@ def run(config: dict[str, Any], output_dir: Path, preflight_only: bool = False) 
         "pandas": pd.__version__,
         "sklearn": __import__("sklearn").__version__,
         "threads": 2,
+        "stochastic_selection_seed_policy": "one fixed context-and-family seed across each inner hyperparameter grid and its outer refit",
         "target": "partition-local T033 rank-8 actual-row least-squares PCA coordinates",
         "selection": "inner fold=(outer+1)%5 by exact actual-row TVT RMSE",
         "aggregation": "reconstruct context action profiles and average five maps per well",

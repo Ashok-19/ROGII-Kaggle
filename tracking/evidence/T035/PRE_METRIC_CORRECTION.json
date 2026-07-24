@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "task_id": "T035",
+  "type": "score_blind_pre_metric_implementation_correction",
+  "original_freeze_commit": "e0b88d82f4753840b66b39caf8c717b0abf705ea",
+  "original_script_sha256": "8dfb1a7efb79d4242f1df01cea59d2318bac21be37e6d48379f287adbd4e164d",
+  "corrected_script_sha256": "cdff3ab05613bd789d4d3c9fa5d1b3e40c781e73801f82e50926f6aad90c1760",
+  "branch_metrics_observed_before_correction": false,
+  "changes": [
+    "Use one fixed context-and-family random seed across every stochastic inner hyperparameter grid and its corresponding outer refit, preventing hyperparameter selection from also selecting seed luck.",
+    "Add exact expected row-count checks for context, hyperparameter, group, map, and membership artifacts.",
+    "Add finite-coordinate and finite-basis-map assertions.",
+    "Record and invalidate the old-hash process that started before the corrected script was written."
+  ],
+  "unchanged_scientific_contract": [
+    "rank-8 partition-local PCA target",
+    "128-node residual action representation",
+    "all legal, privileged, and control branches",
+    "all hyperparameter values",
+    "inner and outer fold definitions",
+    "actual-row TVT selection metric",
+    "five-map aggregation",
+    "all GO, BREAKTHROUGH, mediation, and STOP gates"
+  ],
+  "validation_after_correction": {
+    "python_compile": "PASS",
+    "synthetic_self_test": "PASS",
+    "real_data_preflight": "PASS",
+    "script_hash_matches_freeze": true,
+    "valid_result_artifacts_present": false
+  },
+  "invalid_process_receipt": "tracking/evidence/T035/INVALID_PRE_FREEZE_RUN.json",
+  "interpretation": "This correction is eligible because no T035 branch metric was observed and no result artifact was produced before the corrected implementation was sealed."
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "task_id": "T035",
+  "classification": "operationally_invalid_superseded_hash",
+  "pid": 793793,
+  "command": "/usr/bin/python3.12 tracking/evidence/T035/run_screen.py --output-dir scratch/agents/t035-pca-identifiability-20260724/final_run",
+  "process_started_at_local": "2026-07-25T00:13:20+05:30",
+  "corrected_script_written_at_local": "2026-07-25T00:13:57+05:30",
+  "reason": "The process started before the score-blind seed-fairness and edge-validation correction was written, so it loaded the superseded implementation hash.",
+  "termination": {
+    "signal": "SIGTERM",
+    "terminated": true,
+    "alive_after_termination": false
+  },
+  "outputs": {
+    "stdout_bytes": 0,
+    "stderr_bytes": 0,
+    "result_artifacts": [],
+    "scientific_metrics_observed": false
+  },
+  "interpretation": "No result from this process is eligible for scientific interpretation, promotion, tracker updates, or model selection."
+}

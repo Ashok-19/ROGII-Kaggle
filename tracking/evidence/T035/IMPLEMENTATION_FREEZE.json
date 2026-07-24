@@ -2,60 +2,56 @@
   "schema_version": 1,
   "task_id": "T035",
   "hypothesis_id": "H027",
-  "frozen_at": "2026-07-25T00:11:26+05:30",
+  "frozen_at": "2026-07-25T00:16:45+05:30",
   "source_commit": "7d751839ce0e26d5da184b52e4187a70843e54c9",
-  "script_sha256": "8dfb1a7efb79d4242f1df01cea59d2318bac21be37e6d48379f287adbd4e164d",
-  "config_sha256": "09ac0c5571f320fb217849490372bcdb4c04f3c4b79ec8307bd8ae42dc6da0fc",
+  "supersedes_freeze_commit": "e0b88d82f4753840b66b39caf8c717b0abf705ea",
+  "previous_script_sha256": "8dfb1a7efb79d4242f1df01cea59d2318bac21be37e6d48379f287adbd4e164d",
+  "correction_receipt": "tracking/evidence/T035/PRE_METRIC_CORRECTION.json",
   "branch_metrics_observed_before_freeze": false,
   "known_parent_metrics_only": {
     "e011_rmse": 12.550756295689673,
-    "t033_rank8_oracle_rmse": 2.1613289428958136
+    "t033_rank8_oracle_rmse": 2.161328942895813
   },
-  "target_identity": {
-    "rank": 8,
-    "profile_grid": 128,
-    "action_cap_ft": 160.0,
-    "basis_fit": "partition training residual profiles only",
-    "coordinate_fit": "T033 actual-row least-squares sufficient-statistic equations",
-    "t033_profile_max_abs_delta": 1.4210854715202004e-14,
-    "t033_oracle_rmse_delta": 4.440892098500626e-16
+  "script_sha256": "cdff3ab05613bd789d4d3c9fa5d1b3e40c781e73801f82e50926f6aad90c1760",
+  "config_sha256": "09ac0c5571f320fb217849490372bcdb4c04f3c4b79ec8307bd8ae42dc6da0fc",
+  "preregistration_sha256": "b231f027dd8be8ad0b41940a1969c801ab095bbaa100951bc99ef8fda8894fcb",
+  "input_hashes": {
+    "t033_reference_script": "88e55c0c7e0f6adb3e4e4cc53896595c625f3d07a67dd494c14879c7764c9657",
+    "t031_legal_tensor": "421872a1963bbbe509cfdabcfe9cd9e7fddb86f930ebc6711005cf1634603959"
   },
-  "inputs": {
+  "validated_contract": {
     "wells": 773,
     "contexts": 25,
+    "action_profile_shape": [773, 128],
     "summary_shape": [773, 142],
     "raw_shape": [773, 4544],
     "privileged_shape": [773, 12],
-    "t033_script_sha256": "88e55c0c7e0f6adb3e4e4cc53896595c625f3d07a67dd494c14879c7764c9657",
-    "t031_tensor_sha256": "421872a1963bbbe509cfdabcfe9cd9e7fddb86f930ebc6711005cf1634603959"
-  },
-  "selection": {
-    "outer_contexts": "five immutable maps times five folds",
+    "target": "partition-local rank-8 PCA actual-row least-squares coordinates",
     "inner_validation": "same map fold=(outer+1)%5",
-    "selection_metric": "exact actual-row TVT RMSE after coordinate reconstruction",
-    "aggregation": "average five context-specific action profiles per well"
+    "selection_metric": "exact actual-row TVT RMSE",
+    "aggregation": "five reconstructed map action profiles averaged per well",
+    "stochastic_seed_policy": "one fixed context-and-family seed across each inner hyperparameter grid and its outer refit",
+    "legal_branches": 8,
+    "diagnostic_and_control_branches": 3,
+    "stress_systems": 5
   },
-  "legal_branches": [
-    "mean_coordinates",
-    "summary_ridge",
-    "summary_extra_trees",
-    "summary_hist_gradient_boosting",
-    "summary_mlp",
-    "raw_pca_ridge",
-    "raw_pca_extra_trees",
-    "summary_plus_raw_pca_ridge"
-  ],
-  "ineligible_branches": [
-    "privileged_geology_extra_trees",
-    "shuffled_coordinate_control",
-    "sign_flipped_control"
-  ],
   "preflight": {
-    "compile": "PASS",
-    "synthetic": "PASS",
-    "real_data": "PREFLIGHT_PASS",
-    "static_contract": "PASS",
-    "parent_oracle_reproduction": "PASS"
+    "python_compile": "PASS",
+    "synthetic_self_test": "PASS",
+    "real_data_preflight": "PASS",
+    "baseline_rmse": 12.550756295689673,
+    "no_result_artifacts_present": true
+  },
+  "superseded_process": {
+    "receipt": "tracking/evidence/T035/INVALID_PRE_FREEZE_RUN.json",
+    "pid": 793793,
+    "started_at_local": "2026-07-25T00:13:20+05:30",
+    "corrected_script_written_at_local": "2026-07-25T00:13:57+05:30",
+    "terminated": true,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0,
+    "result_files": 0,
+    "scientific_metrics_observed": false
   },
   "post_metric_prohibitions": [
     "new branches",
