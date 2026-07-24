@@ -1,0 +1,27 @@
+{
+  "aggregation": "average five map-specific OOF coefficient predictions per well",
+  "config_sha256": "9feae3e7d53b8600fc02f0f747270810e124704fcf2adcc87e6b1bc4c6f59a40",
+  "feature_ranking": "split-local sum of squared standardized feature/coefficient correlations",
+  "input_hashes": {
+    "artifacts/E011/compact_stats_v1.npz": "cb2788c602f718dc7a76f09a62bbb433c1d7cda7dd93d69ee8905524eb09156d",
+    "artifacts/E011/oof_predictions.csv.gz": "6ad01b630c9a24eb5f4246639d6a85d974d3633493de90e04c393886f841679d",
+    "experiments/E003/results/legal_features.csv": "1700b3d4b03bb949ed362a3a66ca4c9c72177e0e4fd0087cbfb1a4a72f151fe2",
+    "scratch/agents/t031-state-gate-20260724/main/tensors_v1.npz": "421872a1963bbbe509cfdabcfe9cd9e7fddb86f930ebc6711005cf1634603959"
+  },
+  "knn": "Euclidean distance with inverse-distance weighting",
+  "neighbor_enrichment": "outer-fold standardized legal nearest neighbors versus deterministic suffix-length-quintile matched random pairs",
+  "nested_selection": "inner validation fold=(outer fold+1)%5; select by inner actual-row TVT RMSE",
+  "numpy": "2.4.4",
+  "pandas": "3.0.3",
+  "privileged_rule": "six train-only hidden formation offsets plus masks; diagnostic only and never eligible",
+  "python": "3.12.13 (main, Mar  4 2026, 09:23:07) [GCC 11.4.0]",
+  "ridge_solver": "LSQR",
+  "schema_version": 1,
+  "scoring": "exact actual-row TVT SSE from per-well quadratic sufficient statistics",
+  "script_sha256": "9c93ea22245b8444e57fd25096c6be37b0078131923dc8bacc6875ce6b5fb6db",
+  "shuffled_control": "deterministic outer-training target derangement selected only against pseudo targets",
+  "sign_flipped_control": "negative of the selected best legal coefficient prediction",
+  "sklearn": "1.9.0",
+  "target": "frozen spline7 coefficients relative to E006",
+  "threads": 2
+}

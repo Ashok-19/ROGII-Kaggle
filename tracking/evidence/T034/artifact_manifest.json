@@ -1,0 +1,55 @@
+{
+  "files": [
+    {
+      "bytes": 1814,
+      "name": "implementation_receipt.json",
+      "sha256": "8b12e9c486d32b4ddb7f1bb29e3d3a9c5b85b7ab1c01bc456d93f39d63c752af"
+    },
+    {
+      "bytes": 2311,
+      "name": "summary.json",
+      "sha256": "6f1284005e62ecd90dcf55d3f3e48b1a0522343f5008fab50b18abf38d6f2c67"
+    },
+    {
+      "bytes": 570,
+      "name": "edge_cases.json",
+      "sha256": "577c1049a8759caec5fd466d6f32b909299f54ad68b459c85116dff6169bd5bc"
+    },
+    {
+      "bytes": 2990,
+      "name": "branch_metrics.csv",
+      "sha256": "196778aab8d705d4af5ca910c6adbd0c6f2574f34902614ee5b85c93f486bc08"
+    },
+    {
+      "bytes": 9617,
+      "name": "context_metrics.csv",
+      "sha256": "7cf45029fc676f8fc564a5b56b240087ad24dac032fb47b6ad66a3ccabcfc183"
+    },
+    {
+      "bytes": 22641,
+      "name": "group_metrics.csv",
+      "sha256": "1965ae8ee4841df3883706f8249f0075351c85a39b7e28324e78908d3bdb0587"
+    },
+    {
+      "bytes": 11020,
+      "name": "hyperparameters.csv",
+      "sha256": "e75855da09c70f4a0506b9f09b39d79cbb9c13f27946a969fd72b0219256b1e0"
+    },
+    {
+      "bytes": 740,
+      "name": "neighbor_enrichment.csv",
+      "sha256": "e1e7b5d16c048e26d27d35499c0fc0a1eec24d70759901551485c39574cbddbd"
+    },
+    {
+      "bytes": 273600,
+      "name": "selected_well_metrics.csv",
+      "sha256": "1fda63a61d8ba4c83006e8ea492da8020dc73c5160b69bdfc4edbabd989aad8e"
+    },
+    {
+      "bytes": 1071,
+      "name": "RESULT.md",
+      "sha256": "74636d13e5f3bb1f92b6e59df7e8951b470995b125db29082f4882a96c003bb3"
+    }
+  ],
+  "schema_version": 1
+}

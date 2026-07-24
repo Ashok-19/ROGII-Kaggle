@@ -1,0 +1,73 @@
+{
+  "baseline_rmse": 12.550756295689673,
+  "best_legal_branch": "summary_ridge",
+  "best_legal_metrics": {
+    "coefficient_pearsons": [
+      0.3602744742982495,
+      0.43209426769445475,
+      0.461609200960047,
+      0.4821468470734724,
+      0.4753491686019606,
+      0.5745179344919281,
+      0.509752304174147
+    ],
+    "coefficient_rmse": 14.182859441369475,
+    "gain_vs_e011": -0.456512991471703,
+    "median_coefficient_pearson": 0.4753491686019606,
+    "multivariate_r2": 0.2191484469598809,
+    "oracle_gain_retention": -0.04599342016946563,
+    "positive_well_fraction": 0.4514877102199224,
+    "tvt_rmse": 13.007269287161376
+  },
+  "best_neighbor_enrichment": {
+    "distance_reduction_fraction": 0.06032264387270159,
+    "matched_random_action_distance": 3.2866606452417955,
+    "nearest_action_distance": 3.088400585608451,
+    "neighbors": 5,
+    "pair_count": 19325,
+    "space": "raw_binned"
+  },
+  "contexts": 25,
+  "decision": "STOP_CLOSE_CURRENT_LEGAL_ACTION_IDENTIFICATION",
+  "edge_status": "PASS",
+  "gates": {
+    "maximum_best_legal_tvt_rmse": false,
+    "minimum_median_coefficient_pearson": false,
+    "minimum_multivariate_coefficient_r2": false,
+    "minimum_nearest_neighbor_distance_reduction_fraction": false,
+    "minimum_oracle_gain_retention": false,
+    "negative_controls_below_gain_cap": true,
+    "positive_every_legacy_group": false
+  },
+  "hypothesis_id": "H026",
+  "negative_control_gain_max": -2.4410998715591603,
+  "oracle_rmse": 2.6251410709542142,
+  "privileged_geology_metrics": {
+    "coefficient_pearsons": [
+      0.2559133454296217,
+      0.42220600175185236,
+      0.4840175693048948,
+      0.5445382801460504,
+      0.6246440887183321,
+      0.7683929038157087,
+      0.9420867760367543
+    ],
+    "coefficient_rmse": 11.711160141391554,
+    "gain_vs_e011": 1.233797798729146,
+    "median_coefficient_pearson": 0.5445382801460504,
+    "multivariate_r2": 0.4675967228920376,
+    "oracle_gain_retention": 0.12430441547385589,
+    "positive_well_fraction": 0.5588615782664942,
+    "tvt_rmse": 11.316958496960527
+  },
+  "privileged_interpretation": {
+    "strong_mediation": false,
+    "weak_mediation": true
+  },
+  "runtime_seconds": 181.11297082901,
+  "schema_version": 1,
+  "status": "COMPLETE",
+  "stop_gate": true,
+  "task_id": "T034",
+  "wells": 773
+}

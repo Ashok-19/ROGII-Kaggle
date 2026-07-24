@@ -359,6 +359,15 @@
       "summary": "Outer-training PCA rank 8 reaches 2.1613 RMSE with 89.16% shape-SSE reduction and improves all 773 wells; rank 16 reaches 0.9390 RMSE.",
       "visual": "deployment_gap",
       "why_it_matters": "This is the first verified representation breakthrough large enough for the target. T034 now isolates the remaining problem: legal coordinate identification."
+    },
+    {
+      "id": "B038",
+      "date": "2026-07-24",
+      "evidence": "T034_two_exact_runs",
+      "title": "Fixed spline coordinates are not the compact breakthrough target",
+      "summary": "Every legal spline7-coordinate branch worsens E011; best summary ridge scores 13.0073 RMSE with R2 0.219 and only 6.03% neighbor enrichment.",
+      "visual": "deployment_gap",
+      "why_it_matters": "T034 closes fixed-spline regression but does not test T033\u2019s partition-specific PCA coordinates. T035 is the direct final manifold test."
     }
   ],
   "concepts": [
@@ -813,6 +822,11 @@
     {
       "title": "T033 compact residual action-manifold capacity breakthrough",
       "local_path": "tracking/evidence/T033/RESULT.md",
+      "url": ""
+    },
+    {
+      "title": "T034 fixed spline coordinate identifiability stop",
+      "local_path": "tracking/evidence/T034/RESULT.md",
       "url": ""
     }
   ],

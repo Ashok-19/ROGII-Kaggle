@@ -1,0 +1,21 @@
+{
+  "checks": {
+    "all_oof_predictions_filled": true,
+    "all_predictions_finite": true,
+    "baseline_identity": true,
+    "best_legal_is_eligible": true,
+    "coefficient_metric_finite": true,
+    "contexts_25": true,
+    "controls_ineligible": true,
+    "neighbor_enrichment_complete": true,
+    "oracle_identity": true,
+    "privileged_ineligible": true,
+    "same_well_isolation": true,
+    "stress_systems_complete": true,
+    "summary_shape_773x142": true,
+    "target_shape_773x7": true,
+    "wells_773": true
+  },
+  "schema_version": 1,
+  "status": "PASS"
+}

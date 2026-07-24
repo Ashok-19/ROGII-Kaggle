@@ -386,7 +386,8 @@ These defaults may be revised only through a recorded decision before seeing the
 25. **H023/T031 — Raw-sequence latent formation-displacement identifiability — completed and rejected 2026-07-24.** The best raw branch reaches Pearson 0.261732 and MAE 15.125630 ft, underperforming the 142-summary ridge and triggering the frozen hard stop. No joint state-plus-spline model is authorized.
 26. **H024/T032 — Registered analog-tail retrieval coverage — completed and rejected 2026-07-24.** Registered retrieval reaches 8.674114 RMSE but misses the shape gate; a shuffled-action control reaches 8.031442 and passes all main gates. Residual coverage exists, but U/GR/geometry similarity does not identify causal analogs.
 27. **H025/T033 — Cross-fitted residual action-manifold capacity — completed and confirmed 2026-07-24.** Outer-training PCA rank 8 reaches 2.161329 RMSE with 89.1637% shape-SSE reduction, 100% positive wells, and all legacy groups below 2.327464 RMSE. Rank 16 reaches 0.938975. Two final-hash runs reproduce exactly; this is hidden-label capacity only.
-28. **H026/T034 — Legal residual-action identifiability and privileged-geology mediation — selected next.** Test whether legal summaries/raw bins identify the frozen seven-dimensional action target and whether train-only formation displacement explains the missing-state ceiling. No package or submission is authorized by this diagnostic.
+28. **H026/T034 — Fixed spline7 action identifiability — completed and rejected 2026-07-24.** Every legal branch worsens E011; best summary ridge is 13.007269 RMSE with R2 0.219 and only 6.03% neighbor enrichment. Privileged formation offsets reach 11.316958.
+29. **H027/T035 — Actual T033 PCA rank-8 coordinate identifiability — selected final manifold gate.** Fit partition-local PCA bases and test bounded nonlinear summary, raw-PCA, combined, and privileged models. No further manifold model search if the hard stop triggers.
 
 ## Explicitly rejected behavior
 
@@ -413,4 +414,4 @@ Foundation is complete only when:
 - legacy roadmap is preserved;
 - no training run is falsely presented as completed.
 
-Foundation through T033 is complete. E011 remains deployment primary because T033 is a hidden-label capacity diagnostic rather than an inference model. T031 and T032 close direct latent-state recovery and registered analog identity; T033 proves a compact residual manifold can represent the answer below 5 RMSE. D038 makes T034 the exact next action: test legal coordinate identification and privileged-geology mediation. No action-manifold model, package, Kaggle run, or submission is authorized unless T034 passes every legal gate.
+Foundation through T034 is complete. E011 remains deployment primary. T033 proves compact sub-5 capacity, while T034 rejects fixed spline7 identification. D039 selects T035 as the final direct test of the actual T033 rank-8 PCA coordinates with nonlinear legal models. No manifold package, Kaggle run, or submission is authorized unless T035 passes every legal gate.

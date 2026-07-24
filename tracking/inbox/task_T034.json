@@ -2,12 +2,12 @@
   "payload": {
     "depends_on": "T033",
     "due_at": "2026-07-26",
-    "phase": "implementation_frozen_identifiability_running",
+    "phase": "completed_fixed_spline_identifiability_stop",
     "priority": 1,
-    "status": "active",
+    "status": "completed",
     "task_id": "T034",
     "title": "Test legal residual-action identifiability",
-    "updated_at": "2026-07-24T18:16:58Z"
+    "updated_at": "2026-07-24T18:28:00Z"
   },
   "recorded_at": "2026-07-24T16:39:29Z",
   "type": "task"

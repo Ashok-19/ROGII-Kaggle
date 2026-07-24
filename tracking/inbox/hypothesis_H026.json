@@ -1,12 +1,12 @@
 {
   "payload": {
-    "evidence_against": "T031 raw state recovery hard-stopped and T032 sequence registration was beaten by shuffled actions; existing legal summaries may still be unable to identify the manifold coordinates.",
-    "evidence_for": "T033 proves the residual target is extremely low-dimensional: outer-training PCA rank 8 reaches 2.161329 RMSE and rank 16 reaches 0.938975, while the exact spline7 oracle is 2.625141. The remaining question is legal coordinate identification, not output capacity.",
+    "evidence_against": "Every legal branch worsens E011. Best legal summary ridge scores 13.007269 RMSE with multivariate R2 0.219 and only 6.03% legal-neighbor enrichment. Privileged scalar formation offsets reach only 11.316958 RMSE, so they do not mediate the compact residual action.",
+    "evidence_for": "T034 finds moderate marginal coefficient signal: summary ridge median coefficient Pearson 0.475 and privileged formation offsets multivariate R2 0.468.",
     "hypothesis_id": "H026",
-    "next_test": "Execute frozen T034 only. Compare legal summary/raw branches against a strictly nondeployable privileged-geology diagnostic and close the representation if the legal stop gate triggers.",
+    "next_test": "Do not retune spline7 coefficient regression. Test the actual cross-fitted T033 PCA rank-8 coordinates in T035, with bounded nonlinear legal models and the same outer isolation.",
     "priority": 1,
     "statement": "Legal summary and raw-binned observations contain enough information to identify spline7 residual actions, while privileged geology quantifies the missing-state ceiling.",
-    "status": "active",
+    "status": "rejected",
     "title": "Legal observations identify residual manifold coordinates"
   },
   "recorded_at": "2026-07-24T16:39:29Z",
