@@ -1,12 +1,16 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "task_id": "T033",
-  "type": "validation_only_pre_metric_correction",
-  "corrected_at": "2026-07-24T23:20:10+05:30",
-  "parent_commit": "a8bffd531b034a59677403e099b3f1acdcf9cdd3",
-  "old_script_sha256": "5bcbf460f1506580917a92bddee108c2c45673e414f677033a7e171a283663c4",
-  "new_script_sha256": "39bc32d5ea7406c89cf11e1f860108178490b6413cf3c934d2255d62fe8f6474",
-  "capacity_metrics_observed_before_correction": false,
+  "type": "validation_only_pre_official_run_correction",
+  "first_corrected_at": "2026-07-24T23:20:10+05:30",
+  "second_corrected_at": "2026-07-24T23:25:28+05:30",
+  "initial_parent_commit": "a8bffd531b034a59677403e099b3f1acdcf9cdd3",
+  "first_correction_commit": "545ef3472e799807950a880a03b9bddafcf02d5a",
+  "script_hash_history": [
+    "5bcbf460f1506580917a92bddee108c2c45673e414f677033a7e171a283663c4",
+    "39bc32d5ea7406c89cf11e1f860108178490b6413cf3c934d2255d62fe8f6474",
+    "88e55c0c7e0f6adb3e4e4cc53896595c625f3d07a67dd494c14879c7764c9657"
+  ],
   "scientific_contract_changed": false,
   "unchanged": [
     "target construction and action cap",
@@ -19,15 +23,25 @@
     "GO, research-only, and STOP thresholds",
     "deployment prohibitions"
   ],
-  "added_validation_only": [
+  "validation_only_changes": [
     "explicit OOF hidden-index sorting and contiguous-index assertion",
     "exact compact row-count and 773-well identity assertions",
     "finite OOF path and complete fold-map assertions",
     "five horizon-quintile diagnostic groups",
     "deterministic KMeans, random-source, and Gaussian dictionary assertions",
     "finite actual-row reconstruction assertion",
-    "pooled SSE decomposition assertion for every scored branch"
+    "pooled SSE decomposition assertion for every scored branch",
+    "membership audit corrected from the impossible 25 memberships per well to 25 unique map/fold contexts and five held-out memberships per well"
   ],
+  "metric_observation_boundary": {
+    "capacity_metrics_observed_before_first_correction": false,
+    "superseded_old_hash_run_observed_before_second_correction": true,
+    "superseded_run_script_sha256": "5bcbf460f1506580917a92bddee108c2c45673e414f677033a7e171a283663c4",
+    "superseded_run_edge_status": "FAIL",
+    "superseded_run_failed_check": "contexts_25 expected 25*773 membership rows even though each well is held out once per map",
+    "used_to_change_scientific_contract": false,
+    "official_result_requires_final_hash_reproduction": true
+  },
   "preflight_results": {
     "synthetic_sse_delta": 5.684341886080802e-14,
     "actual_row_sufficient_max_abs_delta": 9.313225746154785e-10,

@@ -14,6 +14,7 @@ import math
 import os
 import sys
 import time
+from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable
@@ -569,11 +570,26 @@ def run(config: dict[str, Any], output_dir: Path) -> dict[str, Any]:
     zero_delta = max(float(np.max(np.abs((well.e011 + interpolate_profile(np.zeros(GRID), well.rows)) - well.e011))) for well in wells)
     all_profiles_finite = all(np.isfinite(value).all() for value in branch_profiles.values())
     maximum_action = max(float(np.max(np.abs(value))) for value in branch_profiles.values())
+    membership_context_counts = Counter(
+        (int(row["map"]), int(row["fold"])) for row in membership_rows
+    )
+    membership_well_counts = Counter(str(row["well_id"]) for row in membership_rows)
     edge = {
         "status": "PASS",
         "checks": {
             "wells_773": n == 773,
-            "contexts_25": len(membership_rows) == 25 * n,
+            "contexts_25": (
+                set(membership_context_counts) == {
+                    (map_index, fold)
+                    for map_index in range(1, 6)
+                    for fold in range(5)
+                }
+                and len(membership_rows) == 5 * n
+            ),
+            "five_memberships_per_well": (
+                len(membership_well_counts) == n
+                and all(count == 5 for count in membership_well_counts.values())
+            ),
             "five_map_actions_every_branch": all(np.isfinite(sums[name]).all() for name in names),
             "same_well_exclusion": same_well_violations == 0 and all(bool(row["same_well_excluded"]) for row in membership_rows),
             "duplicate_action_invariance": duplicate_delta <= 1e-9,

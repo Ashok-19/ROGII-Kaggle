@@ -23,18 +23,20 @@
     "deployment or submission"
   ],
   "pre_metric_validation_completion": {
-    "capacity_metrics_observed_before_correction": false,
+    "initial_capacity_metrics_observed_before_validation_completion": false,
+    "superseded_pre_correction_run_observed_before_membership_fix": true,
     "corrected_at": "2026-07-24T23:20:10+05:30",
     "correction_receipt": "tracking/evidence/T033/PRE_METRIC_CORRECTION.json",
     "data_contract": "sort and assert contiguous hidden_index, exact compact row counts, finite OOF paths, exact 773-well identity, and complete five-map folds",
     "determinism": "repeat one real KMeans fit, one random permutation, and one covariance-matched Gaussian dictionary with identical seeds",
     "horizon_stress": "emit five suffix-length quintile groups without adding them to the frozen legacy-group promotion gate",
+    "membership_audit": "require exactly 25 unique map/fold contexts and exactly five held-out memberships per well",
     "pooled_decomposition": "assert pooled SSE equals datum plus trend plus shape for baseline, spline7 reference, and every branch",
     "reconstruction": "assert every actual-row reconstructed path is finite",
     "scientific_contract_changed": false
   },
   "schema_version": 1,
-  "script_sha256": "39bc32d5ea7406c89cf11e1f860108178490b6413cf3c934d2255d62fe8f6474",
+  "script_sha256": "88e55c0c7e0f6adb3e4e4cc53896595c625f3d07a67dd494c14879c7764c9657",
   "source_commit": "6527a28de4356f554652f4ae889b166f16fb9507",
   "state_metrics_observed_before_freeze": false,
   "synthetic_self_test": "PASS",
