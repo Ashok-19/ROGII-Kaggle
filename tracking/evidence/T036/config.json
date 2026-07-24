@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "task_id": "T036",
+  "hypothesis_id": "H028",
+  "title": "Candidate-path-conditioned GR evidence ranking",
+  "stage": "nested_legal_candidate_ranking_no_deployment",
+  "expected_wells": 773,
+  "expected_hidden_rows": 3783989,
+  "inputs": {
+    "e011_oof": "artifacts/E011/oof_predictions.csv.gz",
+    "e011_compact": "artifacts/E011/compact_stats_v1.npz",
+    "t033_runner": "tracking/evidence/T033/run_screen.py",
+    "t033_metrics": "tracking/evidence/T033/config_metrics.csv",
+    "train_dir": "data/train",
+    "fold_files": ["folds/v1.json", "folds/v2.json", "folds/v3.json", "folds/v4.json", "folds/v5.json"]
+  },
+  "candidate_bank": {
+    "profile_nodes": 128,
+    "kmeans_centers": 32,
+    "kmeans_n_init": 16,
+    "kmeans_algorithm": "lloyd",
+    "seed_formula": "36000 + 100*map + 10*fold + 32",
+    "pair_weights": [0.25, 0.5, 0.75],
+    "unique_nonzero_actions": 1520,
+    "include_exact_zero_action": true,
+    "total_candidates": 1521,
+    "action_cap_ft": 160.0,
+    "outer_training_only": true,
+    "same_well_exclusion": true,
+    "oracle_reference_name": "T033 kmeans_pair_k032",
+    "oracle_reference_rmse": 4.628457367010144,
+    "oracle_tolerance": 1e-9
+  },
+  "path_evidence": {
+    "maximum_hidden_gr_samples": 128,
+    "minimum_valid_samples_for_action": 24,
+    "calibration": "visible-prefix horizontal/typewell GR only using E005 calibration",
+    "candidate_path": "exact E011 plus linearly interpolated 128-node candidate action",
+    "reference": "typewell GR interpolated at candidate TVT",
+    "huber_delta": 1.5,
+    "segments": 4,
+    "feature_names": [
+      "support_fraction", "valid_count_fraction", "mismatch_huber", "mismatch_mae", "mismatch_rmse", "mismatch_bias", "mismatch_pearson", "mismatch_cosine", "reference_std", "std_ratio",
+      "derivative_huber", "derivative_pearson", "derivative_sign_agreement", "second_derivative_huber",
+      "segment_1_huber", "segment_2_huber", "segment_3_huber", "segment_4_huber",
+      "segment_1_pearson", "segment_2_pearson", "segment_3_pearson", "segment_4_pearson",
+      "action_start", "action_mean", "action_end", "action_slope", "action_rms", "action_total_variation", "action_curvature_rms", "action_max_abs",
+      "path_start_support_position", "path_end_support_position", "path_below_support_fraction", "path_above_support_fraction",
+      "hidden_gr_coverage", "log_hidden_rows", "normalized_hidden_md_span", "typewell_tvt_span", "e011_typewell_support_fraction"
+    ],
+    "forbidden": ["hidden TVT", "formation surfaces", "Geology", "absolute X/Y", "group IDs as predictors", "oracle candidate identity", "leaderboard feedback"]
+  },
+  "training_examples": {
+    "pointwise_candidates_per_well": 64,
+    "composition": {
+      "zero_action": 1,
+      "lowest_sse": 8,
+      "highest_sse": 8,
+      "median_near": 8,
+      "hash_selected_remaining": 39
+    },
+    "pointwise_target": "log((candidate_sse_per_row+1e-6)/(e011_sse_per_row+1e-6))",
+    "pairwise_pairs_per_well": 64,
+    "pairwise_rule": "32 mirrored low-rank versus high-rank pairs plus 32 exact-zero versus hash-selected pairs; add both orientations",
+    "held_out_scoring": "all 1521 candidates"
+  },
+  "branches": [
+    {"name": "robust_alignment", "family": "fixed", "formula": "mismatch_huber + 0.25*derivative_huber + 2*(1-support_fraction)"},
+    {"name": "pointwise_ridge", "family": "ridge", "alphas": [1.0, 10.0, 100.0]},
+    {"name": "pointwise_hgb", "family": "hist_gradient_boosting", "max_leaf_nodes": [15, 31], "l2_regularization": [1.0, 10.0], "learning_rate": 0.05, "max_iter": 150, "min_samples_leaf": 80},
+    {"name": "pointwise_extra_trees", "family": "extra_trees", "n_estimators": 300, "max_features": [0.7, 1.0], "min_samples_leaf": [10, 25], "random_state_formula": "36000 + 100*map + 10*fold", "n_jobs": 1},
+    {"name": "pairwise_logistic", "family": "logistic", "C": [0.1, 1.0, 10.0], "max_iter": 500}
+  ],
+  "output_rules": {
+    "hard_argmin": true,
+    "soft_top_k": [4, 8, 16],
+    "temperatures": [0.25, 0.5, 1.0],
+    "score_normalization": "within-well subtract minimum and divide by score IQR floored at 1e-6",
+    "action_aggregation": "weighted mean candidate action then clip to +/-160 ft",
+    "zero_candidate_is_fallback": true
+  },
+  "validation": {
+    "outer_contexts": 25,
+    "inner_validation": "same map fold=(outer_fold+1)%5",
+    "all_preprocessing_split_local": true,
+    "selection_metric": "pooled actual-row TVT RMSE",
+    "final_prediction": "average five map action profiles per well before actual-row scoring",
+    "stress_systems": ["legacy_spatial", "legacy_typewell", "legal_covariate_kmeans", "spatial_2d_kmeans", "horizon_quintile"],
+    "special_slices": ["long_suffix", "high_hidden_gr_missingness", "e011_catastrophe"]
+  },
+  "controls": {
+    "destructive": ["reversed_typewell_gr", "circular_shift_hidden_gr", "action_prior_only", "shuffled_within_well_training_losses"],
+    "structural": ["sign_flipped_selected_action", "candidate_order_permutation", "duplicate_action_invariance", "exact_zero_fallback", "same_well_exclusion", "candidate_capacity_identity", "pooled_sse_identity", "finite_bounded_paths"],
+    "maximum_destructive_control_gain_vs_e011": 0.05,
+    "minimum_path_conditioned_advantage_vs_action_prior_rmse": 0.5
+  },
+  "metrics": [
+    "pooled RMSE", "gain versus E011", "oracle gain retention", "map wins", "outer-cell wins", "p90 well RMSE", "worst-5% SSE share", "group gains", "special-slice gains", "top-1 oracle action hit", "top-16 oracle recall", "mean candidate regret"
+  ],
+  "breakthrough_gate": {
+    "maximum_legal_rmse": 5.0,
+    "minimum_map_wins": 5,
+    "require_positive_every_legacy_group": true,
+    "maximum_p90_deterioration": 0.0,
+    "maximum_worst5_sse_share_increase": 0.005,
+    "require_all_destructive_controls_fail": true
+  },
+  "go_gate": {
+    "maximum_legal_rmse": 8.0,
+    "minimum_oracle_gain_retention": 0.55,
+    "minimum_map_wins": 5,
+    "minimum_outer_cell_wins": 20,
+    "require_positive_every_legacy_group": true,
+    "maximum_p90_deterioration": 0.0,
+    "maximum_worst5_sse_share_increase": 0.005,
+    "minimum_path_conditioned_advantage_vs_action_prior_rmse": 0.5,
+    "require_all_destructive_controls_fail": true
+  },
+  "research_zone": "RMSE >8.0 and <=10.0 with valid controls",
+  "stop_gate": {
+    "minimum_rmse_for_stop": 10.0,
+    "maximum_oracle_gain_retention_for_stop": 0.25,
+    "stop_if_no_path_conditioned_advantage": true
+  },
+  "compute": {"threads": 2, "maximum_cpu_hours": 4, "maximum_rss_gb": 4},
+  "selection": {"no_post_score_features": true, "no_post_score_branches": true, "no_post_score_hyperparameters": true, "no_post_score_gate_changes": true},
+  "deployment": {"package_authorized": false, "kaggle_execution_authorized": false, "submission_authorized": false}
+}

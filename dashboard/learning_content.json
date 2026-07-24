@@ -368,6 +368,15 @@
       "summary": "Every legal spline7-coordinate branch worsens E011; best summary ridge scores 13.0073 RMSE with R2 0.219 and only 6.03% neighbor enrichment.",
       "visual": "deployment_gap",
       "why_it_matters": "T034 closes fixed-spline regression but does not test T033\u2019s partition-specific PCA coordinates. T035 is the direct final manifold test."
+    },
+    {
+      "id": "B039",
+      "date": "2026-07-25",
+      "evidence": "T035_exact_reproduction",
+      "title": "Global legal features cannot identify the actual compact PCA action",
+      "summary": "Raw-PCA ridge is best at 12.2673 RMSE with coordinate R2 0.0341 and only 2.73% oracle-gain retention; every summary-only nonlinear branch regresses.",
+      "visual": "deployment_gap",
+      "why_it_matters": "The compact action space is real, but global coordinate prediction is closed. T036 changes the causal question by recomputing GR/typewell evidence under each candidate path."
     }
   ],
   "concepts": [
@@ -617,9 +626,9 @@
       "signal": "ensemble"
     },
     {
-      "question": "Can legal observations identify the compact residual-manifold coordinates?",
-      "signal": "action coordinates",
-      "falsifier": "T034 stops the current legal representation if every branch remains above 10 RMSE or below multivariate R\u00b2 0.25. Privileged geology below 5.5 with legal failure proves mediation but remains nondeployable."
+      "question": "Can candidate-specific GR evidence select a sub-5 action path?",
+      "signal": "path-conditioned evidence",
+      "falsifier": "T036 stops if the best legal ranker remains above 10 RMSE, retains less than 25% of oracle gain, fails to beat action priors, or survives reversed, shifted, or shuffled evidence controls."
     }
   ],
   "schema_version": 1,
@@ -828,9 +837,19 @@
       "title": "T034 fixed spline coordinate identifiability stop",
       "local_path": "tracking/evidence/T034/RESULT.md",
       "url": ""
+    },
+    {
+      "title": "T035 actual PCA coordinate identifiability hard stop",
+      "local_path": "tracking/evidence/T035/RESULT.md",
+      "url": ""
+    },
+    {
+      "title": "T036 candidate-path-conditioned GR ranking preregistration",
+      "local_path": "tracking/evidence/T036/PRE_REGISTRATION.md",
+      "url": ""
     }
   ],
   "subtitle": "A beginner-first visual guide to the data, geology, target, validation, and idea space.",
   "title": "ROGII Competition Learning Lab",
-  "updated_at": "2026-07-24"
+  "updated_at": "2026-07-25"
 }

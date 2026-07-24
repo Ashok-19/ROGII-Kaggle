@@ -1,0 +1,60 @@
+{
+  "files": [
+    {
+      "bytes": 860,
+      "name": "RESULT.md",
+      "sha256": "b7342246d6589b98ad15708c9f1d10441d0f354b8f4bf820277eeddd58a18d7b"
+    },
+    {
+      "bytes": 4943,
+      "name": "branch_metrics.csv",
+      "sha256": "908e22aa0c85a8284d6d21fd099d5b4736f9eead941a2c86454a1288e0f94b99"
+    },
+    {
+      "bytes": 67303,
+      "name": "context_metrics.csv",
+      "sha256": "16be917271a324b0d6e06dd678c1f6817490d17537e5cc843dc522cbc9273df0"
+    },
+    {
+      "bytes": 745,
+      "name": "edge_cases.json",
+      "sha256": "7dccc8a15af17ec9ca9462b0cac76b3d5e896dbb3db6a2457c6aac6eb5c9b119"
+    },
+    {
+      "bytes": 28719,
+      "name": "group_metrics.csv",
+      "sha256": "c620a81b83f7b2b08c60a2d4a9c85f00800bb0ba9e8c743c73288a25b8302abf"
+    },
+    {
+      "bytes": 16042,
+      "name": "hyperparameters.csv",
+      "sha256": "05d1db729b7c0fe155a85bea203893f03b696c8fde760d94030ae1f730e2a364"
+    },
+    {
+      "bytes": 1061,
+      "name": "implementation_receipt.json",
+      "sha256": "a8fd45cfd6146d4a7e46f3ac657e3367ab3132b846267347cf1abafa2c79fd65"
+    },
+    {
+      "bytes": 3532,
+      "name": "map_metrics.csv",
+      "sha256": "88fddfe93730dfdc0daed1d12fac172499fdf9f1c2dc4d57f1b680e443c3ba20"
+    },
+    {
+      "bytes": 908,
+      "name": "membership_audit.csv",
+      "sha256": "1e4496bd64ca3efe5b88ad3cc3a494613dca3cc63a363883f8733bc381cf5807"
+    },
+    {
+      "bytes": 303911,
+      "name": "selected_well_metrics.csv",
+      "sha256": "65c0edf69e6bdc0c64e5defb69baaa5a607fb41ccbe5c19e0a7bbf82a934a223"
+    },
+    {
+      "bytes": 2781,
+      "name": "summary.json",
+      "sha256": "b7babf60a4ecd81064593edebffd8e693d79de73688d17a9edfcfbb8072fda27"
+    }
+  ],
+  "schema_version": 1
+}

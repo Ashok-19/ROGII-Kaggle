@@ -1,12 +1,12 @@
 {
   "payload": {
-    "evidence_against": "T034 fixed-spline targets are legally underidentified; raw flattening and summaries have weak neighbor enrichment, and scalar privileged geology does not explain the action.",
-    "evidence_for": "T033 proves the actual outer-training PCA rank-8 manifold reaches 2.161329 RMSE, but T034 never modeled those context-specific PCA coordinates. Nonlinear legal models and raw-feature PCA remain untested for that exact target.",
+    "evidence_against": "T035 hard-stops the exact T033 rank-8 target. Best legal raw_pca_ridge reaches 12.267294 RMSE, retains 2.728% of oracle gain, has multivariate coordinate R2 0.0341 and median coordinate Pearson 0.4782, and helps only 61.71% of wells. Nonlinear summary branches regress. Exact independent reproduction passes.",
+    "evidence_for": "T033 proves the outer-training PCA rank-8 manifold itself reaches 2.161329 RMSE, but that capacity is hidden-label only.",
     "hypothesis_id": "H027",
-    "next_test": "Execute frozen T035 only. No further manifold-coordinate model if its hard stop triggers.",
+    "next_test": "Do not retune coordinates, bases, summaries, raw PCA, trees, boosting, MLPs, or privileged scalar geology. Continue only with H028/T036 candidate-path-conditioned evidence.",
     "priority": 1,
     "statement": "The actual cross-fitted T033 PCA rank-8 coordinates are legally identifiable by bounded nonlinear summary and raw-latent models even though fixed spline7 coefficients are not.",
-    "status": "active",
+    "status": "rejected",
     "title": "Legal observations identify the actual compact PCA action coordinates"
   },
   "recorded_at": "2026-07-24T18:28:00Z",

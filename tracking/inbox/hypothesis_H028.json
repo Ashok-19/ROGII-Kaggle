@@ -1,0 +1,14 @@
+{
+  "payload": {
+    "evidence_against": "Direct GR alignment, HMM/DTW paths, global sequence profiles, analog registration, and global action coordinates have all failed legal transfer. Repeated motifs and partial GR coverage may leave candidate likelihood underidentified.",
+    "evidence_for": "T033 pair-32 candidate actions preserve 4.628457 RMSE oracle capacity in 1,520 unique actions. E010 and T023 evaluate well-level or base-path evidence, not features recomputed under each proposed candidate TVT path. Hidden horizontal GR is test-available and candidate TVT changes the typewell reference trace.",
+    "hypothesis_id": "H028",
+    "next_test": "Execute frozen T036 only. Require path-conditioned advantage over action priors and failure of reversed/shifted/shuffled evidence controls.",
+    "priority": 1,
+    "statement": "Candidate-specific hidden-GR/typewell evidence can rank a compact sub-5 action dictionary even though global action coordinates are not legally identifiable.",
+    "status": "active",
+    "title": "Path-conditioned GR evidence identifies high-capacity candidate actions"
+  },
+  "recorded_at": "2026-07-24T19:47:51Z",
+  "type": "hypothesis"
+}

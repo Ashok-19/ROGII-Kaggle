@@ -1,0 +1,27 @@
+{
+  "checks": {
+    "all_oof_predictions_filled": true,
+    "all_profiles_capped": true,
+    "all_profiles_finite": true,
+    "basis_maps_finite": true,
+    "best_legal_eligible": true,
+    "branch_count_11": true,
+    "context_rows_complete": true,
+    "contexts_25": true,
+    "controls_ineligible": true,
+    "coordinate_maps_finite": true,
+    "e011_identity": true,
+    "group_rows_complete": true,
+    "hyperparameter_rows_complete": true,
+    "map_rows_complete": true,
+    "membership_rows_25": true,
+    "oracle_profiles_filled": true,
+    "rank8": true,
+    "same_well_exclusion": true,
+    "stress_systems_complete": true,
+    "t033_rank8_oracle_identity": true,
+    "wells_773": true
+  },
+  "schema_version": 1,
+  "status": "PASS"
+}

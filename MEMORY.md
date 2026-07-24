@@ -38,6 +38,8 @@ Public intelligence last checked: 2026-07-23 23:56 Asia/Kolkata
 - T032 closes H024 negatively despite large oracle gain. Registered analog tails reach 8.674114 RMSE but remove only 14.231% shape SSE. A full-grid shuffled-action control performs better at 8.031442 RMSE and passes all main coverage gates, proving dictionary coverage without causal sequence registration.
 - T033 confirms H025 and supplies the first compact sub-5 capacity breakthrough. Outer-training PCA rank 8 reaches 2.1613289429 RMSE, removes 89.1637% of E011 shape SSE, improves all 773 wells, and keeps every legacy group below 2.327464 RMSE; rank 16 reaches 0.9389753196. Two final-hash runs reproduce exactly and all edge/horizon checks pass. This is hidden-label capacity only; D038 selects T034 legal coordinate identifiability next.
 - T034 closes H026 for fixed spline7 coordinate identification. Every legal branch worsens E011; summary ridge is best at 13.007269 RMSE with multivariate R2 0.219 and 6.03% neighbor enrichment. Privileged scalar formation offsets reach 11.316958, so they are not the missing compact action state. T035 is the final direct test of the actual T033 rank-8 PCA coordinates.
+- T035 closes H027 and all further global compact-manifold coordinate regression. The best legal branch, raw-PCA ridge, reaches 12.2672938069 RMSE, retains only 2.728% of T033 oracle gain, has multivariate coordinate R2 0.0341, and helps 61.71% of wells. All five maps and every legacy group improve, but one legal-covariate cluster and one horizon quintile regress. Privileged geology reaches 10.897200 but worsens shape SSE. Independent recomputation and an exact second run pass.
+- D040 selects T036 as a materially different mechanism: rank the reproduced T033 pair-32 candidate dictionary by GR/typewell evidence recomputed under each proposed path. The dictionary has exactly 1,520 unique nonzero actions plus exact E011 fallback and retains a 4.628457 hidden-label oracle. No further global coordinate, spline, basis, summary, or raw-PCA retuning is allowed.
 
 ## New durable understanding from exact public-source audits
 
@@ -80,7 +82,7 @@ Public intelligence last checked: 2026-07-23 23:56 Asia/Kolkata
 
 ## Exact next action
 
-Execute T035 exactly as preregistered. Fit the actual rank-8 PCA action basis inside every inner/outer training partition and test bounded nonlinear summary, raw-PCA, and combined models. Close the compact-manifold route without further retuning if the hard stop triggers.
+Execute T036 exactly as preregistered. Recompute hidden-horizontal-GR/typewell evidence under every one of the 1,521 split-local candidate paths, select ranking and hard/soft output rules only on inner actual-row RMSE, and require a large advantage over action priors plus failure of reversed/shifted/shuffled evidence controls before any escalation.
 
 ## Open risks
 

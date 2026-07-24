@@ -1,0 +1,18 @@
+{
+  "aggregation": "reconstruct context action profiles and average five maps per well",
+  "config_sha256": "09ac0c5571f320fb217849490372bcdb4c04f3c4b79ec8307bd8ae42dc6da0fc",
+  "controls": "shuffled coordinate targets and sign-flipped selected coordinates",
+  "numpy": "2.4.4",
+  "pandas": "3.0.3",
+  "privileged": "six train-only formation offsets plus masks, ineligible",
+  "python": "3.12.13 (main, Mar  4 2026, 09:23:07) [GCC 11.4.0]",
+  "schema_version": 1,
+  "script_sha256": "cdff3ab05613bd789d4d3c9fa5d1b3e40c781e73801f82e50926f6aad90c1760",
+  "selection": "inner fold=(outer+1)%5 by exact actual-row TVT RMSE",
+  "sklearn": "1.9.0",
+  "stochastic_selection_seed_policy": "one fixed context-and-family seed across each inner hyperparameter grid and its outer refit",
+  "t031_tensor_sha256": "421872a1963bbbe509cfdabcfe9cd9e7fddb86f930ebc6711005cf1634603959",
+  "t033_script_sha256": "88e55c0c7e0f6adb3e4e4cc53896595c625f3d07a67dd494c14879c7764c9657",
+  "target": "partition-local T033 rank-8 actual-row least-squares PCA coordinates",
+  "threads": 2
+}

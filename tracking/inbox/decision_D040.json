@@ -1,0 +1,13 @@
+{
+  "payload": {
+    "decided_at": "2026-07-25",
+    "decision": "Close H027/T035 and all further global compact-manifold coordinate regression. Select H028/T036 as a materially different candidate-path-conditioned GR evidence ranking gate using the reproduced sub-5 T033 pair dictionary.",
+    "decision_id": "D040",
+    "rationale": "T035 directly tests the actual T033 rank-8 coordinates and hard-stops at 12.267294 RMSE with only 2.73% oracle-gain retention despite nonlinear summaries, raw-PCA models, and exact reproduction. E010 and T023 never recompute GR/typewell evidence under every proposed high-capacity path. T033 kmeans pair-32 preserves 4.628457 RMSE oracle capacity in exactly 1,520 unique actions, making exhaustive path-conditioned ranking bounded and genuinely independent.",
+    "revisit_trigger": "No further global coordinate, spline, basis, raw-flattened, or summary architecture search. Continue beyond T036 only if candidate-conditioned evidence reaches the frozen GO or breakthrough contract and defeats all evidence-destruction controls.",
+    "source_ids": "S_T033_VERIFIED_20260724,S_T035_VERIFIED_20260725,E010,T023,H027,T035,H028,T036",
+    "title": "Replace global coordinate prediction with candidate-conditioned evidence ranking"
+  },
+  "recorded_at": "2026-07-24T19:47:51Z",
+  "type": "decision"
+}

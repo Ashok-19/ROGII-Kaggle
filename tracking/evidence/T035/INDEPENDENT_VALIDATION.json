@@ -1,0 +1,130 @@
+{
+  "checks": {
+    "all_required_numeric_finite": true,
+    "best_branch_exact": true,
+    "best_rmse_exact": true,
+    "config_hash_exact": true,
+    "edge_all_pass": true,
+    "gates_exact": true,
+    "key_uniqueness": true,
+    "manifest_all_valid": true,
+    "negative_control_max_exact": true,
+    "pooled_well_rmse_exact": true,
+    "positive_fraction_exact": true,
+    "row_counts": true,
+    "same_well_exclusion": true,
+    "script_hash_exact": true,
+    "stop_exact": true,
+    "t031_hash_exact": true,
+    "t033_hash_exact": true
+  },
+  "failed": [],
+  "legal_ranking": [
+    {
+      "branch": "raw_pca_ridge",
+      "gain_vs_e011": 0.2834624887422823,
+      "median_coordinate_pearson": 0.4782475471049848,
+      "multivariate_coordinate_r2": 0.0341332234284987,
+      "positive_well_fraction": 0.6170763260025873,
+      "rmse": 12.267293806947391
+    },
+    {
+      "branch": "raw_pca_extra_trees",
+      "gain_vs_e011": 0.1396687377905312,
+      "median_coordinate_pearson": 0.2450000512141116,
+      "multivariate_coordinate_r2": 0.0161827773041748,
+      "positive_well_fraction": 0.5899094437257438,
+      "rmse": 12.411087557899142
+    },
+    {
+      "branch": "mean_coordinates",
+      "gain_vs_e011": -0.0094919339037513,
+      "median_coordinate_pearson": -0.0123343546965228,
+      "multivariate_coordinate_r2": -3.216913109249653e-05,
+      "positive_well_fraction": 0.5071151358344114,
+      "rmse": 12.560248229593425
+    },
+    {
+      "branch": "summary_mlp",
+      "gain_vs_e011": -0.02666046500409,
+      "median_coordinate_pearson": -0.0109361756114782,
+      "multivariate_coordinate_r2": -0.0032184765147471,
+      "positive_well_fraction": 0.4553686934023286,
+      "rmse": 12.577416760693763
+    },
+    {
+      "branch": "summary_plus_raw_pca_ridge",
+      "gain_vs_e011": -0.0607468201993803,
+      "median_coordinate_pearson": 0.4075066891889407,
+      "multivariate_coordinate_r2": -0.0185316422228154,
+      "positive_well_fraction": 0.5433376455368694,
+      "rmse": 12.611503115889054
+    },
+    {
+      "branch": "summary_ridge",
+      "gain_vs_e011": -0.1240471078410045,
+      "median_coordinate_pearson": 0.0065908658713086,
+      "multivariate_coordinate_r2": -0.0202826346991424,
+      "positive_well_fraction": 0.4100905562742561,
+      "rmse": 12.674803403530678
+    },
+    {
+      "branch": "summary_extra_trees",
+      "gain_vs_e011": -0.1439174694971363,
+      "median_coordinate_pearson": 0.0048978566651598,
+      "multivariate_coordinate_r2": -0.0314195769248801,
+      "positive_well_fraction": 0.4320827943078913,
+      "rmse": 12.69467376518681
+    },
+    {
+      "branch": "summary_hist_gradient_boosting",
+      "gain_vs_e011": -0.4549070327224402,
+      "median_coordinate_pearson": 0.0260992792733743,
+      "multivariate_coordinate_r2": -0.1292564503333602,
+      "positive_well_fraction": 0.371280724450194,
+      "rmse": 13.005663328412114
+    }
+  ],
+  "manifest_checks": {
+    "RESULT.md": true,
+    "branch_metrics.csv": true,
+    "context_metrics.csv": true,
+    "edge_cases.json": true,
+    "group_metrics.csv": true,
+    "hyperparameters.csv": true,
+    "implementation_receipt.json": true,
+    "map_metrics.csv": true,
+    "membership_audit.csv": true,
+    "selected_well_metrics.csv": true,
+    "summary.json": true
+  },
+  "recomputed": {
+    "best_legal_branch": "raw_pca_ridge",
+    "best_rmse": 12.267293806947391,
+    "gates": {
+      "maximum_best_legal_tvt_rmse": false,
+      "minimum_median_coordinate_pearson": false,
+      "minimum_multivariate_coordinate_r2": false,
+      "minimum_oracle_gain_retention": false,
+      "minimum_positive_well_fraction": false,
+      "negative_controls_below_gain_cap": true,
+      "positive_every_legacy_group": true
+    },
+    "minimum_legacy_gain": 0.134134646388393,
+    "negative_control_gain_max": -0.0245103112828779,
+    "pooled_well_rmse": 12.267293806947391,
+    "positive_well_fraction": 0.6170763260025873,
+    "stop": true
+  },
+  "row_counts": {
+    "branch": 11,
+    "context": 250,
+    "group": 275,
+    "hyper": 250,
+    "map": 55,
+    "membership": 25,
+    "selected_wells": 773
+  },
+  "schema_version": 1,
+  "status": "PASS"
+}
