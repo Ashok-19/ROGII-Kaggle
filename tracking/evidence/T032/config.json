@@ -1,0 +1,86 @@
+{
+  "compute": {
+    "materialized_candidate_cap": 1000,
+    "maximum_cpu_hours": 2,
+    "maximum_rss_gb": 4,
+    "streaming_required": true
+  },
+  "controls": [
+    "shuffled library well IDs",
+    "reversed horizontal GR",
+    "reversed typewell GR",
+    "same-well exclusion assertion",
+    "duplicate-well assertion",
+    "distance tie determinism",
+    "exact E011 zero-action fallback"
+  ],
+  "coverage_outputs": [
+    "best hidden-label analog-tail RMSE",
+    "shape SSE reduction versus E011",
+    "fraction of wells with positive oracle neighbor action",
+    "neighbor-family diversity",
+    "distance/margin distributions",
+    "spatial/typewell/horizon slices"
+  ],
+  "deployment": {
+    "kaggle_execution_authorized": false,
+    "package_authorized": false,
+    "submission_authorized": false
+  },
+  "go_gate": {
+    "minimum_oracle_rmse_gain": 1.0,
+    "minimum_positive_well_fraction": 0.35,
+    "minimum_shape_sse_reduction_fraction": 0.15,
+    "require_nonnegative_every_legacy_spatial_group": true,
+    "require_nonnegative_every_legacy_typewell_group": true
+  },
+  "grid": {
+    "action_beta": [
+      0.25,
+      0.5,
+      0.75
+    ],
+    "geometry_weights": [
+      0.0,
+      0.25,
+      0.5
+    ],
+    "neighbors": [
+      3,
+      5,
+      9
+    ],
+    "typewell_weights": [
+      0.5,
+      1.0,
+      2.0
+    ]
+  },
+  "hypothesis_id": "H024",
+  "if_passed": "write a separate preregistration for legal confidence separation and uncertainty fallback; no selector inside T032",
+  "inputs": {
+    "baseline": "E011 exact OOF",
+    "fold_files": [
+      "folds/v1.json",
+      "folds/v2.json",
+      "folds/v3.json",
+      "folds/v4.json",
+      "folds/v5.json"
+    ],
+    "horizontal_train": "data/train/*__horizontal_well.csv",
+    "typewell_train": "data/train/*__typewell.csv"
+  },
+  "outer_library_rule": "For every held-out well, the analog library contains outer-training wells only; same-well and duplicate-ID retrieval are prohibited.",
+  "registration": {
+    "coordinate": "normalized visible-prefix U=TVT+Z plus horizontal/typewell GR",
+    "dtw_radius_fraction": 0.08,
+    "missingness": "mask-aware distance; no imputed target TVT",
+    "normalization": "outer-training robust fold-only"
+  },
+  "schema_version": 1,
+  "source_commit": "85c650008650c997313a74405cb59ea85ed38bad",
+  "stage": "oracle_coverage_only_no_legal_selector",
+  "stop_gate": "If any coverage gate fails, close analog-tail retrieval before implementing a legal selector or confidence model.",
+  "task_id": "T032",
+  "title": "Registered analog-tail retrieval oracle-coverage gate"
+}

@@ -1,0 +1,13 @@
+{
+  "payload": {
+    "decided_at": "2026-07-24",
+    "decision": "Reject H022/T030 without promotion. Select H023/T031 as the immediate bounded state-identifiability gate and queue H024/T032 as an independent analog-retrieval coverage gate.",
+    "decision_id": "D037",
+    "rationale": "The independent audit finds no multi-point implementation defect and closes nearby blend/routing/objective/view spaces. The largest unresolved opportunity is the one-dimensional E003 hidden formation displacement, but legal identifiability is unproven. T031 tests that question before joint TVT modeling; T032 tests an independent retrieval mechanism before selector work.",
+    "revisit_trigger": "Do not start joint state+spline correction unless every T031 state gate passes. Do not build a retrieval selector unless every T032 oracle-coverage gate passes.",
+    "source_ids": "S_INDEPENDENT_AUDIT_20260724,S_T030_SEALED_20260724,H022,T030,H023,T031,H024,T032",
+    "title": "Close T030 and select raw-sequence state identifiability"
+  },
+  "recorded_at": "2026-07-24T11:06:08Z",
+  "type": "decision"
+}

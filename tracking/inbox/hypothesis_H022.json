@@ -1,14 +1,14 @@
 {
-  "type": "hypothesis",
-  "recorded_at": "2026-07-23T18:49:28Z",
   "payload": {
-    "hypothesis_id": "H022",
-    "title": "Complementary pseudo-coefficient and datum action ensemble",
-    "statement": "A context-local ensemble of the T025 pseudo-coefficient action and the nearly uncorrelated T016 nested datum action can improve E011 and T025 while repairing each parent\u2019s domain failures, without routing or new inference features.",
-    "status": "active",
-    "priority": 1,
+    "evidence_against": "T030 outer-isolated confirmation has no substantive passer. The best fixed pair reaches 12.3689137951 but fails p90, every-spatial-group, and every-typewell-group promotion gates.",
     "evidence_for": "T029 finds row-centered correlation 0.018136 and a full-data 0.40/0.60 diagnostic at 12.377388 with positive direct OOF gain in all ten domains.",
-    "evidence_against": "The diagnostic uses full-label weight selection and parent OOF actions whose context isolation differs. Typewell group 4 margin is only 0.001906 for the best pooled all-domain point.",
-    "next_test": "Execute the committed T030 outer-isolated confirmation without altering branches, grids, controls, aggregation, slices, or gates after the first metric."
-  }
+    "hypothesis_id": "H022",
+    "next_test": "Closed by D037. Do not retune blend weights, scales, caps, routing, or domains.",
+    "priority": 1,
+    "statement": "A context-local ensemble of the T025 pseudo-coefficient action and the nearly uncorrelated T016 nested datum action can improve E011 and T025 while repairing each parent’s domain failures, without routing or new inference features.",
+    "status": "rejected",
+    "title": "Complementary pseudo-coefficient and datum action ensemble"
+  },
+  "recorded_at": "2026-07-23T18:49:28Z",
+  "type": "hypothesis"
 }

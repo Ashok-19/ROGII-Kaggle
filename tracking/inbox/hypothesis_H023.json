@@ -1,0 +1,14 @@
+{
+  "payload": {
+    "evidence_against": "Existing 142 summaries and coordinate-only surface reconstruction barely predict the hidden displacement. Only 773 wells are available and GR is partially missing.",
+    "evidence_for": "Six hidden-offset components are nearly collinear (PC1 99.5626%) and privileged displacement features explain multi-RMSE E003 headroom. All required raw inference channels exist at test time.",
+    "hypothesis_id": "H023",
+    "next_test": "Execute the frozen T031 auxiliary-state gate only; no TVT model until GO.",
+    "priority": 1,
+    "statement": "Boundary-aware horizontal and typewell sequences can predict the one-dimensional E003 hidden formation displacement strongly enough to unlock transferable spline-coefficient learning.",
+    "status": "active",
+    "title": "Raw legal sequences identify latent formation displacement"
+  },
+  "recorded_at": "2026-07-24T11:06:08Z",
+  "type": "hypothesis"
+}

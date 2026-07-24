@@ -1,0 +1,67 @@
+{
+  "files": [
+    {
+      "bytes": 2117,
+      "name": "authorization_gates.csv",
+      "sha256": "00f8bc1d77064bb5c6c5b9d19160658d59a7f755927590f15b7f7a7c7faab75e"
+    },
+    {
+      "bytes": 2719,
+      "name": "candidate_metrics.csv",
+      "sha256": "3433a741528f38e068b2949f709e11663685535d30889dcb592fbd0dcf4aa496"
+    },
+    {
+      "bytes": 61938,
+      "name": "context_metrics.csv",
+      "sha256": "043f7dd980ef896bf7868fdceeeceffc8d706df0efad1abe046d405e36e4a60e"
+    },
+    {
+      "bytes": 909,
+      "name": "edge_cases.json",
+      "sha256": "b6c6bc6357aca4a474903ddd2b852a5018f5028045a4552f32c81c75131bd6e3"
+    },
+    {
+      "bytes": 127413,
+      "name": "isolation_audit.csv",
+      "sha256": "e4ce828d3b090803e7bdb004c76c0418b6a6400639082a74f8a064f85822e7a4"
+    },
+    {
+      "bytes": 9448,
+      "name": "map_metrics.csv",
+      "sha256": "d9ee9c99f0a6c6f100e950ddf5c9bcb28597da390ef2678697f2190398e3fa9b"
+    },
+    {
+      "bytes": 1006,
+      "name": "negative_control_metrics.csv",
+      "sha256": "af9177a77ff29630c5b0e619f98900818b0ab5c47af28c70a70efec736e1602b"
+    },
+    {
+      "bytes": 57124,
+      "name": "selected_weights.csv",
+      "sha256": "9afe24e43cffa8f51171d6d3c40b28d4738ebac16172c6d4a1a7a88473d57b45"
+    },
+    {
+      "bytes": 183984,
+      "name": "selected_well_metrics.csv",
+      "sha256": "4d1de9d0dbe47f11d1cec3e93a4f5d83e0ff1605ff5a5103e9eb46c863d7293b"
+    },
+    {
+      "bytes": 17267,
+      "name": "slice_metrics.csv",
+      "sha256": "5d881ebc9d648a6e02250799131fc66b0af288d0db6770290fbb743fd94ee1df"
+    },
+    {
+      "bytes": 24093,
+      "name": "stress_metrics.csv",
+      "sha256": "6007dd69f828ff5556fc9f52ce66092bed20b9f815df330d548150db7718bae8"
+    },
+    {
+      "bytes": 10470,
+      "name": "summary.json",
+      "sha256": "e22186ea34da1e159669a477268786f524a11bfd4ea850d9bccf7b57d217c5e2"
+    }
+  ],
+  "implementation_commit": "85c650008650c997313a74405cb59ea85ed38bad",
+  "schema_version": 1,
+  "task_id": "T030"
+}

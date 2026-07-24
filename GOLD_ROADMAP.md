@@ -1,6 +1,6 @@
 # ROGII Gold Medal Roadmap
 
-Updated: 2026-07-23
+Updated: 2026-07-24
 Final deadline: 2026-08-05 23:59 UTC / 2026-08-06 05:29 Asia/Kolkata  
 Time remaining at update: 13 days
 
@@ -382,7 +382,9 @@ These defaults may be revised only through a recorded decision before seeing the
 21. **H020/T027 — Target-preserving causal prefix-view learning — completed and rejected 2026-07-23.** Every augmented-view candidate worsens E011; the best eligible branch loses 0.041105 with 0/5 maps. The positive original-only comparator gains 0.091923 but fails spatial/typewell transfer. D033 closes view augmentation.
 22. **H021/T028 — Domain-robust original-view coefficient learning — completed and rejected before implementation 2026-07-24.** No common positive placement exists; domain-oracle gains of 0.039789 spatial and 0.049402 typewell miss the 0.05 worth floor. D034 closes objective retuning.
 23. **T029 — Select the next independent legal mechanism — completed 2026-07-24.** T025+T016 passes the frozen covariance worth gate; T027 receives zero weight. D035 selects formal outer-isolated confirmation.
-24. **H022/T030 — Complementary pseudo-coefficient and datum ensemble — queued next.** Regenerate/select parent actions and simplex weights inside every repeated and spatial/typewell context; require all tails, controls, and exact reproduction.
+24. **H022/T030 — Complementary pseudo-coefficient and datum ensemble — completed and rejected 2026-07-24.** The best fixed pair reaches 12.3689137951 with 5/5 maps and 19/25 cells, but fails p90 plus spatial/typewell transfer and has no substantive passer. D037 closes blend/routing retuning.
+25. **H023/T031 — Raw-sequence latent formation-displacement identifiability — selected next.** Run only the frozen auxiliary-state gate. No joint TVT sequence model unless Pearson, Spearman, MAE, transfer, comparator, and destructive-control gates all pass.
+26. **H024/T032 — Registered analog-tail retrieval coverage — queued independent branch.** Measure outer-training-only oracle coverage first; no selector unless gain, shape-SSE, positive-well, and group gates pass.
 
 ## Explicitly rejected behavior
 
@@ -409,4 +411,4 @@ Foundation is complete only when:
 - legacy roadmap is preserved;
 - no training run is falsely presented as completed.
 
-Foundation, E010 coverage measurement, E011 statistical/deployment verification, E012 specialist rejection, the July 23 intelligence refreshes, T022 uncertainty routing, T023 residual sequence-state screening, T016 wide-datum placement, T024 mechanism selection, T025 coefficient transport, T026 mask-task screening, T027 target-preserving view screening, and T028 objective screening are complete. E011 remains deployment primary. D023, D025, D027, D029, D031, D033, and D034 close the tested routing, sequence-profile, wide-datum, four-cut transport, mask-local target, feature-view, and domain-objective spaces. The current exact next action is preregistration and complete outer-isolated execution of T030, the complementary T025 pseudo-coefficient plus T016 datum ensemble.
+Foundation, E010 coverage measurement, E011 statistical/deployment verification, E012 specialist rejection, the July 23 intelligence refreshes, T022 uncertainty routing, T023 residual sequence-state screening, T016 wide-datum placement, T024 mechanism selection, T025 coefficient transport, T026 mask-task screening, T027 target-preserving view screening, and T028 objective screening are complete. E011 remains deployment primary. D023, D025, D027, D029, D031, D033, and D034 close the tested routing, sequence-profile, wide-datum, four-cut transport, mask-local target, feature-view, and domain-objective spaces. T030 is closed negatively. The current exact next action is T031's bounded state-identifiability gate; T032 is the independent queued coverage branch. No joint TVT model, selector, package, Kaggle run, or submission is authorized by this decision.

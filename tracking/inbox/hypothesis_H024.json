@@ -1,0 +1,14 @@
+{
+  "payload": {
+    "evidence_against": "E010 already proves that coverage does not imply legal selection; repeated motifs, GR missingness, and domain shift may make retrieval underidentified.",
+    "evidence_for": "DTW/retrieval is materially independent of the closed summary/view/objective families and public source audits expose rare unique candidate coverage.",
+    "hypothesis_id": "H024",
+    "next_test": "Run T032 oracle coverage only; no selector unless all coverage gates pass.",
+    "priority": 2,
+    "statement": "Outer-training-only sequence registration can retrieve analog tail actions that cover E011 shape error independently of summary coefficient models.",
+    "status": "queued",
+    "title": "Registered analog tails provide independent nonlinear coverage"
+  },
+  "recorded_at": "2026-07-24T11:06:08Z",
+  "type": "hypothesis"
+}

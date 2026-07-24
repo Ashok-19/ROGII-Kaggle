@@ -1,0 +1,25 @@
+{
+  "closed_at": "2026-07-24T16:36:08+05:30",
+  "controls_pass": true,
+  "decision": "close_h022_without_promotion",
+  "deployment": {
+    "kaggle_executed": false,
+    "package_built": false,
+    "submission_created": false,
+    "submission_made": false
+  },
+  "hypothesis_id": "H022",
+  "implementation_commit": "85c650008650c997313a74405cb59ea85ed38bad",
+  "independent_reproduction": {
+    "performed": false,
+    "reason": "The preregistered reproduction gate applies only after all substantive promotion gates pass. No candidate passes p90 plus spatial and typewell transfer, so reproduction cannot change the rejection decision.",
+    "required": false
+  },
+  "reported_candidate": "fixed_pair_box_046_090",
+  "reported_rmse": 12.368913795097946,
+  "schema_version": 1,
+  "source_run": "scratch/agents/t030-complementary-ensemble-20260724/main",
+  "status": "confirmation_reject",
+  "substantive_passers": [],
+  "task_id": "T030"
+}

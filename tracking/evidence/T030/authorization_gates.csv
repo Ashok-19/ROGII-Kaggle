@@ -1,0 +1,11 @@
+candidate,minimum_spatial_gain,minimum_typewell_gain,minimum_special_gain,minimum_horizon_gain,nonzero_both_parent_contexts,gate_gain,gate_incremental_t025,gate_maps,gate_cells,gate_p90,gate_worst5,gate_spatial,gate_typewell,gate_special,gate_horizon,gate_nondegenerate,gate_controls,gate_parents,gate_reproduction
+t025_fixed_050,-0.39751837642484844,-0.6915803908388245,0.036600227082715264,0.036600227082715264,0,False,False,True,False,False,True,False,False,True,True,False,True,True,False
+t016_fixed_100,-0.09101634726864383,-0.0972045259714136,0.05201861063916979,-0.017965007189664206,0,False,False,True,True,False,True,False,False,True,False,False,True,True,False
+fixed_all_domain_040_060,-0.1882152295355315,-0.35783098432001026,0.11553550015880099,0.1195814969082658,25,True,True,True,True,False,True,False,False,True,True,True,True,True,False
+fixed_minimax_025_045,-0.06338471700915704,-0.14476562100372625,0.10815148768347704,0.10815148768347704,25,False,False,True,True,True,True,False,False,True,True,True,True,True,False
+fixed_pair_box_046_090,-0.23122481401841277,-0.4390362703806723,0.10709801947887243,0.0992556561830984,25,True,True,True,True,False,True,False,False,True,True,True,True,True,False
+fixed_three_pooled_040_005_055,-0.23547438527087827,-0.4195521091919918,0.11314451713278117,0.11314451713278117,25,True,True,True,True,False,True,False,False,True,True,True,True,True,False
+nested_simplex_pooled,-0.12941669237969045,-0.2638479622694234,0.08563284943411098,0.061252585239154556,25,False,False,True,True,True,True,False,False,True,True,True,True,True,False
+nested_box_pooled,-0.1667398338143986,-0.32144060669672747,0.08375729361499751,0.05761741730075798,24,False,False,True,True,True,True,False,False,True,True,True,True,True,False
+nested_simplex_minimax,0.0,-0.010562537152706497,0.02983410306914891,0.02983410306914891,18,False,False,True,True,True,True,False,False,True,True,True,True,True,False
+nested_simplex_domain_safe,-0.12941669237969045,-0.2638479622694234,0.05661139050284092,0.04870526894237237,20,False,False,False,True,True,True,False,False,True,True,True,True,True,False

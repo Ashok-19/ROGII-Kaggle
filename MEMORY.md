@@ -1,6 +1,6 @@
 # ROGII Project Memory
 
-Last updated: 2026-07-23
+Last updated: 2026-07-24
 Public intelligence last checked: 2026-07-23 23:56 Asia/Kolkata
 
 ## Mission state
@@ -32,6 +32,8 @@ Public intelligence last checked: 2026-07-23 23:56 Asia/Kolkata
 - T027 preserves one original-boundary target across ten causal feature views and completes 21 branches, four placements, 35 contexts, 735 isolation audits, four controls, and 22 edge groups. Every augmented-view candidate worsens E011; the best eligible branch loses 0.041105 RMSE with 0/5 maps. The original-view-only ridge gains 0.091923 and improves every global slice, p90, and worst-5% share, but regresses spatial group 0 by 0.284090 and three typewell groups, including group 4 by 0.352838. Reproduction is exact. D033 closes feature-view augmentation and preserves only an objective-level original-view question.
 - T028 closes that objective-level question before implementation. Reoptimizing the global placement adds only 0.000644 RMSE; no nonzero weight improves all ten domains because spatial group 3 and typewell group 4 are adverse at zero. Illegal domain-specific placement adds 0.039789 spatial and 0.049402 typewell RMSE beyond the current candidate, below the frozen 0.05 worth floor. Per-well oracle gain is 0.526402 but requires hidden routing. The corrected audit reproduces byte-for-byte. D034 prohibits objective retuning.
 - T029 audits three verified positive legal actions. T025 and T016 directions are nearly orthogonal at row-centered correlation 0.018136. The frozen 0.40/0.60 diagnostic reaches 12.377388, gains 0.047540 versus T025, and is positive in all ten direct OOF domains; T027 receives zero selected weight. D035 selects H022/T030 for outer-isolated confirmation only.
+- T030 completes the outer-isolated confirmation and closes H022 negatively. `fixed_pair_box_046_090` reaches 12.3689137951, gains 0.1818425 versus E011 and 0.0560138 versus T025, wins 5/5 maps and 19/25 cells, and passes controls/parents/isolation/horizon/special/worst-5% gates. It fails p90 and every-spatial/every-typewell transfer; no substantive passer exists. D037 rejects promotion and prohibits blend/routing retuning.
+- The independent 49-file gold-medal audit was fully owner-side verified: all declared hashes match, all report editions/tables/scripts/figures were read, and no multi-point implementation defect was found. The six E003 hidden surface displacement targets form one latent target (PC1 99.5626%). Raw legal P1 channels exist across all 773 wells; current evaluator groups are X and typewell-GR quantile proxies rather than geology. D037 selects T031 state identifiability and queues T032 retrieval coverage.
 
 ## New durable understanding from exact public-source audits
 
@@ -74,7 +76,7 @@ Public intelligence last checked: 2026-07-23 23:56 Asia/Kolkata
 
 ## Exact next action
 
-Preregister and complete T030 as a fully outer-isolated confirmation of the complementary T025 pseudo-coefficient plus T016 datum ensemble. Regenerate/select both parents and blend weights inside every repeated and spatial/typewell context; include fixed, nested, minimax, ablation, shuffle/sign controls, tails, slices, and exact E011 fallback.
+Execute T031 exactly as preregistered: build the score-blind raw sequence tensors and target-free stress groups, run the summary/raw-binned/state-only branches and destructive controls, and stop without any TVT correction unless every state-identifiability GO gate passes. T032 remains the independent queued oracle-coverage branch.
 
 ## Open risks
 

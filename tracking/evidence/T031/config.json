@@ -1,0 +1,223 @@
+{
+  "branches": [
+    {
+      "family": "constant",
+      "name": "mean_target",
+      "role": "null baseline"
+    },
+    {
+      "alphas": [
+        10.0,
+        100.0,
+        1000.0
+      ],
+      "family": "ridge",
+      "features": "frozen 142 E011 legal summaries",
+      "name": "summary_ridge",
+      "selection": "inner training folds only"
+    },
+    {
+      "alphas": [
+        10.0,
+        100.0,
+        1000.0
+      ],
+      "family": "ridge",
+      "features": "frozen 256-bin horizontal plus 192-bin typewell tensor flattened after fold-only scaling",
+      "name": "raw_binned_ridge",
+      "selection": "inner training folds only"
+    },
+    {
+      "channels": 64,
+      "dilations": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        32
+      ],
+      "dropout": 0.1,
+      "family": "TCN",
+      "kernel": 5,
+      "name": "state_tcn",
+      "pooling": "masked mean plus masked attention",
+      "residual_stacks": 2,
+      "typewell_encoder": "shared-width three-layer dilated encoder, pooled then concatenated"
+    },
+    {
+      "family": "TCN ablation",
+      "name": "state_tcn_no_typewell",
+      "parent": "state_tcn"
+    },
+    {
+      "family": "TCN ablation",
+      "name": "state_tcn_no_hidden_gr",
+      "parent": "state_tcn"
+    },
+    {
+      "family": "ridge control",
+      "features": "absolute and relative MD/X/Y/Z only; no GR, typewell, or visible TVT",
+      "name": "coordinate_only_control"
+    }
+  ],
+  "compute": {
+    "maximum_rss_gb": 4,
+    "score_blind_tensor_build_minutes": 15,
+    "state_gate_gpu_hours": 3,
+    "threads": 2
+  },
+  "deployment": {
+    "kaggle_execution_authorized": false,
+    "package_authorized": false,
+    "submission_authorized": false
+  },
+  "expected_wells": 773,
+  "go_gate": {
+    "maximum_mae_ft": 12.0,
+    "maximum_permuted_abs_pearson": 0.1,
+    "minimum_control_gain_destruction_fraction": 0.8,
+    "minimum_every_legacy_group_pearson": 0.3,
+    "minimum_every_new_group_pearson": 0.2,
+    "minimum_mae_advantage_over_summary_ridge_ft": 2.0,
+    "minimum_pearson": 0.55,
+    "minimum_pearson_advantage_over_coordinate_control": 0.15,
+    "minimum_pearson_advantage_over_summary_ridge": 0.15,
+    "minimum_spearman": 0.5
+  },
+  "hypothesis_id": "H023",
+  "if_passed": "write a new T033 preregistration for joint state+spline prediction; no automatic implementation",
+  "inputs": {
+    "e003_feature_table": "experiments/E003/results/legal_features.csv",
+    "e011_compact": "artifacts/E011/compact_stats_v1.npz",
+    "fold_files": [
+      "folds/v1.json",
+      "folds/v2.json",
+      "folds/v3.json",
+      "folds/v4.json",
+      "folds/v5.json"
+    ],
+    "horizontal_train": "data/train/*__horizontal_well.csv",
+    "typewell_train": "data/train/*__typewell.csv"
+  },
+  "legal_inputs": {
+    "horizontal": [
+      "MD",
+      "X",
+      "Y",
+      "Z",
+      "GR",
+      "TVT_input",
+      "TVT_input finite mask"
+    ],
+    "post_boundary": "MD/X/Y/Z/GR and missingness are legal; TVT is forbidden",
+    "primary_geometry": "boundary-centered and scale-normalized; absolute coordinates excluded from primary branches",
+    "typewell": [
+      "TVT",
+      "GR"
+    ]
+  },
+  "negative_controls": [
+    "outer-training target permutation",
+    "reverse typewell sequence",
+    "circularly shift horizontal GR",
+    "remove visible TVT",
+    "replace post-boundary covariates by matched noise",
+    "duplicate pseudo rows without reweighting",
+    "coordinate-only primary-match control"
+  ],
+  "prohibited": [
+    "hidden TVT",
+    "formation-surface values as model inputs",
+    "Geology",
+    "same-well target lookup",
+    "test/train identity mapping",
+    "full-data target scaling or feature selection",
+    "public leaderboard values",
+    "domain labels as inference features",
+    "joint TVT correction before the state gate passes"
+  ],
+  "research_only_zone": "best legal raw-sequence branch Pearson 0.35–0.549 or MAE 12.001–16.0; report but do not start joint correction",
+  "schema_version": 1,
+  "sequence_grid": {
+    "horizontal_bins": 256,
+    "interpolation": "linear for finite values; separate missingness masks; no interpolation across target TVT boundary",
+    "post_boundary_covariate_bins": 160,
+    "typewell_bins": 192,
+    "visible_prefix_bins": 96
+  },
+  "source_commit": "85c650008650c997313a74405cb59ea85ed38bad",
+  "stage": "auxiliary_state_gate_only_no_tvt_promotion",
+  "stop_gate": {
+    "action": "close compact raw-sequence state recovery; do not tune width, depth, seeds, or joint TVT model",
+    "maximum_pearson_for_hard_stop": 0.35,
+    "minimum_mae_ft_for_hard_stop": 16.0
+  },
+  "target": {
+    "columns": [
+      "ancc_hidden_offset_change_to_z",
+      "astnl_hidden_offset_change_to_z",
+      "astnu_hidden_offset_change_to_z",
+      "buda_hidden_offset_change_to_z",
+      "egfdl_hidden_offset_change_to_z",
+      "egfdu_hidden_offset_change_to_z"
+    ],
+    "construction": "per-well finite-value arithmetic mean of the six training-only surface offset changes; minimum five finite components",
+    "name": "common_hidden_formation_displacement_ft",
+    "role": "training auxiliary target and held-out validation label only; never an inference feature",
+    "sha256_float64_well_order": "aa53407b24d0befc8794b44a633844f9194c4d260a1637dd487ea7d8ade0ba82"
+  },
+  "task_id": "T031",
+  "title": "Raw-sequence latent formation-displacement identifiability gate",
+  "training": {
+    "batch_size": 32,
+    "early_stop_patience": 10,
+    "learning_rate": 0.0005,
+    "maximum_epochs": 80,
+    "optimizer": "AdamW",
+    "seed": 1907,
+    "selection_metric": "inner validation MAE",
+    "weight_decay": 0.001
+  },
+  "validation": {
+    "legacy_stress": [
+      "5 leave-X-quintile-out",
+      "5 leave-typewell-GR-mean-quintile-out"
+    ],
+    "metrics": [
+      "Pearson",
+      "Spearman",
+      "MAE_ft",
+      "RMSE_ft",
+      "per-group Pearson and MAE",
+      "seed/hash reproducibility"
+    ],
+    "new_target_free_stress": {
+      "legal_covariate_kmeans": {
+        "features": [
+          "hidden_fraction",
+          "hidden_z_delta",
+          "hidden_azimuth_sin",
+          "hidden_azimuth_cos",
+          "whole_gr_mean",
+          "whole_gr_missing_fraction",
+          "typewell_gr_mean",
+          "typewell_gr_std"
+        ],
+        "groups": 5,
+        "n_init": 32,
+        "random_state": 31032
+      },
+      "spatial_2d_kmeans": {
+        "features": [
+          "spatial_x_mid",
+          "spatial_y_mid"
+        ],
+        "groups": 5,
+        "n_init": 32,
+        "random_state": 31031
+      }
+    },
+    "repeated_contexts": 25
+  }
+}

@@ -1,747 +1,775 @@
 {
-  "schema_version": 1,
-  "updated_at": "2026-07-23",
-  "title": "ROGII Competition Learning Lab",
-  "subtitle": "A beginner-first visual guide to the data, geology, target, validation, and idea space.",
   "beginner_path": [
     {
       "step": 1,
-      "title": "Follow the drilled path",
-      "text": "Each CSV is one horizontal well. MD moves forward along the borehole while X, Y, and Z describe where the drill bit is in space."
+      "text": "Each CSV is one horizontal well. MD moves forward along the borehole while X, Y, and Z describe where the drill bit is in space.",
+      "title": "Follow the drilled path"
     },
     {
       "step": 2,
-      "title": "Use the visible prefix",
-      "text": "TVT_input is known only at the beginning of the well. It becomes blank at one boundary and stays blank through the hidden suffix."
+      "text": "TVT_input is known only at the beginning of the well. It becomes blank at one boundary and stays blank through the hidden suffix.",
+      "title": "Use the visible prefix"
     },
     {
       "step": 3,
-      "title": "Read geological clues",
-      "text": "Gamma ray, the typewell reference, and trajectory geometry are available clues at test time. Named formation surfaces appear only in training and may be used for understanding, not final inference."
+      "text": "Gamma ray, the typewell reference, and trajectory geometry are available clues at test time. Named formation surfaces appear only in training and may be used for understanding, not final inference.",
+      "title": "Read geological clues"
     },
     {
       "step": 4,
-      "title": "Predict every hidden TVT",
-      "text": "The final notebook must output one TVT value for each hidden row, in the exact sample-submission order."
+      "text": "The final notebook must output one TVT value for each hidden row, in the exact sample-submission order.",
+      "title": "Predict every hidden TVT"
     },
     {
       "step": 5,
-      "title": "Protect against expensive wells",
-      "text": "The metric pools squared error across rows. A few badly shifted wells can dominate the total score."
+      "text": "The metric pools squared error across rows. A few badly shifted wells can dominate the total score.",
+      "title": "Protect against expensive wells"
     }
   ],
-  "feature_groups": [
+  "breakthroughs": [
     {
-      "group": "Well geometry",
-      "purpose": "Where the drill bit is and how it moves.",
-      "features": [
-        {
-          "name": "MD",
-          "plain_name": "Measured depth",
-          "meaning": "Distance travelled along the curved borehole, not straight-down depth.",
-          "use": "Provides row order, distance since the prediction boundary, segment length, and local trajectory scale.",
-          "watch_out": "A one-foot MD change does not imply a one-foot vertical change."
-        },
-        {
-          "name": "X / Y",
-          "plain_name": "Horizontal coordinates",
-          "meaning": "Map position of the well path.",
-          "use": "Can describe direction, neighbouring wells, and broad spatial context.",
-          "watch_out": "Spatial similarity must pass leave-spatial-out validation before it is trusted."
-        },
-        {
-          "name": "Z",
-          "plain_name": "Vertical coordinate",
-          "meaning": "Vertical position in the file's coordinate convention; values are commonly negative.",
-          "use": "Explains part of the high-frequency movement in TVT and helps form structural transforms such as U = TVT + Z.",
-          "watch_out": "Z and TVT are different coordinates. Treating them as interchangeable produces large errors."
-        }
-      ]
+      "date": "2026-07-18",
+      "evidence": "local_verified",
+      "id": "B001",
+      "summary": "E001 reproduced the last-known-TVT baseline at 15.9098528707 RMSE over 3,783,989 hidden rows and froze five deterministic whole-well fold maps.",
+      "title": "Validation substrate frozen",
+      "visual": "error_stack",
+      "why_it_matters": "Every later idea can now be judged with the same metric, folds, tail diagnostics, and controls."
     },
     {
-      "group": "Target and visibility",
-      "purpose": "What is known and what must be predicted.",
-      "features": [
-        {
-          "name": "TVT",
-          "plain_name": "Target geological-position coordinate",
-          "meaning": "The value scored by Kaggle. In this dataset it behaves like a geological interpretation coordinate, not simply physical vertical depth or layer thickness.",
-          "use": "Training truth and the final prediction target.",
-          "watch_out": "The name is easy to interpret too literally. Always verify equations against the actual sign and scale in the data."
-        },
-        {
-          "name": "TVT_input",
-          "plain_name": "Visible TVT prefix",
-          "meaning": "Exact TVT values supplied at the beginning of each well, followed by a contiguous blank suffix.",
-          "use": "Anchors the prediction at the heel and supplies level, slope, curvature, and stability features.",
-          "watch_out": "Hidden TVT labels may never be used by a legal validation or inference feature."
-        }
-      ]
+      "date": "2026-07-18",
+      "evidence": "local_verified",
+      "id": "B002",
+      "summary": "The last-known baseline assigned 67.75% of SSE to per-well mean/datum, 14.53% to linear suffix trend, and 17.72% to remaining shape.",
+      "title": "Datum and trend dominate baseline error",
+      "visual": "error_stack",
+      "why_it_matters": "The campaign should focus on whole-well structural level and drift before chasing tiny row-local corrections."
     },
     {
-      "group": "Logging signal",
-      "purpose": "A pattern that may reveal which geological layer the bit is crossing.",
-      "features": [
-        {
-          "name": "GR",
-          "plain_name": "Gamma-ray log",
-          "meaning": "A rock-response signal measured along the horizontal well. Peaks and valleys can resemble patterns in the typewell reference.",
-          "use": "Alignment, warping, self-correlation, segmentation, candidate scoring, and uncertainty.",
-          "watch_out": "Repeated motifs and missing intervals make pointwise matching ambiguous. Low GR mismatch does not guarantee low TVT error."
-        }
-      ]
+      "date": "2026-07-18",
+      "evidence": "winning_note_supported",
+      "id": "B003",
+      "summary": "Award-winning notes show that a weak standalone candidate can improve an ensemble when its residuals differ from the main model.",
+      "title": "Weak diverse candidates may still be useful",
+      "visual": "ensemble_paths",
+      "why_it_matters": "Candidate quality includes error diversity, not only individual RMSE."
     },
     {
-      "group": "Formation reference columns",
-      "purpose": "Named geological reference surfaces sampled along the well path.",
-      "features": [
-        {
-          "name": "ANCC / ASTNU / ASTNL / EGFDU / EGFDL / BUDA",
-          "plain_name": "Formation-surface coordinates",
-          "meaning": "Six competition-provided reference surfaces. Their relative spacing and movement can describe a shared geological frame.",
-          "use": "Training-only diagnostics reveal how much shared structural context could help. E003 verified that their movement strongly predicts low-order datum/trend on held-out training wells.",
-          "watch_out": "E004 verified that all six columns are absent from test horizontal files. They cannot be used by the final competition notebook unless equivalent evidence is reconstructed from inputs that actually exist at test time."
-        }
-      ]
+      "date": "2026-07-18",
+      "evidence": "winning_note_supported",
+      "id": "B004",
+      "summary": "A lower grouped-CV score has scored worse publicly than an older model in documented competition experiments.",
+      "title": "CV and leaderboard ordering can invert",
+      "visual": "cv_lb_split",
+      "why_it_matters": "Repeated folds, controls, shift tests, and a decorrelated final family are mandatory."
     },
     {
-      "group": "Typewell reference",
-      "purpose": "A vertical reference signature for the geological sequence.",
-      "features": [
-        {
-          "name": "typewell TVT",
-          "plain_name": "Reference geological axis",
-          "meaning": "The vertical reference is indexed by TVT rather than horizontal-well MD.",
-          "use": "Defines the coordinate on which typewell GR is compared with a candidate horizontal-well TVT path.",
-          "watch_out": "It is not a direct lookup for unknown TVT. The model must infer the alignment or warp."
-        },
-        {
-          "name": "typewell GR",
-          "plain_name": "Reference gamma-ray signature",
-          "meaning": "The expected GR pattern along the reference TVT axis.",
-          "use": "Forward-model a candidate TVT path, compare the implied typewell GR with observed horizontal GR, and rank candidate paths.",
-          "watch_out": "Different TVT paths can match similar GR motifs, especially when the signal is repetitive or missing."
-        },
-        {
-          "name": "Geology",
-          "plain_name": "Optional reference annotation",
-          "meaning": "A typewell annotation column that may be sparse or blank.",
-          "use": "Potential segmentation or regime context when present and legally available.",
-          "watch_out": "E004 verified that this annotation is absent from test typewells. It is not a deployable inference feature."
-        }
-      ]
+      "date": "2026-07-19",
+      "evidence": "local_verified",
+      "id": "B005",
+      "summary": "E002 verified the U sign but rejected every naive structural continuation. Robust-linear U scored 39.6546 versus 15.9099 for last-known TVT and won 0 of 25 frozen fold cells.",
+      "title": "Smooth U does not make heel trend portable",
+      "visual": "trend_transfer",
+      "why_it_matters": "Visible and hidden U slopes correlate 0.928, yet a median slope error of 0.00819 ft per row compounds to roughly 41 ft over 5,000 rows. Model the future slope change or TVT drift instead of extending the heel trend unchanged."
+    },
+    {
+      "date": "2026-07-19",
+      "evidence": "local_verified",
+      "id": "B006",
+      "summary": "E003 lowers pooled RMSE from 15.9099 to 10.9280 with a cross-fitted ridge datum-plus-trend action. A separate forest risk probe reaches 0.5415 Spearman and 0.8125 worst-20% AUC.",
+      "title": "Surface-assisted evidence predicts low-order action and risk",
+      "visual": "risk_action",
+      "why_it_matters": "The result proves the hidden structural context is highly informative, but E004 later shows the strongest formation-surface evidence is training-only. E003 is validated understanding, not a deployable final model."
+    },
+    {
+      "date": "2026-07-19",
+      "evidence": "local_verified",
+      "id": "B007",
+      "summary": "E004 verified that all six formation-surface columns are missing from test. Removing them raises the best coefficient model from E003's 10.9280 to 15.4913 RMSE; geometry plus visible-prefix evidence is the best surface-free package.",
+      "title": "A strong training clue can disappear at test time",
+      "visual": "deployment_gap",
+      "why_it_matters": "Cross-validation is not enough when the feature contract changes. The final solution must use only test-available MD, X, Y, Z, GR, TVT_input, and typewell TVT/GR, or legally reconstruct missing structural evidence from those inputs."
+    },
+    {
+      "date": "2026-07-19",
+      "evidence": "kaggle_verified",
+      "id": "B008",
+      "summary": "The exact E004 notebook ran privately on Kaggle Python 3.12 with internet disabled. Local direct, local notebook, and Kaggle outputs are byte-identical over 14,151 rows at SHA-256 62ae0657...5279.",
+      "title": "Deployment-ready is not submission-worthy",
+      "visual": "remote_parity",
+      "why_it_matters": "Operational parity closes the deployment gate, but it does not strengthen the 15.4913 CV score. E004 is a reliable fallback and candidate-bank leg, not a justified standalone leaderboard submission."
+    },
+    {
+      "date": "2026-07-19",
+      "evidence": "local_verified",
+      "id": "B009",
+      "summary": "E005 particle filtering improved pooled RMSE from E004's 15.4913 to 15.3502 and reduced worst-5% SSE share, but p90 rose to 23.4852, only 3 of 5 repeated maps passed, and the worst spatial and typewell-cluster groups regressed.",
+      "title": "Raw GR path gains failed stability gates",
+      "visual": "gr_path_gate",
+      "why_it_matters": "Aggregate GR alignment contains useful, decorrelated evidence, but a raw PF path is not safe enough to deploy. A pre-registered 50/50 diagnostic blend reached 15.0131, so the next experiment must validate fusion with fresh cross-fit placement rather than promote this observed blend."
+    },
+    {
+      "date": "2026-07-19",
+      "evidence": "kaggle_verified",
+      "id": "B010",
+      "summary": "E006 recomputed E004 and PF inside every untouched outer fold, selected a conservative fusion rule only from inner OOF evidence, and reached 14.9331 RMSE with 5 of 5 map wins and 25 of 25 outer-cell wins.",
+      "title": "Strict nesting turned weak PF evidence into a stable candidate",
+      "visual": "nested_fusion",
+      "why_it_matters": "PF was unsafe alone, but its complementary correction became useful when anchored to E004 and validated in final placement. P90 fell to 21.7856, every spatial and typewell group improved, and local plus private Kaggle outputs are byte-identical at SHA-256 e412864a...d81008."
+    },
+    {
+      "date": "2026-07-19",
+      "evidence": "local_verified",
+      "id": "B011",
+      "summary": "E007 matched hidden horizontal-GR fingerprints only to the same well's visible prefix and applied a bounded structural-slope correction around E006. A frozen 0.10 placement improved RMSE from 14.9331 to 14.8305, won all 5 maps and 20 of 25 repeated cells, while the raw correction had only 0.468 residual correlation to E006.",
+      "title": "Independent self-correlation signal still failed shift gates",
+      "visual": "selfcorr_gate",
+      "why_it_matters": "Low correlation and aggregate gain are not enough. P90 exceeded the frozen cap by about 0.015 RMSE, spatial groups 1 and 3 regressed, and typewell groups 2 and 4 regressed. E007 is rejected without deployment packaging; its diagnostics may inform a future residual model but the fixed correction cannot enter the finalist ensemble."
+    },
+    {
+      "date": "2026-07-19",
+      "evidence": "local_verified",
+      "id": "B012",
+      "summary": "E008 trained a surface-free ridge residual action strictly inside each fold using E006 paths and E007 evidence. Datum-only action improved pooled RMSE from 14.9331 to 14.7951, reduced p90 to 21.4080, and beat the no-E007 ablation by 0.0953 RMSE.",
+      "title": "Residual datum signal improved tails but did not transfer",
+      "visual": "residual_action_gate",
+      "why_it_matters": "The action still won only 2 of 5 maps and 14 of 25 repeated cells, while spatial groups 0 and 1 and typewell groups 2 and 4 regressed. Aggregate improvement, better tails, and useful evidence do not establish stable signed transfer. A future experiment must use independently pre-registered model-consensus uncertainty and exact E006 abstention rather than reuse E008 outcomes as routing thresholds."
+    },
+    {
+      "date": "2026-07-19",
+      "evidence": "local_verified",
+      "id": "B013",
+      "summary": "E009 trained six legal datum models and tested fixed plus nested consensus abstention. Majority consensus reached 14.7935 RMSE, won all 5 maps, and improved p90, but won only 15 of 25 repeated cells and repeated the spatial/typewell shift failures.",
+      "title": "Model agreement repeated shared bias",
+      "visual": "consensus_gate",
+      "why_it_matters": "Agreement was not reliable uncertainty: the three rule action sets overlapped at 0.984–0.996 Jaccard, and the sign-flipped negative control exceeded its cap. A diagnostic 64-feature ridge reached 14.6353 with 5/5 maps, so the next experiment targets inner-fold feature stability rather than more consensus threshold tuning."
+    },
+    {
+      "date": "2026-07-20",
+      "evidence": "source_audited_full_data_diagnostic",
+      "id": "B014",
+      "summary": "A published 773-well diagnostic scores 15.9099 for last-known, 9.0354 for the best per-well constant, 6.6972 for the best line, and 3.1106 for a robust smooth curve.",
+      "title": "The oracle ladder makes nonlinear shape mandatory",
+      "visual": "oracle_ladder",
+      "why_it_matters": "Even perfect datum and linear trend are not enough for a reliable sub-5 system. The next experiment must measure nonlinear candidate coverage before optimizing another datum-only correction."
+    },
+    {
+      "date": "2026-07-20",
+      "evidence": "source_audited_preliminary",
+      "id": "B015",
+      "summary": "Amer's exact second-order HMM tracks joint TVT position and dip rate with forward-backward inference and returns posterior mean plus uncertainty. A small-sample PF/HMM blend is reported at 4.57 RMSE.",
+      "title": "Exact smoothing adds a probabilistic whole-well candidate",
+      "visual": "posterior_paths",
+      "why_it_matters": "The mechanism is complementary and directly models nonlinear shape, but the score is not promotion evidence until reproduced on all frozen folds and shift groups. Its posterior uncertainty is a candidate selector feature, not an automatic gate."
+    },
+    {
+      "date": "2026-07-20",
+      "evidence": "kaggle_verified",
+      "id": "B016",
+      "summary": "E010 evaluated 130,252 legal whole-well paths on all 773 wells. The bank oracle reaches 4.7511 RMSE, while the best legal visible-prefix selector reaches 14.7803 and retains only about 1.5% of the available oracle gain.",
+      "title": "The bank contains sub-5 paths, but coefficient selection collapses",
+      "visual": "oracle_ladder",
+      "why_it_matters": "Candidate coverage is proven. A chosen-family oracle counterfactual is 5.7075, so family identity explains only 9.5% of the selector gap and coefficient estimation plus aggregation explain 90.5%. The next experiment must predict low-dimensional coefficients/control points and remain memory-safe; adding more flat candidates is not evidence-backed."
+    },
+    {
+      "date": "2026-07-22",
+      "evidence": "source_audited_public_outputs",
+      "id": "B017",
+      "summary": "Exact audits of the public 6.40-6.83/P100 family show a shared pretrained/PF/contact/overlap lineage. The 6.40 overlap calibration acts only on the three visible wells, P100 moves one visible well by +2 ft, and Yusuke A23 extends that same public-well branch shift.",
+      "title": "The public score frontier is overlap-heavy",
+      "visual": "cv_lb_split",
+      "why_it_matters": "Public titles and votes do not establish hidden unseen-well causality. Reuse only clean-room hypotheses such as seed-cloud branch uncertainty and bounded continuity; reject score-derived constants, public-well overrides, train-only formations, and unknown-license artifacts."
+    },
+    {
+      "date": "2026-07-22",
+      "evidence": "source_audited_public_oof",
+      "id": "B018",
+      "summary": "A public shallow GBDT gate over 391 composite features worsened OOF RMSE from 10.3723 to 10.3824 and p90 from 14.6850 to 14.8066, so its own activation rule kept the gate off.",
+      "title": "A well-level gate failed its own OOF test",
+      "visual": "consensus_gate",
+      "why_it_matters": "Another router is not automatically the answer. The feature representation and transfer controls matter more than adding a gate around a composite path."
+    },
+    {
+      "date": "2026-07-22",
+      "evidence": "discussion_supported_operational",
+      "id": "B019",
+      "summary": "A reported 15-minute run over three visible wells scales to roughly 17 hours over about 200 hidden wells. The discussion recommends targeting around five visible-test minutes after overhead margin.",
+      "title": "Inference must be tested at hidden scale",
+      "visual": "remote_parity",
+      "why_it_matters": "A validation workflow can fit the resource budget while the final inference notebook times out. Every finalist needs a roughly 200-well pseudo-hidden benchmark, fixed output receipt, and deterministic fail-closed behavior."
+    },
+    {
+      "date": "2026-07-22",
+      "evidence": "official_winning_writeup_verified",
+      "id": "B020",
+      "summary": "BirdCLEF+ 2026's winner used an Amphibia/Insecta specialist and a genus specialist only as masked parts of a diverse ensemble with global models, distillation, bounded pseudo-labeling, complementary validation, and separate post-processing pipelines.",
+      "title": "Specialists need a stronger evidence contract",
+      "visual": "ensemble_paths",
+      "why_it_matters": "ROGII may test regime-specific coefficient experts only after E011 packaging and parity. Routing must be legal and cross-fitted, regimes must have enough samples, actions must be bounded, negative controls must fail, and uncertain wells must return the exact strongest global fallback."
+    },
+    {
+      "date": "2026-07-22",
+      "evidence": "independent_frozen_commit_reproduction",
+      "id": "B021",
+      "summary": "E011's spline4 ridge coefficient model reproduces at 12.5507562957 RMSE versus E006 at 14.9331407872. It wins all five maps and all 25 repeated cells, improves every spatial/typewell holdout and special slice, and reproduces byte-identical substantive outputs under two threads.",
+      "title": "Coefficient learning closes a material part of selector regret",
+      "visual": "deployment_gap",
+      "why_it_matters": "Low-dimensional nonlinear coefficient prediction is verified statistical evidence and now the primary deployment path. Saved Kaggle version 1 completed and its outputs passed row, ID/order, finite-value, and readability checks."
+    },
+    {
+      "date": "2026-07-22",
+      "evidence": "kaggle_verified",
+      "id": "B022",
+      "summary": "Saved Kaggle version 1 (scriptVersionId 337242364) completed in 3.54 seconds and produced the three required outputs. The submission has 14,151 unique IDs in exact sample order with finite predictions, plus a COMPLETE receipt and three well diagnostics.",
+      "title": "E011 deployment is complete",
+      "visual": "remote_parity",
+      "why_it_matters": "E011 now replaces E006 as deployment primary. E006 remains the secondary fallback and E004 the exact fallback. H015 regime specialization is unblocked; no competition submission was made."
+    },
+    {
+      "date": "2026-07-23",
+      "evidence": "decision_recorded",
+      "id": "B023",
+      "summary": "D020 promotes E011 as the global deployment model. The next experiment may test regime-specific coefficient experts only with split-local legal routing and exact E011 fallback.",
+      "title": "The next bottleneck is specialist transfer",
+      "visual": "risk_action",
+      "why_it_matters": "E007–E009 showed that apparent regimes and agreement can repeat shared bias. H015 must improve the complete system under repeated and spatial/typewell gates, and shuffled or sign-flipped routing must lose the gain."
+    },
+    {
+      "date": "2026-07-23",
+      "evidence": "exact_source_and_saved_output_audit",
+      "id": "B024",
+      "summary": "Four newly prominent notebooks share 93.1%–99.95% source similarity and the same overlap/model-package profile. Their PF branch and U-continuity layers act materially only on visible well 00e12e8b; a 100-well selector retains 68.61% worst-decile SSE, and the stochastic-TTA gate fails its own OOF threshold.",
+      "title": "The refreshed public frontier is one composite lineage",
+      "visual": "cv_lb_split",
+      "why_it_matters": "Do not infer independent causality from titles or public scores. D022 allows only a clean preimplementation screen for continuous E011 uncertainty/fallback placement; no public constants, artifacts, or score-directed well moves may enter the project."
+    },
+    {
+      "date": "2026-07-23",
+      "evidence": "complete_cross_fitted_worth_screen",
+      "id": "B025",
+      "summary": "T022 finds E011/E006 oracle fallback and continuous-blend gains of 0.7587 and 0.8335 RMSE. Seven legal uncertainty families fail: hard logistic is best at only +0.00687, 2/5 maps and 5/25 cells, while continuous branches are negative.",
+      "title": "Oracle fallback exists, but legal uncertainty cannot find it",
+      "visual": "risk_action",
+      "why_it_matters": "Risk or oracle opportunity is not safe action. D023 closes H016 without E013; the next useful mechanism must create new row-sequence or physical state evidence rather than route the same global paths."
+    },
+    {
+      "date": "2026-07-23",
+      "evidence": "complete_reproduced_sequence_worth_screen",
+      "id": "B026",
+      "summary": "T023 finds mean E011 residual ACF of 0.999980 at lag 1 and a 16-control oracle RMSE of 1.1868. The strongest preliminary legal proxy gains 0.2857 RMSE with 5/5 maps and 24/25 cells, but fails spatial group 4; a reversed-profile control still gains 0.1329.",
+      "title": "Smooth residuals did not prove recoverable signed state",
+      "visual": "trend_transfer",
+      "why_it_matters": "Sequence capacity and smoothness are not the same as legally identified signed state. D025 blocks GRU/TCN/HMM/PF or new-path escalation from this representation; future sequence work needs materially different causal evidence and must defeat reversed/shuffled plus spatial/typewell controls."
+    },
+    {
+      "date": "2026-07-23",
+      "evidence": "complete_reproduced_worth_screen",
+      "id": "B027",
+      "summary": "T016 places twelve saved cross-fitted E009 datum-action families on exact E011. Nested placement reaches 12.4930 RMSE, gaining 0.05779 with 5/5 maps and 21/25 cells, but regresses spatial group 3 and typewell group 0.",
+      "title": "Wide datum actions retain signal but fail transfer",
+      "visual": "residual_action_gate",
+      "why_it_matters": "A small signed datum signal remains, and all controls lose, but repeated aggregate gain cannot override every-group transfer failures. D027 closes the action space without a new refit or subgroup routing."
+    },
+    {
+      "date": "2026-07-23",
+      "evidence": "complete_reproduced_worth_screen",
+      "id": "B028",
+      "summary": "T025 confirms a 4.1137 last-known spline oracle and a unique legal pseudo-trajectory signal. The best aggregate candidate gains 0.125829 RMSE, but the conservative transfer-eligible placement regresses spatial group 0 and typewell group 4.",
+      "title": "Pseudo coefficient dynamics are real but domain-unstable",
+      "visual": "coefficient_transport_gate",
+      "why_it_matters": "The next route should expand the supervised task distribution to many outer-well-isolated long-horizon masks, not retune four fixed pseudo-cut summaries."
+    },
+    {
+      "date": "2026-07-23",
+      "evidence": "complete_reproduced_worth_screen",
+      "id": "B029",
+      "summary": "T026 completes 12,216 causal end-of-well tasks and 76 candidates. Every candidate is worse than E011; the best loses 0.074895 RMSE with 0/5 maps. Randomized task coefficients remain correlated with the real target but differ by 14.278922 pooled coefficient RMSE.",
+      "title": "Long-horizon masks expose target mismatch",
+      "visual": "mask_target_mismatch_gate",
+      "why_it_matters": "More causal views help a weak original-only comparator, but view-local targets are not interchangeable with the competition-boundary target. The next route must preserve one target across views rather than enlarge the model or retune mask horizons."
+    },
+    {
+      "date": "2026-07-23",
+      "evidence": "complete_reproduced_worth_screen",
+      "id": "B030",
+      "summary": "T027 fixes T026's target mismatch by supervising ten causal feature views with one unchanged original-boundary target. Every augmented candidate worsens E011; the best loses 0.041105 RMSE. The unaugmented comparator gains 0.091923 but fails spatial/typewell transfer.",
+      "title": "Target-preserving views degrade the original signal",
+      "visual": "mask_target_mismatch_gate",
+      "why_it_matters": "The failure is now input covariate shift and information loss, not target mismatch. D033 closes feature masking. A successor may change only the training objective on one original view per well and may not route by domain at inference."
+    },
+    {
+      "date": "2026-07-24",
+      "evidence": "reproduced_preimplementation_worth_screen",
+      "id": "B031",
+      "summary": "T028 finds that global placement retuning adds only 0.000644 RMSE and no nonzero weight improves all ten domains. Illegal domain-oracle gains are 0.039789 spatial and 0.049402 typewell, below the frozen 0.05 floor.",
+      "title": "Domain objectives fail the worth gate before implementation",
+      "visual": "residual_action_gate",
+      "why_it_matters": "The project avoids a full GroupDRO/CVaR/robust-loss search with insufficient headroom. Large per-well oracle opportunity still requires hidden routing and cannot authorize a legal objective. D034 forces the next task to find an independent mechanism."
+    },
+    {
+      "date": "2026-07-24",
+      "evidence": "reproduced_covariance_worth_screen",
+      "id": "B032",
+      "summary": "T029 finds row-centered correlation 0.018136 between T025 pseudo-coefficient and T016 datum actions. A 0.40/0.60 diagnostic reaches 12.377388 and improves all ten direct OOF domains.",
+      "title": "A nearly orthogonal datum leg complements pseudo-coefficients",
+      "visual": "ensemble_paths",
+      "why_it_matters": "The next experiment combines independently verified actions instead of reopening a failed target, view, router, or objective. Full-label weights remain diagnostic until T030 confirms them inside untouched contexts."
+    },
+    {
+      "date": "2026-07-24",
+      "evidence": "complete_outer_isolated_confirmation",
+      "id": "B033",
+      "summary": "T030's best fixed T025/T016 pair reaches 12.3689 RMSE with 5/5 maps and 19/25 cells, but fails p90 and spatial/typewell transfer. No substantive passer exists.",
+      "title": "Complementary actions improve globally but fail transfer",
+      "visual": "ensemble_paths",
+      "why_it_matters": "The covariance signal is real, but another blend cannot close the medal gap. D037 closes action retuning and redirects work to new causal state evidence."
+    },
+    {
+      "date": "2026-07-24",
+      "evidence": "independent_audit_plus_local_contract_verification",
+      "id": "B034",
+      "summary": "Six E003 hidden formation-offset changes are nearly one variable: PC1 explains 99.5626%. Existing summaries and coordinate reconstruction do not identify it, while all raw legal sequence channels exist at inference.",
+      "title": "One latent formation displacement becomes the decisive gate",
+      "visual": "deployment_gap",
+      "why_it_matters": "T031 will test identifiability before any joint neural TVT model. Failure closes the highest-impact hypothesis cheaply; success unlocks a separately preregistered state-plus-spline experiment."
     }
   ],
   "concepts": [
     {
       "id": "mission",
-      "title": "The task is suffix reconstruction",
       "plain": "You see the beginning of a TVT path and must continue it for the rest of the same well.",
-      "technical": "Predict every row after the TVT_input boundary; Kaggle scores pooled row-level RMSE."
+      "technical": "Predict every row after the TVT_input boundary; Kaggle scores pooled row-level RMSE.",
+      "title": "The task is suffix reconstruction"
     },
     {
       "id": "coordinate",
-      "title": "TVT is a geological coordinate",
       "plain": "Think of TVT as the well's position inside a geological reference frame, not just how deep the drill bit is.",
-      "technical": "Training surfaces explain the missing structural context, but final inference must reconstruct position from test-available trajectory, visible TVT prefix, horizontal GR, and typewell GR."
+      "technical": "Training surfaces explain the missing structural context, but final inference must reconstruct position from test-available trajectory, visible TVT prefix, horizontal GR, and typewell GR.",
+      "title": "TVT is a geological coordinate"
     },
     {
       "id": "surface",
-      "title": "Separate easy wiggle from hard trend",
       "plain": "The structural coordinate is smooth, but a tiny slope mistake repeated over thousands of rows can still move the prediction tens of feet.",
-      "technical": "E002 verifies U = TVT + Z as the smoother sign convention, then rejects unconditional constant, heel-linear, quadratic, and damped-spline continuation. Future models must estimate the heel-to-toe slope change or TVT drift."
+      "technical": "E002 verifies U = TVT + Z as the smoother sign convention, then rejects unconditional constant, heel-linear, quadratic, and damped-spline continuation. Future models must estimate the heel-to-toe slope change or TVT drift.",
+      "title": "Separate easy wiggle from hard trend"
     },
     {
       "id": "alignment",
-      "title": "GR matching is an alignment problem",
       "plain": "The horizontal and vertical GR curves use different horizontal axes, so they must be warped before comparison.",
-      "technical": "Candidate TVT paths map MD samples onto the typewell TVT axis; the resulting forward GR mismatch is evidence, not proof."
+      "technical": "Candidate TVT paths map MD samples onto the typewell TVT axis; the resulting forward GR mismatch is evidence, not proof.",
+      "title": "GR matching is an alignment problem"
     },
     {
       "id": "tails",
-      "title": "A few wells can control the score",
       "plain": "Many wells may look acceptable while a small set of large shifts creates most of the squared error.",
-      "technical": "E001 found the worst 5% of wells contributed 38.99% of baseline SSE and the worst 10% contributed 52.48%."
+      "technical": "E001 found the worst 5% of wells contributed 38.99% of baseline SSE and the worst 10% contributed 52.48%.",
+      "title": "A few wells can control the score"
     },
     {
       "id": "uncertainty",
-      "title": "Knowing a well is risky is not enough",
       "plain": "One model can estimate which wells are risky while a different model estimates how to move the path. Both can still fail deployment when an important training clue is missing from test.",
-      "technical": "E003 validates surface-assisted risk and action on training folds. E004 shows the surface-free deployable ridge falls to 15.4913 RMSE, so feature availability is a separate gate from cross-validation quality."
+      "technical": "E003 validates surface-assisted risk and action on training folds. E004 shows the surface-free deployable ridge falls to 15.4913 RMSE, so feature availability is a separate gate from cross-validation quality.",
+      "title": "Knowing a well is risky is not enough"
     }
   ],
-  "breakthroughs": [
+  "feature_groups": [
     {
-      "id": "B001",
-      "date": "2026-07-18",
-      "title": "Validation substrate frozen",
-      "evidence": "local_verified",
-      "visual": "error_stack",
-      "summary": "E001 reproduced the last-known-TVT baseline at 15.9098528707 RMSE over 3,783,989 hidden rows and froze five deterministic whole-well fold maps.",
-      "why_it_matters": "Every later idea can now be judged with the same metric, folds, tail diagnostics, and controls."
+      "features": [
+        {
+          "meaning": "Distance travelled along the curved borehole, not straight-down depth.",
+          "name": "MD",
+          "plain_name": "Measured depth",
+          "use": "Provides row order, distance since the prediction boundary, segment length, and local trajectory scale.",
+          "watch_out": "A one-foot MD change does not imply a one-foot vertical change."
+        },
+        {
+          "meaning": "Map position of the well path.",
+          "name": "X / Y",
+          "plain_name": "Horizontal coordinates",
+          "use": "Can describe direction, neighbouring wells, and broad spatial context.",
+          "watch_out": "Spatial similarity must pass leave-spatial-out validation before it is trusted."
+        },
+        {
+          "meaning": "Vertical position in the file's coordinate convention; values are commonly negative.",
+          "name": "Z",
+          "plain_name": "Vertical coordinate",
+          "use": "Explains part of the high-frequency movement in TVT and helps form structural transforms such as U = TVT + Z.",
+          "watch_out": "Z and TVT are different coordinates. Treating them as interchangeable produces large errors."
+        }
+      ],
+      "group": "Well geometry",
+      "purpose": "Where the drill bit is and how it moves."
     },
     {
-      "id": "B002",
-      "date": "2026-07-18",
-      "title": "Datum and trend dominate baseline error",
-      "evidence": "local_verified",
-      "visual": "error_stack",
-      "summary": "The last-known baseline assigned 67.75% of SSE to per-well mean/datum, 14.53% to linear suffix trend, and 17.72% to remaining shape.",
-      "why_it_matters": "The campaign should focus on whole-well structural level and drift before chasing tiny row-local corrections."
+      "features": [
+        {
+          "meaning": "The value scored by Kaggle. In this dataset it behaves like a geological interpretation coordinate, not simply physical vertical depth or layer thickness.",
+          "name": "TVT",
+          "plain_name": "Target geological-position coordinate",
+          "use": "Training truth and the final prediction target.",
+          "watch_out": "The name is easy to interpret too literally. Always verify equations against the actual sign and scale in the data."
+        },
+        {
+          "meaning": "Exact TVT values supplied at the beginning of each well, followed by a contiguous blank suffix.",
+          "name": "TVT_input",
+          "plain_name": "Visible TVT prefix",
+          "use": "Anchors the prediction at the heel and supplies level, slope, curvature, and stability features.",
+          "watch_out": "Hidden TVT labels may never be used by a legal validation or inference feature."
+        }
+      ],
+      "group": "Target and visibility",
+      "purpose": "What is known and what must be predicted."
     },
     {
-      "id": "B003",
-      "date": "2026-07-18",
-      "title": "Weak diverse candidates may still be useful",
-      "evidence": "winning_note_supported",
-      "visual": "ensemble_paths",
-      "summary": "Award-winning notes show that a weak standalone candidate can improve an ensemble when its residuals differ from the main model.",
-      "why_it_matters": "Candidate quality includes error diversity, not only individual RMSE."
+      "features": [
+        {
+          "meaning": "A rock-response signal measured along the horizontal well. Peaks and valleys can resemble patterns in the typewell reference.",
+          "name": "GR",
+          "plain_name": "Gamma-ray log",
+          "use": "Alignment, warping, self-correlation, segmentation, candidate scoring, and uncertainty.",
+          "watch_out": "Repeated motifs and missing intervals make pointwise matching ambiguous. Low GR mismatch does not guarantee low TVT error."
+        }
+      ],
+      "group": "Logging signal",
+      "purpose": "A pattern that may reveal which geological layer the bit is crossing."
     },
     {
-      "id": "B004",
-      "date": "2026-07-18",
-      "title": "CV and leaderboard ordering can invert",
-      "evidence": "winning_note_supported",
-      "visual": "cv_lb_split",
-      "summary": "A lower grouped-CV score has scored worse publicly than an older model in documented competition experiments.",
-      "why_it_matters": "Repeated folds, controls, shift tests, and a decorrelated final family are mandatory."
+      "features": [
+        {
+          "meaning": "Six competition-provided reference surfaces. Their relative spacing and movement can describe a shared geological frame.",
+          "name": "ANCC / ASTNU / ASTNL / EGFDU / EGFDL / BUDA",
+          "plain_name": "Formation-surface coordinates",
+          "use": "Training-only diagnostics reveal how much shared structural context could help. E003 verified that their movement strongly predicts low-order datum/trend on held-out training wells.",
+          "watch_out": "E004 verified that all six columns are absent from test horizontal files. They cannot be used by the final competition notebook unless equivalent evidence is reconstructed from inputs that actually exist at test time."
+        }
+      ],
+      "group": "Formation reference columns",
+      "purpose": "Named geological reference surfaces sampled along the well path."
     },
     {
-      "id": "B005",
-      "date": "2026-07-19",
-      "title": "Smooth U does not make heel trend portable",
-      "evidence": "local_verified",
-      "visual": "trend_transfer",
-      "summary": "E002 verified the U sign but rejected every naive structural continuation. Robust-linear U scored 39.6546 versus 15.9099 for last-known TVT and won 0 of 25 frozen fold cells.",
-      "why_it_matters": "Visible and hidden U slopes correlate 0.928, yet a median slope error of 0.00819 ft per row compounds to roughly 41 ft over 5,000 rows. Model the future slope change or TVT drift instead of extending the heel trend unchanged."
-    },
-    {
-      "id": "B006",
-      "date": "2026-07-19",
-      "title": "Surface-assisted evidence predicts low-order action and risk",
-      "evidence": "local_verified",
-      "visual": "risk_action",
-      "summary": "E003 lowers pooled RMSE from 15.9099 to 10.9280 with a cross-fitted ridge datum-plus-trend action. A separate forest risk probe reaches 0.5415 Spearman and 0.8125 worst-20% AUC.",
-      "why_it_matters": "The result proves the hidden structural context is highly informative, but E004 later shows the strongest formation-surface evidence is training-only. E003 is validated understanding, not a deployable final model."
-    },
-    {
-      "id": "B007",
-      "date": "2026-07-19",
-      "title": "A strong training clue can disappear at test time",
-      "evidence": "local_verified",
-      "visual": "deployment_gap",
-      "summary": "E004 verified that all six formation-surface columns are missing from test. Removing them raises the best coefficient model from E003's 10.9280 to 15.4913 RMSE; geometry plus visible-prefix evidence is the best surface-free package.",
-      "why_it_matters": "Cross-validation is not enough when the feature contract changes. The final solution must use only test-available MD, X, Y, Z, GR, TVT_input, and typewell TVT/GR, or legally reconstruct missing structural evidence from those inputs."
-    },
-    {
-      "id": "B008",
-      "date": "2026-07-19",
-      "title": "Deployment-ready is not submission-worthy",
-      "evidence": "kaggle_verified",
-      "visual": "remote_parity",
-      "summary": "The exact E004 notebook ran privately on Kaggle Python 3.12 with internet disabled. Local direct, local notebook, and Kaggle outputs are byte-identical over 14,151 rows at SHA-256 62ae0657...5279.",
-      "why_it_matters": "Operational parity closes the deployment gate, but it does not strengthen the 15.4913 CV score. E004 is a reliable fallback and candidate-bank leg, not a justified standalone leaderboard submission."
-    },
-    {
-      "id": "B009",
-      "date": "2026-07-19",
-      "title": "Raw GR path gains failed stability gates",
-      "evidence": "local_verified",
-      "visual": "gr_path_gate",
-      "summary": "E005 particle filtering improved pooled RMSE from E004's 15.4913 to 15.3502 and reduced worst-5% SSE share, but p90 rose to 23.4852, only 3 of 5 repeated maps passed, and the worst spatial and typewell-cluster groups regressed.",
-      "why_it_matters": "Aggregate GR alignment contains useful, decorrelated evidence, but a raw PF path is not safe enough to deploy. A pre-registered 50/50 diagnostic blend reached 15.0131, so the next experiment must validate fusion with fresh cross-fit placement rather than promote this observed blend."
-    },
-    {
-      "id": "B010",
-      "date": "2026-07-19",
-      "title": "Strict nesting turned weak PF evidence into a stable candidate",
-      "evidence": "kaggle_verified",
-      "visual": "nested_fusion",
-      "summary": "E006 recomputed E004 and PF inside every untouched outer fold, selected a conservative fusion rule only from inner OOF evidence, and reached 14.9331 RMSE with 5 of 5 map wins and 25 of 25 outer-cell wins.",
-      "why_it_matters": "PF was unsafe alone, but its complementary correction became useful when anchored to E004 and validated in final placement. P90 fell to 21.7856, every spatial and typewell group improved, and local plus private Kaggle outputs are byte-identical at SHA-256 e412864a...d81008."
-    },
-    {
-      "id": "B011",
-      "date": "2026-07-19",
-      "title": "Independent self-correlation signal still failed shift gates",
-      "evidence": "local_verified",
-      "visual": "selfcorr_gate",
-      "summary": "E007 matched hidden horizontal-GR fingerprints only to the same well's visible prefix and applied a bounded structural-slope correction around E006. A frozen 0.10 placement improved RMSE from 14.9331 to 14.8305, won all 5 maps and 20 of 25 repeated cells, while the raw correction had only 0.468 residual correlation to E006.",
-      "why_it_matters": "Low correlation and aggregate gain are not enough. P90 exceeded the frozen cap by about 0.015 RMSE, spatial groups 1 and 3 regressed, and typewell groups 2 and 4 regressed. E007 is rejected without deployment packaging; its diagnostics may inform a future residual model but the fixed correction cannot enter the finalist ensemble."
-    },
-    {
-      "id": "B012",
-      "date": "2026-07-19",
-      "title": "Residual datum signal improved tails but did not transfer",
-      "evidence": "local_verified",
-      "visual": "residual_action_gate",
-      "summary": "E008 trained a surface-free ridge residual action strictly inside each fold using E006 paths and E007 evidence. Datum-only action improved pooled RMSE from 14.9331 to 14.7951, reduced p90 to 21.4080, and beat the no-E007 ablation by 0.0953 RMSE.",
-      "why_it_matters": "The action still won only 2 of 5 maps and 14 of 25 repeated cells, while spatial groups 0 and 1 and typewell groups 2 and 4 regressed. Aggregate improvement, better tails, and useful evidence do not establish stable signed transfer. A future experiment must use independently pre-registered model-consensus uncertainty and exact E006 abstention rather than reuse E008 outcomes as routing thresholds."
-    },
-    {
-      "id": "B013",
-      "date": "2026-07-19",
-      "title": "Model agreement repeated shared bias",
-      "evidence": "local_verified",
-      "visual": "consensus_gate",
-      "summary": "E009 trained six legal datum models and tested fixed plus nested consensus abstention. Majority consensus reached 14.7935 RMSE, won all 5 maps, and improved p90, but won only 15 of 25 repeated cells and repeated the spatial/typewell shift failures.",
-      "why_it_matters": "Agreement was not reliable uncertainty: the three rule action sets overlapped at 0.984–0.996 Jaccard, and the sign-flipped negative control exceeded its cap. A diagnostic 64-feature ridge reached 14.6353 with 5/5 maps, so the next experiment targets inner-fold feature stability rather than more consensus threshold tuning."
-    },
-    {
-      "id": "B014",
-      "date": "2026-07-20",
-      "title": "The oracle ladder makes nonlinear shape mandatory",
-      "evidence": "source_audited_full_data_diagnostic",
-      "visual": "oracle_ladder",
-      "summary": "A published 773-well diagnostic scores 15.9099 for last-known, 9.0354 for the best per-well constant, 6.6972 for the best line, and 3.1106 for a robust smooth curve.",
-      "why_it_matters": "Even perfect datum and linear trend are not enough for a reliable sub-5 system. The next experiment must measure nonlinear candidate coverage before optimizing another datum-only correction."
-    },
-    {
-      "id": "B015",
-      "date": "2026-07-20",
-      "title": "Exact smoothing adds a probabilistic whole-well candidate",
-      "evidence": "source_audited_preliminary",
-      "visual": "posterior_paths",
-      "summary": "Amer's exact second-order HMM tracks joint TVT position and dip rate with forward-backward inference and returns posterior mean plus uncertainty. A small-sample PF/HMM blend is reported at 4.57 RMSE.",
-      "why_it_matters": "The mechanism is complementary and directly models nonlinear shape, but the score is not promotion evidence until reproduced on all frozen folds and shift groups. Its posterior uncertainty is a candidate selector feature, not an automatic gate."
-    },
-    {
-      "id": "B016",
-      "date": "2026-07-20",
-      "title": "The bank contains sub-5 paths, but coefficient selection collapses",
-      "evidence": "kaggle_verified",
-      "visual": "oracle_ladder",
-      "summary": "E010 evaluated 130,252 legal whole-well paths on all 773 wells. The bank oracle reaches 4.7511 RMSE, while the best legal visible-prefix selector reaches 14.7803 and retains only about 1.5% of the available oracle gain.",
-      "why_it_matters": "Candidate coverage is proven. A chosen-family oracle counterfactual is 5.7075, so family identity explains only 9.5% of the selector gap and coefficient estimation plus aggregation explain 90.5%. The next experiment must predict low-dimensional coefficients/control points and remain memory-safe; adding more flat candidates is not evidence-backed."
-    },
-    {
-      "id": "B017",
-      "date": "2026-07-22",
-      "title": "The public score frontier is overlap-heavy",
-      "evidence": "source_audited_public_outputs",
-      "visual": "cv_lb_split",
-      "summary": "Exact audits of the public 6.40-6.83/P100 family show a shared pretrained/PF/contact/overlap lineage. The 6.40 overlap calibration acts only on the three visible wells, P100 moves one visible well by +2 ft, and Yusuke A23 extends that same public-well branch shift.",
-      "why_it_matters": "Public titles and votes do not establish hidden unseen-well causality. Reuse only clean-room hypotheses such as seed-cloud branch uncertainty and bounded continuity; reject score-derived constants, public-well overrides, train-only formations, and unknown-license artifacts."
-    },
-    {
-      "id": "B018",
-      "date": "2026-07-22",
-      "title": "A well-level gate failed its own OOF test",
-      "evidence": "source_audited_public_oof",
-      "visual": "consensus_gate",
-      "summary": "A public shallow GBDT gate over 391 composite features worsened OOF RMSE from 10.3723 to 10.3824 and p90 from 14.6850 to 14.8066, so its own activation rule kept the gate off.",
-      "why_it_matters": "Another router is not automatically the answer. The feature representation and transfer controls matter more than adding a gate around a composite path."
-    },
-    {
-      "id": "B019",
-      "date": "2026-07-22",
-      "title": "Inference must be tested at hidden scale",
-      "evidence": "discussion_supported_operational",
-      "visual": "remote_parity",
-      "summary": "A reported 15-minute run over three visible wells scales to roughly 17 hours over about 200 hidden wells. The discussion recommends targeting around five visible-test minutes after overhead margin.",
-      "why_it_matters": "A validation workflow can fit the resource budget while the final inference notebook times out. Every finalist needs a roughly 200-well pseudo-hidden benchmark, fixed output receipt, and deterministic fail-closed behavior."
-    },
-    {
-      "id": "B020",
-      "date": "2026-07-22",
-      "title": "Specialists need a stronger evidence contract",
-      "evidence": "official_winning_writeup_verified",
-      "visual": "ensemble_paths",
-      "summary": "BirdCLEF+ 2026's winner used an Amphibia/Insecta specialist and a genus specialist only as masked parts of a diverse ensemble with global models, distillation, bounded pseudo-labeling, complementary validation, and separate post-processing pipelines.",
-      "why_it_matters": "ROGII may test regime-specific coefficient experts only after E011 packaging and parity. Routing must be legal and cross-fitted, regimes must have enough samples, actions must be bounded, negative controls must fail, and uncertain wells must return the exact strongest global fallback."
-    },
-    {
-      "id": "B021",
-      "date": "2026-07-22",
-      "title": "Coefficient learning closes a material part of selector regret",
-      "evidence": "independent_frozen_commit_reproduction",
-      "visual": "deployment_gap",
-      "summary": "E011's spline4 ridge coefficient model reproduces at 12.5507562957 RMSE versus E006 at 14.9331407872. It wins all five maps and all 25 repeated cells, improves every spatial/typewell holdout and special slice, and reproduces byte-identical substantive outputs under two threads.",
-      "why_it_matters": "Low-dimensional nonlinear coefficient prediction is verified statistical evidence and now the primary deployment path. Saved Kaggle version 1 completed and its outputs passed row, ID/order, finite-value, and readability checks."
-    },
-    {
-      "id": "B022",
-      "date": "2026-07-22",
-      "title": "E011 deployment is complete",
-      "evidence": "kaggle_verified",
-      "visual": "remote_parity",
-      "summary": "Saved Kaggle version 1 (scriptVersionId 337242364) completed in 3.54 seconds and produced the three required outputs. The submission has 14,151 unique IDs in exact sample order with finite predictions, plus a COMPLETE receipt and three well diagnostics.",
-      "why_it_matters": "E011 now replaces E006 as deployment primary. E006 remains the secondary fallback and E004 the exact fallback. H015 regime specialization is unblocked; no competition submission was made."
-    },
-    {
-      "id": "B023",
-      "date": "2026-07-23",
-      "title": "The next bottleneck is specialist transfer",
-      "evidence": "decision_recorded",
-      "visual": "risk_action",
-      "summary": "D020 promotes E011 as the global deployment model. The next experiment may test regime-specific coefficient experts only with split-local legal routing and exact E011 fallback.",
-      "why_it_matters": "E007–E009 showed that apparent regimes and agreement can repeat shared bias. H015 must improve the complete system under repeated and spatial/typewell gates, and shuffled or sign-flipped routing must lose the gain."
-    },
-    {
-      "id": "B024",
-      "date": "2026-07-23",
-      "title": "The refreshed public frontier is one composite lineage",
-      "evidence": "exact_source_and_saved_output_audit",
-      "visual": "cv_lb_split",
-      "summary": "Four newly prominent notebooks share 93.1%–99.95% source similarity and the same overlap/model-package profile. Their PF branch and U-continuity layers act materially only on visible well 00e12e8b; a 100-well selector retains 68.61% worst-decile SSE, and the stochastic-TTA gate fails its own OOF threshold.",
-      "why_it_matters": "Do not infer independent causality from titles or public scores. D022 allows only a clean preimplementation screen for continuous E011 uncertainty/fallback placement; no public constants, artifacts, or score-directed well moves may enter the project."
-    },
-    {
-      "id": "B025",
-      "date": "2026-07-23",
-      "title": "Oracle fallback exists, but legal uncertainty cannot find it",
-      "evidence": "complete_cross_fitted_worth_screen",
-      "visual": "risk_action",
-      "summary": "T022 finds E011/E006 oracle fallback and continuous-blend gains of 0.7587 and 0.8335 RMSE. Seven legal uncertainty families fail: hard logistic is best at only +0.00687, 2/5 maps and 5/25 cells, while continuous branches are negative.",
-      "why_it_matters": "Risk or oracle opportunity is not safe action. D023 closes H016 without E013; the next useful mechanism must create new row-sequence or physical state evidence rather than route the same global paths."
-    },
-    {
-      "id": "B026",
-      "date": "2026-07-23",
-      "title": "Smooth residuals did not prove recoverable signed state",
-      "evidence": "complete_reproduced_sequence_worth_screen",
-      "visual": "trend_transfer",
-      "summary": "T023 finds mean E011 residual ACF of 0.999980 at lag 1 and a 16-control oracle RMSE of 1.1868. The strongest preliminary legal proxy gains 0.2857 RMSE with 5/5 maps and 24/25 cells, but fails spatial group 4; a reversed-profile control still gains 0.1329.",
-      "why_it_matters": "Sequence capacity and smoothness are not the same as legally identified signed state. D025 blocks GRU/TCN/HMM/PF or new-path escalation from this representation; future sequence work needs materially different causal evidence and must defeat reversed/shuffled plus spatial/typewell controls."
-    },
-    {
-      "id": "B027",
-      "date": "2026-07-23",
-      "title": "Wide datum actions retain signal but fail transfer",
-      "evidence": "complete_reproduced_worth_screen",
-      "visual": "residual_action_gate",
-      "summary": "T016 places twelve saved cross-fitted E009 datum-action families on exact E011. Nested placement reaches 12.4930 RMSE, gaining 0.05779 with 5/5 maps and 21/25 cells, but regresses spatial group 3 and typewell group 0.",
-      "why_it_matters": "A small signed datum signal remains, and all controls lose, but repeated aggregate gain cannot override every-group transfer failures. D027 closes the action space without a new refit or subgroup routing."
-    },
-    {
-      "id": "B028",
-      "date": "2026-07-23",
-      "title": "Pseudo coefficient dynamics are real but domain-unstable",
-      "evidence": "complete_reproduced_worth_screen",
-      "visual": "coefficient_transport_gate",
-      "summary": "T025 confirms a 4.1137 last-known spline oracle and a unique legal pseudo-trajectory signal. The best aggregate candidate gains 0.125829 RMSE, but the conservative transfer-eligible placement regresses spatial group 0 and typewell group 4.",
-      "why_it_matters": "The next route should expand the supervised task distribution to many outer-well-isolated long-horizon masks, not retune four fixed pseudo-cut summaries."
-    },
-    {
-      "id": "B029",
-      "date": "2026-07-23",
-      "title": "Long-horizon masks expose target mismatch",
-      "evidence": "complete_reproduced_worth_screen",
-      "visual": "mask_target_mismatch_gate",
-      "summary": "T026 completes 12,216 causal end-of-well tasks and 76 candidates. Every candidate is worse than E011; the best loses 0.074895 RMSE with 0/5 maps. Randomized task coefficients remain correlated with the real target but differ by 14.278922 pooled coefficient RMSE.",
-      "why_it_matters": "More causal views help a weak original-only comparator, but view-local targets are not interchangeable with the competition-boundary target. The next route must preserve one target across views rather than enlarge the model or retune mask horizons."
-    },
-    {
-      "id": "B030",
-      "date": "2026-07-23",
-      "title": "Target-preserving views degrade the original signal",
-      "evidence": "complete_reproduced_worth_screen",
-      "visual": "mask_target_mismatch_gate",
-      "summary": "T027 fixes T026's target mismatch by supervising ten causal feature views with one unchanged original-boundary target. Every augmented candidate worsens E011; the best loses 0.041105 RMSE. The unaugmented comparator gains 0.091923 but fails spatial/typewell transfer.",
-      "why_it_matters": "The failure is now input covariate shift and information loss, not target mismatch. D033 closes feature masking. A successor may change only the training objective on one original view per well and may not route by domain at inference."
-    },
-    {
-      "id": "B031",
-      "date": "2026-07-24",
-      "title": "Domain objectives fail the worth gate before implementation",
-      "evidence": "reproduced_preimplementation_worth_screen",
-      "visual": "residual_action_gate",
-      "summary": "T028 finds that global placement retuning adds only 0.000644 RMSE and no nonzero weight improves all ten domains. Illegal domain-oracle gains are 0.039789 spatial and 0.049402 typewell, below the frozen 0.05 floor.",
-      "why_it_matters": "The project avoids a full GroupDRO/CVaR/robust-loss search with insufficient headroom. Large per-well oracle opportunity still requires hidden routing and cannot authorize a legal objective. D034 forces the next task to find an independent mechanism."
-    },
-    {
-      "id": "B032",
-      "date": "2026-07-24",
-      "title": "A nearly orthogonal datum leg complements pseudo-coefficients",
-      "evidence": "reproduced_covariance_worth_screen",
-      "visual": "ensemble_paths",
-      "summary": "T029 finds row-centered correlation 0.018136 between T025 pseudo-coefficient and T016 datum actions. A 0.40/0.60 diagnostic reaches 12.377388 and improves all ten direct OOF domains.",
-      "why_it_matters": "The next experiment combines independently verified actions instead of reopening a failed target, view, router, or objective. Full-label weights remain diagnostic until T030 confirms them inside untouched contexts."
+      "features": [
+        {
+          "meaning": "The vertical reference is indexed by TVT rather than horizontal-well MD.",
+          "name": "typewell TVT",
+          "plain_name": "Reference geological axis",
+          "use": "Defines the coordinate on which typewell GR is compared with a candidate horizontal-well TVT path.",
+          "watch_out": "It is not a direct lookup for unknown TVT. The model must infer the alignment or warp."
+        },
+        {
+          "meaning": "The expected GR pattern along the reference TVT axis.",
+          "name": "typewell GR",
+          "plain_name": "Reference gamma-ray signature",
+          "use": "Forward-model a candidate TVT path, compare the implied typewell GR with observed horizontal GR, and rank candidate paths.",
+          "watch_out": "Different TVT paths can match similar GR motifs, especially when the signal is repetitive or missing."
+        },
+        {
+          "meaning": "A typewell annotation column that may be sparse or blank.",
+          "name": "Geology",
+          "plain_name": "Optional reference annotation",
+          "use": "Potential segmentation or regime context when present and legally available.",
+          "watch_out": "E004 verified that this annotation is absent from test typewells. It is not a deployable inference feature."
+        }
+      ],
+      "group": "Typewell reference",
+      "purpose": "A vertical reference signature for the geological sequence."
     }
   ],
   "idea_questions": [
     {
-      "signal": "complementary coefficient-datum ensemble",
+      "falsifier": "Stop if Pearson <0.35 or MAE >16 ft; do not rescue with architecture/seed search. Joint TVT work requires every T031 GO gate.",
+      "question": "Can raw legal sequences recover the one-dimensional hidden structural state?",
+      "signal": "latent formation displacement"
+    },
+    {
+      "falsifier": "T032 stops before selector work unless oracle gain >=1.0 RMSE, shape SSE falls >=15%, >=35% of wells benefit, and every legacy domain is nonnegative.",
+      "question": "Does outer-training-only retrieval provide enough nonlinear shape coverage to justify a selector?",
+      "signal": "registered analog tails"
+    },
+    {
+      "falsifier": "Reject if context-local parent regeneration or weight selection removes the gain, any spatial/typewell group regresses, tails worsen, controls retain gain, or the selected blend collapses to one parent.",
       "question": "Can the pseudo-coefficient and datum legs retain their covariance gain under exact outer isolation?",
-      "falsifier": "Reject if context-local parent regeneration or weight selection removes the gain, any spatial/typewell group regresses, tails worsen, controls retain gain, or the selected blend collapses to one parent."
+      "signal": "complementary coefficient-datum ensemble"
     },
     {
-      "signal": "independent mechanism selection",
+      "falsifier": "Reject a proposed successor if its gain is only hidden routing, scalar placement, a reopened closed target/view/objective, public-score tuning, or correlated movement without a frozen oracle and negative-control advantage.",
       "question": "Which remaining legal signal is causally or covariantly independent of the closed families?",
-      "falsifier": "Reject a proposed successor if its gain is only hidden routing, scalar placement, a reopened closed target/view/objective, public-score tuning, or correlated movement without a frozen oracle and negative-control advantage."
+      "signal": "independent mechanism selection"
     },
     {
-      "signal": "domain-robust original-view objective",
+      "falsifier": "T028 triggers the frozen preimplementation falsifier: the weaker domain-oracle gain is only 0.039789 RMSE, no common positive placement exists, and global retuning adds 0.000644. Do not implement or retune this objective family.",
       "question": "Can one original feature vector per well retain coefficient signal while improving worst-domain transfer?",
-      "falsifier": "T028 triggers the frozen preimplementation falsifier: the weaker domain-oracle gain is only 0.039789 RMSE, no common positive placement exists, and global retuning adds 0.000644. Do not implement or retune this objective family."
+      "signal": "domain-robust original-view objective"
     },
     {
-      "signal": "target-preserving causal prefix views",
+      "falsifier": "T027 triggers the falsifier: every augmented-view candidate worsens E011, the best wins 0/5 maps, and broad spatial/typewell/horizon transfer fails. Do not retune masks, views, indicators, weighting, or model size.",
       "question": "Can multiple causal views improve prediction of one unchanged original-boundary spline target?",
-      "falsifier": "T027 triggers the falsifier: every augmented-view candidate worsens E011, the best wins 0/5 maps, and broad spatial/typewell/horizon transfer fails. Do not retune masks, views, indicators, weighting, or model size."
+      "signal": "target-preserving causal prefix views"
     },
     {
-      "signal": "randomized long-horizon mask tasks",
+      "falsifier": "T026 triggers the falsifier: all 76 candidates worsen E011, the best wins 0/5 maps, and broad spatial/typewell/horizon transfer fails. Do not retune mask-local targets or escalate them to neural models.",
       "question": "Can many outer-training-well mask tasks predict nonlinear coefficients across real hidden horizons?",
-      "falsifier": "T026 triggers the falsifier: all 76 candidates worsen E011, the best wins 0/5 maps, and broad spatial/typewell/horizon transfer fails. Do not retune mask-local targets or escalate them to neural models."
+      "signal": "randomized long-horizon mask tasks"
     },
     {
-      "signal": "stable wide datum action",
+      "falsifier": "T016 triggers the falsifier: +0.05779 RMSE and 5/5 maps are real, but spatial group 3 and typewell group 0 regress. Do not refit or retune this action space.",
       "question": "Did saved E009 cross-fitted datum actions retain stable value on top of E011?",
-      "falsifier": "T016 triggers the falsifier: +0.05779 RMSE and 5/5 maps are real, but spatial group 3 and typewell group 0 regress. Do not refit or retune this action space."
+      "signal": "stable wide datum action"
     },
     {
-      "signal": "residual sequence state",
+      "falsifier": "T023 triggers the falsifier: oracle capacity is very large, but the strongest stable branch regresses spatial group 4 and a reversed-profile control retains +0.1329 RMSE. Do not escalate this representation to neural or new path models.",
       "question": "Did coherent E011 residual structure produce a legally recoverable bounded state proxy?",
-      "falsifier": "T023 triggers the falsifier: oracle capacity is very large, but the strongest stable branch regresses spatial group 4 and a reversed-profile control retains +0.1329 RMSE. Do not escalate this representation to neural or new path models."
+      "signal": "residual sequence state"
     },
     {
-      "signal": "continuous uncertainty placement",
+      "falsifier": "T022 triggers the falsifier: headroom is large, but the best legal gate gains only 0.00687, wins 2/5 maps and 5/25 cells, and fails typewell/high-GR-missingness transfer. Do not retune this family.",
       "question": "Is there enough E011-versus-E006 oracle fallback or blend headroom, and can legal uncertainty proxies recover it cross-fitted without hard routing?",
-      "falsifier": "T022 triggers the falsifier: headroom is large, but the best legal gate gains only 0.00687, wins 2/5 maps and 5/25 cells, and fails typewell/high-GR-missingness transfer. Do not retune this family."
+      "signal": "continuous uncertainty placement"
     },
     {
-      "signal": "PF branch uncertainty",
+      "falsifier": "The features fail split-local signed-action tests, repeat spatial/typewell failures, or only explain the three visible public wells.",
       "question": "Can likelihood-weighted PF seed clouds expose branch mass, separation, entropy, and instability that predict when a bounded path move is safe?",
-      "falsifier": "The features fail split-local signed-action tests, repeat spatial/typewell failures, or only explain the three visible public wells."
+      "signal": "PF branch uncertainty"
     },
     {
-      "signal": "hidden-scale runtime",
+      "falsifier": "Runtime extrapolates beyond the scoring limit, memory grows with row-by-candidate matrices, or any well failure prevents a complete output receipt.",
       "question": "Can the final inference path process roughly 200 pseudo-test wells within a conservative resource envelope while preserving exact IDs and deterministic output?",
-      "falsifier": "Runtime extrapolates beyond the scoring limit, memory grows with row-by-candidate matrices, or any well failure prevents a complete output receipt."
+      "signal": "hidden-scale runtime"
     },
     {
-      "signal": "E011 packaging",
+      "falsifier": "A regime lacks split-local support, routing repeats spatial/typewell failures, negative routing controls retain gain, or fallback differs from exact E011.",
       "question": "Can the verified E011 global model be improved safely by regime-specialized coefficient experts?",
-      "falsifier": "A regime lacks split-local support, routing repeats spatial/typewell failures, negative routing controls retain gain, or fallback differs from exact E011."
+      "signal": "E011 packaging"
     },
     {
-      "signal": "regime specialists",
+      "falsifier": "E012 triggers the falsifier: 226 worth-screen branches produce zero positive pooled gains, and the best nested KNN expert misses the gain/cell/spatial/typewell gates. Do not retune this family.",
       "question": "Did legally routed regime experts add stable value beyond E011?",
-      "falsifier": "E012 triggers the falsifier: 226 worth-screen branches produce zero positive pooled gains, and the best nested KNN expert misses the gain/cell/spatial/typewell gates. Do not retune this family."
+      "signal": "regime specialists"
     },
     {
-      "signal": "deployment",
+      "falsifier": "Its gain depends on train-only columns, exact sample reconstruction fails, local notebook output differs, or remote Kaggle parity fails.",
       "question": "Can a candidate remain useful when every input is checked against the actual test schema and the same notebook runs without external artifacts?",
-      "falsifier": "Its gain depends on train-only columns, exact sample reconstruction fails, local notebook output differs, or remote Kaggle parity fails."
+      "signal": "deployment"
     },
     {
-      "signal": "geometry",
+      "falsifier": "The feature loses its gain on repeated whole-well maps or on a harsher spatial/typewell split.",
       "question": "Can a feature predict how the structural trend changes after the TVT_input boundary without using hidden labels?",
-      "falsifier": "The feature loses its gain on repeated whole-well maps or on a harsher spatial/typewell split."
+      "signal": "geometry"
     },
     {
-      "signal": "gamma ray",
+      "falsifier": "A shuffled-template control performs similarly or low GR mismatch does not correlate with TVT improvement.",
       "question": "Can candidate-path ranking use GR pattern shape while remaining robust to repeated motifs and reversed movement?",
-      "falsifier": "A shuffled-template control performs similarly or low GR mismatch does not correlate with TVT improvement."
+      "signal": "gamma ray"
     },
     {
-      "signal": "surfaces",
+      "falsifier": "E005 triggered the standalone-path falsifier: PF improved pooled RMSE but failed repeated-map, p90, spatial, and typewell-cluster gates. Only a fresh controlled fusion experiment may reuse its evidence.",
       "question": "Can test-available GR/typewell alignment reconstruct some of the structural context that training-only formation surfaces reveal?",
-      "falsifier": "E005 triggered the standalone-path falsifier: PF improved pooled RMSE but failed repeated-map, p90, spatial, and typewell-cluster gates. Only a fresh controlled fusion experiment may reuse its evidence."
+      "signal": "surfaces"
     },
     {
-      "signal": "whole well",
+      "falsifier": "The candidate improves easy wells but increases worst-5% SSE share or fails runtime constraints.",
       "question": "Can a whole-well candidate avoid the error accumulation of purely sequential particle updates?",
-      "falsifier": "The candidate improves easy wells but increases worst-5% SSE share or fails runtime constraints."
+      "signal": "whole well"
     },
     {
-      "signal": "uncertainty",
+      "falsifier": "E009 triggers the falsifier: consensus rules select nearly the same wells, retain spatial/typewell failures, and a sign-flipped model bank still gains above the frozen cap. Do not retune consensus thresholds.",
       "question": "Can target-independent uncertainty actually isolate unsafe signed action rather than merely report shared model confidence?",
-      "falsifier": "E009 triggers the falsifier: consensus rules select nearly the same wells, retain spatial/typewell failures, and a sign-flipped model bank still gains above the frozen cap. Do not retune consensus thresholds."
+      "signal": "uncertainty"
     },
     {
-      "signal": "ensemble",
+      "falsifier": "E007 shows the stricter standard: its fixed self-correlation leg improved aggregate RMSE and all five maps but still failed p90 and subgroup gates. Future additions must beat E006 without repeating those shift failures.",
       "question": "Does a weak candidate reduce pooled RMSE when blended with the strongest OOF path because its residual correlation is low?",
-      "falsifier": "E007 shows the stricter standard: its fixed self-correlation leg improved aggregate RMSE and all five maps but still failed p90 and subgroup gates. Future additions must beat E006 without repeating those shift failures."
+      "signal": "ensemble"
     }
   ],
+  "schema_version": 1,
   "sources": [
     {
-      "title": "Official competition snapshot",
       "local_path": "archive/competition/official_summary.md",
+      "title": "Official competition snapshot",
       "url": "https://www.kaggle.com/competitions/rogii-wellbore-geology-prediction"
     },
     {
-      "title": "Diagram of the problem discussion",
       "local_path": "archive/discussions/messages_001.jsonl#topic-697418",
+      "title": "Diagram of the problem discussion",
       "url": "https://www.kaggle.com/competitions/rogii-wellbore-geology-prediction/discussion/697418"
     },
     {
-      "title": "UI visualizer discussion",
       "local_path": "archive/discussions/messages_001.jsonl#topic-700424",
+      "title": "UI visualizer discussion",
       "url": "https://www.kaggle.com/competitions/rogii-wellbore-geology-prediction/discussion/700424"
     },
     {
-      "title": "Winning-note synthesis",
       "local_path": "archive/writeups/synthesis.md",
+      "title": "Winning-note synthesis",
       "url": ""
     },
     {
-      "title": "E001 validated results",
       "local_path": "experiments/E001/RESULT.md",
+      "title": "E001 validated results",
       "url": ""
     },
     {
-      "title": "E002 rejected structural ladder",
       "local_path": "experiments/E002/RESULT.md",
+      "title": "E002 rejected structural ladder",
       "url": ""
     },
     {
-      "title": "E003 promoted learnability result",
       "local_path": "experiments/E003/RESULT.md",
+      "title": "E003 promoted learnability result",
       "url": ""
     },
     {
-      "title": "E004 surface-free deployment result",
       "local_path": "experiments/E004/RESULT.md",
+      "title": "E004 surface-free deployment result",
       "url": ""
     },
     {
-      "title": "E005 rejected GR path result",
       "local_path": "experiments/E005/RESULT.md",
+      "title": "E005 rejected GR path result",
       "url": ""
     },
     {
-      "title": "E006 promoted nested fusion result",
       "local_path": "experiments/E006/RESULT.md",
+      "title": "E006 promoted nested fusion result",
       "url": ""
     },
     {
-      "title": "E007 rejected horizontal self-correlation result",
       "local_path": "experiments/E007/RESULT.md",
+      "title": "E007 rejected horizontal self-correlation result",
       "url": ""
     },
     {
-      "title": "E008 rejected residual-action result",
       "local_path": "experiments/E008/RESULT.md",
+      "title": "E008 rejected residual-action result",
       "url": ""
     },
     {
-      "title": "E009 rejected consensus-abstention result",
       "local_path": "experiments/E009/RESULT.md",
+      "title": "E009 rejected consensus-abstention result",
       "url": ""
     },
     {
-      "title": "Public notebook and discussion intelligence refresh",
       "local_path": "archive/competition/public_intelligence_2026-07-20.md",
+      "title": "Public notebook and discussion intelligence refresh",
       "url": ""
     },
     {
-      "title": "July 22 public frontier and discussion audit",
       "local_path": "archive/competition/public_intelligence_2026-07-22.md",
+      "title": "July 22 public frontier and discussion audit",
       "url": ""
     },
     {
-      "title": "E010 rejected selector and validated candidate-coverage result",
       "local_path": "experiments/E010/RESULT.md",
+      "title": "E010 rejected selector and validated candidate-coverage result",
       "url": "https://www.kaggle.com/code/ashok205/e010-candidate-selector-kaggle/"
     },
     {
-      "title": "Verified leaderboard split and BirdCLEF specialist lesson",
       "local_path": "archive/competition/knowledge_context_2026-07-22.md",
+      "title": "Verified leaderboard split and BirdCLEF specialist lesson",
       "url": "https://doi.org/10.34740/KAGGLE/W/86265"
     },
     {
-      "title": "E011 independently reproduced statistical promotion",
       "local_path": "experiments/E011/RESULT.md",
+      "title": "E011 independently reproduced statistical promotion",
       "url": ""
     },
     {
-      "title": "E011 completed Kaggle output review",
       "local_path": "experiments/E011/deployment/kaggle_output_review.json",
+      "title": "E011 completed Kaggle output review",
       "url": "https://www.kaggle.com/code/ashok205/e011-spline4-deployment-kaggle?scriptVersionId=337242364"
     },
     {
-      "title": "E011 private dataset upload receipt",
       "local_path": "experiments/E011/deployment/kaggle_upload_receipt.json",
+      "title": "E011 private dataset upload receipt",
       "url": ""
     },
     {
-      "title": "E011 verification and artifact receipts",
       "local_path": "experiments/E011/verification.json",
+      "title": "E011 verification and artifact receipts",
       "url": ""
     },
     {
-      "title": "E012 rejected regime-specialist confirmation",
       "local_path": "experiments/E012/RESULT.md",
+      "title": "E012 rejected regime-specialist confirmation",
       "url": ""
     },
     {
-      "title": "July 23 public frontier source and output audit",
       "local_path": "archive/competition/public_intelligence_2026-07-23.md",
+      "title": "July 23 public frontier source and output audit",
       "url": ""
     },
     {
-      "title": "T022 rejected uncertainty/fallback worth screen",
       "local_path": "tracking/evidence/T022/RESULT.md",
+      "title": "T022 rejected uncertainty/fallback worth screen",
       "url": ""
     },
     {
-      "title": "T023 rejected residual sequence-state worth screen",
       "local_path": "tracking/evidence/T023/RESULT.md",
+      "title": "T023 rejected residual sequence-state worth screen",
       "url": ""
     },
     {
-      "title": "July 23 17:04 public-intelligence delta",
       "local_path": "archive/competition/public_intelligence_delta_2026-07-23_1704.md",
+      "title": "July 23 17:04 public-intelligence delta",
       "url": ""
     },
     {
-      "title": "T016 rejected stable wide datum worth screen",
       "local_path": "tracking/evidence/T016/RESULT.md",
+      "title": "T016 rejected stable wide datum worth screen",
       "url": ""
     },
     {
-      "title": "July 23 18:35 public-intelligence delta",
       "local_path": "archive/competition/public_intelligence_delta_2026-07-23_1835.md",
+      "title": "July 23 18:35 public-intelligence delta",
       "url": ""
     },
     {
-      "title": "T024 independent-mechanism selection",
       "local_path": "tracking/evidence/T024/RESULT.md",
+      "title": "T024 independent-mechanism selection",
       "url": ""
     },
     {
-      "title": "T025 rejected multi-cut coefficient dynamics screen",
       "local_path": "tracking/evidence/T025/RESULT.md",
+      "title": "T025 rejected multi-cut coefficient dynamics screen",
       "url": ""
     },
     {
-      "title": "July 23 19:34 public-intelligence delta",
       "local_path": "archive/competition/public_intelligence_delta_2026-07-23_1934.md",
+      "title": "July 23 19:34 public-intelligence delta",
       "url": ""
     },
     {
-      "title": "T026 rejected randomized mask-task screen",
       "local_path": "tracking/evidence/T026/RESULT.md",
+      "title": "T026 rejected randomized mask-task screen",
       "url": ""
     },
     {
-      "title": "July 23 22:15 public-intelligence delta",
       "local_path": "archive/competition/public_intelligence_delta_2026-07-23_2215.md",
+      "title": "July 23 22:15 public-intelligence delta",
       "url": ""
     },
     {
-      "title": "T027 rejected target-preserving feature-view screen",
       "local_path": "tracking/evidence/T027/RESULT.md",
+      "title": "T027 rejected target-preserving feature-view screen",
       "url": ""
     },
     {
-      "title": "July 23 23:56 public-intelligence and rules delta",
       "local_path": "archive/competition/public_intelligence_delta_2026-07-23_2356.md",
+      "title": "July 23 23:56 public-intelligence and rules delta",
       "url": ""
     },
     {
-      "title": "T028 rejected domain-objective worth screen",
       "local_path": "tracking/evidence/T028/RESULT.md",
+      "title": "T028 rejected domain-objective worth screen",
       "url": ""
     },
     {
-      "title": "T029 complementary saved-action covariance selection",
       "local_path": "tracking/evidence/T029/RESULT.md",
+      "title": "T029 complementary saved-action covariance selection",
       "url": ""
     }
-  ]
+  ],
+  "subtitle": "A beginner-first visual guide to the data, geology, target, validation, and idea space.",
+  "title": "ROGII Competition Learning Lab",
+  "updated_at": "2026-07-23"
 }

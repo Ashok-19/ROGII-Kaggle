@@ -1,0 +1,29 @@
+{
+  "edge_groups": 23,
+  "passed": [
+    "simplex_box_grid_boundaries_counts",
+    "deterministic_grid_order",
+    "zero_weight_exact_fallback",
+    "finite_exact_sufficient_statistic_scoring",
+    "single_parent_and_combined_dimensions",
+    "nonfinite_dimension_rejection",
+    "nonfinite_action_rejection",
+    "all_missing_zero_variance_imputation",
+    "tiny_ridge_partition",
+    "row_action_averaging",
+    "metric_averaging_not_used",
+    "coefficient_datum_cross_term_symmetry",
+    "t016_scale_cap_extreme_boundaries",
+    "deterministic_ties",
+    "strict_context_membership",
+    "repeated_inner_heldout_exclusion",
+    "stress_inner_heldout_exclusion",
+    "empty_inner_partition_rejection",
+    "domain_partition_completeness",
+    "horizon_quintile_completeness",
+    "joint_control_determinism",
+    "maximum_correction_bound_contract",
+    "branch_control_contract"
+  ],
+  "status": "PASS"
+}
