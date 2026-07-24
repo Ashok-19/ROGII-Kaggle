@@ -179,20 +179,43 @@ def summarize(metrics: Iterable[Metric]) -> dict[str, float]:
 
 def load_wells() -> tuple[list[WellData], np.ndarray, np.ndarray, list[dict[str, int]]]:
     path = ROOT / "artifacts/E011/oof_predictions.csv.gz"
-    columns = ["well_id", "target", "e006_nested_fusion", "spline4_ridge_equal_s075"]
+    columns = [
+        "well_id",
+        "hidden_index",
+        "target",
+        "e006_nested_fusion",
+        "spline4_ridge_equal_s075",
+    ]
     frame = pd.read_csv(path, usecols=columns, dtype={"well_id": str})
+    frame = frame.sort_values(["well_id", "hidden_index"], kind="mergesort").reset_index(drop=True)
     compact = np.load(ROOT / "artifacts/E011/compact_stats_v1.npz", allow_pickle=False)
     well_order = [str(x) for x in compact["well_ids"]]
+    expected_rows = compact["rows"].astype(int)
+    if len(well_order) != 773 or len(set(well_order)) != 773:
+        raise ValueError("T033 requires exactly 773 unique wells")
     groups = {str(well_id): group for well_id, group in frame.groupby("well_id", sort=False)}
+    if set(groups) != set(well_order):
+        raise ValueError("OOF well IDs do not exactly match the compact artifact")
     wells: list[WellData] = []
-    for well_id in well_order:
+    for index, well_id in enumerate(well_order):
         g = groups[well_id]
+        hidden_index = g["hidden_index"].to_numpy(int)
+        if len(g) != int(expected_rows[index]):
+            raise ValueError(f"{well_id}: hidden row count differs from compact artifact")
+        if not np.array_equal(hidden_index, np.arange(len(g), dtype=int)):
+            raise ValueError(f"{well_id}: hidden_index is not contiguous from zero")
         truth = g["target"].to_numpy(np.float64)
         e006 = g["e006_nested_fusion"].to_numpy(np.float64)
         e011 = g["spline4_ridge_equal_s075"].to_numpy(np.float64)
+        if not np.isfinite(np.column_stack([truth, e006, e011])).all():
+            raise ValueError(f"{well_id}: OOF path contains non-finite values")
         residual = truth - e011
         q, diag, off = interpolation_sufficient(residual)
-        profile = np.interp(np.linspace(0.0, residual.size - 1.0, GRID), np.arange(residual.size), residual)
+        profile = np.interp(
+            np.linspace(0.0, residual.size - 1.0, GRID),
+            np.arange(residual.size),
+            residual,
+        )
         wells.append(WellData(
             well_id=well_id,
             rows=residual.size,
@@ -209,7 +232,10 @@ def load_wells() -> tuple[list[WellData], np.ndarray, np.ndarray, list[dict[str,
     assignments: list[dict[str, int]] = []
     for version in range(1, 6):
         payload = json.loads((ROOT / f"folds/v{version}.json").read_text(encoding="utf-8"))
-        assignments.append({str(k): int(v) for k, v in payload["assignments"].items()})
+        assignment = {str(k): int(v) for k, v in payload["assignments"].items()}
+        if set(assignment) != set(well_order) or set(assignment.values()) != set(range(5)):
+            raise ValueError(f"fold map v{version} does not cover all wells and folds")
+        assignments.append(assignment)
     return wells, compact["spatial_assignment"].astype(int), compact["typewell_assignment"].astype(int), assignments
 
 
@@ -312,6 +338,8 @@ def run(config: dict[str, Any], output_dir: Path) -> dict[str, Any]:
     map_rows: list[dict[str, Any]] = []
     membership_rows: list[dict[str, Any]] = []
     same_well_violations = 0
+    deterministic_dictionary_delta = 0.0
+    random_dictionary_deterministic = True
 
     kmeans_sizes = sorted({spec["size"] for spec in specs if spec["family"] in {"kmeans_single", "kmeans_pair"}})
     pca_max = max(spec["size"] for spec in specs if spec["family"] == "pca")
@@ -334,6 +362,22 @@ def run(config: dict[str, Any], output_dir: Path) -> dict[str, Any]:
                 centers_by_size[size] = centers
                 if any(spec["family"] == "kmeans_pair" and spec["size"] == size for spec in specs):
                     pair_by_size[size] = pair_candidates(centers, pair_weights)
+            if map_index == 0 and fold == 0:
+                check_size = kmeans_sizes[0]
+                check_seed = 33000 + check_size
+                repeat_model = KMeans(
+                    n_clusters=check_size,
+                    random_state=check_seed,
+                    n_init=16,
+                    max_iter=300,
+                    algorithm="lloyd",
+                )
+                repeat_model.fit(train_profiles)
+                repeat_centers = np.clip(repeat_model.cluster_centers_, -CAP, CAP)
+                deterministic_dictionary_delta = max(
+                    deterministic_dictionary_delta,
+                    float(np.max(np.abs(centers_by_size[check_size] - repeat_centers))),
+                )
             random_by_key: dict[tuple[int, int], np.ndarray] = {}
             for spec in specs:
                 if spec["family"] == "random_source":
@@ -341,6 +385,11 @@ def run(config: dict[str, Any], output_dir: Path) -> dict[str, Any]:
                     rng = np.random.default_rng(spec["seed"] + 1000 * map_index + 100 * fold)
                     order = rng.permutation(train_idx)
                     random_by_key[key] = profiles[order[: spec["size"]]]
+            if map_index == 0 and fold == 0:
+                check_seed = 3301
+                first_order = np.random.default_rng(check_seed).permutation(train_idx)
+                second_order = np.random.default_rng(check_seed).permutation(train_idx)
+                random_dictionary_deterministic = bool(np.array_equal(first_order, second_order))
             gaussian_by_key: dict[tuple[int, int], np.ndarray] = {}
             for spec in specs:
                 if spec["family"] == "smooth_gaussian":
@@ -350,6 +399,14 @@ def run(config: dict[str, Any], output_dir: Path) -> dict[str, Any]:
                         spec["size"],
                         spec["seed"] + 1000 * map_index + 100 * fold,
                     )
+            if map_index == 0 and fold == 0:
+                gaussian_seed = 3311
+                first_gaussian = smooth_gaussian_dictionary(train_profiles, 16, gaussian_seed)
+                second_gaussian = smooth_gaussian_dictionary(train_profiles, 16, gaussian_seed)
+                deterministic_dictionary_delta = max(
+                    deterministic_dictionary_delta,
+                    float(np.max(np.abs(first_gaussian - second_gaussian))),
+                )
 
             for q in test_idx:
                 well = wells[int(q)]
@@ -400,11 +457,25 @@ def run(config: dict[str, Any], output_dir: Path) -> dict[str, Any]:
     spline_metrics, _ = spline7_reference(wells)
     spline_summary = summarize(spline_metrics)
 
+    def pooled_decomposition_matches(value: dict[str, float]) -> bool:
+        delta = abs(value["sse"] - value["datum_sse"] - value["trend_sse"] - value["shape_sse"])
+        return delta <= max(1e-6, abs(value["sse"]) * 1e-12)
+
+    pooled_decomposition_consistent = (
+        pooled_decomposition_matches(baseline)
+        and pooled_decomposition_matches(spline_summary)
+    )
+    row_order = np.argsort(np.asarray([well.rows for well in wells]), kind="mergesort")
+    horizon_group = np.empty(n, dtype=int)
+    for rank, index in enumerate(row_order):
+        horizon_group[index] = min(4, int(rank * 5 / n))
+
     config_rows: list[dict[str, Any]] = []
     group_rows: list[dict[str, Any]] = []
     well_rows: list[dict[str, Any]] = []
     branch_metrics: dict[str, list[Metric]] = {}
     branch_profiles: dict[str, np.ndarray] = {}
+    all_predictions_finite = True
     for spec in specs:
         name = spec["name"]
         averaged = np.clip(sums[name] / 5.0, -CAP, CAP)
@@ -413,18 +484,30 @@ def run(config: dict[str, Any], output_dir: Path) -> dict[str, Any]:
         positive = 0
         for i, well in enumerate(wells):
             prediction = well.e011 + interpolate_profile(averaged[i], well.rows)
+            all_predictions_finite = all_predictions_finite and bool(np.isfinite(prediction).all())
             metric = error_metric(prediction - well.truth)
             metrics.append(metric)
             positive += int(metric.sse < baseline_metrics[i].sse - 1e-9)
         branch_metrics[name] = metrics
         summary = summarize(metrics)
-        group_rmses: list[float] = []
-        for system, assignment in [("legacy_spatial", spatial), ("legacy_typewell", typewell)]:
+        pooled_decomposition_consistent = (
+            pooled_decomposition_consistent and pooled_decomposition_matches(summary)
+        )
+        legacy_group_rmses: list[float] = []
+        horizon_group_rmses: list[float] = []
+        for system, assignment, include_in_legacy_gate in [
+            ("legacy_spatial", spatial, True),
+            ("legacy_typewell", typewell, True),
+            ("horizon_quintile", horizon_group, False),
+        ]:
             for group in range(5):
                 ids = np.flatnonzero(assignment == group)
                 candidate = summarize(metrics[int(i)] for i in ids)
                 base_group = summarize(baseline_metrics[int(i)] for i in ids)
-                group_rmses.append(candidate["rmse"])
+                if include_in_legacy_gate:
+                    legacy_group_rmses.append(candidate["rmse"])
+                else:
+                    horizon_group_rmses.append(candidate["rmse"])
                 group_rows.append({
                     "branch": name,
                     "group_system": system,
@@ -439,7 +522,8 @@ def run(config: dict[str, Any], output_dir: Path) -> dict[str, Any]:
             "gain_vs_e011": baseline["rmse"] - summary["rmse"],
             "shape_sse_reduction_fraction": (baseline["shape_sse"] - summary["shape_sse"]) / baseline["shape_sse"],
             "positive_well_fraction": positive / n,
-            "maximum_legacy_group_rmse": max(group_rmses),
+            "maximum_legacy_group_rmse": max(legacy_group_rmses),
+            "maximum_horizon_group_rmse": max(horizon_group_rmses),
         })
 
     compact_rows = [row for row in config_rows if bool(row["compact"])]
@@ -470,6 +554,7 @@ def run(config: dict[str, Any], output_dir: Path) -> dict[str, Any]:
             "rows": well.rows,
             "legacy_spatial": int(spatial[i]),
             "legacy_typewell": int(typewell[i]),
+            "horizon_quintile": int(horizon_group[i]),
             "baseline_rmse": baseline_metrics[i].rmse,
             "candidate_rmse": best_metrics[i].rmse,
             "baseline_sse": baseline_metrics[i].sse,
@@ -494,7 +579,16 @@ def run(config: dict[str, Any], output_dir: Path) -> dict[str, Any]:
             "duplicate_action_invariance": duplicate_delta <= 1e-9,
             "zero_action_exact_e011": zero_delta <= 1e-12,
             "finite_profiles": all_profiles_finite,
+            "finite_reconstructions": all_predictions_finite,
             "action_cap": maximum_action <= CAP + 1e-9,
+            "deterministic_dictionary_initialization": (
+                deterministic_dictionary_delta <= 1e-12 and random_dictionary_deterministic
+            ),
+            "pooled_sse_decomposition_consistency": pooled_decomposition_consistent,
+            "horizon_groups_complete": (
+                set(map(int, np.unique(horizon_group))) == set(range(5))
+                and len(group_rows) == len(specs) * 15
+            ),
             "spline7_reference": abs(spline_summary["rmse"] - float(next(x["expected_rmse"] for x in config["branches"] if x["name"] == "spline7_oracle_reference"))) <= 1e-9,
             "branch_count": len(config_rows) == len(specs),
         },
@@ -513,6 +607,7 @@ def run(config: dict[str, Any], output_dir: Path) -> dict[str, Any]:
         "exact_scoring": "tridiagonal interpolation sufficient statistics reproduce actual-row SSE for every candidate profile",
         "aggregation": "five outer-map oracle action profiles averaged per well",
         "same_well_rule": "all empirical actions fitted or selected from outer-training wells only",
+        "validation_completion": "five horizon groups emitted; deterministic KMeans/random/Gaussian initialization and pooled SSE decomposition asserted",
     }
     summary = {
         "schema_version": 1,
@@ -551,6 +646,7 @@ def run(config: dict[str, Any], output_dir: Path) -> dict[str, Any]:
         f"- Shape-SSE reduction: {best_compact['shape_sse_reduction_fraction']:.6%}",
         f"- Positive wells: {best_compact['positive_well_fraction']:.6%}",
         f"- Maximum legacy group RMSE: {best_compact['maximum_legacy_group_rmse']:.6f}",
+        f"- Maximum horizon-group RMSE: {best_compact['maximum_horizon_group_rmse']:.6f}",
         "",
         "## Gates",
     ]
