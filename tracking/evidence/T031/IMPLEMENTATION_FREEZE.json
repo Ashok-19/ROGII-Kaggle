@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "task_id": "T031",
+  "frozen_at": "2026-07-24T17:35:42+05:30",
+  "state_metrics_observed_before_freeze": false,
+  "run_script": "tracking/evidence/T031/run_screen.py",
+  "run_script_sha256": "efa28e474718c4a2118950edd3b022a52fd7e20b3d1e7edbf78c0d7714da1de3",
+  "config_sha256": "0bd4d0c7558068cca05884e3de372bd6a0253b17a2ea56a802b04c2aa8a75a85",
+  "tensor_contract": {
+    "horizontal_shape": [773, 256, 14],
+    "typewell_shape": [773, 192, 5],
+    "horizontal_sha256": "3b12979d3049883a4a12f67a84dbcce68b87bcb4018e2e753df073b342e005f6",
+    "typewell_sha256": "3a7705ce8c8bc97211ad1fc230557c2f4e12a8d0d9599e18893be82f07686776",
+    "target_sha256": "aa53407b24d0befc8794b44a633844f9194c4d260a1637dd487ea7d8ade0ba82",
+    "independent_rebuild_match": true
+  },
+  "resolved_implementation_choices": {
+    "tcn_convolution": "depthwise-separable symmetric-padded temporal convolution",
+    "width": 64,
+    "kernel": 5,
+    "dilations": [1, 2, 4, 8, 16, 32],
+    "residual_stacks": 2,
+    "pooling": "mean plus learned attention",
+    "typewell_encoder": "three residual blocks with dilations 1, 2, 4",
+    "inner_validation_fold": "(outer_fold + 1) mod 5 within the same immutable map",
+    "refit": "full outer-training refit for the selected epoch",
+    "primary_aggregation": "mean of five whole-well OOF map predictions",
+    "eligible_primary_branches": [
+      "raw_binned_ridge",
+      "state_tcn",
+      "state_tcn_no_typewell",
+      "state_tcn_no_hidden_gr"
+    ],
+    "primary_branch_tie_break": "highest Pearson, then lowest MAE, then lexical branch name",
+    "control_signal_destruction": "1 - abs(control Pearson) / abs(full state_tcn Pearson)"
+  },
+  "environment": {
+    "python": "3.12",
+    "torch": "2.7.1+cpu",
+    "torch_location": "scratch/_t031_deps",
+    "threads": 2
+  },
+  "score_blind_checks": {
+    "python_compile": "PASS",
+    "synthetic_tcn_smoke": "PASS",
+    "tensor_build": "PASS",
+    "tensor_rebuild": "PASS",
+    "all_raw_tensors_finite": true,
+    "all_evaluator_groups_have_five_groups": true
+  },
+  "prohibited_after_first_metric": [
+    "adding or removing branches",
+    "changing channels, bins, model width, depth, dilations, seed, training schedule, groups, thresholds, controls, or target",
+    "starting joint TVT prediction inside T031"
+  ]
+}

@@ -4,10 +4,10 @@
     "due_at": "2026-07-26",
     "phase": "preregistered_auxiliary_state_gate",
     "priority": 1,
-    "status": "queued",
+    "status": "active",
     "task_id": "T031",
     "title": "Test raw-sequence latent-state identifiability",
-    "updated_at": "2026-07-24T11:06:08Z"
+    "updated_at": "2026-07-24T12:05:42Z"
   },
   "recorded_at": "2026-07-24T11:06:08Z",
   "type": "task"
