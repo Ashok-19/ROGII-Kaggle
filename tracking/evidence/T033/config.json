@@ -1,0 +1,166 @@
+{
+  "branches": [
+    {
+      "family": "baseline",
+      "name": "e011_zero_action"
+    },
+    {
+      "expected_rmse": 2.625141070954217,
+      "family": "existing capacity reference",
+      "name": "spline7_oracle_reference"
+    },
+    {
+      "center": true,
+      "coefficient_fit": "held-out least squares",
+      "family": "outer-training PCA basis",
+      "name": "outer_pca_oracle",
+      "ranks": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        32
+      ]
+    },
+    {
+      "dictionary_sizes": [
+        4,
+        8,
+        16,
+        32,
+        64,
+        128
+      ],
+      "family": "outer-training centroid dictionary",
+      "name": "outer_kmeans_single_oracle",
+      "selection": "held-out minimum SSE single centroid"
+    },
+    {
+      "dictionary_sizes": [
+        8,
+        16,
+        32
+      ],
+      "family": "two-centroid convex mixture",
+      "name": "outer_kmeans_pair_oracle",
+      "selection": "held-out minimum SSE pair and weight",
+      "weights": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0
+      ]
+    },
+    {
+      "dictionary_sizes": [
+        9,
+        16,
+        32,
+        64,
+        128
+      ],
+      "family": "deterministic random source dictionary control",
+      "name": "outer_random_source_oracle",
+      "seeds": [
+        3301,
+        3302,
+        3303,
+        3304,
+        3305
+      ]
+    },
+    {
+      "dictionary_sizes": [
+        16,
+        32,
+        64
+      ],
+      "family": "synthetic covariance-matched smooth action control",
+      "name": "smooth_gaussian_dictionary_control",
+      "seeds": [
+        3311,
+        3312,
+        3313
+      ]
+    }
+  ],
+  "compute": {
+    "maximum_cpu_hours": 2,
+    "maximum_rss_gb": 4,
+    "threads": 2
+  },
+  "controls": [
+    "same-well exclusion",
+    "duplicate action invariance",
+    "zero action exact E011",
+    "deterministic dictionary initialization",
+    "action cap",
+    "finite reconstruction",
+    "synthetic smooth dictionary comparator",
+    "pooled SSE decomposition consistency"
+  ],
+  "deployment": {
+    "kaggle_execution_authorized": false,
+    "package_authorized": false,
+    "submission_authorized": false
+  },
+  "expected_wells": 773,
+  "go_gate": {
+    "compact_definition": "PCA rank <=8, single-centroid dictionary <=32, or pair dictionary <=16",
+    "maximum_compact_oracle_rmse": 5.0,
+    "maximum_every_legacy_group_rmse": 6.0,
+    "minimum_positive_well_fraction": 0.8,
+    "minimum_shape_sse_reduction_fraction": 0.7,
+    "require_same_well_exclusion": true
+  },
+  "hypothesis_id": "H025",
+  "if_passed": "Use T034 identifiability evidence to decide whether to preregister a legal prototype/mixture predictor.",
+  "inputs": {
+    "e011_compact": "artifacts/E011/compact_stats_v1.npz",
+    "e011_oof": "artifacts/E011/oof_predictions.csv.gz",
+    "fold_files": [
+      "folds/v1.json",
+      "folds/v2.json",
+      "folds/v3.json",
+      "folds/v4.json",
+      "folds/v5.json"
+    ],
+    "legal_features": "experiments/E003/results/legal_features.csv"
+  },
+  "research_zone": "best compact branch RMSE 5.001-6.0; report structure but do not authorize a legal model",
+  "schema_version": 1,
+  "selection": {
+    "no_post_score_branch_additions": true,
+    "no_post_score_gate_changes": true,
+    "no_post_score_rank_changes": true
+  },
+  "stage": "hidden_label_capacity_diagnostic_only_no_legal_selector",
+  "stop_gate": "If no rank <=16 or dictionary <=64 branch reaches RMSE <=6.0, close compact reusable residual manifolds.",
+  "target": {
+    "action_cap_ft": 160.0,
+    "construction": "TVT_true minus exact E011 OOF path, resampled to 128 normalized-hidden-fraction nodes",
+    "name": "e011_hidden_residual_curve",
+    "role": "outer-training action library and held-out oracle scoring only",
+    "same_well_exclusion": true
+  },
+  "task_id": "T033",
+  "title": "Cross-fitted residual action-manifold capacity gate",
+  "validation": {
+    "aggregation": "fit each map/fold on outer-training wells, choose or fit held-out oracle action, then average five map actions per well before pooled scoring",
+    "contexts": 25,
+    "horizon_groups": 5,
+    "legacy_stress": [
+      "5 spatial groups",
+      "5 typewell groups"
+    ],
+    "metrics": [
+      "pooled RMSE",
+      "shape SSE reduction",
+      "positive-well fraction",
+      "group RMSE",
+      "dictionary diversity"
+    ]
+  }
+}

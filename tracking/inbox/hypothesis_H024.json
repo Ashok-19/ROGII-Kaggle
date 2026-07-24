@@ -1,12 +1,12 @@
 {
   "payload": {
-    "evidence_against": "E010 already proves that coverage does not imply legal selection; repeated motifs, GR missingness, and domain shift may make retrieval underidentified.",
+    "evidence_against": "T032 registered analog retrieval improved E011 to 8.674114 RMSE but missed the frozen 15% shape-SSE gate at 14.231%. More decisively, a full-grid shuffled-action control reached 8.031442 RMSE, reduced shape SSE by 24.909%, helped 95.860% of wells, and passed every main coverage gate. The available residual action dictionary has coverage, but the registered U/GR/geometry similarity does not identify geological analogs.",
     "evidence_for": "DTW/retrieval is materially independent of the closed summary/view/objective families and public source audits expose rare unique candidate coverage.",
     "hypothesis_id": "H024",
-    "next_test": "Run T032 oracle coverage only; no selector unless all coverage gates pass.",
+    "next_test": "Close analog-tail retrieval before selector work. Run T033 action-manifold capacity and T034 legal-identifiability diagnostics as independent gates.",
     "priority": 2,
     "statement": "Outer-training-only sequence registration can retrieve analog tail actions that cover E011 shape error independently of summary coefficient models.",
-    "status": "active",
+    "status": "rejected",
     "title": "Registered analog tails provide independent nonlinear coverage"
   },
   "recorded_at": "2026-07-24T11:06:08Z",

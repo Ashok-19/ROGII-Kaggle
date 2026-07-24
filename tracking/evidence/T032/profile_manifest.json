@@ -1,0 +1,39 @@
+{
+  "cache_sha256": "ad7b48e9b4440bec75dd7734a2c78a719ff5d50fe896aa14a47ee98c1478b2ad",
+  "distance_shape": [
+    773,
+    773
+  ],
+  "dtw_radius_gr": 8,
+  "dtw_radius_u": 6,
+  "geometry_shape": [
+    773,
+    8
+  ],
+  "horizontal_distance_sha256": "4f4c1b9b0360a04da48d4438d769c46996407a1e3e466482a429e561326846d9",
+  "horizontal_shape": [
+    773,
+    96,
+    2
+  ],
+  "input_files": {
+    "artifacts/E011/compact_stats_v1.npz": "cb2788c602f718dc7a76f09a62bbb433c1d7cda7dd93d69ee8905524eb09156d",
+    "experiments/E003/results/legal_features.csv": "1700b3d4b03bb949ed362a3a66ca4c9c72177e0e4fd0087cbfb1a4a72f151fe2"
+  },
+  "runtime_seconds": 11.377478122711182,
+  "schema_version": 1,
+  "status": "BUILD_ONLY_PASS",
+  "typewell_distance_sha256": "cb69f82fbe4b4d45972149e81779c0f2a68df2759a6a1eeab1b55907008840b3",
+  "typewell_shape": [
+    773,
+    96,
+    2
+  ],
+  "u_distance_sha256": "c890d1795eb7d2ffd5704d0491c9c7f90e532064c2b802f6c2337009aebf26d4",
+  "u_shape": [
+    773,
+    64
+  ],
+  "well_count": 773,
+  "well_ids_sha256": "6319dbb031e65771cef4f62c5560e841729d30b078d1977d9c6f584803c28b67"
+}

@@ -1,0 +1,14 @@
+{
+  "payload": {
+    "evidence_against": "E011 retains only 21.95% of spline4 oracle gain, T031 state recovery hard-stopped, and T032 legal similarity was beaten by shuffled actions.",
+    "evidence_for": "E011 coefficient correlations are near 0.5 and T032 demonstrates broad reusable action coverage.",
+    "hypothesis_id": "H026",
+    "next_test": "Execute frozen T034 identifiability and mediation diagnostic only.",
+    "priority": 1,
+    "statement": "Legal summary and raw-binned observations contain enough information to identify spline7 residual actions, while privileged geology quantifies the missing-state ceiling.",
+    "status": "active",
+    "title": "Legal observations identify residual manifold coordinates"
+  },
+  "recorded_at": "2026-07-24T16:39:29Z",
+  "type": "hypothesis"
+}

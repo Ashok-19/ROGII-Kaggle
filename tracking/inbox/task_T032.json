@@ -2,12 +2,12 @@
   "payload": {
     "depends_on": "D037",
     "due_at": "2026-07-27",
-    "phase": "implementation_frozen_oracle_coverage_running",
+    "phase": "completed_oracle_coverage_rejected",
     "priority": 2,
-    "status": "active",
+    "status": "completed",
     "task_id": "T032",
     "title": "Measure registered analog-tail coverage",
-    "updated_at": "2026-07-24T15:28:08Z"
+    "updated_at": "2026-07-24T16:39:29Z"
   },
   "recorded_at": "2026-07-24T11:06:08Z",
   "type": "task"

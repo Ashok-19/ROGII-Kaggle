@@ -1,0 +1,42 @@
+{
+  "candidate_action": {
+    "absolute_cap_ft": 120.0,
+    "fallback": "exact E011 zero action",
+    "nodes": 256,
+    "placement": "registered beta",
+    "source": "source truth minus exact E011 OOF prediction",
+    "transfer": "linear interpolation on normalized hidden fraction"
+  },
+  "config_sha256": "393fbd859e58f016bed19d9235cf46db4b6a91b9509b8087f410f5d5a3b3cf22",
+  "control_gate": "each shuffled/reversed control repeats the full 81-point screen and its own best configuration must fail at least one main coverage gate",
+  "dtaidistance": "2.3.13",
+  "numpy": "2.4.4",
+  "oracle": "best top-k neighbor action by held-out hidden SSE inside each outer context, then mean of five map actions per well",
+  "pandas": "3.0.3",
+  "python": "3.12.13 (main, Mar  4 2026, 09:23:07) [GCC 11.4.0]",
+  "registration": {
+    "component_scaling": "outer-library median positive pairwise distance; geometry outer-library median/IQR",
+    "composite": "U_DTW + horizontal_GR_DTW + typewell_weight*typewell_GR_DTW + geometry_weight*geometry_distance",
+    "geometry_features": [
+      "hidden_fraction",
+      "hidden_z_delta",
+      "horizontal_hidden_distance",
+      "md_hidden_span",
+      "x_hidden_delta",
+      "y_hidden_delta",
+      "hidden_z_slope",
+      "hidden_rows"
+    ],
+    "gr_channels": [
+      "robust_z",
+      "finite_mask"
+    ],
+    "horizontal_gr_bins": 96,
+    "typewell_gr_bins": 96,
+    "visible_u_bins": 64
+  },
+  "schema_version": 1,
+  "script_sha256": "778e435fad507a255264a28693d272219aa636fe3a278cf7d0a7429aba8abbc8",
+  "streaming": "all 81 configurations are scored and discarded sequentially; only the winning configuration predictions are reconstructed",
+  "threads": 2
+}

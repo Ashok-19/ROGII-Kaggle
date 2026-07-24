@@ -1,0 +1,196 @@
+{
+  "branches": [
+    {
+      "family": "null",
+      "name": "mean_coefficients"
+    },
+    {
+      "alphas": [
+        1.0,
+        10.0,
+        100.0,
+        1000.0
+      ],
+      "family": "multioutput ridge",
+      "feature_counts": [
+        32,
+        64,
+        96,
+        142
+      ],
+      "name": "summary_ridge",
+      "selection": "inner folds"
+    },
+    {
+      "components": [
+        2,
+        4,
+        8,
+        16
+      ],
+      "family": "PLS regression",
+      "name": "summary_pls",
+      "selection": "inner folds"
+    },
+    {
+      "family": "standardized legal-feature kNN",
+      "feature_counts": [
+        32,
+        64,
+        96
+      ],
+      "name": "summary_knn",
+      "neighbors": [
+        5,
+        9,
+        17,
+        33
+      ],
+      "selection": "inner folds"
+    },
+    {
+      "alphas": [
+        10.0,
+        100.0,
+        1000.0
+      ],
+      "family": "multioutput ridge on T031 legal raw bins",
+      "name": "raw_binned_ridge",
+      "selection": "inner folds"
+    },
+    {
+      "alphas": [
+        10.0,
+        100.0,
+        1000.0
+      ],
+      "family": "multioutput ridge on concatenated summaries and raw bins",
+      "name": "summary_plus_raw_ridge",
+      "selection": "inner folds"
+    },
+    {
+      "alphas": [
+        0.1,
+        1.0,
+        10.0,
+        100.0
+      ],
+      "eligible": false,
+      "family": "diagnostic multioutput ridge",
+      "name": "privileged_geology_ridge"
+    },
+    {
+      "family": "negative control",
+      "name": "shuffled_target_control"
+    },
+    {
+      "family": "negative control",
+      "name": "sign_flipped_control"
+    }
+  ],
+  "compute": {
+    "maximum_cpu_hours": 3,
+    "maximum_rss_gb": 4,
+    "threads": 2
+  },
+  "deployment": {
+    "kaggle_execution_authorized": false,
+    "package_authorized": false,
+    "submission_authorized": false
+  },
+  "expected_wells": 773,
+  "go_gate": {
+    "maximum_best_legal_tvt_rmse": 8.0,
+    "maximum_shuffled_or_signflipped_gain_vs_e011": 0.03,
+    "minimum_median_coefficient_pearson": 0.6,
+    "minimum_multivariate_coefficient_r2": 0.4,
+    "minimum_nearest_neighbor_distance_reduction_fraction": 0.25,
+    "minimum_oracle_gain_retention": 0.5,
+    "require_positive_every_legacy_group": true
+  },
+  "hypothesis_id": "H026",
+  "if_passed": "Preregister a legal action-manifold mixture predictor; no automatic implementation.",
+  "inputs": {
+    "e003_features": "experiments/E003/results/legal_features.csv",
+    "e011_compact": "artifacts/E011/compact_stats_v1.npz",
+    "e011_oof": "artifacts/E011/oof_predictions.csv.gz",
+    "fold_files": [
+      "folds/v1.json",
+      "folds/v2.json",
+      "folds/v3.json",
+      "folds/v4.json",
+      "folds/v5.json"
+    ],
+    "t031_tensor_builder": "tracking/evidence/T031/run_screen.py"
+  },
+  "legal_inputs": {
+    "prohibited": [
+      "formation values",
+      "Geology",
+      "hidden TVT",
+      "domain labels as predictors",
+      "same-well lookup",
+      "leaderboard feedback"
+    ],
+    "raw_binned": "T031 256-bin horizontal and 192-bin typewell legal tensors flattened after fold-only scaling",
+    "summary": "frozen 142 E011 legal summaries"
+  },
+  "neighborhood_enrichment": {
+    "comparison": "outer-training random pairs matched by fold and suffix-length quintile",
+    "legal_spaces": [
+      "142 summaries",
+      "raw-binned legal tensor"
+    ],
+    "nearest_k": [
+      5,
+      9,
+      17,
+      33
+    ],
+    "target_distance": "standardized spline7 coefficient Euclidean distance"
+  },
+  "privileged_diagnostic": {
+    "inputs": "six train-only hidden formation-offset changes and their finite masks",
+    "role": "upper-bound mediation diagnostic only; never eligible for inference or promotion"
+  },
+  "privileged_interpretation": {
+    "strong_mediation": "privileged geology RMSE <=5.5 while all legal branches fail GO",
+    "weak_mediation": "privileged geology RMSE >8.0"
+  },
+  "schema_version": 1,
+  "selection": {
+    "no_post_score_branch_additions": true,
+    "no_post_score_gate_changes": true,
+    "no_post_score_hyperparameter_changes": true
+  },
+  "stage": "identifiability_diagnostic_only_no_promotion",
+  "stop_gate": "If every legal branch remains above RMSE 10.0 or multivariate R2 below 0.25, close current legal summary/raw representations for spline7 action identification.",
+  "target": {
+    "dimensions": 7,
+    "oracle_rmse": 2.625141070954217,
+    "primary": "frozen spline7 least-squares correction coefficients from E011 compact sufficient statistics",
+    "validation_labels_role": "outer-test scoring only"
+  },
+  "task_id": "T034",
+  "title": "Legal residual-action identifiability and privileged-geology mediation gate",
+  "validation": {
+    "aggregation": "five repeated whole-well OOF predictions averaged per well",
+    "contexts": 25,
+    "legacy_stress": [
+      "5 spatial groups",
+      "5 typewell groups"
+    ],
+    "metrics": [
+      "TVT pooled RMSE",
+      "oracle gain retention",
+      "multivariate coefficient R2",
+      "coefficient Pearson",
+      "neighbor enrichment",
+      "group gains"
+    ],
+    "new_stress": [
+      "T031 legal-covariate kmeans",
+      "T031 2D spatial kmeans"
+    ]
+  }
+}

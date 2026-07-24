@@ -1,0 +1,70 @@
+{
+  "files": [
+    {
+      "bytes": 1103,
+      "name": "profile_manifest.json",
+      "sha256": "83b30d15913f4e1f406949e4b5115a5bad5160708fd9759e68aac2bdcddc1a16"
+    },
+    {
+      "bytes": 1702,
+      "name": "implementation_receipt.json",
+      "sha256": "eac2abf67b72315bf3c261ef5192b8b151d602ddbf6f6d81ea9d516110a6f5c4"
+    },
+    {
+      "bytes": 2913,
+      "name": "summary.json",
+      "sha256": "23d866bae65809a2f954831217bd754fe1fbd0fb42e44df65ece6a89fd49129e"
+    },
+    {
+      "bytes": 595,
+      "name": "edge_cases.json",
+      "sha256": "c1196d767a512b4ab8aa9ff3f110f5e4961918080573d5bbfe8396d9a8e7405f"
+    },
+    {
+      "bytes": 14234,
+      "name": "config_metrics.csv",
+      "sha256": "28f81b6edb375660a144ba13a38ec1a8c06d4ba7f3f53a37642468d4a07f471e"
+    },
+    {
+      "bytes": 1834,
+      "name": "distance_contexts.csv",
+      "sha256": "697f3844e78a9bdd18a30293eded16214d97fbd4baa0df4cbf625a2bc7fb7e58"
+    },
+    {
+      "bytes": 27325524,
+      "name": "selection_rows.csv",
+      "sha256": "396c65321394af188dc982ec4f7238a6934acf4b93309ece385fd66817ce0e54"
+    },
+    {
+      "bytes": 87231,
+      "name": "selected_well_metrics.csv",
+      "sha256": "9bcb5507f50cc77de6f73f6ed4fe63cc18aaf82890022a8a6a23121215656a1d"
+    },
+    {
+      "bytes": 1222,
+      "name": "group_metrics.csv",
+      "sha256": "d611e1857d8752053dd22879b9c59e1f9a44cedb225ea2ceaf952e07cf63f32d"
+    },
+    {
+      "bytes": 330,
+      "name": "map_metrics.csv",
+      "sha256": "a38d46b38d211e44f080c05a30eb6662814d5677562b8a6bb73e515fe6d00e1c"
+    },
+    {
+      "bytes": 739,
+      "name": "control_metrics.csv",
+      "sha256": "63e3b511ad5928efabc91e3f4248900054ae5ffdc850932cc6017121be1682ee"
+    },
+    {
+      "bytes": 43736,
+      "name": "control_config_metrics.csv",
+      "sha256": "d872480811b0fd1018035693f004bb8edd88f339d4f3fea560082ed2d73fc274"
+    },
+    {
+      "bytes": 807,
+      "name": "RESULT.md",
+      "sha256": "5f99cfe5d17ec6955f8e2a4b21947bfac2eb76afe15fc7ebf606a581738249e4"
+    }
+  ],
+  "schema_version": 1
+}

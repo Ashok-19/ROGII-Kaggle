@@ -1,0 +1,14 @@
+{
+  "payload": {
+    "evidence_against": "T032 random coverage remained above 8 RMSE and the fixed-basis capacity may not imply a compact empirical dictionary.",
+    "evidence_for": "T032 shuffled residual actions reached 8.031 RMSE despite only a sparse random action opportunity set; E011 spline7 oracle reaches 2.625 RMSE.",
+    "hypothesis_id": "H025",
+    "next_test": "Execute frozen T033 capacity diagnostic only.",
+    "priority": 1,
+    "statement": "E011 residual curves can be represented by a compact outer-training action manifold with sub-5 hidden-label capacity.",
+    "status": "active",
+    "title": "Residual actions occupy a compact reusable manifold"
+  },
+  "recorded_at": "2026-07-24T16:39:29Z",
+  "type": "hypothesis"
+}

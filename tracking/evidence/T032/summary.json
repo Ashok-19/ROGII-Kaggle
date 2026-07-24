@@ -1,0 +1,91 @@
+{
+  "baseline": {
+    "datum_sse": 342348841.1066058,
+    "rmse": 12.550756295689673,
+    "rows": 3783989,
+    "shape_sse": 160374075.03749105,
+    "sse": 596059561.1825968,
+    "trend_sse": 93336645.03849992,
+    "wells": 773
+  },
+  "best_config": {
+    "beta": 0.75,
+    "gain_vs_e011": 3.8766423979763704,
+    "geometry_weight": 0.5,
+    "minimum_spatial_gain": 3.6304079877429363,
+    "minimum_typewell_gain": 3.4697005572697304,
+    "name": "k09_g0p50_t0p50_b0p75",
+    "neighbors": 9,
+    "positive_well_fraction": 0.8589909443725744,
+    "rmse": 8.674113897713303,
+    "selected_source_entropy": 5.889862656640316,
+    "shape_sse_reduction_fraction": 0.14231437394795105,
+    "typewell_weight": 0.5,
+    "unique_selected_sources": 493
+  },
+  "contexts": 25,
+  "controls": [
+    {
+      "beta": 0.75,
+      "control": "shuffled_library_well_ids",
+      "gain_vs_e011": 4.519314395661388,
+      "geometry_weight": 0.0,
+      "minimum_spatial_gain": 4.179132374437689,
+      "minimum_typewell_gain": 4.26193728606772,
+      "name": "k09_g0p00_t2p00_b0p75",
+      "neighbors": 9,
+      "passes_main_coverage_gates": true,
+      "positive_well_fraction": 0.9586028460543338,
+      "rmse": 8.031441900028286,
+      "shape_sse_reduction_fraction": 0.24909410432600385,
+      "typewell_weight": 2.0
+    },
+    {
+      "beta": 0.75,
+      "control": "reversed_horizontal_gr",
+      "gain_vs_e011": 3.9198826414558763,
+      "geometry_weight": 0.5,
+      "minimum_spatial_gain": 3.6109525673616325,
+      "minimum_typewell_gain": 3.6228232865326504,
+      "name": "k09_g0p50_t2p00_b0p75",
+      "neighbors": 9,
+      "passes_main_coverage_gates": false,
+      "positive_well_fraction": 0.8615782664941786,
+      "rmse": 8.630873654233797,
+      "shape_sse_reduction_fraction": 0.1469301257975671,
+      "typewell_weight": 2.0
+    },
+    {
+      "beta": 0.75,
+      "control": "reversed_typewell_gr",
+      "gain_vs_e011": 3.9923037898653035,
+      "geometry_weight": 0.25,
+      "minimum_spatial_gain": 3.7358781442686038,
+      "minimum_typewell_gain": 3.6946775051753455,
+      "name": "k09_g0p25_t2p00_b0p75",
+      "neighbors": 9,
+      "passes_main_coverage_gates": false,
+      "positive_well_fraction": 0.8822768434670116,
+      "rmse": 8.55845250582437,
+      "shape_sse_reduction_fraction": 0.12937617156475403,
+      "typewell_weight": 2.0
+    }
+  ],
+  "decision": "CLOSE_ANALOG_TAIL_RETRIEVAL",
+  "edge_status": "PASS",
+  "gates": {
+    "all_destructive_controls_fail_main_coverage": false,
+    "minimum_oracle_rmse_gain": true,
+    "minimum_positive_well_fraction": true,
+    "minimum_shape_sse_reduction_fraction": false,
+    "nonnegative_every_legacy_spatial_group": true,
+    "nonnegative_every_legacy_typewell_group": true
+  },
+  "grid_points": 81,
+  "hypothesis_id": "H024",
+  "runtime_seconds": 48.0942018032074,
+  "schema_version": 1,
+  "status": "COMPLETE",
+  "task_id": "T032",
+  "wells": 773
+}

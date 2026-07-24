@@ -1,0 +1,14 @@
+{
+  "payload": {
+    "depends_on": "T032",
+    "due_at": "2026-07-26",
+    "phase": "preregistered_identifiability_diagnostic",
+    "priority": 1,
+    "status": "queued",
+    "task_id": "T034",
+    "title": "Test legal residual-action identifiability",
+    "updated_at": "2026-07-24T16:39:29Z"
+  },
+  "recorded_at": "2026-07-24T16:39:29Z",
+  "type": "task"
+}

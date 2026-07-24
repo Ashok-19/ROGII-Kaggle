@@ -1,0 +1,21 @@
+{
+  "checks": {
+    "action_bound": true,
+    "all_best_predictions_finite": true,
+    "all_profile_distances_finite": true,
+    "contexts_25": true,
+    "control_grid_rows_243": true,
+    "destructive_controls_report_complete": true,
+    "grid_81": true,
+    "legacy_groups_complete": true,
+    "same_well_excluded": true,
+    "selected_source_bounds": true,
+    "streaming_only_winner_predictions_materialized": true,
+    "tie_order_deterministic": true,
+    "well_count_773": true,
+    "well_ids_unique": true,
+    "zero_fallback_exact": true
+  },
+  "schema_version": 1,
+  "status": "PASS"
+}
