@@ -2,12 +2,12 @@
   "payload": {
     "depends_on": "T034",
     "due_at": "2026-07-25",
-    "phase": "preregistered_actual_pca_identifiability",
+    "phase": "implementation_frozen_actual_pca_running",
     "priority": 1,
-    "status": "queued",
+    "status": "active",
     "task_id": "T035",
     "title": "Test actual PCA action-coordinate identifiability",
-    "updated_at": "2026-07-24T18:28:00Z"
+    "updated_at": "2026-07-24T18:41:26Z"
   },
   "recorded_at": "2026-07-24T18:28:00Z",
   "type": "task"
