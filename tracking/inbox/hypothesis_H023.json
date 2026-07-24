@@ -1,12 +1,12 @@
 {
   "payload": {
-    "evidence_against": "Existing 142 summaries and coordinate-only surface reconstruction barely predict the hidden displacement. Only 773 wells are available and GR is partially missing.",
+    "evidence_against": "T031 hard-stopped: best legal raw branch raw_binned_ridge reached Pearson 0.261732 and MAE 15.125630 ft, materially worse than the frozen 142-summary ridge at Pearson 0.431034 and MAE 13.685349 ft; transfer and destructive-control gates failed.",
     "evidence_for": "Six hidden-offset components are nearly collinear (PC1 99.5626%) and privileged displacement features explain multi-RMSE E003 headroom. All required raw inference channels exist at test time.",
     "hypothesis_id": "H023",
-    "next_test": "Execute the frozen T031 auxiliary-state gate only; no TVT model until GO.",
+    "next_test": "Do not implement T033 or retune compact raw-sequence state recovery. Continue with the independent T032 analog-tail oracle-coverage gate.",
     "priority": 1,
     "statement": "Boundary-aware horizontal and typewell sequences can predict the one-dimensional E003 hidden formation displacement strongly enough to unlock transferable spline-coefficient learning.",
-    "status": "active",
+    "status": "rejected",
     "title": "Raw legal sequences identify latent formation displacement"
   },
   "recorded_at": "2026-07-24T11:06:08Z",

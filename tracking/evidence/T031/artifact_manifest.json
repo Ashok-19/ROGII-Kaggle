@@ -1,0 +1,65 @@
+{
+  "files": [
+    {
+      "bytes": 966,
+      "name": "implementation_receipt.json",
+      "sha256": "393fce25cf2b5f36f1bd6bb42cff9247ae5b830be60f8458c15b9ff7c455a285"
+    },
+    {
+      "bytes": 1720,
+      "name": "tensor_manifest.json",
+      "sha256": "3fe5b76001a3f2d173b0d2d160f3994d4dae29206881d6b7d504fb3964425ba9"
+    },
+    {
+      "bytes": 1826,
+      "name": "summary.json",
+      "sha256": "86845c818feb7e2b2332c5b24ec122a6bee2400682808bacf1b4943ec8391e68"
+    },
+    {
+      "bytes": 4594,
+      "name": "branch_metrics.csv",
+      "sha256": "e22779f954e78c7bb6da0621a6c24c9ccd040d337eea0e266a80cc2d83bb13c1"
+    },
+    {
+      "bytes": 16769,
+      "name": "context_metrics.csv",
+      "sha256": "b93e89a553873ad411005ecb9565df9d4d3065fbec23741bce32070c8283b267"
+    },
+    {
+      "bytes": 16831,
+      "name": "group_metrics.csv",
+      "sha256": "13d5a0ef59eee815fe942e14d805d4c346735aebebee044bd0b893bfcfb28d07"
+    },
+    {
+      "bytes": 8704,
+      "name": "selected_hyperparameters.csv",
+      "sha256": "6d011f317146dc6d7e61e8cbff100949219d4d4968b827deced527f798576b33"
+    },
+    {
+      "bytes": 955,
+      "name": "control_metrics.csv",
+      "sha256": "5836442a4964bf8c939c35bd4ce60d54dd861a05495031a36e540dd118bb867b"
+    },
+    {
+      "bytes": 157441,
+      "name": "predictions.csv",
+      "sha256": "308489f254336bd9145132b6ef5e567717a315613fbcd5de5a5216cd9c5f4ac3"
+    },
+    {
+      "bytes": 2106,
+      "name": "edge_cases.json",
+      "sha256": "44292529791178eb40d30344e6827ac0095b6db684c25490a7092e139c8726bc"
+    },
+    {
+      "bytes": 1317,
+      "name": "RESULT.md",
+      "sha256": "abeafde0a8f8b40174919ce2befe141b333ed93289bb705c3a868c9abd96861d"
+    },
+    {
+      "bytes": 3345,
+      "name": "WRITER_CORRECTION.json",
+      "sha256": "846e31be80f55e79318de05047500f428cdfba2df8bd01545bd631d5ed7f5879"
+    }
+  ],
+  "schema_version": 1
+}

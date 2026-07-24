@@ -6,7 +6,7 @@
     "next_test": "Run T032 oracle coverage only; no selector unless all coverage gates pass.",
     "priority": 2,
     "statement": "Outer-training-only sequence registration can retrieve analog tail actions that cover E011 shape error independently of summary coefficient models.",
-    "status": "queued",
+    "status": "active",
     "title": "Registered analog tails provide independent nonlinear coverage"
   },
   "recorded_at": "2026-07-24T11:06:08Z",

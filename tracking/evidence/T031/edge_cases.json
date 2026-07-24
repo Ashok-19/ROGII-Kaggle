@@ -1,0 +1,74 @@
+{
+  "checks": {
+    "all_predictions_finite": true,
+    "all_scientific_files_exist": true,
+    "all_table_metrics_finite": true,
+    "branch_rows_42": true,
+    "context_count_25": true,
+    "context_rows_150": true,
+    "control_rows_6": true,
+    "csv_target_matches_cache": true,
+    "decision_is_hard_stop": true,
+    "five_groups_each": true,
+    "four_group_systems": true,
+    "group_rows_140": true,
+    "hard_stop_matches_threshold": true,
+    "headline_metrics_exact": true,
+    "hyperparameter_rows_150": true,
+    "permutation_control_below_cap": true,
+    "prediction_columns_exact": true,
+    "selected_prediction_identity": true,
+    "seven_reported_branches": true,
+    "six_modeled_context_branches": true,
+    "target_finite": true,
+    "target_hash_matches": true,
+    "well_ids_unique": true,
+    "wells_exactly_773": true
+  },
+  "metric_match": {
+    "coordinate_control_metrics": true,
+    "permuted_target_metrics": true,
+    "selected_metrics": true,
+    "summary_ridge_metrics": true
+  },
+  "metric_recomputation": {
+    "coordinate_control_metrics": {
+      "count": 773,
+      "mae_ft": 14.63919546283592,
+      "pearson": 0.21984942889766845,
+      "rmse_ft": 20.785313109786852,
+      "spearman": 0.2221441255549164
+    },
+    "permuted_target_metrics": {
+      "count": 773,
+      "mae_ft": 15.22463102820106,
+      "pearson": -0.0369540305828993,
+      "rmse_ft": 21.027341714837114,
+      "spearman": -0.05642380291851368
+    },
+    "selected_metrics": {
+      "count": 773,
+      "mae_ft": 15.12563042959143,
+      "pearson": 0.2617319087305722,
+      "rmse_ft": 20.306341651837254,
+      "spearman": 0.18121987410017093
+    },
+    "summary_ridge_metrics": {
+      "count": 773,
+      "mae_ft": 13.685348735683274,
+      "pearson": 0.43103428276112976,
+      "rmse_ft": 18.575228778768732,
+      "spearman": 0.37443596526636547
+    }
+  },
+  "row_counts": {
+    "branch_metrics": 42,
+    "context_metrics": 150,
+    "control_metrics": 6,
+    "group_metrics": 140,
+    "predictions": 773,
+    "selected_hyperparameters": 150
+  },
+  "schema_version": 1,
+  "status": "PASS"
+}

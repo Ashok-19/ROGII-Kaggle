@@ -116,8 +116,19 @@ def sha256_array(array: np.ndarray) -> str:
     return hashlib.sha256(value.tobytes()).hexdigest()
 
 
+def _json_default(value: Any) -> Any:
+    if isinstance(value, np.generic):
+        return value.item()
+    if isinstance(value, Path):
+        return str(value)
+    raise TypeError(f"Object of type {value.__class__.__name__} is not JSON serializable")
+
+
 def json_dump(path: Path, value: Any) -> None:
-    path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    path.write_text(
+        json.dumps(value, indent=2, sort_keys=True, default=_json_default) + "\n",
+        encoding="utf-8",
+    )
 
 
 def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:

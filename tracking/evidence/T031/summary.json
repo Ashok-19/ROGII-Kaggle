@@ -1,0 +1,56 @@
+{
+  "contexts": 25,
+  "coordinate_control_metrics": {
+    "count": 773,
+    "mae_ft": 14.63919546283592,
+    "pearson": 0.21984942889766845,
+    "rmse_ft": 20.785313109786852,
+    "spearman": 0.2221441255549164
+  },
+  "decision": "HARD_STOP_CLOSE_COMPACT_RAW_SEQUENCE_STATE_RECOVERY",
+  "gates": {
+    "maximum_mae_ft": false,
+    "maximum_permuted_abs_pearson": true,
+    "minimum_control_gain_destruction_fraction": false,
+    "minimum_every_legacy_group_pearson": false,
+    "minimum_every_new_group_pearson": false,
+    "minimum_mae_advantage_over_summary_ridge_ft": false,
+    "minimum_pearson": false,
+    "minimum_pearson_advantage_over_coordinate_control": false,
+    "minimum_pearson_advantage_over_summary_ridge": false,
+    "minimum_spearman": false
+  },
+  "hard_stop": true,
+  "hypothesis_id": "H023",
+  "legacy_group_pearson_floor": 0.10113256624361842,
+  "minimum_destructive_control_signal_destruction_fraction": -0.02757956663853478,
+  "new_group_pearson_floor": 0.15230015859316848,
+  "permuted_target_metrics": {
+    "count": 773,
+    "mae_ft": 15.22463102820106,
+    "pearson": -0.0369540305828993,
+    "rmse_ft": 21.027341714837114,
+    "spearman": -0.05642380291851368
+  },
+  "runtime_seconds": 8611.18250155449,
+  "schema_version": 1,
+  "selected_branch": "raw_binned_ridge",
+  "selected_metrics": {
+    "count": 773,
+    "mae_ft": 15.12563042959143,
+    "pearson": 0.2617319087305722,
+    "rmse_ft": 20.306341651837254,
+    "spearman": 0.18121987410017093
+  },
+  "status": "COMPLETE",
+  "summary_ridge_metrics": {
+    "count": 773,
+    "mae_ft": 13.685348735683274,
+    "pearson": 0.43103428276112976,
+    "rmse_ft": 18.575228778768732,
+    "spearman": 0.37443596526636547
+  },
+  "target_sha256": "aa53407b24d0befc8794b44a633844f9194c4d260a1637dd487ea7d8ade0ba82",
+  "task_id": "T031",
+  "wells": 773
+}

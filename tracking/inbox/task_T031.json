@@ -2,12 +2,12 @@
   "payload": {
     "depends_on": "D037",
     "due_at": "2026-07-26",
-    "phase": "preregistered_auxiliary_state_gate",
+    "phase": "completed_auxiliary_state_hard_stop",
     "priority": 1,
-    "status": "active",
+    "status": "completed",
     "task_id": "T031",
     "title": "Test raw-sequence latent-state identifiability",
-    "updated_at": "2026-07-24T12:05:42Z"
+    "updated_at": "2026-07-24T15:27:09Z"
   },
   "recorded_at": "2026-07-24T11:06:08Z",
   "type": "task"

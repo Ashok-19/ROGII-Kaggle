@@ -1,0 +1,16 @@
+{
+  "architecture": "depthwise-separable symmetric-padded TCN; 64 channels; kernel 5; registered dilations and two stacks; masked-fixed-bin mean plus learned attention pooling",
+  "branch_selection": "highest repeated-map-average Pearson, then lowest MAE, then branch name among raw_binned_ridge and three TCN branches",
+  "config_sha256": "0bd4d0c7558068cca05884e3de372bd6a0253b17a2ea56a802b04c2aa8a75a85",
+  "control_signal_destruction": "1 - abs(control Pearson)/abs(state_tcn Pearson)",
+  "inner_validation": "same immutable map, deterministic fold (outer+1)%5",
+  "numpy": "2.4.4",
+  "primary_gate_aggregation": "mean of five whole-well OOF map predictions",
+  "python": "3.12.13 (main, Mar  4 2026, 09:23:07) [GCC 11.4.0]",
+  "refit": "full outer-training refit for the selected epoch",
+  "schema_version": 1,
+  "script_sha256": "efa28e474718c4a2118950edd3b022a52fd7e20b3d1e7edbf78c0d7714da1de3",
+  "sklearn": "1.9.0",
+  "threads": 2,
+  "torch": "2.7.1+cpu"
+}

@@ -1,0 +1,63 @@
+{
+  "cache_sha256": "421872a1963bbbe509cfdabcfe9cd9e7fddb86f930ebc6711005cf1634603959",
+  "coordinate_shape": [
+    773,
+    1802
+  ],
+  "created_at_epoch": 1784894661.248211,
+  "horizontal_channels": [
+    "global_position",
+    "md_relative_scaled",
+    "x_relative_scaled",
+    "y_relative_scaled",
+    "z_relative_scaled",
+    "dz_dmd_scaled",
+    "gr_robust_z",
+    "gr_finite_mask",
+    "visible_tvt_relative_100ft",
+    "visible_u_relative_100ft",
+    "visible_tvt_mask",
+    "boundary_side",
+    "visible_gr_coverage",
+    "hidden_gr_coverage"
+  ],
+  "horizontal_sha256": "3b12979d3049883a4a12f67a84dbcce68b87bcb4018e2e753df073b342e005f6",
+  "horizontal_shape": [
+    773,
+    256,
+    14
+  ],
+  "input_files": {
+    "artifacts/E011/compact_stats_v1.npz": "cb2788c602f718dc7a76f09a62bbb433c1d7cda7dd93d69ee8905524eb09156d",
+    "experiments/E003/results/legal_features.csv": "1700b3d4b03bb949ed362a3a66ca4c9c72177e0e4fd0087cbfb1a4a72f151fe2"
+  },
+  "schema_version": 1,
+  "seconds": 11.8823082447052,
+  "summary_shape": [
+    773,
+    142
+  ],
+  "target_sha256": "aa53407b24d0befc8794b44a633844f9194c4d260a1637dd487ea7d8ade0ba82",
+  "typewell_channels": [
+    "typewell_position",
+    "typewell_tvt_relative_500ft",
+    "typewell_gr_robust_z",
+    "typewell_gr_finite_mask",
+    "typewell_gr_gradient"
+  ],
+  "typewell_sha256": "3a7705ce8c8bc97211ad1fc230557c2f4e12a8d0d9599e18893be82f07686776",
+  "typewell_shape": [
+    773,
+    192,
+    5
+  ],
+  "well_count": 773,
+  "well_stats": {
+    "hidden_gr_coverage_median": 0.6970896852108494,
+    "hidden_gr_coverage_min": 0.18822199899547964,
+    "hidden_rows_max": 10052,
+    "hidden_rows_min": 407,
+    "visible_rows_max": 2392,
+    "visible_rows_min": 851
+  }
+}
