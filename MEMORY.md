@@ -34,6 +34,9 @@ Public intelligence last checked: 2026-07-23 23:56 Asia/Kolkata
 - T029 audits three verified positive legal actions. T025 and T016 directions are nearly orthogonal at row-centered correlation 0.018136. The frozen 0.40/0.60 diagnostic reaches 12.377388, gains 0.047540 versus T025, and is positive in all ten direct OOF domains; T027 receives zero selected weight. D035 selects H022/T030 for outer-isolated confirmation only.
 - T030 completes the outer-isolated confirmation and closes H022 negatively. `fixed_pair_box_046_090` reaches 12.3689137951, gains 0.1818425 versus E011 and 0.0560138 versus T025, wins 5/5 maps and 19/25 cells, and passes controls/parents/isolation/horizon/special/worst-5% gates. It fails p90 and every-spatial/every-typewell transfer; no substantive passer exists. D037 rejects promotion and prohibits blend/routing retuning.
 - The independent 49-file gold-medal audit was fully owner-side verified: all declared hashes match, all report editions/tables/scripts/figures were read, and no multi-point implementation defect was found. The six E003 hidden surface displacement targets form one latent target (PC1 99.5626%). Raw legal P1 channels exist across all 773 wells; current evaluator groups are X and typewell-GR quantile proxies rather than geology. D037 selects T031 state identifiability and queues T032 retrieval coverage.
+- T031 closes H023 negatively. The best legal raw-sequence branch reaches Pearson 0.261732 and MAE 15.125630 ft, materially worse than the 142-summary ridge at Pearson 0.431034 and MAE 13.685349 ft. It triggers the frozen hard stop; no T033 state-plus-spline model is authorized from this route.
+- T032 closes H024 negatively despite large oracle gain. Registered analog tails reach 8.674114 RMSE but remove only 14.231% shape SSE. A full-grid shuffled-action control performs better at 8.031442 RMSE and passes all main coverage gates, proving dictionary coverage without causal sequence registration.
+- T033 confirms H025 and supplies the first compact sub-5 capacity breakthrough. Outer-training PCA rank 8 reaches 2.1613289429 RMSE, removes 89.1637% of E011 shape SSE, improves all 773 wells, and keeps every legacy group below 2.327464 RMSE; rank 16 reaches 0.9389753196. Two final-hash runs reproduce exactly and all edge/horizon checks pass. This is hidden-label capacity only; D038 selects T034 legal coordinate identifiability next.
 
 ## New durable understanding from exact public-source audits
 
@@ -76,7 +79,7 @@ Public intelligence last checked: 2026-07-23 23:56 Asia/Kolkata
 
 ## Exact next action
 
-Execute T031 exactly as preregistered: build the score-blind raw sequence tensors and target-free stress groups, run the summary/raw-binned/state-only branches and destructive controls, and stop without any TVT correction unless every state-identifiability GO gate passes. T032 remains the independent queued oracle-coverage branch.
+Execute T034 exactly as preregistered. Predict the frozen seven-dimensional spline7 action target using only legal summary/raw representations, quantify legal-neighbor enrichment, and compare against the explicitly nondeployable privileged-geology ridge. Do not implement or package a legal action-manifold model unless every T034 GO gate passes.
 
 ## Open risks
 

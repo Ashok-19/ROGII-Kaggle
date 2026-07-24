@@ -1,0 +1,14 @@
+{
+  "aggregation": "five outer-map oracle action profiles averaged per well",
+  "config_sha256": "cce7bb0c17da540c5ba64c157da64fdbc40fc6461ef7f133f4718c1494b641f1",
+  "exact_scoring": "tridiagonal interpolation sufficient statistics reproduce actual-row SSE for every candidate profile",
+  "numpy": "2.4.4",
+  "profile_grid": 128,
+  "python": "3.12.13 (main, Mar  4 2026, 09:23:07) [GCC 11.4.0]",
+  "same_well_rule": "all empirical actions fitted or selected from outer-training wells only",
+  "schema_version": 1,
+  "script_sha256": "88e55c0c7e0f6adb3e4e4cc53896595c625f3d07a67dd494c14879c7764c9657",
+  "sklearn": "1.9.0",
+  "threads": 2,
+  "validation_completion": "five horizon groups emitted; deterministic KMeans/random/Gaussian initialization and pooled SSE decomposition asserted"
+}

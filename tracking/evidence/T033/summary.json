@@ -1,0 +1,62 @@
+{
+  "baseline": {
+    "datum_sse": 342348841.1066058,
+    "rmse": 12.550756295689673,
+    "rows": 3783989,
+    "shape_sse": 160374075.03749102,
+    "sse": 596059561.1825968,
+    "trend_sse": 93336645.03849994,
+    "wells": 773
+  },
+  "best_compact": {
+    "compact": true,
+    "expanded": true,
+    "family": "pca",
+    "gain_vs_e011": 10.38942735279386,
+    "maximum_horizon_group_rmse": 2.681647096704222,
+    "maximum_legacy_group_rmse": 2.327463844838725,
+    "name": "pca_r08",
+    "positive_well_fraction": 1.0,
+    "rmse": 2.161328942895813,
+    "shape_sse_reduction_fraction": 0.8916373862986183,
+    "size": 8
+  },
+  "best_expanded": {
+    "compact": false,
+    "expanded": true,
+    "family": "pca",
+    "gain_vs_e011": 11.611780976109996,
+    "maximum_horizon_group_rmse": 1.2463164294080373,
+    "maximum_legacy_group_rmse": 1.025225154725611,
+    "name": "pca_r16",
+    "positive_well_fraction": 1.0,
+    "rmse": 0.9389753195796775,
+    "shape_sse_reduction_fraction": 0.9791978645678558,
+    "size": 16
+  },
+  "branches": 49,
+  "contexts": 25,
+  "decision": "GO_COMPACT_ACTION_MANIFOLD",
+  "edge_status": "PASS",
+  "gates": {
+    "maximum_compact_oracle_rmse": true,
+    "maximum_every_legacy_group_rmse": true,
+    "minimum_positive_well_fraction": true,
+    "minimum_shape_sse_reduction_fraction": true,
+    "same_well_exclusion": true
+  },
+  "hypothesis_id": "H025",
+  "runtime_seconds": 60.41985106468201,
+  "schema_version": 1,
+  "spline7_oracle_reference": {
+    "datum_sse": 168845.78176891166,
+    "rmse": 2.625141070954216,
+    "rows": 3783989,
+    "shape_sse": 25401660.77020689,
+    "sse": 26076851.785859823,
+    "trend_sse": 506345.2338840228,
+    "wells": 773
+  },
+  "status": "COMPLETE",
+  "task_id": "T033"
+}

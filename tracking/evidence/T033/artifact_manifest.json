@@ -1,0 +1,50 @@
+{
+  "files": [
+    {
+      "bytes": 790,
+      "name": "implementation_receipt.json",
+      "sha256": "b6ad76cfa9cc9b740dc405b2aedc6e50a23398b3968178bf0dc5cc7c0f54aabe"
+    },
+    {
+      "bytes": 1739,
+      "name": "summary.json",
+      "sha256": "dc2d3839f1b673f69018c2f4b35ac11afddd7ed73b0bdc9e6dc3da117e3b8057"
+    },
+    {
+      "bytes": 567,
+      "name": "edge_cases.json",
+      "sha256": "507ac22f0b4ec991d8f45739f07c65d466d74e3b38796ffb4e895e88a0b46e3c"
+    },
+    {
+      "bytes": 8079,
+      "name": "config_metrics.csv",
+      "sha256": "eb75d7e6e29de40fc25e3fe0db605079df094e373df24b0bc504a86c73ea7c45"
+    },
+    {
+      "bytes": 59708,
+      "name": "group_metrics.csv",
+      "sha256": "57d2e8a385e2c00cb27d4a9402cd0de2a296cfb9265798b3b3bf652418fe8fac"
+    },
+    {
+      "bytes": 10590,
+      "name": "map_metrics.csv",
+      "sha256": "422897e444ba75f7bf49bc920d56bdcb9ff7ebf87af74485176e368cfacb7c97"
+    },
+    {
+      "bytes": 104415,
+      "name": "membership_audit.csv",
+      "sha256": "8173443d98d54327909f11c0b2f8dcf6cc59beedc10a59b5dcde8622f27e2602"
+    },
+    {
+      "bytes": 73349,
+      "name": "selected_well_metrics.csv",
+      "sha256": "1dc9146225df82f134be5a5883de85e45c8b2ace1e71e00a8c1ea75f63f3ca98"
+    },
+    {
+      "bytes": 723,
+      "name": "RESULT.md",
+      "sha256": "e46df52db34de67a008fb0cdf08360e1683f61cbbdf1245c552bb6cd5f772fa2"
+    }
+  ],
+  "schema_version": 1
+}

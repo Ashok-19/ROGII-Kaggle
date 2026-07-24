@@ -1,12 +1,12 @@
 {
   "payload": {
-    "evidence_against": "T032 random coverage remained above 8 RMSE and the fixed-basis capacity may not imply a compact empirical dictionary.",
-    "evidence_for": "T032 shuffled residual actions reached 8.031 RMSE despite only a sparse random action opportunity set; E011 spline7 oracle reaches 2.625 RMSE.",
+    "evidence_against": "T033 is hidden-label capacity only. Held-out least squares chooses PCA coordinates using the true hidden residual, so the result does not yet identify a legal inference rule.",
+    "evidence_for": "T033 passes every capacity gate under 25 outer-training contexts. The best compact branch, outer-training PCA rank 8, reaches 2.1613289429 RMSE, removes 89.1637% of E011 shape SSE, improves all 773 wells, and keeps the worst legacy group at 2.327464 RMSE. PCA rank 16 reaches 0.9389753196 RMSE. Two final-hash executions reproduce all deterministic artifacts exactly.",
     "hypothesis_id": "H025",
-    "next_test": "Execute frozen T033 capacity diagnostic only.",
+    "next_test": "Execute T034 legal residual-action identifiability and privileged-geology mediation diagnostic. Do not package or submit a PCA oracle.",
     "priority": 1,
     "statement": "E011 residual curves can be represented by a compact outer-training action manifold with sub-5 hidden-label capacity.",
-    "status": "active",
+    "status": "confirmed",
     "title": "Residual actions occupy a compact reusable manifold"
   },
   "recorded_at": "2026-07-24T16:39:29Z",

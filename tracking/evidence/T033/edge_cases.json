@@ -1,0 +1,20 @@
+{
+  "checks": {
+    "action_cap": true,
+    "branch_count": true,
+    "contexts_25": true,
+    "deterministic_dictionary_initialization": true,
+    "duplicate_action_invariance": true,
+    "finite_profiles": true,
+    "finite_reconstructions": true,
+    "five_map_actions_every_branch": true,
+    "five_memberships_per_well": true,
+    "horizon_groups_complete": true,
+    "pooled_sse_decomposition_consistency": true,
+    "same_well_exclusion": true,
+    "spline7_reference": true,
+    "wells_773": true,
+    "zero_action_exact_e011": true
+  },
+  "status": "PASS"
+}

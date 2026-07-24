@@ -2,12 +2,12 @@
   "payload": {
     "depends_on": "T032",
     "due_at": "2026-07-25",
-    "phase": "implementation_frozen_capacity_running",
+    "phase": "completed_compact_action_manifold_go",
     "priority": 1,
-    "status": "active",
+    "status": "completed",
     "task_id": "T033",
     "title": "Measure residual action-manifold capacity",
-    "updated_at": "2026-07-24T16:45:58Z"
+    "updated_at": "2026-07-24T18:04:00Z"
   },
   "recorded_at": "2026-07-24T16:39:29Z",
   "type": "task"

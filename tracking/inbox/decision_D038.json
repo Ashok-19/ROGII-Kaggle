@@ -1,0 +1,13 @@
+{
+  "payload": {
+    "decided_at": "2026-07-24",
+    "decision": "Confirm H025/T033: E011 residual actions occupy a compact outer-training manifold with sub-5 hidden-label capacity. Select H026/T034 as the immediate legal-identifiability and privileged-geology mediation gate.",
+    "decision_id": "D038",
+    "rationale": "T031 rejects direct latent formation-displacement recovery and T032 rejects registered analog identity, but T033 separates representation from selection and passes every capacity gate. PCA rank 8 reaches 2.1613289429 RMSE with 100% positive wells and robust legacy/horizon groups; rank 16 reaches 0.9389753196. T034 now tests whether legal observations identify the seven-dimensional action target and whether train-only formation displacement explains any remaining gap.",
+    "revisit_trigger": "Do not implement, package, run on Kaggle, or submit a PCA/action-manifold model unless T034 legal identifiability passes. A strong privileged-geology result is causal diagnostic evidence only and never authorizes unavailable columns at inference.",
+    "source_ids": "S_T031_VERIFIED_20260724,S_T032_VERIFIED_20260724,S_T033_VERIFIED_20260724,H023,T031,H024,T032,H025,T033,H026,T034",
+    "title": "Confirm compact residual manifold and test legal coordinate identification"
+  },
+  "recorded_at": "2026-07-24T18:04:00Z",
+  "type": "decision"
+}

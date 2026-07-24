@@ -142,7 +142,7 @@
       "summary": "E009 trained six legal datum models and tested fixed plus nested consensus abstention. Majority consensus reached 14.7935 RMSE, won all 5 maps, and improved p90, but won only 15 of 25 repeated cells and repeated the spatial/typewell shift failures.",
       "title": "Model agreement repeated shared bias",
       "visual": "consensus_gate",
-      "why_it_matters": "Agreement was not reliable uncertainty: the three rule action sets overlapped at 0.984–0.996 Jaccard, and the sign-flipped negative control exceeded its cap. A diagnostic 64-feature ridge reached 14.6353 with 5/5 maps, so the next experiment targets inner-fold feature stability rather than more consensus threshold tuning."
+      "why_it_matters": "Agreement was not reliable uncertainty: the three rule action sets overlapped at 0.984\u20130.996 Jaccard, and the sign-flipped negative control exceeded its cap. A diagnostic 64-feature ridge reached 14.6353 with 5/5 maps, so the next experiment targets inner-fold feature stability rather than more consensus threshold tuning."
     },
     {
       "date": "2026-07-20",
@@ -232,13 +232,13 @@
       "summary": "D020 promotes E011 as the global deployment model. The next experiment may test regime-specific coefficient experts only with split-local legal routing and exact E011 fallback.",
       "title": "The next bottleneck is specialist transfer",
       "visual": "risk_action",
-      "why_it_matters": "E007–E009 showed that apparent regimes and agreement can repeat shared bias. H015 must improve the complete system under repeated and spatial/typewell gates, and shuffled or sign-flipped routing must lose the gain."
+      "why_it_matters": "E007\u2013E009 showed that apparent regimes and agreement can repeat shared bias. H015 must improve the complete system under repeated and spatial/typewell gates, and shuffled or sign-flipped routing must lose the gain."
     },
     {
       "date": "2026-07-23",
       "evidence": "exact_source_and_saved_output_audit",
       "id": "B024",
-      "summary": "Four newly prominent notebooks share 93.1%–99.95% source similarity and the same overlap/model-package profile. Their PF branch and U-continuity layers act materially only on visible well 00e12e8b; a 100-well selector retains 68.61% worst-decile SSE, and the stochastic-TTA gate fails its own OOF threshold.",
+      "summary": "Four newly prominent notebooks share 93.1%\u201399.95% source similarity and the same overlap/model-package profile. Their PF branch and U-continuity layers act materially only on visible well 00e12e8b; a 100-well selector retains 68.61% worst-decile SSE, and the stochastic-TTA gate fails its own OOF threshold.",
       "title": "The refreshed public frontier is one composite lineage",
       "visual": "cv_lb_split",
       "why_it_matters": "Do not infer independent causality from titles or public scores. D022 allows only a clean preimplementation screen for continuous E011 uncertainty/fallback placement; no public constants, artifacts, or score-directed well moves may enter the project."
@@ -332,6 +332,33 @@
       "title": "One latent formation displacement becomes the decisive gate",
       "visual": "deployment_gap",
       "why_it_matters": "T031 will test identifiability before any joint neural TVT model. Failure closes the highest-impact hypothesis cheaply; success unlocks a separately preregistered state-plus-spline experiment."
+    },
+    {
+      "id": "B035",
+      "date": "2026-07-24",
+      "evidence": "T031_complete_hard_stop",
+      "title": "Raw legal sequences do not recover the privileged formation state",
+      "summary": "T031 selects raw-binned ridge at Pearson 0.2617 and MAE 15.13 ft, below the hard-stop threshold and materially worse than the 142-summary ridge.",
+      "visual": "deployment_gap",
+      "why_it_matters": "The train-only geology signal is real, but compact legal raw sequences cannot identify that auxiliary state. Architecture and seed retuning are closed."
+    },
+    {
+      "id": "B036",
+      "date": "2026-07-24",
+      "evidence": "T032_full_grid_controls",
+      "title": "Residual dictionaries have coverage but sequence registration is noncausal",
+      "summary": "Registered analog tails reach 8.6741 RMSE, while shuffled action IDs improve to 8.0314 and pass every main coverage gate.",
+      "visual": "ensemble_paths",
+      "why_it_matters": "Nearest-neighbor identity is not the breakthrough. The useful object is the action space itself; selection must be learned directly rather than inferred from DTW similarity."
+    },
+    {
+      "id": "B037",
+      "date": "2026-07-24",
+      "evidence": "T033_two_final_hash_runs",
+      "title": "A compact residual manifold has robust sub-5 capacity",
+      "summary": "Outer-training PCA rank 8 reaches 2.1613 RMSE with 89.16% shape-SSE reduction and improves all 773 wells; rank 16 reaches 0.9390 RMSE.",
+      "visual": "deployment_gap",
+      "why_it_matters": "This is the first verified representation breakthrough large enough for the target. T034 now isolates the remaining problem: legal coordinate identification."
     }
   ],
   "concepts": [
@@ -579,6 +606,11 @@
       "falsifier": "E007 shows the stricter standard: its fixed self-correlation leg improved aggregate RMSE and all five maps but still failed p90 and subgroup gates. Future additions must beat E006 without repeating those shift failures.",
       "question": "Does a weak candidate reduce pooled RMSE when blended with the strongest OOF path because its residual correlation is low?",
       "signal": "ensemble"
+    },
+    {
+      "question": "Can legal observations identify the compact residual-manifold coordinates?",
+      "signal": "action coordinates",
+      "falsifier": "T034 stops the current legal representation if every branch remains above 10 RMSE or below multivariate R\u00b2 0.25. Privileged geology below 5.5 with legal failure proves mediation but remains nondeployable."
     }
   ],
   "schema_version": 1,
@@ -767,9 +799,24 @@
       "local_path": "tracking/evidence/T029/RESULT.md",
       "title": "T029 complementary saved-action covariance selection",
       "url": ""
+    },
+    {
+      "title": "T031 latent-state identifiability hard stop",
+      "local_path": "tracking/evidence/T031/RESULT.md",
+      "url": ""
+    },
+    {
+      "title": "T032 registered analog-tail coverage rejection",
+      "local_path": "tracking/evidence/T032/RESULT.md",
+      "url": ""
+    },
+    {
+      "title": "T033 compact residual action-manifold capacity breakthrough",
+      "local_path": "tracking/evidence/T033/RESULT.md",
+      "url": ""
     }
   ],
   "subtitle": "A beginner-first visual guide to the data, geology, target, validation, and idea space.",
   "title": "ROGII Competition Learning Lab",
-  "updated_at": "2026-07-23"
+  "updated_at": "2026-07-24"
 }
