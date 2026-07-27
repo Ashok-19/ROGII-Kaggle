@@ -179,7 +179,7 @@ class LearningDashboardTests(unittest.TestCase):
         html = (ROOT / "dashboard/learn.html").read_text(encoding="utf-8")
         self.assertGreaterEqual(len(content["feature_groups"]), 5)
         self.assertGreaterEqual(len(content["breakthroughs"]), 4)
-        self.assertEqual(content["updated_at"], "2026-07-25")
+        self.assertEqual(content["updated_at"], "2026-07-27")
         self.assertTrue(any(item["id"] == "B005" for item in content["breakthroughs"]))
         self.assertTrue(any(item["id"] == "B006" for item in content["breakthroughs"]))
         self.assertTrue(any(item["id"] == "B007" for item in content["breakthroughs"]))

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "task_id": "T036",
+  "type": "score_blind_preregistration_correction",
+  "source_commit": "cc6d63a30d3935e76d14b4251b196f97b586cfe8",
+  "model_metrics_observed_before_correction": false,
+  "correction": "Replace the candidate KMeans seed formula 36000 + 100*map + 10*fold + 32 with the exact T033 formula 33000 + 100*map + 10*fold + 32.",
+  "reason": "The preregistered candidate-capacity identity requires reproducing T033 kmeans_pair_k032 exactly. The previous value was a transcription error and would define a different dictionary.",
+  "unchanged": [
+    "candidate count and pair weights",
+    "path-conditioned features",
+    "training sample rules",
+    "model branches and hyperparameters",
+    "inner and outer folds",
+    "controls",
+    "all decision gates"
+  ],
+  "resource_correction": {
+    "model_metrics_observed_before_correction": false,
+    "projection": "A 300-tree single-thread ExtraTrees four-point grid on the registered 30000x39 score-blind synthetic shape required 144.20 seconds, projecting to 5.03 hours across 125 mode-context selections before outer refits and feature construction.",
+    "change": "Use 200 trees and n_jobs=2 for the same four ExtraTrees hyperparameter points.",
+    "unchanged": "branch family, max_features grid, min_samples_leaf grid, seeds, inner selection, outer refit, controls, outputs, and gates",
+    "corrected_projection": "The same 30000x39 score-blind benchmark with 200 trees and n_jobs=2 required 52.35 seconds for all four ExtraTrees points. Full 125 mode-context selection projects to 1.84 hours; a worst-case ExtraTrees outer-refit allowance raises model fitting to 2.29 hours."
+  },
+  "interpretation": "This correction is mandatory for parent identity and does not use or respond to any T036 outcome."
+}

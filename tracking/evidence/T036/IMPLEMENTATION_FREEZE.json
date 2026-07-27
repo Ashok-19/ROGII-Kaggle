@@ -1,0 +1,82 @@
+{
+  "branch_metrics_observed_before_freeze": false,
+  "config": {
+    "bytes": 7017,
+    "path": "tracking/evidence/T036/config.json",
+    "sha256": "df9dc31c84cad82af8699fc913fc3f67c79456068ee2ebf886db3fa5382155ff"
+  },
+  "frozen_at": "2026-07-27T14:42:00Z",
+  "hypothesis_id": "H028",
+  "kaggle_notebook_run": false,
+  "kaggle_submission": false,
+  "parent_hashes": {
+    "t031_tensor": "421872a1963bbbe509cfdabcfe9cd9e7fddb86f930ebc6711005cf1634603959",
+    "t033_runner": "88e55c0c7e0f6adb3e4e4cc53896595c625f3d07a67dd494c14879c7764c9657"
+  },
+  "prohibited_post_metric_changes": [
+    "candidate additions or removals",
+    "feature additions or removals",
+    "model-family additions",
+    "hyperparameter-grid changes",
+    "gate changes",
+    "control changes",
+    "public-LB-driven tuning"
+  ],
+  "resource_contract": {
+    "extra_trees_estimators": 200,
+    "extra_trees_jobs": 2,
+    "maximum_rss_gb": 4.0,
+    "maximum_runtime_hours": 4.0,
+    "projected_nested_grid_fit_hours": 1.8393124347908776,
+    "projected_worst_case_total_model_fit_hours": 2.2936991237229956
+  },
+  "result_artifacts_present_before_freeze": false,
+  "schema_version": 1,
+  "scientific_contract": {
+    "candidate_bank": "32 split-local KMeans centers plus unique pair mixtures at 0.25/0.50/0.75 plus exact zero fallback",
+    "candidate_count": 1521,
+    "destructive_controls": [
+      "reversed_typewell_gr",
+      "circular_shift_hidden_gr",
+      "action_prior_only",
+      "shuffled_within_well_training_losses",
+      "sign_flipped_selected_action"
+    ],
+    "final_aggregation": "average five repeated-map action profiles per well",
+    "legal_branches": [
+      "robust_alignment",
+      "ridge",
+      "hist_gradient_boosting",
+      "extra_trees",
+      "pairwise_logistic"
+    ],
+    "primary_metric": "pooled row-level RMSE",
+    "registered_features": 39,
+    "selection": "inner actual-row TVT RMSE only"
+  },
+  "score_blind_validation": {
+    "all_candidates_finite": true,
+    "all_features_finite": true,
+    "candidate_shape": [
+      1521,
+      128
+    ],
+    "compile": "PASS",
+    "contexts": 25,
+    "eligible_evidence_wells": 773,
+    "feature_shape": [
+      1521,
+      39
+    ],
+    "real_data_preflight": "PASS",
+    "synthetic_contracts": "PASS",
+    "wells": 773
+  },
+  "script": {
+    "bytes": 66454,
+    "path": "tracking/evidence/T036/run_screen.py",
+    "sha256": "ee713980485a4c3539426b5989b6688b16c4359a73d933713d5f16eefda95aa0"
+  },
+  "source_commit": "cc6d63a30d3935e76d14b4251b196f97b586cfe8",
+  "task_id": "T036"
+}

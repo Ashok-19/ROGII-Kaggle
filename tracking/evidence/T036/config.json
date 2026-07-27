@@ -19,7 +19,7 @@
     "kmeans_centers": 32,
     "kmeans_n_init": 16,
     "kmeans_algorithm": "lloyd",
-    "seed_formula": "36000 + 100*map + 10*fold + 32",
+    "seed_formula": "33000 + 100*map + 10*fold + 32",
     "pair_weights": [0.25, 0.5, 0.75],
     "unique_nonzero_actions": 1520,
     "include_exact_zero_action": true,
@@ -68,7 +68,7 @@
     {"name": "robust_alignment", "family": "fixed", "formula": "mismatch_huber + 0.25*derivative_huber + 2*(1-support_fraction)"},
     {"name": "pointwise_ridge", "family": "ridge", "alphas": [1.0, 10.0, 100.0]},
     {"name": "pointwise_hgb", "family": "hist_gradient_boosting", "max_leaf_nodes": [15, 31], "l2_regularization": [1.0, 10.0], "learning_rate": 0.05, "max_iter": 150, "min_samples_leaf": 80},
-    {"name": "pointwise_extra_trees", "family": "extra_trees", "n_estimators": 300, "max_features": [0.7, 1.0], "min_samples_leaf": [10, 25], "random_state_formula": "36000 + 100*map + 10*fold", "n_jobs": 1},
+    {"name": "pointwise_extra_trees", "family": "extra_trees", "n_estimators": 200, "max_features": [0.7, 1.0], "min_samples_leaf": [10, 25], "random_state_formula": "36000 + 100*map + 10*fold", "n_jobs": 2},
     {"name": "pairwise_logistic", "family": "logistic", "C": [0.1, 1.0, 10.0], "max_iter": 500}
   ],
   "output_rules": {
@@ -86,7 +86,11 @@
     "selection_metric": "pooled actual-row TVT RMSE",
     "final_prediction": "average five map action profiles per well before actual-row scoring",
     "stress_systems": ["legacy_spatial", "legacy_typewell", "legal_covariate_kmeans", "spatial_2d_kmeans", "horizon_quintile"],
-    "special_slices": ["long_suffix", "high_hidden_gr_missingness", "e011_catastrophe"]
+    "special_slices": {
+      "long_suffix": "top quintile by hidden row count, inclusive threshold",
+      "high_hidden_gr_missingness": "top quintile by one minus hidden GR coverage, inclusive threshold",
+      "e011_catastrophe": "top decile by E011 per-well RMSE, inclusive threshold"
+    }
   },
   "controls": {
     "destructive": ["reversed_typewell_gr", "circular_shift_hidden_gr", "action_prior_only", "shuffled_within_well_training_losses"],

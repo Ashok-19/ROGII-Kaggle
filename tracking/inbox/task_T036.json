@@ -1,14 +1,14 @@
 {
   "payload": {
     "depends_on": "T035",
-    "due_at": "2026-07-26",
-    "phase": "preregistered_candidate_conditioned_evidence",
+    "due_at": "2026-07-28",
+    "phase": "implementation_frozen_ready_for_full_run",
     "priority": 1,
-    "status": "queued",
+    "status": "active",
     "task_id": "T036",
     "title": "Rank compact actions by path-conditioned GR evidence",
-    "updated_at": "2026-07-24T19:47:51Z"
+    "updated_at": "2026-07-27T14:42:00Z"
   },
-  "recorded_at": "2026-07-24T19:47:51Z",
+  "recorded_at": "2026-07-27T14:42:00Z",
   "type": "task"
 }

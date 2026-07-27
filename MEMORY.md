@@ -82,7 +82,7 @@ Public intelligence last checked: 2026-07-23 23:56 Asia/Kolkata
 
 ## Exact next action
 
-Execute T036 exactly as preregistered. Recompute hidden-horizontal-GR/typewell evidence under every one of the 1,521 split-local candidate paths, select ranking and hard/soft output rules only on inner actual-row RMSE, and require a large advantage over action priors plus failure of reversed/shifted/shuffled evidence controls before any escalation.
+Execute the committed T036 full run from the exact implementation freeze. Primary decision is pooled row-level RMSE; require a large advantage over the action-prior control plus failure of reversed/shifted/shuffled evidence controls. If it hard-stops, select the next sub-5-capacity mechanism immediately without reopening closed global-coordinate or public-LB-tuning routes.
 
 ## Open risks
 
@@ -91,7 +91,7 @@ Execute T036 exactly as preregistered. Recompute hidden-horizontal-GR/typewell e
 - HMM/DTW/PF can over-count autocorrelated GR, commit to repeated motifs, or smooth across faults. Posterior uncertainty must be calibrated OOF and a jump candidate must remain available.
 - E010 confirms that a below-5 bank does not imply a useful legal selector. The immediate risk is coefficient learnability under spatial shift; family classification alone cannot close the 9.07 RMSE coefficient/aggregation gap.
 - E011 resolves coefficient learnability and deployment positively. E012 rejects regime specialization, T022 rejects E011/E006 uncertainty routing, T023 rejects the tested residual sequence-state proxy, T016 rejects the tested wide datum action space, T025 rejects four fixed pseudo-cut summaries, and T026 rejects mask-local end-of-well target pooling. T027 rejects target-preserving view augmentation and T028 rejects objective-only repair before implementation. The remaining risk is selecting a genuinely independent legal mechanism rather than recombining another version of the same coefficient, routing, profile, or mask signal.
-- The current public topic list reports 139 topics while the frozen archive contains 132. New/Recent deltas are audited, but canonical topic/message counts remain unchanged until a complete recrawl verifies additions, removals, and message counts.
+- The 2026-07-27 public refresh reports 145 topics and a public leaderboard frontier of 4.679 and 4.902. Sub-5 is operationally real, but the top mechanisms are undisclosed; public `gs` tuning and visible-test overlap overrides are not valid private-generalization evidence.
 - Every future finalist needs a runnable Kaggle notebook, correct IDs/order, finite predictions, complete output coverage, and a saved result that can be retrieved and reviewed.
 
 ## Memory update rule

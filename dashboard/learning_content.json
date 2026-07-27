@@ -142,7 +142,7 @@
       "summary": "E009 trained six legal datum models and tested fixed plus nested consensus abstention. Majority consensus reached 14.7935 RMSE, won all 5 maps, and improved p90, but won only 15 of 25 repeated cells and repeated the spatial/typewell shift failures.",
       "title": "Model agreement repeated shared bias",
       "visual": "consensus_gate",
-      "why_it_matters": "Agreement was not reliable uncertainty: the three rule action sets overlapped at 0.984\u20130.996 Jaccard, and the sign-flipped negative control exceeded its cap. A diagnostic 64-feature ridge reached 14.6353 with 5/5 maps, so the next experiment targets inner-fold feature stability rather than more consensus threshold tuning."
+      "why_it_matters": "Agreement was not reliable uncertainty: the three rule action sets overlapped at 0.984–0.996 Jaccard, and the sign-flipped negative control exceeded its cap. A diagnostic 64-feature ridge reached 14.6353 with 5/5 maps, so the next experiment targets inner-fold feature stability rather than more consensus threshold tuning."
     },
     {
       "date": "2026-07-20",
@@ -232,13 +232,13 @@
       "summary": "D020 promotes E011 as the global deployment model. The next experiment may test regime-specific coefficient experts only with split-local legal routing and exact E011 fallback.",
       "title": "The next bottleneck is specialist transfer",
       "visual": "risk_action",
-      "why_it_matters": "E007\u2013E009 showed that apparent regimes and agreement can repeat shared bias. H015 must improve the complete system under repeated and spatial/typewell gates, and shuffled or sign-flipped routing must lose the gain."
+      "why_it_matters": "E007–E009 showed that apparent regimes and agreement can repeat shared bias. H015 must improve the complete system under repeated and spatial/typewell gates, and shuffled or sign-flipped routing must lose the gain."
     },
     {
       "date": "2026-07-23",
       "evidence": "exact_source_and_saved_output_audit",
       "id": "B024",
-      "summary": "Four newly prominent notebooks share 93.1%\u201399.95% source similarity and the same overlap/model-package profile. Their PF branch and U-continuity layers act materially only on visible well 00e12e8b; a 100-well selector retains 68.61% worst-decile SSE, and the stochastic-TTA gate fails its own OOF threshold.",
+      "summary": "Four newly prominent notebooks share 93.1%–99.95% source similarity and the same overlap/model-package profile. Their PF branch and U-continuity layers act materially only on visible well 00e12e8b; a 100-well selector retains 68.61% worst-decile SSE, and the stochastic-TTA gate fails its own OOF threshold.",
       "title": "The refreshed public frontier is one composite lineage",
       "visual": "cv_lb_split",
       "why_it_matters": "Do not infer independent causality from titles or public scores. D022 allows only a clean preimplementation screen for continuous E011 uncertainty/fallback placement; no public constants, artifacts, or score-directed well moves may enter the project."
@@ -367,7 +367,7 @@
       "title": "Fixed spline coordinates are not the compact breakthrough target",
       "summary": "Every legal spline7-coordinate branch worsens E011; best summary ridge scores 13.0073 RMSE with R2 0.219 and only 6.03% neighbor enrichment.",
       "visual": "deployment_gap",
-      "why_it_matters": "T034 closes fixed-spline regression but does not test T033\u2019s partition-specific PCA coordinates. T035 is the direct final manifold test."
+      "why_it_matters": "T034 closes fixed-spline regression but does not test T033’s partition-specific PCA coordinates. T035 is the direct final manifold test."
     },
     {
       "id": "B039",
@@ -377,6 +377,15 @@
       "summary": "Raw-PCA ridge is best at 12.2673 RMSE with coordinate R2 0.0341 and only 2.73% oracle-gain retention; every summary-only nonlinear branch regresses.",
       "visual": "deployment_gap",
       "why_it_matters": "The compact action space is real, but global coordinate prediction is closed. T036 changes the causal question by recomputing GR/typewell evidence under each candidate path."
+    },
+    {
+      "id": "B040",
+      "date": "2026-07-27",
+      "evidence": "official_Kaggle_leaderboard_and_discussion_refresh",
+      "title": "The public frontier has crossed sub-5",
+      "summary": "The official public leaderboard now starts at 4.679 and 4.902; public notebook stacks remain mostly in the 6.46-6.71 range.",
+      "visual": "deployment_gap",
+      "why_it_matters": "Sub-5 is operationally attainable, but the leading mechanisms are undisclosed. T036 remains the fastest evidence-backed route because it preserves a 4.6285 candidate oracle and tests path-conditioned GR evidence honestly."
     }
   ],
   "concepts": [
@@ -847,9 +856,14 @@
       "title": "T036 candidate-path-conditioned GR ranking preregistration",
       "local_path": "tracking/evidence/T036/PRE_REGISTRATION.md",
       "url": ""
+    },
+    {
+      "title": "July 27 leaderboard and discussion delta",
+      "local_path": "archive/competition/public_intelligence_delta_2026-07-27.md",
+      "url": "https://www.kaggle.com/competitions/rogii-wellbore-geology-prediction/leaderboard"
     }
   ],
   "subtitle": "A beginner-first visual guide to the data, geology, target, validation, and idea space.",
   "title": "ROGII Competition Learning Lab",
-  "updated_at": "2026-07-25"
+  "updated_at": "2026-07-27"
 }
