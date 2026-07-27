@@ -9,6 +9,7 @@ Top-1 oracle hit: 0.00258732212160414
 Top-16 oracle recall: 0.029495472186287192
 Minimum legacy-group gain: -0.1667909073561819
 Decision: STOP_CLOSE_PATH_CONDITIONED_RANKING
-Metric, membership, manifest, gate, destructive-control reselection, and candidate-order checks: PASS
+Metric, membership, manifest, gate, four reselected destructive-control, and candidate-order checks: PASS
 Genuine duplicate-action invariance under selected soft top-k output: FAIL
 Duplicate probe maximum action delta: 0.2689414213699952
+Sign-flip full inner reselection: FAIL — the branch negates nested_profiles after legal selection

@@ -2,7 +2,7 @@
   "payload": {
     "depends_on": "T035",
     "due_at": "2026-07-28",
-    "phase": "completed_rejected_path_conditioned_ranking_with_structural_control_failure",
+    "phase": "completed_rejected_path_conditioned_ranking_with_control_contract_failures",
     "priority": 1,
     "status": "completed",
     "task_id": "T036",

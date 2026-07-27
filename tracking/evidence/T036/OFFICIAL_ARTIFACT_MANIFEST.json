@@ -1,9 +1,9 @@
 {
   "files": [
     {
-      "bytes": 1829,
+      "bytes": 2001,
       "name": "CLOSURE_RECEIPT.json",
-      "sha256": "10a4e5f9691cb4ee191ba0a584e1b0b534c629003ebbc783024c9345c86fda8e"
+      "sha256": "346b7eba4a53f813186364897b82be76204c97492bad39f68daf447937263154"
     },
     {
       "bytes": 1074,
@@ -21,9 +21,9 @@
       "sha256": "fb58890a4ccffc9fb0eda6b47c24e1ccb0cb0b1122dc7ac3aa88e7d1dfa1d5be"
     },
     {
-      "bytes": 3694,
+      "bytes": 4331,
       "name": "INDEPENDENT_VALIDATION.json",
-      "sha256": "3ea5fb2d3623e4f58439202b69998455efdc677a54604ff65f6ba4d8b4f97f6f"
+      "sha256": "205ff3a6e02b8339f9a66e31102382274203321424d4795280fed81bfe2c5d5f"
     },
     {
       "bytes": 722,
@@ -61,9 +61,9 @@
       "sha256": "51a7f89d29670f2fd3bf942227d7a1f0146838f052b3d631714f9638238a42a2"
     },
     {
-      "bytes": 693,
+      "bytes": 797,
       "name": "VALIDATION_STATUS.txt",
-      "sha256": "e9ea0fed2a98d218d011b28b693f9184d1d5f9c072a94cf4eb49bb18c6e451e4"
+      "sha256": "b0334735cc0f151f3a09ee3b5335a2b8bd98116e162aa5dbca191b1d7f7c1b6f"
     },
     {
       "bytes": 2044,

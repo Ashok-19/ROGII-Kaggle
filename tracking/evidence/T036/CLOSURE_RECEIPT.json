@@ -14,10 +14,12 @@
   "gain_vs_e011": 0.07789156082865745,
   "hypothesis_id": "H028",
   "independent_validation_failures": [
-    "duplicate_action_control_genuine"
+    "duplicate_action_control_genuine",
+    "sign_flip_control_full_inner_reselection",
+    "all_frozen_destructive_controls_full_inner_reselection"
   ],
   "independent_validation_status": "FAIL",
-  "interpretation": "The hard STOP is independently reproduced. Candidate-conditioned summary ranking retains less than one percent of oracle gain, has no map wins, fails transfer and tail gates, and has only 0.0923 RMSE advantage over action priors. The generated duplicate-action control is not genuine for soft top-k selection; this additional frozen-control failure cannot be repaired after result observation and further strengthens rejection.",
+  "interpretation": "The hard STOP is independently reproduced. Candidate-conditioned summary ranking retains less than one percent of oracle gain, has no map wins, fails transfer and tail gates, and has only 0.0923 RMSE advantage over action priors. In addition, duplicate-action invariance is not genuine for soft top-k selection and the sign-flip branch does not perform the frozen full inner reselection. Neither defect may be repaired after result observation.",
   "kaggle_execution_authorized": false,
   "map_wins": 0,
   "next_hypothesis": "H029",
@@ -30,6 +32,7 @@
   "recorded_at": "2026-07-27T17:47:05Z",
   "schema_version": 1,
   "selected_soft_contexts": 23,
+  "sign_flip_full_inner_reselection": false,
   "status": "CLOSED_REJECTED_HARD_STOP",
   "submission_authorized": false,
   "task_id": "T036",

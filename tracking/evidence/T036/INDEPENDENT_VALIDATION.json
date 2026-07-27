@@ -7,7 +7,7 @@
     "tail_gates": false
   },
   "checks": {
-    "all_destructive_controls_full_inner_reselection": true,
+    "all_frozen_destructive_controls_full_inner_reselection": false,
     "all_numeric_finite": true,
     "breakthrough_gates_exact": true,
     "candidate_order_control_genuine": true,
@@ -16,6 +16,7 @@
     "decision_exact": true,
     "duplicate_action_control_genuine": false,
     "five_memberships_per_well": true,
+    "four_reselected_destructive_controls_full_inner_reselection": true,
     "generated_edge_all_true": true,
     "go_gates_exact": true,
     "hidden_rows_exact": true,
@@ -32,12 +33,15 @@
     "pooled_candidate_rmse_exact": true,
     "positive_fraction_exact": true,
     "row_counts_exact": true,
+    "sign_flip_control_full_inner_reselection": false,
     "stop_gate_exact": true,
     "wells_unique_773": true,
     "worst5_exact": true
   },
   "failed": [
-    "duplicate_action_control_genuine"
+    "duplicate_action_control_genuine",
+    "sign_flip_control_full_inner_reselection",
+    "all_frozen_destructive_controls_full_inner_reselection"
   ],
   "go_gates": {
     "destructive_controls_fail": true,
@@ -49,7 +53,7 @@
     "positive_every_legacy_group": false,
     "tail_gates": false
   },
-  "interpretation": "Hard STOP metrics independently reproduce, but duplicate-action invariance is not genuine for the selected soft-top-k mechanism.",
+  "interpretation": "Hard STOP metrics independently reproduce. Two frozen validation claims fail: exact duplicate candidates change the selected soft top-k action, and the sign-flip branch negates the already selected legal action instead of repeating full inner branch/output reselection.",
   "manifest_checks": {
     "RESULT.md": true,
     "branch_metrics.csv": true,
@@ -102,6 +106,12 @@
     "worst5_sse_share": 0.3217589829665758
   },
   "schema_version": 1,
+  "sign_flip_audit": {
+    "full_inner_reselection": false,
+    "gain_vs_e011": -0.3121569759507494,
+    "implementation": "negative of nested_profiles after legal selection",
+    "source_lines": "tracking/evidence/T036/run_screen.py:1012-1014"
+  },
   "status": "FAIL",
   "stop_gate": true,
   "structural_probe": {
