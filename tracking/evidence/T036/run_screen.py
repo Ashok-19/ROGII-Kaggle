@@ -652,10 +652,10 @@ def fit_model(branch: str, params: dict[str, Any], x: np.ndarray, y: np.ndarray,
 
 
 def score_model(fitted: FittedModel, features: np.ndarray) -> np.ndarray:
-    if fitted.branch == "robust_alignment":
+    if fitted.family == "robust_alignment":
         return features[:, 2].astype(np.float64) + 0.25 * features[:, 10] + 2.0 * (1.0 - features[:, 0])
     transformed = fitted.scaler.transform(features) if fitted.scaler is not None else features
-    if fitted.branch == "pairwise_logistic":
+    if fitted.family == "pairwise_logistic":
         return -np.asarray(fitted.model.decision_function(transformed), dtype=np.float64)
     return np.asarray(fitted.model.predict(transformed), dtype=np.float64)
 
@@ -1422,6 +1422,8 @@ def synthetic_self_test() -> dict[str, Any]:
     )
     features = candidate_features(evidence, actions)
     prior = candidate_features(evidence, actions, mode="action_prior_only")
+    robust_fitted = fit_model("robust_alignment", {}, np.zeros((1, 39)), np.zeros(1), 0, {"branches": []})
+    robust_scores = score_model(robust_fitted, features)
     sses = np.linspace(1000.0, 2000.0, 1521)
     indices = pointwise_indices("synthetic", "v1_f0", sses)
     rule = {"kind": "soft", "top_k": 8, "temperature": 0.5}
@@ -1441,6 +1443,7 @@ def synthetic_self_test() -> dict[str, Any]:
     checks = {
         "feature_shape": features.shape == (1521, 39),
         "features_finite": bool(np.isfinite(features).all()),
+        "score_model_field_contract": robust_scores.shape == (1521,) and bool(np.isfinite(robust_scores).all()),
         "prior_evidence_zero": bool(np.all(prior[:, :EVIDENCE_FEATURES] == 0.0)),
         "pointwise_sample_64": len(indices) == 64 and len(set(map(int, indices))) == 64,
         "soft_profile_finite": bool(np.isfinite(profile).all()),

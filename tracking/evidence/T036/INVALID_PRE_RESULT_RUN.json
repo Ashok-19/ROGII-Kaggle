@@ -1,0 +1,17 @@
+{
+  "attempt": "2026-07-27-pre-result-run-1",
+  "correction_scope": "Replace the two stale fitted.branch references with the dataclass field fitted.family and add a synthetic score_model contract check.",
+  "elapsed_seconds": 352.78081488609314,
+  "failure": "AttributeError: 'FittedModel' object has no attribute 'branch'",
+  "head_sha": "2e5bed9a2f4372f6604d4d52589b33505d60d488",
+  "metrics_observed": false,
+  "pid": 146346,
+  "result_files": [],
+  "schema_version": 1,
+  "scientific_contract_changed": false,
+  "script_sha256": "ee713980485a4c3539426b5989b6688b16c4359a73d933713d5f16eefda95aa0",
+  "status": "invalid_runtime_failure_before_metrics",
+  "stderr_bytes": 1041,
+  "stdout_bytes": 0,
+  "task_id": "T036"
+}
