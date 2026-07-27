@@ -1,14 +1,14 @@
 {
   "payload": {
-    "evidence_against": "The independently recomputed nested legal result is 12.4728647349 RMSE with 0/5 map wins, 7/25 cell wins, 0.983% oracle-gain retention, p90 and worst-5% deterioration, a negative legacy-group gain, and only 0.092333 RMSE advantage over action priors. Top-1 and top-16 oracle recall are 0.259% and 2.950%. The claimed duplicate-action invariance is not genuine for the selected soft top-k mechanism.",
-    "evidence_for": "The exact 1,520-action T033 pair dictionary retains a verified 4.6284573670 RMSE oracle and T036 legal ranking improves E011 by 0.077892 RMSE.",
+    "evidence_against": "T036 independently recomputes to 12.4728647349 RMSE, 0/5 map wins, 7/25 cell wins, 0.983% oracle-gain retention, 0.2587% top-1 hit, 2.9495% top-16 recall, p90 and worst-5% deterioration, and a -0.166791 minimum legacy-group gain. A direct frozen-selection probe also proves the generated duplicate-action invariance check is not genuine for the selected soft top-k mechanism.",
+    "evidence_for": "T033 pair-32 candidate actions preserve 4.6284573670 RMSE oracle capacity in 1,520 unique actions. T036 legal ranking improves E011 by 0.0778915608 RMSE and beats the action-prior control by 0.0923330919 RMSE.",
     "hypothesis_id": "H028",
-    "next_test": "Do not retune candidate-wise summary ranking. Execute only the separately preregistered H029/T037 full-emission structured decoder gate, which operates on node/state emissions and deduplicates exact paths before decoding.",
+    "next_test": "Closed by T036. Do not retune global path-conditioned features, ranking models, candidate subsets, soft top-k rules, or output temperatures. Execute only the separately preregistered H029/T037 full-emission structured decoder gate.",
     "priority": 1,
     "statement": "Candidate-specific hidden-GR/typewell evidence can rank a compact sub-5 action dictionary even though global action coordinates are not legally identifiable.",
     "status": "rejected",
     "title": "Path-conditioned GR evidence identifies high-capacity candidate actions"
   },
-  "recorded_at": "2026-07-27T17:47:05Z",
+  "recorded_at": "2026-07-27T17:45:00Z",
   "type": "hypothesis"
 }

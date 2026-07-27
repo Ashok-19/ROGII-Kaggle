@@ -25,6 +25,15 @@ class TrackerTests(unittest.TestCase):
             self.assertAlmostEqual(state["kpis"]["leader_score"], 4.679)
             self.assertAlmostEqual(state["leaderboard_bands"][0]["score"], 4.679)
             self.assertEqual(state["leaderboard_bands"][0]["team"], "shu01")
+            tasks = {row["task_id"]: row for row in state["tasks"]}
+            self.assertEqual(tasks["T036"]["status"], "completed")
+            self.assertEqual(tasks["T037"]["status"], "queued")
+            self.assertEqual(tasks["T037"]["phase"], "preregistered_full_emission_structured_decoder")
+            hypotheses = {row["hypothesis_id"]: row for row in state["hypotheses"]}
+            self.assertEqual(hypotheses["H028"]["status"], "rejected")
+            self.assertEqual(hypotheses["H029"]["status"], "active")
+            decisions = {row["decision_id"]: row for row in state["decisions"]}
+            self.assertIn("full-emission structured decoding", decisions["D041"]["title"].lower())
 
     def test_validation_archive_counts(self):
         with tempfile.TemporaryDirectory() as tmp:

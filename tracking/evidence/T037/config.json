@@ -1,6 +1,7 @@
 {
   "breakthrough_gate": {
     "all_destructive_controls_fail": true,
+    "all_structural_controls_pass": true,
     "maximum_legal_rmse": 5.0,
     "maximum_p90_deterioration": 0.0,
     "maximum_worst5_sse_share_increase": 0.005,
@@ -57,9 +58,10 @@
     "same_well_target_lookup",
     "opaque_or_unknown_license_artifacts"
   ],
-  "frozen_at": "2026-07-27T17:47:05Z",
+  "frozen_at": "2026-07-27T17:45:00Z",
   "go_gate": {
     "all_destructive_controls_fail": true,
+    "all_structural_controls_pass": true,
     "maximum_legal_rmse": 8.0,
     "maximum_p90_deterioration": 0.0,
     "maximum_worst5_sse_share_increase": 0.005,
@@ -87,7 +89,7 @@
       "ridge",
       "hist_gradient_boosting"
     ],
-    "exact_profile_dedup_before_scoring": true,
+    "exact_profile_dedup_before_graph": true,
     "representation": "node_state_emission_volume_on_deduplicated_union_graph",
     "soft_outputs_forbidden": true,
     "transition_strengths": [

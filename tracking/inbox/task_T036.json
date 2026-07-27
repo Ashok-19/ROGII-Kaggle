@@ -2,13 +2,13 @@
   "payload": {
     "depends_on": "T035",
     "due_at": "2026-07-28",
-    "phase": "completed_hard_stop_with_duplicate_control_failure",
+    "phase": "completed_rejected_path_conditioned_ranking_with_structural_control_failure",
     "priority": 1,
     "status": "completed",
     "task_id": "T036",
     "title": "Rank compact actions by path-conditioned GR evidence",
-    "updated_at": "2026-07-27T17:47:05Z"
+    "updated_at": "2026-07-27T17:45:00Z"
   },
-  "recorded_at": "2026-07-27T17:47:05Z",
+  "recorded_at": "2026-07-27T17:45:00Z",
   "type": "task"
 }

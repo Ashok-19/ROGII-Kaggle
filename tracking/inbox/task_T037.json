@@ -4,11 +4,11 @@
     "due_at": "2026-07-29",
     "phase": "preregistered_full_emission_structured_decoder",
     "priority": 1,
-    "status": "next",
+    "status": "queued",
     "task_id": "T037",
     "title": "Test full-emission structured path decoding",
-    "updated_at": "2026-07-27T17:47:05Z"
+    "updated_at": "2026-07-27T17:45:00Z"
   },
-  "recorded_at": "2026-07-27T17:47:05Z",
+  "recorded_at": "2026-07-27T17:45:00Z",
   "type": "task"
 }

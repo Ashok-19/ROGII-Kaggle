@@ -1,13 +1,13 @@
 {
   "payload": {
     "decided_at": "2026-07-27",
-    "decision": "Reject H028/T036 and close candidate-wise summary, pointwise-loss, pairwise-ranking, and soft top-k selection over the T033 pair dictionary. Select H029/T037 as one materially independent bounded mechanism: full row-level candidate-conditioned emissions decoded on the deduplicated union path graph.",
+    "decision": "Reject H028/T036 and close candidate-level summary, pointwise-loss, pairwise-ranking, and soft top-k selection over the T033 pair dictionary. Select H029/T037 as one materially independent bounded mechanism: full row-level candidate-conditioned emissions decoded by hard Viterbi on the exact deduplicated union graph of the 1,520 nonzero T033 pair paths plus zero fallback.",
     "decision_id": "D041",
-    "rationale": "T036 preserves the 4.628457 candidate oracle but the legal selector reaches 12.472865 RMSE, retains only 0.983% of oracle gain, wins 0/5 maps and 7/25 cells, fails legacy and tail gates, and beats action priors by only 0.092333 RMSE. Its 39-feature candidate summary compression may discard local emission structure; a graph decoder asks a different question while keeping an exact sub-5 admissible-path capacity identity. The non-genuine duplicate-action control is frozen evidence against soft selection and is corrected structurally in T037 by exact pre-decoding path deduplication, not by post-result repair of T036.",
-    "revisit_trigger": "Do not reopen T036 families. Continue beyond T037 only if the full-emission decoder passes its frozen legal, transfer, tail, resource, and evidence-destruction gates.",
-    "source_ids": "S_T033_VERIFIED_20260724,S_T036_VALIDATED_20260727,S_PUBLIC_DELTA_20260727,H028,T036,H029,T037",
-    "title": "Close candidate summary ranking and test full-emission structured decoding"
+    "rationale": "T036 preserves the 4.628457 candidate oracle but reaches 12.472865 RMSE, retains only 0.983% of oracle gain, wins 0/5 maps and 7/25 cells, fails legacy and tail gates, and beats action priors by only 0.092333 RMSE. It compresses each complete candidate into 39 aggregate summaries before ranking, leaving the row/node emission field untested. The selected T036 output is soft in 23/25 contexts and fails genuine duplicate-action invariance; T037 does not repair T036 after scores, but structurally deduplicates complete paths before graph construction and uses hard decoding only.",
+    "revisit_trigger": "Do not reopen T036 families. Continue beyond T037 only if the full-emission decoder passes the frozen legal, transfer, tail, resource, and evidence-destruction gates; GO requires RMSE at most 8.0 and breakthrough at most 5.0.",
+    "source_ids": "S_T036_VERIFIED_20260727,S_T033_VERIFIED_20260724,T033,T036,H028,H029,T037",
+    "title": "Replace candidate summaries with full-emission structured decoding"
   },
-  "recorded_at": "2026-07-27T17:47:05Z",
+  "recorded_at": "2026-07-27T17:45:00Z",
   "type": "decision"
 }

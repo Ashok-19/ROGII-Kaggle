@@ -56,14 +56,14 @@
       "sha256": "f05127b74716f440024cc18d379c2ee011a9f774c47ff4c98c40f9e6da373f28"
     },
     {
-      "bytes": 5297,
+      "bytes": 2590,
       "name": "RUN_ARTIFACT_MANIFEST.json",
-      "sha256": "5c21c9c752cd3ee8d003e56db90a66571f4f8d2dbe216bfda1144930bf04d4cb"
+      "sha256": "51a7f89d29670f2fd3bf942227d7a1f0146838f052b3d631714f9638238a42a2"
     },
     {
-      "bytes": 352,
+      "bytes": 693,
       "name": "VALIDATION_STATUS.txt",
-      "sha256": "574a099fd5276cf6f19349d6dee25378c3db34a0d52e8aa5d9e4574a13cbfa50"
+      "sha256": "e9ea0fed2a98d218d011b28b693f9184d1d5f9c072a94cf4eb49bb18c6e451e4"
     },
     {
       "bytes": 2044,
