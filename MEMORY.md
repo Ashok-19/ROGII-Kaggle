@@ -41,7 +41,7 @@ Public intelligence last checked: 2026-07-27 22:32 Asia/Kolkata
 - T035 closes H027 and all further global compact-manifold coordinate regression. The best legal branch, raw-PCA ridge, reaches 12.2672938069 RMSE, retains only 2.728% of T033 oracle gain, has multivariate coordinate R2 0.0341, and helps 61.71% of wells. All five maps and every legacy group improve, but one legal-covariate cluster and one horizon quintile regress. Privileged geology reaches 10.897200 but worsens shape SSE. Independent recomputation and an exact second run pass.
 - D040 selects T036 as a materially different mechanism: rank the reproduced T033 pair-32 candidate dictionary by GR/typewell evidence recomputed under each proposed path. The dictionary has exactly 1,520 unique nonzero actions plus exact E011 fallback and retains a 4.628457 hidden-label oracle. No further global coordinate, spline, basis, summary, or raw-PCA retuning is allowed.
 - T036 closes H028 negatively. The complete corrected run reaches 12.4728647349 RMSE, only +0.0778915608 versus E011, with 0/5 map wins, 7/25 cell wins, a -0.166791 worst legacy-group gain, 0.983% oracle-gain retention, 0.2587% top-1 hit, and 2.9495% top-16 recall. All edge checks, controls, manifests, and independent recomputation pass. Do not retune global candidate features, ranking models, dictionaries, or output temperatures.
-- D041 selects T037 as the immediate fast gate: use each query well's known visible TVT/GR prefix to calibrate candidate-conditioned evidence for that same well. Stage A is one five-fold map and must gain at least 3.0 RMSE, reach at most 9.5, win all folds and legacy groups, reach 20% top-16 recall, and defeat all controls before any 25-context escalation.
+- D041 selects T037 as the immediate bounded mechanism: preserve all 1,520 split-local nonzero T033 pair-dictionary paths plus exact zero fallback, construct the deduplicated node/state union graph, compute full row-level candidate-conditioned GR emissions, and perform hard Viterbi decoding. T036's 39 aggregate summaries are closed; T037 must reach at most 8.0 RMSE for GO or 5.0 for breakthrough and defeat transition-only plus all evidence-destruction controls.
 
 ## New durable understanding from exact public-source audits
 
@@ -84,7 +84,7 @@ Public intelligence last checked: 2026-07-27 22:32 Asia/Kolkata
 
 ## Exact next action
 
-Implement and execute T037 Stage A exactly as preregistered. Use only each held-out well's visible TVT/GR prefix for query-specific candidate calibration. Stop immediately unless the five-fold screen reaches at most 9.5 RMSE, gains at least 3.0 versus E011, wins every fold and legacy group, reaches at least 20% oracle top-16 recall, beats action priors by at least 1.0 RMSE, and defeats every destructive control. Do not reopen T036 or tune against the public leaderboard.
+Implement and execute T037 exactly as preregistered. Deduplicate the complete T033 pair-32 action paths, build the split-local union graph, fit row/node GR emission models only inside each outer partition, select hard-Viterbi transition strength on the fixed inner fold, and require exact complete-path oracle identity plus every structural and destructive control. STOP if legal RMSE is above 10.0, oracle-gain retention is below 25%, or full emissions do not beat transition-only. Do not reopen T036 or tune against the public leaderboard.
 
 ## Open risks
 

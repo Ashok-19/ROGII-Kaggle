@@ -391,10 +391,10 @@
       "id": "B041",
       "date": "2026-07-27",
       "evidence": "T036_complete_independent_validation",
-      "title": "Global candidate-conditioned evidence is real but far too weak",
+      "title": "Candidate summaries fail; full local emission structure remains untested",
       "summary": "T036 reaches 12.4729 RMSE, gains 0.0779, wins 0/5 maps, and identifies the oracle candidate in the top 16 only 2.95% of the time.",
       "visual": "deployment_gap",
-      "why_it_matters": "The 4.6285 dictionary remains capable, but one cross-well evidence mapping cannot select it. T037 tests query-specific calibration from the legal visible TVT prefix and requires a multi-RMSE effect before escalation."
+      "why_it_matters": "The 4.6285 dictionary remains capable, but candidate-level summary ranking discards local structure. T037 preserves every complete path in a deduplicated union graph and tests full row-level GR emissions with hard Viterbi continuity."
     }
   ],
   "concepts": [
@@ -877,7 +877,7 @@
       "url": ""
     },
     {
-      "title": "T037 query-specific visible calibration preregistration",
+      "title": "T037 full-emission structured decoder preregistration",
       "local_path": "tracking/evidence/T037/PRE_REGISTRATION.md",
       "url": ""
     }

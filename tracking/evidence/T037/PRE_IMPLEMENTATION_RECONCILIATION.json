@@ -1,0 +1,12 @@
+{
+  "committed_contract": "full-emission structured path decoding",
+  "config_sha256": "547b0bd77a50dd9dc8536561b8caeb641e784fdbd7a2edc1ee3266ae3eecd1d7",
+  "prereg_sha256": "58513ae17eab0e2cda21823f8de33b35e944b48105ea737b57fe5043bf46d9d2",
+  "reason": "A concurrent preregistration acquired H029/T037/D041 before implementation and was already committed. Tracker, config, and PRE_REGISTRATION consistently identify structured decoding; stale memory/roadmap/dashboard text from the overlapping visible-calibration proposal was corrected.",
+  "recorded_at": "2026-07-27T17:58:00Z",
+  "schema_version": 1,
+  "status": "PRE_METRIC_RECONCILED",
+  "superseded_untracked_draft": "scratch/agents/t037-visible-calibration-20260727/superseded_visible_calibration_draft.py",
+  "t037_metrics_observed_before_reconciliation": false,
+  "task_id": "T037"
+}
