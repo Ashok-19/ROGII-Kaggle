@@ -1,12 +1,12 @@
 # ROGII Project Memory
 
-Last updated: 2026-07-24
-Public intelligence last checked: 2026-07-23 23:56 Asia/Kolkata
+Last updated: 2026-07-27
+Public intelligence last checked: 2026-07-27 22:32 Asia/Kolkata
 
 ## Mission state
 
 - Deadline: 2026-08-05 23:59 UTC / 2026-08-06 05:29 Asia/Kolkata.
-- Current public leaderboard snapshot: 4.859 at rank 1, 4.904 at rank 2, 5.265 at rank 5, and 5.511 at rank 10. Official Meta Kaggle verifies that the public leaderboard covers exactly 26% of the test data and the private leaderboard the remaining 74%. Best Kaggle-MCP-verified account submission remains 7.119 (ref 54754431, 2026-07-16); user-reported best remains 6.888 with reference unverified.
+- Current verified public leaderboard snapshot: 4.679 at rank 1, 4.902 at rank 2, 5.237 at rank 5, and 5.444 at rank 10 as of 2026-07-27 22:32 Asia/Kolkata. Official Meta Kaggle verifies that the public leaderboard covers exactly 26% of the test data and the private leaderboard the remaining 74%. Best Kaggle-MCP-verified account submission remains 7.119 (ref 54754431, 2026-07-16); user-reported best remains 6.888 with reference unverified.
 - E001 is frozen; E002, E005, E007, E008, and E009 are rejected; E003 is promoted only as nondeployable surface-assisted understanding; E011 is the promoted deployment-ready primary, E006 is the secondary fallback, and E004 is the exact fallback.
 - E010 is completed and rejected. Its 130,252-path legal bank oracle reaches 4.7510768278 RMSE, but the best legal selector reaches 14.7802528528, fails spatial group 1/high-GR-missingness transfer, and uses 17,528,436 KB RSS versus the frozen 3 GB cap. E011/H014 is independently reproduced at 12.5507562957 RMSE and is deployment-ready after saved Kaggle version 1 passed review. E012/H015 is completed and rejected: 226 worth-screen branches had zero positive pooled gains, and the best formal KNN expert gained only 0.013698 RMSE while failing cell/spatial/typewell gates. T022/H016, T023/H017, T016/H012, T025/H018, T026/H019, T027/H020, and T028/H021 are closed negatively after exact reproduction or a reproduced preimplementation gate. E011 remains primary, E006 secondary fallback, and E004 exact fallback.
 
@@ -40,6 +40,7 @@ Public intelligence last checked: 2026-07-23 23:56 Asia/Kolkata
 - T034 closes H026 for fixed spline7 coordinate identification. Every legal branch worsens E011; summary ridge is best at 13.007269 RMSE with multivariate R2 0.219 and 6.03% neighbor enrichment. Privileged scalar formation offsets reach 11.316958, so they are not the missing compact action state. T035 is the final direct test of the actual T033 rank-8 PCA coordinates.
 - T035 closes H027 and all further global compact-manifold coordinate regression. The best legal branch, raw-PCA ridge, reaches 12.2672938069 RMSE, retains only 2.728% of T033 oracle gain, has multivariate coordinate R2 0.0341, and helps 61.71% of wells. All five maps and every legacy group improve, but one legal-covariate cluster and one horizon quintile regress. Privileged geology reaches 10.897200 but worsens shape SSE. Independent recomputation and an exact second run pass.
 - D040 selects T036 as a materially different mechanism: rank the reproduced T033 pair-32 candidate dictionary by GR/typewell evidence recomputed under each proposed path. The dictionary has exactly 1,520 unique nonzero actions plus exact E011 fallback and retains a 4.628457 hidden-label oracle. No further global coordinate, spline, basis, summary, or raw-PCA retuning is allowed.
+- T036 is frozen at commit `0f61f9678212f4e2d9d7db8c083460c1bed0fb23`. The first pre-result attempt failed before metrics on a stale dataclass field and is preserved in `tracking/evidence/T036/INVALID_PRE_RESULT_RUN.json`; no scientific result was observed. The corrected full run is active as PID `150726`, launched from the exact frozen commit and hashes into `scratch/agents/t036-path-ranker-20260727/final_run2`; stdout/stderr remain empty and no partial result files are to be inspected or used.
 
 ## New durable understanding from exact public-source audits
 
@@ -82,7 +83,7 @@ Public intelligence last checked: 2026-07-23 23:56 Asia/Kolkata
 
 ## Exact next action
 
-Execute the committed T036 full run from the exact implementation freeze. Primary decision is pooled row-level RMSE; require a large advantage over the action-prior control plus failure of reversed/shifted/shuffled evidence controls. If it hard-stops, select the next sub-5-capacity mechanism immediately without reopening closed global-coordinate or public-LB-tuning routes.
+Preserve the active committed T036 full run at PID `150726`: do not terminate it, duplicate it, inspect partial scientific metrics, or change the frozen contract. After it exits, classify the process from its durable logs and atomic output directory, independently recompute pooled row-level RMSE and every frozen gate/control, reproduce any accepted result, then close or advance H028/T036. If it hard-stops, select the next sub-5-capacity mechanism immediately without reopening closed global-coordinate or public-LB-tuning routes.
 
 ## Open risks
 

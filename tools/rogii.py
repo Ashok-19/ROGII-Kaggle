@@ -376,9 +376,10 @@ class Tracker:
         }
 
     def _leaderboard_bands(self) -> list[dict[str, Any]]:
-        path = self.root / "archive" / "competition" / "leaderboard_2026-07-18.csv"
-        if not path.exists():
+        snapshots = sorted((self.root / "archive" / "competition").glob("leaderboard_????-??-??.csv"))
+        if not snapshots:
             return []
+        path = snapshots[-1]
         with path.open(encoding="utf-8") as handle:
             rows = list(csv.DictReader(handle))
         out = []

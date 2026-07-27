@@ -1,12 +1,12 @@
 # ROGII Gold Medal Roadmap
 
-Updated: 2026-07-24
+Updated: 2026-07-27
 Final deadline: 2026-08-05 23:59 UTC / 2026-08-06 05:29 Asia/Kolkata  
-Time remaining at update: 13 days
+Time remaining at update: approximately 9.3 days
 
 ## Objective and reality check
 
-The goal is a gold-medal-level final placement with an original, reproducible solution. A medal cannot be guaranteed. The current public leader is 4.859; rank 2 is 4.904 and the current rank-10 band is 5.511, while archived bands remain 6.199 at rank 25, 6.505 at rank 50, and 6.799 at rank 100. The account's best Kaggle-MCP-verified score is 7.119; the user-reported 6.888 score still needs a submission reference.
+The goal is a gold-medal-level final placement with an original, reproducible solution. A medal cannot be guaranteed. The verified 2026-07-27 public frontier is 4.679 at rank 1, 4.902 at rank 2, 5.237 at rank 5, and 5.444 at rank 10. The account's best Kaggle-MCP-verified score is 7.119; the user-reported 6.888 score still needs a submission reference. The public board covers only 26% of test rows, so these scores do not authorize public-score-directed tuning.
 
 The public board is not the final objective. Private-leaderboard robustness, legal provenance, and reproducibility determine whether a high public score is useful.
 
@@ -388,7 +388,7 @@ These defaults may be revised only through a recorded decision before seeing the
 27. **H025/T033 — Cross-fitted residual action-manifold capacity — completed and confirmed 2026-07-24.** Outer-training PCA rank 8 reaches 2.161329 RMSE with 89.1637% shape-SSE reduction, 100% positive wells, and all legacy groups below 2.327464 RMSE. Rank 16 reaches 0.938975. Two final-hash runs reproduce exactly; this is hidden-label capacity only.
 28. **H026/T034 — Fixed spline7 action identifiability — completed and rejected 2026-07-24.** Every legal branch worsens E011; best summary ridge is 13.007269 RMSE with R2 0.219 and only 6.03% neighbor enrichment. Privileged formation offsets reach 11.316958.
 29. **H027/T035 — Actual T033 PCA rank-8 coordinate identifiability — completed and rejected 2026-07-25.** Raw-PCA ridge is best at 12.267294 RMSE, retains only 2.728% of the rank-8 oracle gain, and has multivariate coordinate R2 0.0341. All maps and legacy groups improve, but broader covariate/horizon transfer and every identification gate fail. Privileged geology reaches 10.897200 and worsens shape SSE. Exact reproduction passes; close global coordinate/basis/model retuning.
-30. **H028/T036 — Candidate-path-conditioned GR evidence ranking — selected next.** Use the split-local T033 32-center pair-mixture dictionary: 1,520 unique nonzero actions plus exact E011 fallback, with 4.628457 oracle capacity. Recompute typewell/horizontal GR evidence under each candidate path and require strong advantage over action priors plus failed reversed/shifted/shuffled controls.
+30. **H028/T036 — Candidate-path-conditioned GR evidence ranking — frozen full run active.** Use the split-local T033 32-center pair-mixture dictionary: 1,520 unique nonzero actions plus exact E011 fallback, with 4.628457 oracle capacity. The corrected run is active as PID `150726` from commit `0f61f9678212f4e2d9d7db8c083460c1bed0fb23`, writing atomically to `scratch/agents/t036-path-ranker-20260727/final_run2`. Do not duplicate, terminate, inspect partial metrics, or change the frozen contract; validate every RMSE/control artifact after completion.
 
 ## Explicitly rejected behavior
 
@@ -415,4 +415,4 @@ Foundation is complete only when:
 - legacy roadmap is preserved;
 - no training run is falsely presented as completed.
 
-Foundation through T035 is complete. E011 remains deployment primary. T033 proves compact sub-5 capacity, while T034 and T035 reject both fixed spline7 and the actual partition-local PCA coordinates under global legal representations. D040 selects T036 because it introduces candidate-specific evidence: each proposed path changes the typewell GR trace against which hidden horizontal GR is evaluated. No package, Kaggle run, or submission is authorized unless T036 passes every frozen legal and control gate.
+Foundation through T035 is complete and T036 is frozen and running. E011 remains deployment primary. T033 proves compact sub-5 capacity, while T034 and T035 reject both fixed spline7 and the actual partition-local PCA coordinates under global legal representations. D040 selects T036 because it introduces candidate-specific evidence: each proposed path changes the typewell GR trace against which hidden horizontal GR is evaluated. No package, Kaggle run, or submission is authorized unless T036 passes every frozen legal and control gate and is independently reproduced.

@@ -22,7 +22,9 @@ class TrackerTests(unittest.TestCase):
             self.assertEqual(state["kpis"]["db_integrity"], "ok")
             self.assertEqual(state["meta"]["discussion_topics_archived"], "132")
             self.assertGreaterEqual(len(state["submissions"]), 1)
-            self.assertAlmostEqual(state["kpis"]["leader_score"], 4.859)
+            self.assertAlmostEqual(state["kpis"]["leader_score"], 4.679)
+            self.assertAlmostEqual(state["leaderboard_bands"][0]["score"], 4.679)
+            self.assertEqual(state["leaderboard_bands"][0]["team"], "shu01")
 
     def test_validation_archive_counts(self):
         with tempfile.TemporaryDirectory() as tmp:
