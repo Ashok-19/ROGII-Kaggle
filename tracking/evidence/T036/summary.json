@@ -1,0 +1,84 @@
+{
+  "baseline": {
+    "datum_sse": 342348841.1066058,
+    "p90_well_rmse": 17.831023926499395,
+    "rmse": 12.550756295689673,
+    "rows": 3783989,
+    "shape_sse": 160374075.03749102,
+    "sse": 596059561.1825968,
+    "trend_sse": 93336645.03849994,
+    "wells": 773,
+    "worst5_sse_share": 0.31532172426448224
+  },
+  "best_legal_branch": "nested_best",
+  "best_legal_metrics": {
+    "datum_sse": 336416462.4619328,
+    "gain_vs_e011": 0.07789156082865745,
+    "map_wins": 0.0,
+    "oracle_gain_retention": 0.00983193912901747,
+    "outer_cell_wins": 7.0,
+    "p90_well_rmse": 18.166671225545304,
+    "positive_well_fraction": 0.5614489003880984,
+    "rmse": 12.472864734861016,
+    "shape_sse": 159586327.13452643,
+    "trend_sse": 92681289.27026327,
+    "worst5_sse_share": 0.3217589829665758
+  },
+  "breakthrough_gates": {
+    "destructive_controls_fail": true,
+    "maximum_legal_rmse": false,
+    "minimum_map_wins": false,
+    "positive_every_legacy_group": false,
+    "tail_gates": false
+  },
+  "candidate_oracle_definition": "best of 1520 nonzero T033 pair-dictionary actions; exact zero remains a legal fallback only",
+  "candidate_oracle_identity": true,
+  "candidate_oracle_rmse": 4.628457367010144,
+  "candidates": 1521,
+  "contexts": 25,
+  "decision": "STOP_CLOSE_PATH_CONDITIONED_RANKING",
+  "destructive_control_gains": {
+    "action_prior_only": -0.01444153104999657,
+    "circular_shift_hidden_gr": 0.018531276077592196,
+    "reversed_typewell_gr": -0.04724124789647455,
+    "shuffled_within_well_training_losses": -1.986254983230923
+  },
+  "edge_status": "PASS",
+  "go_gates": {
+    "destructive_controls_fail": true,
+    "maximum_legal_rmse": false,
+    "minimum_map_wins": false,
+    "minimum_oracle_gain_retention": false,
+    "minimum_outer_cell_wins": false,
+    "path_conditioned_advantage": false,
+    "positive_every_legacy_group": false,
+    "tail_gates": false
+  },
+  "hypothesis_id": "H028",
+  "path_conditioned_advantage_vs_action_prior_rmse": 0.09233309187865402,
+  "ranking": {
+    "mean_regret_sse": 661124.2369384144,
+    "top16_recall_fraction": 0.029495472186287192,
+    "top1_hit_fraction": 0.00258732212160414
+  },
+  "runtime_seconds": 9261.378671646118,
+  "schema_version": 1,
+  "special_slices": {
+    "e011_catastrophe": {
+      "nested_best_gain": 0.13212917637289578,
+      "wells": 78
+    },
+    "high_hidden_gr_missingness": {
+      "nested_best_gain": 0.10674276045549114,
+      "wells": 155
+    },
+    "long_suffix": {
+      "nested_best_gain": 0.130195275537222,
+      "wells": 155
+    }
+  },
+  "status": "COMPLETE",
+  "stop_gate": true,
+  "task_id": "T036",
+  "wells": 773
+}

@@ -1,0 +1,10 @@
+T036 independent validation PASS
+Pooled baseline RMSE: 12.550756295689673
+Pooled candidate RMSE: 12.472864734861016
+Gain: 0.07789156082865745
+Map wins: 0/5
+Outer-cell wins: 7/25
+Top-1 oracle hit: 0.00258732212160414
+Top-16 oracle recall: 0.029495472186287192
+Minimum legacy-group gain: -0.1667909073561819
+Decision: STOP_CLOSE_PATH_CONDITIONED_RANKING

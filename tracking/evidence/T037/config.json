@@ -1,0 +1,128 @@
+{
+  "breakthrough_gate": {
+    "all_destructive_controls_fail": true,
+    "maximum_legal_rmse": 5.0,
+    "maximum_p90_deterioration": 0.0,
+    "maximum_worst5_sse_share_increase": 0.005,
+    "minimum_map_wins": 5,
+    "positive_every_legacy_group": true
+  },
+  "capacity": {
+    "action_cap_ft": 160.0,
+    "complete_path_oracle_rmse": 4.628457367010144,
+    "denominator_frozen": true,
+    "nodes": 128,
+    "nonzero_complete_paths": 1520,
+    "parent": "T036/T033 pair-32",
+    "zero_fallback_paths": 1
+  },
+  "controls": {
+    "destructive": [
+      "reversed_typewell_gr",
+      "circular_shift_hidden_gr",
+      "within_well_emission_row_permutation",
+      "transition_only",
+      "shuffled_within_well_training_state_losses",
+      "randomized_graph_edge_identity",
+      "sign_flipped_selected_action"
+    ],
+    "maximum_destructive_gain_vs_e011": 0.05,
+    "minimum_emission_advantage_vs_transition_only_rmse": 0.5,
+    "structural": [
+      "state_path_order_permutation",
+      "duplicate_path_invariance_after_dedup",
+      "exact_zero_fallback",
+      "same_well_exclusion",
+      "complete_path_capacity_identity",
+      "graph_contains_all_complete_paths",
+      "pooled_sse_identity",
+      "finite_bounded_paths",
+      "all_missing_short_support",
+      "deterministic_decode",
+      "membership_identity"
+    ]
+  },
+  "decision_id": "D041",
+  "forbidden_inputs": [
+    "hidden_tvt",
+    "hidden_validation_residuals",
+    "oracle_identity",
+    "oracle_coefficients",
+    "formation_surfaces",
+    "Geology",
+    "absolute_XY",
+    "evaluator_group_ids",
+    "leaderboard_feedback",
+    "public_score_constants",
+    "same_well_target_lookup",
+    "opaque_or_unknown_license_artifacts"
+  ],
+  "frozen_at": "2026-07-27T17:47:05Z",
+  "go_gate": {
+    "all_destructive_controls_fail": true,
+    "maximum_legal_rmse": 8.0,
+    "maximum_p90_deterioration": 0.0,
+    "maximum_worst5_sse_share_increase": 0.005,
+    "minimum_emission_advantage_vs_transition_only_rmse": 0.5,
+    "minimum_map_wins": 5,
+    "minimum_oracle_gain_retention": 0.55,
+    "minimum_outer_cell_wins": 20,
+    "positive_every_legacy_group": true
+  },
+  "hypothesis_id": "H029",
+  "legal_inputs": [
+    "hidden_horizontal_gr",
+    "typewell_gr_at_proposed_tvt",
+    "visible_prefix_calibration",
+    "local_mismatch_and_derivatives",
+    "finite_and_missing_support",
+    "md_spacing",
+    "trajectory_derivatives",
+    "state_support_and_boundaries"
+  ],
+  "mechanism": {
+    "decoder": "hard_viterbi",
+    "emission_families": [
+      "fixed_robust",
+      "ridge",
+      "hist_gradient_boosting"
+    ],
+    "exact_profile_dedup_before_scoring": true,
+    "representation": "node_state_emission_volume_on_deduplicated_union_graph",
+    "soft_outputs_forbidden": true,
+    "transition_strengths": [
+      0.0,
+      0.25,
+      1.0,
+      4.0
+    ]
+  },
+  "public_intelligence_refreshed_immediately_before": "2026-07-27T17:42:00Z",
+  "research_only": {
+    "maximum_rmse": 10.0,
+    "minimum_rmse_exclusive": 8.0
+  },
+  "resource_contract": {
+    "atomic_output": true,
+    "maximum_rss_gb": 4.0,
+    "maximum_runtime_hours": 4.0,
+    "worker_cap": 2
+  },
+  "schema_version": 1,
+  "status": "preregistered",
+  "stop_gate": {
+    "maximum_oracle_gain_retention_for_stop": 0.25,
+    "minimum_rmse_for_stop": 10.0,
+    "stop_if_no_positive_emission_advantage": true
+  },
+  "task_id": "T037",
+  "validation": {
+    "all_split_local": true,
+    "hidden_rows": 3783989,
+    "inner_fold_rule": "(outer_fold + 1) % 5",
+    "maps": 5,
+    "outer_contexts": 25,
+    "same_well_exclusion": true,
+    "wells": 773
+  }
+}

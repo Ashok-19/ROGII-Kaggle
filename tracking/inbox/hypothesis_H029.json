@@ -1,0 +1,14 @@
+{
+  "payload": {
+    "evidence_against": "T036 path-conditioned evidence is weak, repeated GR motifs and missingness can create ambiguous local emissions, and prior HMM/DTW, raw-state, residual-profile, and analog identity routes failed legal transfer.",
+    "evidence_for": "The admissible complete-path set contains every exact T036 nonzero action and zero fallback, so its hidden-label oracle is no worse than the verified 4.6284573670 RMSE. T036 compressed each candidate into 39 summaries before ranking and had only 2.95% top-16 oracle recall, leaving full local emission structure untested.",
+    "hypothesis_id": "H029",
+    "next_test": "Implement only the frozen T037 node/state emission and Viterbi gate with exact path deduplication, full outer isolation, and transition-only/reversed/shifted/permuted/shuffled controls.",
+    "priority": 1,
+    "statement": "A split-local structured decoder over the exact deduplicated union graph of the T036 action bank can use row-level candidate-conditioned GR emissions and continuity to recover sub-5-capacity paths that candidate-level summary ranking cannot identify.",
+    "status": "active",
+    "title": "Full-emission structured decoding identifies a high-capacity path"
+  },
+  "recorded_at": "2026-07-27T17:47:05Z",
+  "type": "hypothesis"
+}

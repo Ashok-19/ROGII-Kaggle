@@ -1,0 +1,40 @@
+{
+  "atomic_scientific_artifacts_written_at_end": true,
+  "command": [
+    "/usr/bin/python3.12",
+    "tracking/evidence/T036/run_screen.py",
+    "--output-dir",
+    "scratch/agents/t036-path-ranker-20260727/final_run2"
+  ],
+  "completed_at_approx_from_artifacts": "2026-07-27T17:34:51Z",
+  "config_sha256": "df9dc31c84cad82af8699fc913fc3f67c79456068ee2ebf886db3fa5382155ff",
+  "launch_commit": "0f61f9678212f4e2d9d7db8c083460c1bed0fb23",
+  "launched_epoch": 1785164428.5764618,
+  "maximum_observed_rss_kb": 1005072,
+  "maximum_rss_contract_gb": 4.0,
+  "output_dir": "scratch/agents/t036-path-ranker-20260727/final_run2",
+  "pid": 150726,
+  "ppid": 1,
+  "recorded_at": "2026-07-27T17:47:05Z",
+  "rss_contract_pass_from_observation": true,
+  "rss_observation_kind": "repeated external ps lower-bound; no durable max-RSS sampler receipt survived",
+  "runtime_contract_hours": 4.0,
+  "runtime_contract_pass": true,
+  "runtime_hours": 2.5726051865683663,
+  "runtime_seconds": 9261.378671646118,
+  "schema_version": 1,
+  "script_sha256": "3325fc51154dcf7faccf82a2e882915942fd06854933289d193d46d28b497049",
+  "status": "COMPLETE",
+  "stderr": {
+    "bytes": 0,
+    "empty": true,
+    "path": "scratch/agents/t036-path-ranker-20260727/process2/stderr.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 2626,
+    "path": "scratch/agents/t036-path-ranker-20260727/process2/stdout.log",
+    "sha256": "9b4eb6c6e7c0594404f489b2c1894e770e050d53b4b190ad5b1605648512a465"
+  },
+  "task_id": "T036"
+}

@@ -1,0 +1,54 @@
+{
+  "finite": true,
+  "gates": {
+    "cell_wins": 7,
+    "map_wins": 0,
+    "min_legacy_gain": -0.1667909073561819,
+    "positive_every_legacy": false
+  },
+  "manifest": true,
+  "membership": {
+    "contexts": 25,
+    "rows": 25,
+    "same_well_all": true
+  },
+  "pooled": {
+    "base": 12.550756295689673,
+    "base_match": true,
+    "candidate": 12.472864734861016,
+    "candidate_match": true,
+    "gain": 0.07789156082865745
+  },
+  "ranking": {
+    "mean_regret_sse": 661124.2369384144,
+    "rows": 3865,
+    "top1": 0.00258732212160414,
+    "top16": 0.029495472186287192
+  },
+  "row_counts": {
+    "branch": 12,
+    "context": 300,
+    "group": 300,
+    "hyper": 225,
+    "map": 60,
+    "membership": 25,
+    "selection": 3865,
+    "special": 36,
+    "well": 773
+  },
+  "special": {
+    "e011_catastrophe": {
+      "gain": 0.1321291763728957,
+      "wells": 78
+    },
+    "high_hidden_gr_missingness": {
+      "gain": 0.1067427604554911,
+      "wells": 155
+    },
+    "long_suffix": {
+      "gain": 0.130195275537222,
+      "wells": 155
+    }
+  },
+  "status": "PASS"
+}

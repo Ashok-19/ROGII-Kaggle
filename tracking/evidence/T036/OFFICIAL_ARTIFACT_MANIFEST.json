@@ -1,0 +1,145 @@
+{
+  "files": [
+    {
+      "bytes": 1829,
+      "name": "CLOSURE_RECEIPT.json",
+      "sha256": "10a4e5f9691cb4ee191ba0a584e1b0b534c629003ebbc783024c9345c86fda8e"
+    },
+    {
+      "bytes": 1074,
+      "name": "CONCURRENT_VALIDATION_RECEIPT.json",
+      "sha256": "ef596d63488df0a6f605bc6065895cdaab85a7b3c719d7b9697c446ad14eb342"
+    },
+    {
+      "bytes": 352,
+      "name": "CONCURRENT_VALIDATION_STATUS.txt",
+      "sha256": "574a099fd5276cf6f19349d6dee25378c3db34a0d52e8aa5d9e4574a13cbfa50"
+    },
+    {
+      "bytes": 2998,
+      "name": "IMPLEMENTATION_FREEZE.json",
+      "sha256": "fb58890a4ccffc9fb0eda6b47c24e1ccb0cb0b1122dc7ac3aa88e7d1dfa1d5be"
+    },
+    {
+      "bytes": 3694,
+      "name": "INDEPENDENT_VALIDATION.json",
+      "sha256": "3ea5fb2d3623e4f58439202b69998455efdc677a54604ff65f6ba4d8b4f97f6f"
+    },
+    {
+      "bytes": 722,
+      "name": "INVALID_PRE_RESULT_RUN.json",
+      "sha256": "c0a00a3c422c06ebd371f7899f27f7ad52223354834340387859fe6f5ffdad4b"
+    },
+    {
+      "bytes": 2342,
+      "name": "PRE_METRIC_CORRECTION.json",
+      "sha256": "ab313b8a13c3be6649a01f2f06f10b63ad924975ffa6d4561c7c8fd7c4af3efa"
+    },
+    {
+      "bytes": 4167,
+      "name": "PRE_REGISTRATION.md",
+      "sha256": "2ff5e9d5a9a18374ef7a29399736884ec4f0eb669d4df338054f452a08187238"
+    },
+    {
+      "bytes": 1553,
+      "name": "PROCESS_RECEIPT.json",
+      "sha256": "30d6c5d6e9cb827a1f43f1d6451b7b2803e9146b4cc5316776027b3b601836db"
+    },
+    {
+      "bytes": 689,
+      "name": "REPRODUCTION_RECEIPT.json",
+      "sha256": "84627464326efe97e4953b140a71e3fc51fc7ffc5dfd954b5f39f303b4a5b364"
+    },
+    {
+      "bytes": 949,
+      "name": "RESULT.md",
+      "sha256": "f05127b74716f440024cc18d379c2ee011a9f774c47ff4c98c40f9e6da373f28"
+    },
+    {
+      "bytes": 5297,
+      "name": "RUN_ARTIFACT_MANIFEST.json",
+      "sha256": "5c21c9c752cd3ee8d003e56db90a66571f4f8d2dbe216bfda1144930bf04d4cb"
+    },
+    {
+      "bytes": 352,
+      "name": "VALIDATION_STATUS.txt",
+      "sha256": "574a099fd5276cf6f19349d6dee25378c3db34a0d52e8aa5d9e4574a13cbfa50"
+    },
+    {
+      "bytes": 2044,
+      "name": "artifact_manifest.json",
+      "sha256": "4b398d08458521b65ab09ebb5a409fd9f2bf3dd29b4f09d786d9411d11a5343d"
+    },
+    {
+      "bytes": 2499,
+      "name": "branch_metrics.csv",
+      "sha256": "6a225305321d3efdcbb95323c75343bf4453f792bb41dda2be8ba185cbc0cbba"
+    },
+    {
+      "bytes": 7017,
+      "name": "config.json",
+      "sha256": "df9dc31c84cad82af8699fc913fc3f67c79456068ee2ebf886db3fa5382155ff"
+    },
+    {
+      "bytes": 29077,
+      "name": "context_metrics.csv",
+      "sha256": "10f0e4ad7bceb1c038d8bdec7ae26e8a0fbcb12ff2f9fb0ec738a205cc6d1013"
+    },
+    {
+      "bytes": 950,
+      "name": "edge_cases.json",
+      "sha256": "4cbad6bb5b035fb968b3959ef99d663f395f8224c0f9a172e10bebb97253ad45"
+    },
+    {
+      "bytes": 30965,
+      "name": "group_metrics.csv",
+      "sha256": "525bfdb57e4a61e6d0908806582e58d60456ff6471ca4e2798e48d796af15050"
+    },
+    {
+      "bytes": 47246,
+      "name": "hyperparameters.csv",
+      "sha256": "8b27b8037340d097f29304521363e501041c93f101da29c045e9c24d11b8f212"
+    },
+    {
+      "bytes": 1711,
+      "name": "implementation_receipt.json",
+      "sha256": "da2337e0c5ac58a99700fad834949e64f26b0c44e334d22d8a6bfd6d1d816be3"
+    },
+    {
+      "bytes": 3787,
+      "name": "map_metrics.csv",
+      "sha256": "aef92af00d545fe78f7457203aa7a6ec0ff6c8f964a49b02ac1a65cd7213bbe2"
+    },
+    {
+      "bytes": 1334,
+      "name": "membership_audit.csv",
+      "sha256": "bf8f713311440ee243f95b711baf5b4dbff504170332fa91a655cb279324e3d3"
+    },
+    {
+      "bytes": 66731,
+      "name": "run_screen.py",
+      "sha256": "3325fc51154dcf7faccf82a2e882915942fd06854933289d193d46d28b497049"
+    },
+    {
+      "bytes": 76173,
+      "name": "selected_well_metrics.csv",
+      "sha256": "3f932980123a0dc4cf8db9fbe3e88e3810f2aaddd304c50ac5b76ea1ec81de10"
+    },
+    {
+      "bytes": 371961,
+      "name": "selection_metrics.csv",
+      "sha256": "6983b52e6ad5967cf7be4ce47ce5375bdc662de9484079df2d15ce1d0ad0c73a"
+    },
+    {
+      "bytes": 3699,
+      "name": "special_slice_metrics.csv",
+      "sha256": "ee738abbd35d7b73d1f62549b547067bac41f5cfb2d0ae44008d232f214f5784"
+    },
+    {
+      "bytes": 2626,
+      "name": "summary.json",
+      "sha256": "9b4eb6c6e7c0594404f489b2c1894e770e050d53b4b190ad5b1605648512a465"
+    }
+  ],
+  "schema_version": 1
+}

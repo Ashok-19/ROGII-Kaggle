@@ -1,0 +1,11 @@
+{
+  "full_second_scientific_rerun_performed": false,
+  "independent_metric_and_control_recomputation_performed": true,
+  "independent_validation_path": "tracking/evidence/T036/INDEPENDENT_VALIDATION.json",
+  "reason": "T036 triggers the frozen hard STOP and is not a promotion candidate. A second full model rerun was not used to rescue or retune a rejected result; all decision-critical metrics, gates, memberships, manifest identities, and controls were independently recomputed from the first completed atomic artifacts.",
+  "recorded_at": "2026-07-27T17:47:05Z",
+  "schema_version": 1,
+  "scientific_decision_stable": true,
+  "status": "NOT_RUN_REJECTED_RESULT",
+  "task_id": "T036"
+}

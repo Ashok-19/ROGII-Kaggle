@@ -1,0 +1,113 @@
+{
+  "breakthrough_gates": {
+    "destructive_controls_fail": true,
+    "maximum_legal_rmse": false,
+    "minimum_map_wins": false,
+    "positive_every_legacy_group": false,
+    "tail_gates": false
+  },
+  "checks": {
+    "all_destructive_controls_full_inner_reselection": true,
+    "all_numeric_finite": true,
+    "breakthrough_gates_exact": true,
+    "candidate_order_control_genuine": true,
+    "cell_wins_exact": true,
+    "contexts_25_each_complete": true,
+    "decision_exact": true,
+    "duplicate_action_control_genuine": false,
+    "five_memberships_per_well": true,
+    "generated_edge_all_true": true,
+    "go_gates_exact": true,
+    "hidden_rows_exact": true,
+    "manifest_all_valid": true,
+    "manifest_covered_scientific_artifacts_exact": true,
+    "manifest_name_set_exact": true,
+    "map_wins_exact": true,
+    "membership_25_unique_and_excluded": true,
+    "oracle_exact": true,
+    "oracle_retention_exact": true,
+    "p90_exact": true,
+    "path_advantage_exact": true,
+    "pooled_baseline_rmse_exact": true,
+    "pooled_candidate_rmse_exact": true,
+    "positive_fraction_exact": true,
+    "row_counts_exact": true,
+    "stop_gate_exact": true,
+    "wells_unique_773": true,
+    "worst5_exact": true
+  },
+  "failed": [
+    "duplicate_action_control_genuine"
+  ],
+  "go_gates": {
+    "destructive_controls_fail": true,
+    "maximum_legal_rmse": false,
+    "minimum_map_wins": false,
+    "minimum_oracle_gain_retention": false,
+    "minimum_outer_cell_wins": false,
+    "path_conditioned_advantage": false,
+    "positive_every_legacy_group": false,
+    "tail_gates": false
+  },
+  "interpretation": "Hard STOP metrics independently reproduce, but duplicate-action invariance is not genuine for the selected soft-top-k mechanism.",
+  "manifest_checks": {
+    "RESULT.md": true,
+    "branch_metrics.csv": true,
+    "context_metrics.csv": true,
+    "edge_cases.json": true,
+    "group_metrics.csv": true,
+    "hyperparameters.csv": true,
+    "implementation_receipt.json": true,
+    "map_metrics.csv": true,
+    "membership_audit.csv": true,
+    "selected_well_metrics.csv": true,
+    "selection_metrics.csv": true,
+    "special_slice_metrics.csv": true,
+    "summary.json": true
+  },
+  "post_atomic_extra_files": [
+    {
+      "bytes": 1074,
+      "name": "INDEPENDENT_VALIDATION.json",
+      "post_atomic": true,
+      "sha256": "ef596d63488df0a6f605bc6065895cdaab85a7b3c719d7b9697c446ad14eb342"
+    },
+    {
+      "bytes": 352,
+      "name": "VALIDATION_STATUS.txt",
+      "post_atomic": true,
+      "sha256": "574a099fd5276cf6f19349d6dee25378c3db34a0d52e8aa5d9e4574a13cbfa50"
+    }
+  ],
+  "recomputed": {
+    "baseline_rmse": 12.550756295689673,
+    "candidate_rmse": 12.472864734861016,
+    "candidate_sse": 588684078.8667225,
+    "destructive_control_gains": {
+      "action_prior_only": -0.0144415310499965,
+      "circular_shift_hidden_gr": 0.0185312760775921,
+      "reversed_typewell_gr": -0.0472412478964745,
+      "shuffled_within_well_training_losses": -1.986254983230923
+    },
+    "map_wins": 0,
+    "minimum_legacy_gain": -0.1667909073561819,
+    "oracle_gain_retention": 0.00983193912901747,
+    "outer_cell_wins": 7,
+    "p90_well_rmse": 18.166671225545308,
+    "path_advantage": 0.09233309187865402,
+    "positive_well_fraction": 0.5614489003880984,
+    "rows": 3783989,
+    "sign_flip_gain": -0.3121569759507494,
+    "wells": 773,
+    "worst5_sse_share": 0.3217589829665758
+  },
+  "schema_version": 1,
+  "status": "FAIL",
+  "stop_gate": true,
+  "structural_probe": {
+    "candidate_order_permutation_genuine": true,
+    "duplicate_action_invariance_genuine": false,
+    "duplicate_probe_max_delta": 0.2689414213699952,
+    "selected_soft_contexts": 23
+  }
+}

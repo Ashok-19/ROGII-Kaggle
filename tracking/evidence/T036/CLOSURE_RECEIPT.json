@@ -1,0 +1,39 @@
+{
+  "candidate_oracle_rmse": 4.628457367010144,
+  "decision": "STOP_CLOSE_PATH_CONDITIONED_RANKING",
+  "decision_id": "D041",
+  "deployment_authorized": false,
+  "destructive_controls": {
+    "action_prior_only": -0.01444153104999657,
+    "circular_shift_hidden_gr": 0.018531276077592196,
+    "reversed_typewell_gr": -0.04724124789647455,
+    "shuffled_within_well_training_losses": -1.986254983230923
+  },
+  "duplicate_action_invariance_genuine": false,
+  "duplicate_action_probe_max_delta": 0.2689414213699952,
+  "gain_vs_e011": 0.07789156082865745,
+  "hypothesis_id": "H028",
+  "independent_validation_failures": [
+    "duplicate_action_control_genuine"
+  ],
+  "independent_validation_status": "FAIL",
+  "interpretation": "The hard STOP is independently reproduced. Candidate-conditioned summary ranking retains less than one percent of oracle gain, has no map wins, fails transfer and tail gates, and has only 0.0923 RMSE advantage over action priors. The generated duplicate-action control is not genuine for soft top-k selection; this additional frozen-control failure cannot be repaired after result observation and further strengthens rejection.",
+  "kaggle_execution_authorized": false,
+  "map_wins": 0,
+  "next_hypothesis": "H029",
+  "next_task": "T037",
+  "oracle_gain_retention": 0.00983193912901747,
+  "outer_cell_wins": 7,
+  "p90_well_rmse": 18.166671225545304,
+  "path_conditioned_advantage_vs_action_prior_rmse": 0.09233309187865402,
+  "pooled_rmse": 12.472864734861016,
+  "recorded_at": "2026-07-27T17:47:05Z",
+  "schema_version": 1,
+  "selected_soft_contexts": 23,
+  "status": "CLOSED_REJECTED_HARD_STOP",
+  "submission_authorized": false,
+  "task_id": "T036",
+  "top16_oracle_recall_fraction": 0.029495472186287192,
+  "top1_oracle_hit_fraction": 0.00258732212160414,
+  "worst5_sse_share": 0.3217589829665758
+}

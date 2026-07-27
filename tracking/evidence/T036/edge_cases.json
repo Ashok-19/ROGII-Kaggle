@@ -1,0 +1,31 @@
+{
+  "checks": {
+    "action_cap": true,
+    "all_features_finite": true,
+    "all_metrics_finite": true,
+    "branch_rows_complete": true,
+    "candidate_oracle_identity": true,
+    "candidate_order_feature_identity": true,
+    "candidate_order_selection_identity": true,
+    "candidates_1521": true,
+    "context_rows_complete": true,
+    "contexts_25": true,
+    "duplicate_action_deduplication": true,
+    "duplicate_action_feature_identity": true,
+    "exact_zero_fallback": true,
+    "features_39": true,
+    "group_rows_complete": true,
+    "hidden_rows_exact": true,
+    "hyperparameter_rows_complete": true,
+    "ineligible_exact_zero_fallback": true,
+    "ineligible_feature_matrix_empty": true,
+    "map_rows_complete": true,
+    "membership_rows_25": true,
+    "same_well_exclusion": true,
+    "selection_rows_complete": true,
+    "special_slice_rows_complete": true,
+    "wells_773": true
+  },
+  "schema_version": 1,
+  "status": "PASS"
+}

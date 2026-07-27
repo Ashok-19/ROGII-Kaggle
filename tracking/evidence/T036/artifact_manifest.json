@@ -1,0 +1,70 @@
+{
+  "files": [
+    {
+      "bytes": 949,
+      "name": "RESULT.md",
+      "sha256": "f05127b74716f440024cc18d379c2ee011a9f774c47ff4c98c40f9e6da373f28"
+    },
+    {
+      "bytes": 2499,
+      "name": "branch_metrics.csv",
+      "sha256": "6a225305321d3efdcbb95323c75343bf4453f792bb41dda2be8ba185cbc0cbba"
+    },
+    {
+      "bytes": 29077,
+      "name": "context_metrics.csv",
+      "sha256": "10f0e4ad7bceb1c038d8bdec7ae26e8a0fbcb12ff2f9fb0ec738a205cc6d1013"
+    },
+    {
+      "bytes": 30965,
+      "name": "group_metrics.csv",
+      "sha256": "525bfdb57e4a61e6d0908806582e58d60456ff6471ca4e2798e48d796af15050"
+    },
+    {
+      "bytes": 3699,
+      "name": "special_slice_metrics.csv",
+      "sha256": "ee738abbd35d7b73d1f62549b547067bac41f5cfb2d0ae44008d232f214f5784"
+    },
+    {
+      "bytes": 3787,
+      "name": "map_metrics.csv",
+      "sha256": "aef92af00d545fe78f7457203aa7a6ec0ff6c8f964a49b02ac1a65cd7213bbe2"
+    },
+    {
+      "bytes": 47246,
+      "name": "hyperparameters.csv",
+      "sha256": "8b27b8037340d097f29304521363e501041c93f101da29c045e9c24d11b8f212"
+    },
+    {
+      "bytes": 371961,
+      "name": "selection_metrics.csv",
+      "sha256": "6983b52e6ad5967cf7be4ce47ce5375bdc662de9484079df2d15ce1d0ad0c73a"
+    },
+    {
+      "bytes": 1334,
+      "name": "membership_audit.csv",
+      "sha256": "bf8f713311440ee243f95b711baf5b4dbff504170332fa91a655cb279324e3d3"
+    },
+    {
+      "bytes": 76173,
+      "name": "selected_well_metrics.csv",
+      "sha256": "3f932980123a0dc4cf8db9fbe3e88e3810f2aaddd304c50ac5b76ea1ec81de10"
+    },
+    {
+      "bytes": 1711,
+      "name": "implementation_receipt.json",
+      "sha256": "da2337e0c5ac58a99700fad834949e64f26b0c44e334d22d8a6bfd6d1d816be3"
+    },
+    {
+      "bytes": 950,
+      "name": "edge_cases.json",
+      "sha256": "4cbad6bb5b035fb968b3959ef99d663f395f8224c0f9a172e10bebb97253ad45"
+    },
+    {
+      "bytes": 2626,
+      "name": "summary.json",
+      "sha256": "9b4eb6c6e7c0594404f489b2c1894e770e050d53b4b190ad5b1605648512a465"
+    }
+  ],
+  "schema_version": 1
+}
