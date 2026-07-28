@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E013",
+  "recorded_at": "2026-07-28T17:36:00Z",
+  "status": "PRE_RESULT_OPERATIONAL_AMENDMENT_FROZEN",
+  "base_frozen_commit": "9223f4bab555b7f12fc194a8a4bf6e61d36ae23a",
+  "invalid_pre_result_receipt_sha256": "121c84d1c8f114c0eea261e8795b2a6bdcfcb58f0ad42e959cbe08a288cfbc1b",
+  "resumable_runner_sha256": "d22d76451e28d4f4b60c15d1ddd4565096061bfa18689b7c33e2f489d10a60c1",
+  "config_sha256": "9f23115d4d23c1c73a77dbfd324e0595faaa653396b7232cdfae292fdd5bc660",
+  "scientific_module_sha256": "72a5550efaa23b1e8a626de31af2e695bd615dd4756bd4e2806387771a412a49",
+  "metrics_observed_before_amendment": false,
+  "scientific_contract_changed": false,
+  "candidate_grid_changed": false,
+  "control_grid_changed": false,
+  "well_membership_changed": false,
+  "algorithm_changed": false,
+  "operational_change": "Compute the same frozen per-well PF and control predictions into atomic score-blind caches. Finalization reads hidden targets and computes metrics only after all expected caches pass exact config, module, input, and row-identity checks.",
+  "cache_contents": ["well_id path", "hidden row_index", "prediction", "config/module/input identities", "runtime", "RSS", "input immutability flag"],
+  "cache_excludes": ["target", "RMSE", "SSE", "candidate selection", "group metrics", "leaderboard information"],
+  "score_blind_smoke": {
+    "full_well_id": "000d7d20",
+    "full_cache_created": true,
+    "full_cache_reopened_without_recomputation": true,
+    "control": "no_emission",
+    "control_cache_created": true,
+    "syntax_passed": true
+  },
+  "finalization_rule": "No partial cache or incomplete OOF stream is scientific evidence. Only the atomic final result after all 773 full caches and every registered control cache exist is valid.",
+  "kaggle_run_authorized": false,
+  "submission_authorized": false
+}

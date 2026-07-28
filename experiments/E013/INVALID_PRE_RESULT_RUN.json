@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E013",
+  "recorded_at": "2026-07-28T17:31:30Z",
+  "status": "INVALID_PRE_RESULT_OPERATIONAL_FAILURE",
+  "frozen_commit": "9223f4bab555b7f12fc194a8a4bf6e61d36ae23a",
+  "command": "python3.12 experiments/E013/run_experiment.py --output-dir experiments/E013/results",
+  "process_pid": 175886,
+  "atomic_result_emitted": false,
+  "scientific_metrics_observed": false,
+  "final_artifacts_emitted": false,
+  "incomplete_stream": {
+    "quarantined_path": "scratch/agents/public-frontier-sprint-20260728/e013_invalid_pre_result/oof_predictions.csv.gz.tmp",
+    "bytes": 82489222,
+    "sha256": "e07d5c178129f3b4e9badfcc81368624b3436c1b0e170bb19e284bbda91361e5",
+    "gzip_complete": false,
+    "complete_lines_including_header_before_eof": 2416667,
+    "last_complete_well_id": "a692b17e",
+    "last_complete_row_index": 4701
+  },
+  "failure_evidence": "The detached process exited without an atomic summary, result, or control artifact. The temporary gzip lacks an end-of-stream marker. No RMSE or hidden-label aggregate was computed or read.",
+  "scientific_contract_changed": false,
+  "operational_response": "Execute the identical frozen PF per well and each fixed control in score-blind resumable chunks, then compute metrics exactly once only after all caches pass identity checks."
+}
