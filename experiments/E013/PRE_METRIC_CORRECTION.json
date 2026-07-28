@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E013",
+  "recorded_at": "2026-07-28T16:54:15Z",
+  "status": "PRE_METRIC_SCHEMA_CORRECTION",
+  "metrics_observed_before_correction": false,
+  "field": "manifest.parent_id",
+  "from": "E011,T038",
+  "to": "E011",
+  "reason": "The tracker enforces a single experiment foreign key. T038 is a task/evidence source, not an experiment parent. H031, T039, and D043 retain the T038 provenance.",
+  "scientific_contract_changed": false,
+  "old_manifest_sha256": "234ddf02ff27fe043de14a364bf9e3755dee76100ecf5ad6efc8ea69917d1eea",
+  "new_manifest_sha256": "a8795add361e31dd6b1ad39b1870278fe96c0921875265b615826ba99a0bc634"
+}

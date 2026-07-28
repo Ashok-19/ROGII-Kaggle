@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E013",
+  "task_id": "T039",
+  "status": "IMPLEMENTATION_FROZEN_PRE_METRIC",
+  "recorded_at": "2026-07-28T16:54:00Z",
+  "base_head": "3f9a89c33b65302ec259aa3a7b1c5fd7344fcf7b",
+  "config_sha256": "9f23115d4d23c1c73a77dbfd324e0595faaa653396b7232cdfae292fdd5bc660",
+  "preregistration_sha256": "68f03e3f11262335082afd74dd23fc5f8750efa79bb27afec192c9f882d05520",
+  "manifest_sha256": "a8795add361e31dd6b1ad39b1870278fe96c0921875265b615826ba99a0bc634",
+  "runner_sha256": "d2f7ffb8de8975058e9e53ee6575e50d8600e09648addaba95dcdcc197f42738",
+  "module_sha256": "72a5550efaa23b1e8a626de31af2e695bd615dd4756bd4e2806387771a412a49",
+  "tests_sha256": "4d9b9b25896d3ecc275170416d7f30cc8b4008626f63cd7ab4c41b25fa29f124",
+  "public_source_sha256": "2321997c8bcbca442d7d7abfc5b9b7eeed251bac8c671b3554b54c9355c231dc",
+  "source_parity": {
+    "all_pass": true,
+    "hidden_target_score_observed": false,
+    "wells": [
+      {"well_id": "000d7d20", "hidden_rows": 3836, "max_abs_delta": 0.0},
+      {"well_id": "ae0784a8", "hidden_rows": 7823, "max_abs_delta": 0.0},
+      {"well_id": "febb4411", "hidden_rows": 4247, "max_abs_delta": 0.0}
+    ]
+  },
+  "score_blind_structural_smoke": {
+    "well_id": "000d7d20",
+    "deterministic_max_abs": 0.0,
+    "reversed_seed_order_max_abs": 7.275957614183426e-12,
+    "all_missing_hidden_gr_finite": true,
+    "short_visible_gr_support_finite": true,
+    "no_emission_finite": true,
+    "visible_prefix_exact": true,
+    "input_immutable": true
+  },
+  "focused_tests": {
+    "command": "python3.12 -m unittest tests.test_likelihood_pf",
+    "passed": 5,
+    "failed": 0
+  },
+  "primary_candidate": "0.25 * E011 + 0.75 * clean-room likelihood-PF",
+  "metrics_observed_before_freeze": false,
+  "pre_metric_manifest_correction": "parent_id changed from invalid E011,T038 to valid experiment parent E011 after tracker foreign-key rejection; scientific contract unchanged",
+  "public_code_imported_by_scoring_pipeline": false,
+  "kaggle_run_authorized": false,
+  "submission_authorized": false
+}
