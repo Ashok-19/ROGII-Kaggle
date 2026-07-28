@@ -395,6 +395,24 @@
       "summary": "T036 reaches 12.4729 RMSE, gains 0.0779, wins 0/5 maps, identifies the oracle candidate in the top 16 only 2.95% of the time, fails genuine duplicate-action invariance, and does not fully reselect the sign-flip control.",
       "visual": "deployment_gap",
       "why_it_matters": "The 4.6285 dictionary remains capable, but candidate-level summary ranking discards local structure and its soft output is not duplicate-invariant. T037 deduplicates complete paths before graph construction and tests full row-level GR emissions with hard Viterbi continuity."
+    },
+    {
+      "id": "B042",
+      "date": "2026-07-28",
+      "evidence": "T038_exact_public_mechanism_worth_audit",
+      "title": "Sequential PF is the first public-derived multi-RMSE legal lead",
+      "summary": "A fixed 75% sequential likelihood-PF blend reaches 6.1144 RMSE versus 12.9126 on a frozen 20-well panel and wins all five fold strata.",
+      "visual": "deployment_gap",
+      "why_it_matters": "The result is exact and causal enough to justify clean-room full validation, but the panel is too small to promote the model."
+    },
+    {
+      "id": "B043",
+      "date": "2026-07-28",
+      "evidence": "E013_full_773_well_independent_validation",
+      "title": "PF gains transfer broadly but catastrophic tails block promotion",
+      "summary": "The frozen 75% PF blend reaches 10.1053 RMSE on all 773 wells, wins 5/5 maps and 25/25 cells, but raises worst-5% SSE share from 31.53% to 46.31% and misses the 8.0 GO gate.",
+      "visual": "deployment_gap",
+      "why_it_matters": "PF contains real aligned-GR signal, yet fixed placement is unsafe. The only justified successor is a fresh PF-internal catastrophe-identifiability screen, not parameter or blend retuning."
     }
   ],
   "concepts": [
@@ -880,9 +898,19 @@
       "title": "T037 full-emission structured decoder preregistration",
       "local_path": "tracking/evidence/T037/PRE_REGISTRATION.md",
       "url": ""
+    },
+    {
+      "title": "T038 public mechanism worth audit",
+      "local_path": "tracking/evidence/T038/RESULT.md",
+      "url": ""
+    },
+    {
+      "title": "E013 clean-room sequential likelihood-PF full validation",
+      "local_path": "experiments/E013/RESULT.md",
+      "url": ""
     }
   ],
   "subtitle": "A beginner-first visual guide to the data, geology, target, validation, and idea space.",
   "title": "ROGII Competition Learning Lab",
-  "updated_at": "2026-07-27"
+  "updated_at": "2026-07-28"
 }

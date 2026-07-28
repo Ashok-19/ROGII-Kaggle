@@ -1,0 +1,13 @@
+{
+  "payload": {
+    "decided_at": "2026-07-28",
+    "decision": "Reject H031/T039/E013 and do not promote or package the fixed 0.75 sequential likelihood-PF blend. Preserve the PF as a verified causal research leg and select only a bounded PF-internal catastrophe-identifiability worth screen, H032/T040, before any new routing or abstention implementation.",
+    "decision_id": "D044",
+    "rationale": "E013 completes all 773 wells and 3,783,989 rows with exact clean-room parity and all controls. The frozen primary improves E011 from 12.550756 to 10.105332, wins 5/5 maps and 25/25 cells, improves every legacy group and p90, but misses the 8.0 GO threshold and worsens worst-5% SSE share from 0.315322 to 0.463097. The registered 0.50 diagnostic reaches 9.983906 but is not eligible for post-result promotion and remains tail-concentrated. Independent validation passes exactly.",
+    "revisit_trigger": "Do not retune PF weights, particles, seeds, process noise, GR scale, or the E013 panel. Continue only if a frozen cross-fitted screen proves that PF-internal test-available diagnostics identify catastrophic PF-vs-E011 loss with meaningful held-out AUC/rank correlation and a legal abstention oracle worth at least 1.0 RMSE. Otherwise close sequential PF as a standalone/fixed-blend family.",
+    "source_ids": "E013,H031,T039,T038,experiments/E013/results/summary.json,experiments/E013/INDEPENDENT_VALIDATION.json",
+    "title": "Reject fixed likelihood-PF placement and test catastrophe identifiability only"
+  },
+  "recorded_at": "2026-07-28T18:25:00Z",
+  "type": "decision"
+}

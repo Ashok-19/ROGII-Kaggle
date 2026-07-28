@@ -3,18 +3,20 @@
   "experiment_id": "E013",
   "title": "Clean-room sequential likelihood-PF full validation",
   "hypothesis": "A clean-room sequential likelihood-weighted particle filter blended at the frozen 0.75 weight with E011 will retain multi-RMSE value on all 773 wells and can reach at most 8 RMSE, with sub-6 as the breakthrough target, while surviving PF-specific causality and robustness controls.",
-  "status": "designed",
+  "status": "rejected",
   "track": "public_mechanism_clean_room",
   "priority": 1,
   "owner": "NNMax",
   "parent_id": "E011",
   "created_at": "2026-07-28T16:44:00Z",
-  "updated_at": "2026-07-28T16:44:00Z",
+  "updated_at": "2026-07-28T18:27:00Z",
   "config_path": "experiments/E013/config.json",
   "pre_registration_path": "experiments/E013/PRE_REGISTRATION.md",
+  "result_path": "experiments/E013/RESULT.md",
   "hypothesis_id": "H031",
   "task_id": "T039",
-  "decision_id": "D043",
+  "decision_id": "D044",
+  "source_commit": "cf1ed4eb1abe004c11b92db7d96ac2dd4ba9ed14",
   "outputs": [
     "experiments/E013/results/summary.json",
     "experiments/E013/results/candidate_metrics.csv",
@@ -23,10 +25,70 @@
     "experiments/E013/results/slice_metrics.csv",
     "experiments/E013/results/control_metrics.csv",
     "experiments/E013/results/selected_well_metrics.csv",
+    "experiments/E013/results/oof_predictions.csv.gz",
     "experiments/E013/results/artifact_manifest.json",
+    "experiments/E013/INDEPENDENT_VALIDATION.json",
     "experiments/E013/RESULT.md"
   ],
-  "result": null,
-  "runs": [],
+  "local_artifacts": [
+    {
+      "path": "experiments/E013/results/oof_predictions.csv.gz",
+      "bytes": 129158829,
+      "sha256": "8c52c508e4dfffc1a9e39648690cbac2c85069d19b525a2da632a90978b4881f",
+      "committed": false,
+      "reason": "Large deterministic row-level evidence is retained locally; committed summaries, per-well metrics, controls, and independent validation preserve the scientific decision."
+    }
+  ],
+  "result": {
+    "decision": "REJECT_E013",
+    "deployment_ready": false,
+    "e011_rmse": 12.550756295689673,
+    "fixed_blend_w075_rmse": 10.105331947939284,
+    "fixed_blend_w075_gain": 2.4454243477503894,
+    "diagnostic_blend_w050_rmse": 9.983905587039255,
+    "pf_standalone_rmse": 11.20108817917038,
+    "map_wins": 5,
+    "outer_cell_wins": 25,
+    "every_legacy_group_positive": true,
+    "p90_pass": true,
+    "worst5_share_pass": false,
+    "go_rmse_pass": false,
+    "all_destructive_controls_pass": true,
+    "all_structural_controls_pass": true,
+    "independent_validation_pass": true,
+    "submission_made": false
+  },
+  "runs": [
+    {
+      "run_id": "R20260728-e013-resumable-full",
+      "runtime_seconds": 5107.885368585587,
+      "status": "complete"
+    }
+  ],
+  "post_finalization_validation": {
+    "focused_tests": {
+      "command": "python3.12 -m unittest tests.test_likelihood_pf tests.test_dashboard_learning",
+      "passed": 17,
+      "failed": 0
+    },
+    "full_repository_tests": {
+      "command": "python3.12 -m unittest discover -s tests",
+      "passed": 181,
+      "failed": 0,
+      "wall_seconds": 82.382
+    },
+    "tracker_sync": {
+      "status": "ok",
+      "manifests": 13,
+      "runs": 14,
+      "events": 107
+    },
+    "tracker_validate": "ok",
+    "sqlite_integrity": "ok",
+    "sqlite_foreign_key_violations": 0,
+    "artifact_hash_failures": 0,
+    "independent_validation": "pass",
+    "completed_at": "2026-07-28T18:27:00Z"
+  },
   "submission_made": false
 }

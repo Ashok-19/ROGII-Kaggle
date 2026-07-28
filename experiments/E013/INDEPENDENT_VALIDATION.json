@@ -1,0 +1,64 @@
+{
+  "all_pass": true,
+  "checks": {
+    "blend_w0.50_rmse": true,
+    "blend_w0.75_rmse": true,
+    "candidate_csv": true,
+    "cells": true,
+    "control_advantage": true,
+    "e011_rmse": true,
+    "gain": true,
+    "legacy": true,
+    "maps": true,
+    "pf_rmse": true,
+    "pre_fix_hash_reproduction": true,
+    "rows": true
+  },
+  "experiment_id": "E013",
+  "hash_reproduction": {
+    "candidate_metrics.csv": {
+      "expected": "ab6b5f93428d1d98e491df4ea9412b4b714dd0fd704b7cc01133c430b22799f6",
+      "match": true,
+      "observed": "ab6b5f93428d1d98e491df4ea9412b4b714dd0fd704b7cc01133c430b22799f6"
+    },
+    "control_metrics.csv": {
+      "expected": "be7e40a16e5fea0628ef74e1eea0059308c4e75af7dc7b3bb5c7c20fc95d91b1",
+      "match": true,
+      "observed": "be7e40a16e5fea0628ef74e1eea0059308c4e75af7dc7b3bb5c7c20fc95d91b1"
+    },
+    "group_metrics.csv": {
+      "expected": "e34f52c81a54514504b89e4c1a2ddbbbde533103c6fd2923b7c053b9038540e1",
+      "match": true,
+      "observed": "e34f52c81a54514504b89e4c1a2ddbbbde533103c6fd2923b7c053b9038540e1"
+    },
+    "map_metrics.csv": {
+      "expected": "7fe597e623da728268d8c24f3fac1451325ef6b8749652f5e43f0f57c298d98d",
+      "match": true,
+      "observed": "7fe597e623da728268d8c24f3fac1451325ef6b8749652f5e43f0f57c298d98d"
+    },
+    "oof_predictions.csv.gz": {
+      "expected": "8c52c508e4dfffc1a9e39648690cbac2c85069d19b525a2da632a90978b4881f",
+      "match": true,
+      "observed": "8c52c508e4dfffc1a9e39648690cbac2c85069d19b525a2da632a90978b4881f"
+    },
+    "selected_well_metrics.csv": {
+      "expected": "c86e9ea00881f3b1e32e5e3c9f8e5fcffa6909032605080e62ce5718e794d297",
+      "match": true,
+      "observed": "c86e9ea00881f3b1e32e5e3c9f8e5fcffa6909032605080e62ce5718e794d297"
+    },
+    "slice_metrics.csv": {
+      "expected": "e8d1d38882c30b1c9e1f94e54d3b1698a59376dd8102c200ecd6036aae3fc406",
+      "match": true,
+      "observed": "e8d1d38882c30b1c9e1f94e54d3b1698a59376dd8102c200ecd6036aae3fc406"
+    }
+  },
+  "recomputed_rmse": {
+    "blend_w0.50": 9.983905587039269,
+    "blend_w0.75": 10.105331947939268,
+    "e011": 12.550756295689672,
+    "pf": 11.201088179170403
+  },
+  "schema_version": 1,
+  "summary_decision": "REJECT_E013",
+  "summary_go": false
+}

@@ -1,8 +1,8 @@
 # ROGII Gold Medal Roadmap
 
-Updated: 2026-07-27
+Updated: 2026-07-28
 Final deadline: 2026-08-05 23:59 UTC / 2026-08-06 05:29 Asia/Kolkata  
-Time remaining at update: approximately 9.3 days
+Time remaining at update: approximately 8.2 days
 
 ## Objective and reality check
 
@@ -284,6 +284,8 @@ The E011 package reconstructs all 142 frozen legal columns across 773 wells, pas
 
 E012/H015 is completed and rejected. Two preimplementation screens completed 226 hard, soft, local, latent, and partial-pooled branches with zero positive pooled gains. The frozen nested confirmation completed nine representative branches over all 25 repeated cells and ten stress holdouts. `knn25_distance_s025` is best at 12.5370580451, only 0.013698 better than E011; it wins 5/5 maps but only 15/25 cells and regresses spatial groups 0/1 and typewell group 0. All controls and independent reproduction pass. Do not package, submit, or retune this family.
 
+E013/H031 is completed and rejected. A clean-room sequential likelihood-PF matches the audited source-visible implementation exactly on three frozen wells. The preregistered 75% PF blend reaches 10.1053319479 RMSE on all 773 wells versus E011 at 12.5507562957, wins 5/5 maps and 25/25 cells, improves every legacy group and p90, and passes all PF-specific destructive and structural controls. It misses the 8.0 GO gate and increases worst-5% SSE share from 31.53% to 46.31%. The registered 50% diagnostic reaches 9.9839055870 but is not eligible for post-result promotion and remains tail-concentrated. Independent validation reproduces every decisive metric and artifact hash. E011 remains primary.
+
 ### July 24–26 — Tabular residual and datum models
 
 Deliverables:
@@ -390,6 +392,9 @@ These defaults may be revised only through a recorded decision before seeing the
 29. **H027/T035 — Actual T033 PCA rank-8 coordinate identifiability — completed and rejected 2026-07-25.** Raw-PCA ridge is best at 12.267294 RMSE, retains only 2.728% of the rank-8 oracle gain, and has multivariate coordinate R2 0.0341. All maps and legacy groups improve, but broader covariate/horizon transfer and every identification gate fail. Privileged geology reaches 10.897200 and worsens shape SSE. Exact reproduction passes; close global coordinate/basis/model retuning.
 30. **H028/T036 — Candidate-path-conditioned GR evidence ranking — completed and rejected 2026-07-27.** The nested legal ranker reaches 12.472865 RMSE, gains 0.077892, wins 0/5 maps and 7/25 cells, and retains only 0.983% of the 4.628457 oracle gain. Top-1/top-16 oracle identification is 0.26%/2.95%. Decision metrics, memberships, manifests, gates, the four genuinely reselected destructive controls, and candidate-order invariance independently reproduce. Genuine duplicate-action invariance fails for the selected soft top-k output, and the sign-flip branch does not repeat full inner reselection; close global path ranking without repair or retuning.
 31. **H029/T037 — Full-emission structured path decoding — selected 2026-07-27.** Preserve the exact 1,520 nonzero T033 pair-dictionary paths plus zero fallback, deduplicate paths before graph construction, compute row/node hidden-GR/typewell emissions, and hard-decode one path with Viterbi continuity. Fit and select every emission/transition branch split-locally across all 25 contexts; GO requires at most 8.0 RMSE and breakthrough requires at most 5.0 with all transfer, tail, resource, and destructive-control gates.
+32. **H030/T038 — Public HMM/PF mechanism worth audit — completed and passed 2026-07-28.** The fixed 75% sequential-PF blend reaches 6.114432 on a frozen 20-well panel, wins all five strata, and reproduces exactly. This authorizes clean-room full validation only.
+33. **H031/T039/E013 — Clean-room sequential likelihood-PF full validation — completed and rejected 2026-07-28.** The frozen primary reaches 10.105332 with broad average gains but fails the 8.0 GO and worst-5% concentration gates. The 50% diagnostic reaches 9.983906 but remains research-only. No package or submission.
+34. **H032/T040 — PF catastrophe-identifiability worth screen — queued 2026-07-28.** Use only PF-internal legal diagnostics and whole-well cross-fitting. A router is authorized only if held-out catastrophe discrimination is material and hidden-label exact-E011 fallback headroom is at least 1.0 RMSE.
 
 ## Explicitly rejected behavior
 
@@ -416,4 +421,4 @@ Foundation is complete only when:
 - legacy roadmap is preserved;
 - no training run is falsely presented as completed.
 
-Foundation through T036 is complete and T037 full-emission structured decoding is preregistered. E011 remains deployment primary. T033 proves compact sub-5 capacity; T034/T035 reject global coordinate identification and T036 rejects candidate-level summary ranking. D041 tests the remaining local-structure question with exact split-local union graphs and hard Viterbi decoding. No package, Kaggle run, or submission is authorized unless T037 passes every frozen legal, transfer, tail, resource, and evidence-destruction gate.
+Foundation through E013 is complete. E011 remains deployment primary. T038 identified a powerful sequential-PF lead on a small frozen panel, but E013 full validation rejects fixed PF placement at 10.105332 because the gain does not reach the 8.0 gate and tail concentration deteriorates sharply. D044 permits only T040's PF-internal catastrophe-identifiability worth screen; no PF router, package, Kaggle run, or submission is authorized unless that fresh screen passes.

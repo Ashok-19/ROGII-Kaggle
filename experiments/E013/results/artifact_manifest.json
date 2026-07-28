@@ -1,0 +1,37 @@
+{
+  "files": {
+    "candidate_metrics.csv": {
+      "bytes": 907,
+      "sha256": "ab6b5f93428d1d98e491df4ea9412b4b714dd0fd704b7cc01133c430b22799f6"
+    },
+    "control_metrics.csv": {
+      "bytes": 638,
+      "sha256": "be7e40a16e5fea0628ef74e1eea0059308c4e75af7dc7b3bb5c7c20fc95d91b1"
+    },
+    "group_metrics.csv": {
+      "bytes": 2229,
+      "sha256": "e34f52c81a54514504b89e4c1a2ddbbbde533103c6fd2923b7c053b9038540e1"
+    },
+    "map_metrics.csv": {
+      "bytes": 1847,
+      "sha256": "7fe597e623da728268d8c24f3fac1451325ef6b8749652f5e43f0f57c298d98d"
+    },
+    "oof_predictions.csv.gz": {
+      "bytes": 129158829,
+      "sha256": "8c52c508e4dfffc1a9e39648690cbac2c85069d19b525a2da632a90978b4881f"
+    },
+    "selected_well_metrics.csv": {
+      "bytes": 212474,
+      "sha256": "c86e9ea00881f3b1e32e5e3c9f8e5fcffa6909032605080e62ce5718e794d297"
+    },
+    "slice_metrics.csv": {
+      "bytes": 313,
+      "sha256": "e8d1d38882c30b1c9e1f94e54d3b1698a59376dd8102c200ecd6036aae3fc406"
+    },
+    "summary.json": {
+      "bytes": 5737,
+      "sha256": "3329a01111a54051200c3caaa9fc40c5103f3ec0790f2ac87368a86916a8f579"
+    }
+  },
+  "schema_version": 1
+}

@@ -1,6 +1,6 @@
 # ROGII Project Memory
 
-Last updated: 2026-07-27
+Last updated: 2026-07-28
 Public intelligence last checked: 2026-07-27 23:12 Asia/Kolkata
 
 ## Mission state
@@ -8,6 +8,7 @@ Public intelligence last checked: 2026-07-27 23:12 Asia/Kolkata
 - Deadline: 2026-08-05 23:59 UTC / 2026-08-06 05:29 Asia/Kolkata.
 - Current verified public leaderboard snapshot: 4.679 at rank 1, 4.902 at rank 2, 5.237 at rank 5, and 5.444 at rank 10 as of 2026-07-27 23:12 Asia/Kolkata. Official Meta Kaggle verifies that the public leaderboard covers exactly 26% of the test data and the private leaderboard the remaining 74%. Best Kaggle-MCP-verified account submission remains 7.119 (ref 54754431, 2026-07-16); user-reported best remains 6.888 with reference unverified.
 - E001 is frozen; E002, E005, E007, E008, and E009 are rejected; E003 is promoted only as nondeployable surface-assisted understanding; E011 is the promoted deployment-ready primary, E006 is the secondary fallback, and E004 is the exact fallback.
+- T038 passed a 20-well public-mechanism worth screen at 6.114432 RMSE, but E013 full validation rejected quantitative transfer. The frozen 75% sequential-PF blend scores 10.105332 on all 773 wells; the registered 50% diagnostic scores 9.983906. Neither is promoted because the primary misses the 8.0 GO gate and worst-5% SSE concentration rises sharply. E011 remains the official primary.
 - E010 is completed and rejected. Its 130,252-path legal bank oracle reaches 4.7510768278 RMSE, but the best legal selector reaches 14.7802528528, fails spatial group 1/high-GR-missingness transfer, and uses 17,528,436 KB RSS versus the frozen 3 GB cap. E011/H014 is independently reproduced at 12.5507562957 RMSE and is deployment-ready after saved Kaggle version 1 passed review. E012/H015 is completed and rejected: 226 worth-screen branches had zero positive pooled gains, and the best formal KNN expert gained only 0.013698 RMSE while failing cell/spatial/typewell gates. T022/H016, T023/H017, T016/H012, T025/H018, T026/H019, T027/H020, and T028/H021 are closed negatively after exact reproduction or a reproduced preimplementation gate. E011 remains primary, E006 secondary fallback, and E004 exact fallback.
 
 ## Verified project state
@@ -42,6 +43,8 @@ Public intelligence last checked: 2026-07-27 23:12 Asia/Kolkata
 - D040 selects T036 as a materially different mechanism: rank the reproduced T033 pair-32 candidate dictionary by GR/typewell evidence recomputed under each proposed path. The dictionary has exactly 1,520 unique nonzero actions plus exact E011 fallback and retains a 4.628457 hidden-label oracle. No further global coordinate, spline, basis, summary, or raw-PCA retuning is allowed.
 - T036 closes H028 negatively. The complete corrected run reaches 12.4728647349 RMSE, only +0.0778915608 versus E011, with 0/5 map wins, 7/25 cell wins, a -0.166791 minimum legacy-group gain, 0.983% oracle-gain retention, 0.2587% top-1 hit, and 2.9495% top-16 recall. Independent pooled metrics, memberships, manifests, gates, the four genuinely reselected destructive controls, and candidate-order invariance reproduce. Two frozen validation claims fail: 23/25 contexts use soft output and an exact duplicate changes the selected action by up to 0.268941; the sign-flip branch negates the already selected profiles instead of repeating full inner reselection. The hard STOP remains valid and T036 may not be repaired or retuned after result observation.
 - D041 selects T037 as the immediate bounded mechanism: preserve all 1,520 split-local nonzero T033 pair-dictionary paths plus exact zero fallback, construct the deduplicated node/state union graph, compute full row-level candidate-conditioned GR emissions, and perform hard Viterbi decoding. T036's 39 aggregate summaries are closed; T037 must reach at most 8.0 RMSE for GO or 5.0 for breakthrough and defeat transition-only plus all evidence-destruction controls.
+- T038 cleanly audits four HMM branches and sequential likelihood-PF. The fixed 75% PF / 25% E011 blend reaches 6.114432 RMSE on the frozen 20-well panel and reproduces exactly, selecting E013 for full validation.
+- E013 completes 773 wells and 3,783,989 rows with a clean-room PF matching the audited source-visible implementation at zero numerical difference on three frozen wells. The fixed 75% blend reaches 10.105332 RMSE versus E011 at 12.550756, wins 5/5 maps and 25/25 cells, improves every legacy group and p90, and passes every PF-specific destructive/structural control. It fails the 8.0 GO gate and worsens worst-5% SSE share from 0.315322 to 0.463097. The registered 50% diagnostic reaches 9.983906 but is ineligible and still tail-concentrated. Independent recomputation and all pre-fix artifact hashes pass exactly. D044 rejects promotion.
 
 ## New durable understanding from exact public-source audits
 
@@ -60,6 +63,8 @@ Public intelligence last checked: 2026-07-27 23:12 Asia/Kolkata
 - The 22:15 public delta moved rank 2 from 4.905 to 4.904 and topic count from 138 to 139. Seven exact source pulls added no independent measured mechanism: three frontier records are 98.8%–99.96% clones of the existing seven-dataset composite lineage, the dip-aware HMM/GBM notebook mixes optional pretrained artifacts and overlap/contact logic without grouped scores, and the clean-room alignment bundle reports no OOF or stress result.
 - The 23:56 delta leaves leaderboard, topic count, and notebook runs unchanged. One participant comment prompted a direct rules check: official Section 2.6 includes LLMs/tools under reasonableness and accessibility and permits appropriately licensed AML tools; the retrieved text contains no separate coding-assistant disclosure requirement.
 
+- E013 establishes that sequential PF contains strong causal signal but suffers rare catastrophic tracking failures. Its median well RMSE falls to 5.7338 and p90 to 14.6906, while worst-5% concentration rises to 46.31%. The next question is not PF parameter tuning; it is whether PF-internal legal diagnostics can identify those failures before fallback.
+
 ## Decisions
 
 - Repository files and verified Kaggle records—not chat recollection—are the source of truth. Every new session must reconcile git, tracker state, locks, current public intelligence, and the exact next action before work.
@@ -72,6 +77,7 @@ Public intelligence last checked: 2026-07-27 23:12 Asia/Kolkata
 - D016 gives specialists a higher evidence burden than global models; unsupported or uncertain regimes must use the exact verified global fallback.
 - D017 makes public notebooks and writeups permanent hypothesis generators rather than trusted pipelines. Their scores, artifacts, thresholds, and routing rules cannot enter official state without legal clean-room reconstruction and independent reproduction.
 - D018 statistically promoted E011 while retaining E006 during packaging. D020 closes that boundary: E011 is now deployment primary. D021 closes H015 negatively: no tested regime, local, latent, or partial-pooled expert passes complete-system gates, so E011 remains unchanged.
+- D044 rejects E013's fixed sequential-PF placement. Do not retune PF weight, particles, seeds, process noise, GR scale, or control panel. T040 may only run a preregistered PF-internal catastrophe-identifiability worth screen; no router is authorized until that screen passes.
 - D022 rejects cloning the current public composite frontier and freezes a preimplementation-only H016/T022 screen. E013 is forbidden unless E011/E006 fallback or blend oracle headroom is at least 0.20 RMSE and a legal cross-fitted screen gains at least 0.03 with 4/5 maps, 17/25 cells, stable tails, and failed negative controls.
 - D023 closes H016 without E013. Oracle headroom passes, but every legal branch fails gain, repeated-cell, and shift requirements. Do not retune uncertainty routing over the same E011/E006 well-level feature space; the next mechanism must generate new sequence or physical state evidence.
 - D025 closes H017 without escalation. Smooth residual oracle capacity is not sufficient: the best stable legal proxy fails spatial transfer and a reversed-profile control retains material gain. Do not retune the same residual-profile target or substitute a GRU/TCN/HMM/PF extension without materially different legal state evidence.
@@ -84,13 +90,14 @@ Public intelligence last checked: 2026-07-27 23:12 Asia/Kolkata
 
 ## Exact next action
 
-Implement and execute T037 exactly as preregistered. Deduplicate the complete T033 pair-32 action paths, build the split-local union graph, fit row/node GR emission models only inside each outer partition, select hard-Viterbi transition strength on the fixed inner fold, and require exact complete-path oracle identity plus every structural and destructive control. STOP if legal RMSE is above 10.0, oracle-gain retention is below 25%, or full emissions do not beat transition-only. Do not reopen T036 or tune against the public leaderboard.
+Execute T040 as a bounded preimplementation worth screen. Derive only PF-internal test-available diagnostics from the frozen E013 prediction process, cross-fit whole-well catastrophe discrimination, and quantify hidden-label fallback-oracle headroom. Require material held-out discrimination and at least 1.0 RMSE oracle headroom before any routing implementation. Do not retune E013 weights or PF parameters.
 
 ## Open risks
 
 - Public CV/LB ordering is noisy and hidden test contains roughly 200 wells; current public claims are not verified evidence.
 - The public leaderboard covers only 26% of the test data. Score-directed tuning on that minority split has a high private-shakeup risk and cannot override frozen local validation.
 - HMM/DTW/PF can over-count autocorrelated GR, commit to repeated motifs, or smooth across faults. Posterior uncertainty must be calibrated OOF and a jump candidate must remain available.
+- E013 verifies the PF-tail risk directly: fixed PF blends improve most wells and all fold cells but concentrate 46.31% of SSE in the worst 5%. Any successor must detect this risk from legal PF-internal state rather than outcome-defined subgroups.
 - E010 confirms that a below-5 bank does not imply a useful legal selector. The immediate risk is coefficient learnability under spatial shift; family classification alone cannot close the 9.07 RMSE coefficient/aggregation gap.
 - E011 resolves coefficient learnability and deployment positively. E012 rejects regime specialization, T022 rejects E011/E006 uncertainty routing, T023 rejects the tested residual sequence-state proxy, T016 rejects the tested wide datum action space, T025 rejects four fixed pseudo-cut summaries, and T026 rejects mask-local end-of-well target pooling. T027 rejects target-preserving view augmentation and T028 rejects objective-only repair before implementation. The remaining risk is selecting a genuinely independent legal mechanism rather than recombining another version of the same coefficient, routing, profile, or mask signal.
 - The 2026-07-27 public refresh reports 145 topics and a public leaderboard frontier of 4.679 and 4.902. Sub-5 is operationally real, but the top mechanisms are undisclosed; public `gs` tuning and visible-test overlap overrides are not valid private-generalization evidence.
