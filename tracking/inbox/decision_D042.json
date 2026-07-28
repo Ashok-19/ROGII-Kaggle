@@ -1,0 +1,13 @@
+{
+  "payload": {
+    "decided_at": "2026-07-28",
+    "decision": "Pause, but do not close or modify, the unrun T037 structured-decoder draft. Select H030/T038 as a bounded public-mechanism worth audit because the remaining deadline favors source-audited mechanisms already near the public frontier. Public code and artifacts remain quarantined; a T038 pass authorizes only a fresh clean-room E013 implementation and full outer-isolated validation.",
+    "decision_id": "D042",
+    "rationale": "T037 has no active process or scientific outputs and projects close to its four-hour cap. Meanwhile two independent, score-blind local probes of Amer's exact second-order HMM show low error correlation with E011 and exploratory fixed-blend gains of about 2.7-3.3 RMSE. The advertised Sub-6 and Physics notebooks are 92.96% source-similar composite stacks and cannot be trusted as independent unseen-well evidence, but HMM and likelihood-PF are self-contained algorithmic leads worth a bounded falsification screen.",
+    "revisit_trigger": "Proceed to E013 only if T038 completes every registered branch and control and a fixed globally specified candidate gains at least 1.0 RMSE with at least 4/5 fold-stratum wins, stable tails/edge wells, destructive-control separation, and a projected full-data runtime below four hours. Otherwise reject H030 and resume the next independent public mechanism audit without repairing T038 after scores.",
+    "source_ids": "archive/competition/public_intelligence_2026-07-20.md,archive/competition/public_intelligence_delta_2026-07-23_1835.md,S_T036_VERIFIED_20260727,E011,H030,T038",
+    "title": "Run a bounded public HMM/PF worth audit before any clean-room implementation"
+  },
+  "recorded_at": "2026-07-28T16:05:00Z",
+  "type": "decision"
+}

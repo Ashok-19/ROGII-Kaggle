@@ -1,0 +1,14 @@
+{
+  "payload": {
+    "evidence_against": "The exact HMM public notebook reports only a small-well comparison; our first local screens found severe 16-28 RMSE HMM catastrophes; E010 found no unique full-data oracle wins from the HMM family; public composite notebooks depend on pretrained, overlap, contact, and unknown-license artifacts that cannot enter a prize pipeline.",
+    "evidence_for": "A score-blind fold-stratified 20-well probe gave E011 12.9126 RMSE, the exact second-order HMM 12.5865, and a fixed 50/50 blend 9.5685 with row-error correlation 0.1359. A separate first-12-well probe gave 12.4440, 10.7663, and 9.7453. This is multi-point complementary signal, not a hundredth-level selector effect.",
+    "hypothesis_id": "H030",
+    "next_test": "Complete T038 exactly: audit four second-order HMM variants, one likelihood-PF branch, fixed global blends, legal observable-edge wells, and full evidence-destruction/determinism/missing-data controls. Escalate only if a fixed candidate gains at least 1.0 RMSE with broad fold and tail support.",
+    "priority": 1,
+    "statement": "Independent public trajectory mechanisms, especially exact second-order HMM smoothing and likelihood-weighted PF, contain complementary legal whole-tail shape signal that can combine with E011 for a multi-RMSE gain without overlap, contact lookup, formations, pretrained artifacts, score-derived constants, or hidden routing.",
+    "status": "active",
+    "title": "Public trajectory mechanisms add complementary legal shape signal"
+  },
+  "recorded_at": "2026-07-28T16:05:00Z",
+  "type": "hypothesis"
+}

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "task_id": "T038",
+  "status": "IMPLEMENTATION_FROZEN_PRE_METRIC",
+  "recorded_at": "2026-07-28T16:13:30Z",
+  "base_head": "aea9bc57c722967a239e2c6d7e82a4e32f1b399b",
+  "contract_sha256": "38bc7959b3a0daa6398520e26366abca91d900074693973c9540e661f53c558e",
+  "config_sha256": "8b127e30e0b50740e1bfd69e4149914a8dc3c5edae8cac261637cd7bed9fe606",
+  "script_sha256": "c806d17e5c3f788481c62d63d8ca7a1dc2e0f4144833013b4e33a2d62e1e4c0e",
+  "public_source_sha256": "2321997c8bcbca442d7d7abfc5b9b7eeed251bac8c671b3554b54c9355c231dc",
+  "public_source_policy": "quarantined research-only source audit; no promotion or deployment reuse",
+  "smoke_test": {
+    "well_id": "000d7d20",
+    "hidden_rows": 3836,
+    "hmm_finite": true,
+    "pf_finite": true,
+    "deterministic_max_abs": 0.0,
+    "input_immutable": true,
+    "hidden_target_score_observed": false
+  },
+  "frozen_branches": 24,
+  "frozen_controls": 7,
+  "metrics_observed_before_freeze": false,
+  "kaggle_run_authorized": false,
+  "submission_authorized": false
+}

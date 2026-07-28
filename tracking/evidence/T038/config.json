@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "task_id": "T038",
+  "hypothesis_id": "H030",
+  "decision_id": "D042",
+  "baseline": "artifacts/E011/oof_predictions.csv.gz:spline4_ridge_equal_s075",
+  "public_source": ".tmp_public_audit/amer_hmm/rogii-wellbore-geology-exact-hmm-smoother.ipynb",
+  "source_use": "research-only executable source audit; passing does not authorize source reuse in deployment",
+  "primary_sample": {
+    "fold_map": "folds/v1.json",
+    "wells_per_fold": 4,
+    "selection": "sort well IDs within each fold and take four equally spaced indices including endpoints",
+    "expected_wells": 20
+  },
+  "edge_panel": {
+    "selection_uses_hidden_labels": false,
+    "features": ["hidden_row_count", "known_row_count", "hidden_gr_missing_fraction", "hidden_gr_robust_scale", "maximum_md_step"],
+    "extremes_per_feature": 2,
+    "maximum_additional_wells": 10
+  },
+  "hmm_branches": [
+    {"name": "hmm_gauss_std_s070_l100_zero", "step": 0.7, "n_rates": 41, "rate_span": 0.1, "sig_r": 0.002, "sig_p": 0.02, "mom": 0.998, "lam": 1.0, "emission": "gauss", "sigma_mode": "std", "rate_center": "zero"},
+    {"name": "hmm_gauss_std_s070_l050_zero", "step": 0.7, "n_rates": 41, "rate_span": 0.1, "sig_r": 0.002, "sig_p": 0.02, "mom": 0.998, "lam": 0.5, "emission": "gauss", "sigma_mode": "std", "rate_center": "zero"},
+    {"name": "hmm_t_mad_s070_l100_zero", "step": 0.7, "n_rates": 41, "rate_span": 0.1, "sig_r": 0.002, "sig_p": 0.02, "mom": 0.998, "lam": 1.0, "emission": "t", "sigma_mode": "mad", "rate_center": "zero"},
+    {"name": "hmm_gauss_std_s100_l100_tail", "step": 1.0, "n_rates": 41, "rate_span": 0.1, "sig_r": 0.002, "sig_p": 0.02, "mom": 0.998, "lam": 1.0, "emission": "gauss", "sigma_mode": "std", "rate_center": "tail"}
+  ],
+  "pf_branch": {"name": "likelihood_pf_384x16", "n_particles": 384, "n_seeds": 16, "scale": 5.0, "init_spread": 4.5},
+  "fixed_blend_weights": [0.25, 0.5, 0.75],
+  "three_way_weights": [[0.5, 0.25, 0.25], [0.34, 0.33, 0.33]],
+  "control_wells": 10,
+  "controls": ["transition_only_lam0", "reversed_typewell_gr", "circular_shift_hidden_gr", "permuted_hidden_gr", "duplicate_and_deterministic_rerun", "all_missing_hidden_gr", "short_gr_support"],
+  "worth_gates": {
+    "minimum_primary_gain_rmse": 1.0,
+    "minimum_fold_stratum_wins": 4,
+    "maximum_p90_deterioration": 0.0,
+    "maximum_worst20_sse_share_increase": 0.02,
+    "maximum_edge_panel_rmse_deterioration": 0.25,
+    "minimum_advantage_over_each_destructive_control": 0.5,
+    "maximum_projected_full_runtime_hours": 4.0,
+    "maximum_rss_gb": 4.0
+  },
+  "escalation": "A pass selects a new E013 clean-room implementation with full five-map outer isolation. It does not promote T038 predictions, source code, weights, or public artifacts.",
+  "kaggle_run_authorized": false,
+  "submission_authorized": false
+}

@@ -1,0 +1,14 @@
+{
+  "payload": {
+    "depends_on": "T036,T037_public_pivot",
+    "due_at": "2026-07-29",
+    "phase": "preregistered_public_mechanism_worth_audit",
+    "priority": 1,
+    "status": "active",
+    "task_id": "T038",
+    "title": "Audit public HMM/PF mechanisms and fixed blends",
+    "updated_at": "2026-07-28T16:05:00Z"
+  },
+  "recorded_at": "2026-07-28T16:05:00Z",
+  "type": "task"
+}
