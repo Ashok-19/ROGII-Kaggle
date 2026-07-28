@@ -1,0 +1,27 @@
+{
+  "all_pass": true,
+  "checks": {
+    "all_branch_aggregations": true,
+    "artifact_manifest": true,
+    "baseline_primary_rmse": true,
+    "edge_gain": true,
+    "edge_list": true,
+    "gain": true,
+    "primary_list": true,
+    "selected_edge_rmse": true,
+    "selected_primary_rmse": true,
+    "source_sha": true
+  },
+  "max_branch_aggregation_delta": 7.105427357601002e-15,
+  "recomputed": {
+    "baseline_edge_rmse": 22.788307649563173,
+    "baseline_primary_rmse": 12.912615586736203,
+    "selected_edge_gain": 1.1532566572580478,
+    "selected_edge_rmse": 21.635050992305125,
+    "selected_gain": 6.798183573616014,
+    "selected_p90": 9.708012335955138,
+    "selected_primary_rmse": 6.114432013120189,
+    "selected_worst20": 0.4780033995879314
+  },
+  "source_sha256": "2321997c8bcbca442d7d7abfc5b9b7eeed251bac8c671b3554b54c9355c231dc"
+}

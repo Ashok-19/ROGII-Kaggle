@@ -1,0 +1,14 @@
+{
+  "payload": {
+    "evidence_against": "T038 selected its fixed weight on only 20 primary wells; the ten observable edge wells remain very difficult at 21.635 RMSE; the public source implementation cannot enter deployment; and PF-specific destructive controls were not part of the T038 contract.",
+    "evidence_for": "The sequential likelihood-PF is materially different from E005/E006's bounded datum/toe particle grid. T038 PF standalone reaches 6.3041 and the frozen 0.75 PF blend reaches 6.1144, gains 6.7982 versus E011, wins every fold stratum, improves p90 and worst-20% concentration, improves the edge panel, runs deterministically, and projects to about 0.60 hours for 773 wells.",
+    "hypothesis_id": "H031",
+    "next_test": "Implement E013 without importing or executing public source code; verify score-blind parity on three wells, freeze the implementation, then run all 773 wells and the registered 100-well PF control panel exactly once.",
+    "priority": 1,
+    "statement": "A clean-room sequential likelihood-weighted particle filter blended at the frozen 0.75 weight with E011 will retain multi-RMSE value on all 773 wells and can reach at most 8 RMSE, with sub-6 as the breakthrough target, while surviving PF-specific causality and robustness controls.",
+    "status": "active",
+    "title": "Clean-room likelihood PF transfers the T038 gain"
+  },
+  "recorded_at": "2026-07-28T16:33:00Z",
+  "type": "hypothesis"
+}

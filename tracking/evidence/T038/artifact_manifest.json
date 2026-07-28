@@ -1,0 +1,29 @@
+{
+  "files": {
+    "RESULT.md": {
+      "bytes": 1208,
+      "sha256": "51ad782b575a7f0715c65b9836fc0095e5f00c1c14c3ae0aa6f0522650645742"
+    },
+    "branch_metrics.csv": {
+      "bytes": 7530,
+      "sha256": "195b6501f2eb5c679322b221497ab10e32bad02473f714889c2e5ac1439f0549"
+    },
+    "control_metrics.csv": {
+      "bytes": 696,
+      "sha256": "6ca3ae9cb9bdd52f4f109a57f00cb94af49a66b1791c7abf45d7dd3dadaf261c"
+    },
+    "edge_selection.csv": {
+      "bytes": 56539,
+      "sha256": "67b504cc59c2b068d2942d737d7a93fcef44979567e6ec2ac822f390187e76e0"
+    },
+    "per_well_metrics.csv": {
+      "bytes": 73222,
+      "sha256": "d350a404d0c27de2b16c676124b3567bc4e24d8b394e6859b2c264117c7df5ba"
+    },
+    "summary.json": {
+      "bytes": 2963,
+      "sha256": "f85e1497b2342ba29c036fcb97b9faf87746ece14abcf5e38d3122f2eeec0b2a"
+    }
+  },
+  "schema_version": 1
+}

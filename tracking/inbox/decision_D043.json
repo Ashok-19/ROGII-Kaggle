@@ -1,0 +1,13 @@
+{
+  "payload": {
+    "decided_at": "2026-07-28",
+    "decision": "Confirm H030/T038 as a worth-screen pass and select H031/T039/E013. The winning mechanism is the sequential likelihood-weighted dip-rate particle filter, not the HMM. Freeze a clean-room implementation and the fixed 0.75 PF plus 0.25 E011 placement for full-data validation; do not import public notebook code or alter the weight after full-data metrics.",
+    "decision_id": "D043",
+    "rationale": "T038's fixed selected candidate reaches 6.114432 RMSE versus 12.912616 on the independent fold-stratified panel, wins 5/5 strata, improves p90, SSE concentration, and the observable edge panel, and projects below one hour for all wells. Independent reproduction is exact. E005/E006's PF is a finite datum/toe grid and is not the same sequential state-space mechanism. The remaining evidence gap is full-773 transfer and PF-specific destructive controls.",
+    "revisit_trigger": "Promote beyond research only if E013 reaches at most 8.0 RMSE, wins all maps and at least 20/25 cells, improves every legacy group, passes p90/worst-5% gates, defeats all PF evidence-destruction controls, reproduces deterministically, and stays below four hours and 4 GB. Sub-6 is the breakthrough result. Otherwise reject the exact frozen family without retuning weight, particles, seeds, process noise, GR scale, or control panel.",
+    "source_ids": "T038,H030,H031,T039,E011,E005,E006,tracking/evidence/T038/summary.json,tracking/evidence/T038/INDEPENDENT_VALIDATION.json",
+    "title": "Escalate the fixed likelihood-PF blend to clean-room full validation"
+  },
+  "recorded_at": "2026-07-28T16:33:00Z",
+  "type": "decision"
+}

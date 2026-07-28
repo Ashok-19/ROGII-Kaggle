@@ -2,13 +2,13 @@
   "payload": {
     "depends_on": "T036,T037_public_pivot",
     "due_at": "2026-07-29",
-    "phase": "preregistered_public_mechanism_worth_audit",
+    "phase": "completed_pass_authorize_clean_room_e013",
     "priority": 1,
-    "status": "active",
+    "status": "completed",
     "task_id": "T038",
     "title": "Audit public HMM/PF mechanisms and fixed blends",
-    "updated_at": "2026-07-28T16:05:00Z"
+    "updated_at": "2026-07-28T16:33:00Z"
   },
-  "recorded_at": "2026-07-28T16:05:00Z",
+  "recorded_at": "2026-07-28T16:33:00Z",
   "type": "task"
 }

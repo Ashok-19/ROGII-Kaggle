@@ -1,0 +1,14 @@
+{
+  "payload": {
+    "depends_on": "T038",
+    "due_at": "2026-07-30",
+    "phase": "preregistered_e013_clean_room_likelihood_pf",
+    "priority": 1,
+    "status": "active",
+    "task_id": "T039",
+    "title": "Validate clean-room likelihood PF on all wells",
+    "updated_at": "2026-07-28T16:33:00Z"
+  },
+  "recorded_at": "2026-07-28T16:33:00Z",
+  "type": "task"
+}

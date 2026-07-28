@@ -1,14 +1,14 @@
 {
   "payload": {
-    "evidence_against": "The exact HMM public notebook reports only a small-well comparison; our first local screens found severe 16-28 RMSE HMM catastrophes; E010 found no unique full-data oracle wins from the HMM family; public composite notebooks depend on pretrained, overlap, contact, and unknown-license artifacts that cannot enter a prize pipeline.",
-    "evidence_for": "A score-blind fold-stratified 20-well probe gave E011 12.9126 RMSE, the exact second-order HMM 12.5865, and a fixed 50/50 blend 9.5685 with row-error correlation 0.1359. A separate first-12-well probe gave 12.4440, 10.7663, and 9.7453. This is multi-point complementary signal, not a hundredth-level selector effect.",
+    "evidence_against": "The HMM branches remain catastrophe-prone and regress the observable edge panel. T038's destructive controls targeted the selected HMM configuration rather than the ultimately winning PF branch, so PF-specific evidence-destruction controls remain mandatory in E013. The 20-well primary panel is a worth screen, not full promotion evidence.",
+    "evidence_for": "T038 completed all 24 fixed candidates and seven registered controls. The fixed 75% likelihood-PF plus 25% E011 candidate reaches 6.1144320131 RMSE versus E011 at 12.9126155867 on the score-blind fold-stratified panel, wins 5/5 fold strata, lowers p90 from 18.4192 to 9.7080, lowers worst-20% SSE share from 0.5482 to 0.4780, and improves the observable edge panel by 1.1533 RMSE. Independent rerun reproduces every decisive metric and artifact identity exactly.",
     "hypothesis_id": "H030",
-    "next_test": "Complete T038 exactly: audit four second-order HMM variants, one likelihood-PF branch, fixed global blends, legal observable-edge wells, and full evidence-destruction/determinism/missing-data controls. Escalate only if a fixed candidate gains at least 1.0 RMSE with broad fold and tail support.",
+    "next_test": "Execute H031/T039/E013: a clean-room full-773 implementation of the frozen sequential likelihood-PF and fixed 0.75 placement, with PF-specific no-emission, reversed-typewell, shifted-GR, permuted-GR, seed-order, missing-data, deterministic, group, tail, and runtime controls.",
     "priority": 1,
-    "statement": "Independent public trajectory mechanisms, especially exact second-order HMM smoothing and likelihood-weighted PF, contain complementary legal whole-tail shape signal that can combine with E011 for a multi-RMSE gain without overlap, contact lookup, formations, pretrained artifacts, score-derived constants, or hidden routing.",
-    "status": "active",
+    "statement": "Independent public trajectory mechanisms, especially exact second-order HMM smoothing and likelihood-weighted PF, contain enough complementary legal whole-tail shape signal to justify a clean-room full-data experiment with E011.",
+    "status": "confirmed",
     "title": "Public trajectory mechanisms add complementary legal shape signal"
   },
-  "recorded_at": "2026-07-28T16:05:00Z",
+  "recorded_at": "2026-07-28T16:33:00Z",
   "type": "hypothesis"
 }
