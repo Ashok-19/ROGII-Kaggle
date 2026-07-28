@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E013",
+  "status": "POST_METRIC_OPERATIONAL_FIX",
+  "recorded_at": "2026-07-28T18:20:00Z",
+  "failed_runner_sha256": "d22d76451e28d4f4b60c15d1ddd4565096061bfa18689b7c33e2f489d10a60c1",
+  "failure": "After all 773 full caches and all 620 control caches were read and metrics CSVs were written, summary JSON serialization failed because one or more gate values were numpy.bool_ rather than Python bool.",
+  "scientific_changes": false,
+  "fix": "Cast scientific_gates, structural_gates, go, and breakthrough to Python bool immediately before summary serialization.",
+  "frozen_unchanged": [
+    "all prediction caches",
+    "all control caches",
+    "candidate formulas",
+    "0.75 PF blend placement",
+    "targets",
+    "folds",
+    "groups",
+    "gates",
+    "metrics",
+    "decisions"
+  ],
+  "pre_fix_output_hashes": {
+    "candidate_metrics.csv": "ab6b5f93428d1d98e491df4ea9412b4b714dd0fd704b7cc01133c430b22799f6",
+    "map_metrics.csv": "7fe597e623da728268d8c24f3fac1451325ef6b8749652f5e43f0f57c298d98d",
+    "group_metrics.csv": "e34f52c81a54514504b89e4c1a2ddbbbde533103c6fd2923b7c053b9038540e1",
+    "slice_metrics.csv": "e8d1d38882c30b1c9e1f94e54d3b1698a59376dd8102c200ecd6036aae3fc406",
+    "control_metrics.csv": "be7e40a16e5fea0628ef74e1eea0059308c4e75af7dc7b3bb5c7c20fc95d91b1",
+    "selected_well_metrics.csv": "c86e9ea00881f3b1e32e5e3c9f8e5fcffa6909032605080e62ce5718e794d297",
+    "oof_predictions.csv.gz": "8c52c508e4dfffc1a9e39648690cbac2c85069d19b525a2da632a90978b4881f"
+  }
+}

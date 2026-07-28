@@ -494,8 +494,10 @@ def finalize(cache_dir: Path, out: Path) -> int:
         "rmse_sse_identity": abs(selected_summary["rmse"] ** 2 * selected_summary["rows"] - selected_summary["sse"]) <= max(1e-6, 1e-10 * selected_summary["sse"]),
         "group_membership_identity": len(membership) == int(cfg["expected_wells"]),
     }
-    go = all(scientific_gates.values()) and all(structural_gates.values())
-    breakthrough = go and selected_summary["rmse"] <= float(gates["breakthrough_rmse"])
+    scientific_gates = {key: bool(value) for key, value in scientific_gates.items()}
+    structural_gates = {key: bool(value) for key, value in structural_gates.items()}
+    go = bool(all(scientific_gates.values()) and all(structural_gates.values()))
+    breakthrough = bool(go and selected_summary["rmse"] <= float(gates["breakthrough_rmse"]))
     decision = "BREAKTHROUGH_SUB6" if breakthrough else ("GO_CLEAN_ROOM_PF" if go else "REJECT_E013")
 
     candidate_rows = [{"candidate": name, **summary_by_candidate[name], "gain_vs_e011": base_summary["rmse"] - summary_by_candidate[name]["rmse"], "primary": name == selected} for name in candidates]
