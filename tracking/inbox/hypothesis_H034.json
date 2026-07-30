@@ -1,0 +1,14 @@
+{
+  "payload": {
+    "evidence_against": "T041 direct pseudo-cut rankings have only 0.16 mean Spearman and fail controls. Earlier global routers over weaker path pairs also failed transfer, and the development panel contains only 100 wells.",
+    "evidence_for": "T041's seven-candidate oracle reaches 5.883054 and selects every path family. Exact HMM posterior standard deviation/log-likelihood, PF/HMM/E011 path disagreement, candidate spread, and observable well geometry are legal diagnostics that do not use the rejected pseudo-cut losses and are materially closer to the actual failure modes.",
+    "hypothesis_id": "H034",
+    "next_test": "Run T042 with a frozen feature table, four preregistered multi-output loss predictors, whole-well v1 cross-fitting, hard/guarded/soft placement, and target-shuffle plus candidate-rotation controls. Use the remaining 673 wells only after a complete screen pass.",
+    "priority": 1,
+    "statement": "Full-path disagreement and posterior-state diagnostics can cross-fittedly predict which public-core candidate will minimize whole-well loss strongly enough to improve the fixed E011/PF blend.",
+    "status": "active",
+    "title": "Posterior state predicts public-core candidate loss"
+  },
+  "recorded_at": "2026-07-30T18:30:00Z",
+  "type": "hypothesis"
+}

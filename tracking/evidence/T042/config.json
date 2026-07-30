@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "task_id": "T042",
+  "hypothesis_id": "H034",
+  "decision_id": "D046",
+  "source_task": "T041",
+  "t041_cache_dir": "scratch/agents/public-frontier-uplift-20260730/t041_cache",
+  "data_dir": "data/train",
+  "baseline_oof": "artifacts/E011/oof_predictions.csv.gz",
+  "fold_map": "folds/v1.json",
+  "candidate_order": ["e011", "pf", "hmm_stable", "hmm_edge", "blend_e011_pf", "blend_e011_hmm_stable", "blend_e011_hmm_edge"],
+  "reference_candidate": "blend_e011_pf",
+  "models": {
+    "ridge_a10": {"family": "ridge", "alpha": 10.0},
+    "ridge_a100": {"family": "ridge", "alpha": 100.0},
+    "extra_trees": {"family": "extra_trees", "n_estimators": 256, "max_depth": 4, "min_samples_leaf": 5, "max_features": 0.75},
+    "random_forest": {"family": "random_forest", "n_estimators": 256, "max_depth": 5, "min_samples_leaf": 5, "max_features": 0.75}
+  },
+  "placements": {
+    "hard": {},
+    "guarded": {"minimum_predicted_log_mse_gain": 0.10},
+    "soft": {"temperature": 0.50}
+  },
+  "forbidden_feature_prefixes": ["pseudo_mse", "mse_conservative", "mse_balanced", "cuts_", "rows_"],
+  "controls": ["shuffled_training_targets", "rotated_candidate_targets"],
+  "gates": {
+    "minimum_gain_vs_reference_rmse": 0.50,
+    "minimum_fold_wins": 4,
+    "minimum_cell_wins": 18,
+    "maximum_p90_deterioration": 0.0,
+    "maximum_worst20_share_increase": 0.02,
+    "minimum_mean_candidate_rank_spearman": 0.25,
+    "minimum_candidate_hit_rate": 0.25,
+    "maximum_component_oracle_rmse": 6.0,
+    "minimum_control_loss_rmse": 0.25
+  },
+  "pass_action": "freeze the selected model and placement, then evaluate it without changes on the untouched 673 wells using one full run per tracker",
+  "kaggle_run_authorized": false,
+  "submission_authorized": false
+}

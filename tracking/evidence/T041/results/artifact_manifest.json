@@ -1,0 +1,37 @@
+{
+  "files": {
+    "arbitration_metrics.csv": {
+      "bytes": 19990,
+      "sha256": "117629203c1a38324302fbaaf5d213a688f9955f68831285cbbf1d8bd166f713"
+    },
+    "candidate_metrics.csv": {
+      "bytes": 2492,
+      "sha256": "897df049eb316c8255d23d4f9157a029ffb8384984d70a7ea074ff16055cde50"
+    },
+    "cell_metrics.csv": {
+      "bytes": 1759,
+      "sha256": "60cbb55046debbbdccdbfa4d7459799c90ce56828636494eb646fd15302459b5"
+    },
+    "component_oracle.csv": {
+      "bytes": 17307,
+      "sha256": "23043a7c976890768652f39d2f1c96aabdc414032f212ee173cc44e0a09ab5b6"
+    },
+    "control_metrics.csv": {
+      "bytes": 240,
+      "sha256": "d585e13dab54bd5d413e070412d2a36ab8363faaf6d88d665af9b7305a309c0f"
+    },
+    "fold_metrics.csv": {
+      "bytes": 381,
+      "sha256": "2841c337a5c235b7cb380c4059835a215c7c6f9de38cce3aa044cae188ae61da"
+    },
+    "per_well_metrics.csv": {
+      "bytes": 91200,
+      "sha256": "373aa8ec9453c84f9fbab7e3f7cc22c8146fc0753c99ed145fe8725ab2f3023d"
+    },
+    "summary.json": {
+      "bytes": 8380,
+      "sha256": "b88a3d7d9b0e68e6c7d1e3ab628d52665cbe432a1be035280ffd3a4b84f27549"
+    }
+  },
+  "schema_version": 1
+}

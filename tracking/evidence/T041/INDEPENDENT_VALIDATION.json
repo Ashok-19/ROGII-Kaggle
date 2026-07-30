@@ -1,0 +1,186 @@
+{
+  "all_pass": true,
+  "artifact_hashes": {
+    "arbitration_metrics.csv": {
+      "bytes": 19990,
+      "match": true,
+      "sha256": "117629203c1a38324302fbaaf5d213a688f9955f68831285cbbf1d8bd166f713"
+    },
+    "candidate_metrics.csv": {
+      "bytes": 2492,
+      "match": true,
+      "sha256": "897df049eb316c8255d23d4f9157a029ffb8384984d70a7ea074ff16055cde50"
+    },
+    "cell_metrics.csv": {
+      "bytes": 1759,
+      "match": true,
+      "sha256": "60cbb55046debbbdccdbfa4d7459799c90ce56828636494eb646fd15302459b5"
+    },
+    "component_oracle.csv": {
+      "bytes": 17307,
+      "match": true,
+      "sha256": "23043a7c976890768652f39d2f1c96aabdc414032f212ee173cc44e0a09ab5b6"
+    },
+    "control_metrics.csv": {
+      "bytes": 240,
+      "match": true,
+      "sha256": "d585e13dab54bd5d413e070412d2a36ab8363faaf6d88d665af9b7305a309c0f"
+    },
+    "fold_metrics.csv": {
+      "bytes": 381,
+      "match": true,
+      "sha256": "2841c337a5c235b7cb380c4059835a215c7c6f9de38cce3aa044cae188ae61da"
+    },
+    "per_well_metrics.csv": {
+      "bytes": 91200,
+      "match": true,
+      "sha256": "373aa8ec9453c84f9fbab7e3f7cc22c8146fc0753c99ed145fe8725ab2f3023d"
+    },
+    "summary.json": {
+      "bytes": 8380,
+      "match": true,
+      "sha256": "b88a3d7d9b0e68e6c7d1e3ab628d52665cbe432a1be035280ffd3a4b84f27549"
+    }
+  },
+  "checks": {
+    "artifact_manifest": true,
+    "candidate_csv_control_rotated_candidate_labels": true,
+    "candidate_csv_control_shuffled_well_pseudo": true,
+    "candidate_csv_e011": true,
+    "candidate_csv_fixed_pf_blend": true,
+    "candidate_csv_hard_conservative": true,
+    "candidate_csv_hmm_edge": true,
+    "candidate_csv_hmm_stable": true,
+    "candidate_csv_inverse_mse_balanced": true,
+    "candidate_csv_inverse_mse_conservative": true,
+    "candidate_csv_pf": true,
+    "candidate_csv_soft_t4_conservative": true,
+    "candidate_csv_soft_t8_conservative": true,
+    "candidate_csv_uniform_tracker": true,
+    "cell_wins": true,
+    "component_oracle_rmse": true,
+    "config_hash": true,
+    "decision_identity": true,
+    "fold_wins": true,
+    "mean_rank_spearman": true,
+    "minimum_control_loss": true,
+    "rmse_control_rotated_candidate_labels": true,
+    "rmse_control_shuffled_well_pseudo": true,
+    "rmse_e011": true,
+    "rmse_fixed_pf_blend": true,
+    "rmse_hard_conservative": true,
+    "rmse_hmm_edge": true,
+    "rmse_hmm_stable": true,
+    "rmse_inverse_mse_balanced": true,
+    "rmse_inverse_mse_conservative": true,
+    "rmse_pf": true,
+    "rmse_soft_t4_conservative": true,
+    "rmse_soft_t8_conservative": true,
+    "rmse_uniform_tracker": true,
+    "runner_hash": true,
+    "scientific_gate_identity": true,
+    "source_hash": true,
+    "sse_control_rotated_candidate_labels": true,
+    "sse_control_shuffled_well_pseudo": true,
+    "sse_e011": true,
+    "sse_fixed_pf_blend": true,
+    "sse_hard_conservative": true,
+    "sse_hmm_edge": true,
+    "sse_hmm_stable": true,
+    "sse_inverse_mse_balanced": true,
+    "sse_inverse_mse_conservative": true,
+    "sse_pf": true,
+    "sse_soft_t4_conservative": true,
+    "sse_soft_t8_conservative": true,
+    "sse_uniform_tracker": true,
+    "tracker_hit_rate": true
+  },
+  "recomputed_candidate_metrics": {
+    "control_rotated_candidate_labels": {
+      "rmse": 10.971271725778376,
+      "rows": 490225,
+      "sse": 59007796.58836156
+    },
+    "control_shuffled_well_pseudo": {
+      "rmse": 10.725904282490802,
+      "rows": 490225,
+      "sse": 56397946.24190808
+    },
+    "e011": {
+      "rmse": 12.526884618114424,
+      "rows": 490225,
+      "sse": 76927498.37402338
+    },
+    "fixed_pf_blend": {
+      "rmse": 9.276141513243775,
+      "rows": 490225,
+      "sse": 42182293.203434095
+    },
+    "hard_conservative": {
+      "rmse": 13.354972564423772,
+      "rows": 490225,
+      "sse": 87434223.11703493
+    },
+    "hmm_edge": {
+      "rmse": 25.158243382996098,
+      "rows": 490225,
+      "sse": 310281643.8301294
+    },
+    "hmm_stable": {
+      "rmse": 14.524406946445819,
+      "rows": 490225,
+      "sse": 103417080.24087998
+    },
+    "inverse_mse_balanced": {
+      "rmse": 11.18613633211026,
+      "rows": 490225,
+      "sse": 61341680.73023216
+    },
+    "inverse_mse_conservative": {
+      "rmse": 11.154147760459058,
+      "rows": 490225,
+      "sse": 60991349.38621435
+    },
+    "pf": {
+      "rmse": 10.023096001917848,
+      "rows": 490225,
+      "sse": 49249206.249223486
+    },
+    "soft_t4_conservative": {
+      "rmse": 12.15911336826479,
+      "rows": 490225,
+      "sse": 72476843.48066264
+    },
+    "soft_t8_conservative": {
+      "rmse": 11.750390725848085,
+      "rows": 490225,
+      "sse": 67686190.41144465
+    },
+    "uniform_tracker": {
+      "rmse": 11.010235850069629,
+      "rows": 490225,
+      "sse": 59427669.49336933
+    }
+  },
+  "recomputed_component_oracle_rmse": 5.883054150583266,
+  "recomputed_mean_rank_spearman": 0.16,
+  "recomputed_minimum_control_loss_rmse": -0.4282434779682553,
+  "recomputed_scientific_gates": {
+    "cell_wins": false,
+    "component_oracle": true,
+    "controls": false,
+    "fold_wins": false,
+    "gain_vs_e011": false,
+    "gain_vs_fixed_pf_blend": false,
+    "memory": true,
+    "p90": false,
+    "rank_spearman": false,
+    "runtime": false,
+    "tracker_hit_rate": true,
+    "worst20_share": false
+  },
+  "recomputed_tracker_hit_rate": 0.43,
+  "schema_version": 1,
+  "summary_decision": "REJECT_H033_EXACT_ARBITRATION",
+  "task_id": "T041"
+}

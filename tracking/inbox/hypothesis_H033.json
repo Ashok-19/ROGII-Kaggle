@@ -1,14 +1,14 @@
 {
   "payload": {
-    "evidence_against": "E013 showed that a 20-well public-mechanism screen can overstate transfer, and prior pseudo-cut coefficient experiments failed because mask-local targets differed from the original boundary. Public notebook lineages also rely heavily on opaque artifacts and public-overlap logic that cannot be reused.",
-    "evidence_for": "The full likelihood-PF improves E011 from 12.5508 to 11.2011 and the fixed 50/50 blend reaches 9.9839, while stable and heavy-tail HMM branches show complementary behavior on ordinary and observable-edge panels. High-scoring public notebooks repeatedly use visible-prefix self-verification, candidate disagreement, and exact fallback to control branch failures.",
+    "evidence_against": "T041's legal inverse-pseudo-MSE arbitration scores 11.154148 versus 9.276142 for the fixed E011/PF reference, wins 0/5 folds and 6/25 cells, has mean rank Spearman 0.16, and is beaten by both corrupted routing controls. Projected serial runtime is 10.93 hours.",
+    "evidence_for": "The frozen seven-candidate component oracle reaches 5.883054 on the same 100 wells, with PF, stable HMM, edge HMM, E011, and all three fixed blends selected across different wells.",
     "hypothesis_id": "H033",
-    "next_test": "Run the frozen 100-well T041 source audit with three independent trackers, two fixed pseudo-cut profiles, an inverse-MSE primary arbitration rule, exact E011 fallback, and destructive score-routing controls. Escalate only on every registered gate.",
+    "next_test": "Do not retune pseudo-cuts, floors, temperatures, or direct arbitration. Use T042 to test materially different full-path disagreement and posterior-state diagnostics under whole-well cross-fitting.",
     "priority": 1,
     "statement": "Visible-prefix self-verification can identify which public-core trajectory tracker is reliable for each well strongly enough to improve the 50/50 E011–PF baseline and preserve a sub-6 component oracle.",
-    "status": "active",
+    "status": "rejected",
     "title": "Public-core tracker arbitration transfers robustly"
   },
-  "recorded_at": "2026-07-30T18:05:00Z",
+  "recorded_at": "2026-07-30T18:30:00Z",
   "type": "hypothesis"
 }

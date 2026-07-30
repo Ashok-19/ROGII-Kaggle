@@ -1,0 +1,13 @@
+{
+  "payload": {
+    "decided_at": "2026-07-30",
+    "decision": "Reject H033/T041's direct visible-prefix pseudo-loss arbitration without retuning. Preserve the seven fixed candidate paths and select H034/T042: predict candidate loss from target-free full-path disagreement, HMM posterior uncertainty/log-likelihood, and observable well/typewell geometry under whole-well cross-fitting. Exclude all pseudo-cut MSE features from the successor.",
+    "decision_id": "D046",
+    "rationale": "T041 independently reproduces at 11.154148 RMSE versus 9.276142 for the fixed PF blend; corrupted score routing is better, and runtime fails. Yet the fixed candidate oracle is 5.883054 and selects all mechanism families, proving real sub-6 capacity. Full-path and posterior diagnostics are materially different from the rejected pseudo-cut target and are already available from the score-blind caches.",
+    "revisit_trigger": "Escalate to a frozen 673-well untouched source holdout only if T042 gains at least 0.50 RMSE versus the fixed PF blend, wins at least 4/5 folds and 18/25 cells, preserves p90/tails, predicts candidate ranking materially, and defeats target-shuffle and candidate-rotation controls.",
+    "source_ids": "T041,H033,T038,T039,E013,tracking/evidence/T041/results/summary.json,tracking/evidence/T041/INDEPENDENT_VALIDATION.json",
+    "title": "Replace pseudo-cut arbitration with posterior-state candidate-loss prediction"
+  },
+  "recorded_at": "2026-07-30T18:30:00Z",
+  "type": "decision"
+}

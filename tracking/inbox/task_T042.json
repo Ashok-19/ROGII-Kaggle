@@ -1,0 +1,14 @@
+{
+  "payload": {
+    "depends_on": "T041",
+    "due_at": "2026-07-31",
+    "phase": "preregistered_public_core_posterior_diagnostic_selector_screen",
+    "priority": 1,
+    "status": "active",
+    "task_id": "T042",
+    "title": "Cross-fit public-core candidate loss from posterior diagnostics",
+    "updated_at": "2026-07-30T18:30:00Z"
+  },
+  "recorded_at": "2026-07-30T18:30:00Z",
+  "type": "task"
+}

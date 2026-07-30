@@ -1,14 +1,14 @@
 {
   "payload": {
-    "evidence_against": "Prior E011/E006 uncertainty routing failed legal identification, and E013's catastrophic PF errors may arise from repeated GR motifs that are not observable before hidden labels. No subgroup or threshold may be chosen from E013 outcomes and used directly at inference.",
-    "evidence_for": "E013 PF substantially improves median and p90 error while concentrating SSE in a minority of wells. The sequential PF naturally exposes legal internal diagnostics unavailable to earlier routers: seed-cloud dispersion, effective trajectory mass, posterior branch separation, boundary pressure, and PF/E011 path disagreement. All GR-destruction controls prove the PF responds causally to aligned evidence.",
+    "evidence_against": "A PF-only router cannot reach the newly measured T041 seven-candidate oracle, and prior E011/E006 uncertainty routing failed legal identification.",
+    "evidence_for": "E013's E011/PF/fixed-blend oracle reaches 7.854264 on all 773 wells, gaining 2.129642 versus the fixed blend. T041 adds stable and heavy-tail HMM candidates and lowers the 100-well component oracle to 5.883054.",
     "hypothesis_id": "H032",
-    "next_test": "Before implementation, freeze a whole-well cross-fitted worth screen for predicting PF-vs-E011 catastrophic loss from PF-internal test-available diagnostics only. Require material held-out discrimination and at least 1.0 RMSE hidden-label fallback-oracle headroom; otherwise stop without building a router.",
-    "priority": 1,
+    "next_test": "Superseded by H034/T042, which retains PF-internal risk as part of a broader posterior-uncertainty and complete-path disagreement selector.",
+    "priority": 2,
     "statement": "PF-internal test-available diagnostics can identify the minority of catastrophic sequential-PF wells strongly enough to justify a separately validated exact-E011 abstention mechanism.",
-    "status": "active",
+    "status": "superseded",
     "title": "PF internal state identifies catastrophic tracking failures"
   },
-  "recorded_at": "2026-07-28T18:25:00Z",
+  "recorded_at": "2026-07-30T18:30:00Z",
   "type": "hypothesis"
 }

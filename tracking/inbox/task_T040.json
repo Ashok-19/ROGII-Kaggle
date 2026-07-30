@@ -1,14 +1,14 @@
 {
   "payload": {
     "depends_on": "T039",
-    "due_at": "2026-07-29",
-    "phase": "queued_pf_catastrophe_identifiability_worth_screen",
-    "priority": 1,
-    "status": "queued",
+    "due_at": "2026-07-30",
+    "phase": "superseded_by_broader_public_core_diagnostic_selector",
+    "priority": 2,
+    "status": "completed",
     "task_id": "T040",
     "title": "Screen PF catastrophe identifiability before routing",
-    "updated_at": "2026-07-28T18:25:00Z"
+    "updated_at": "2026-07-30T18:30:00Z"
   },
-  "recorded_at": "2026-07-28T18:25:00Z",
+  "recorded_at": "2026-07-30T18:30:00Z",
   "type": "task"
 }
