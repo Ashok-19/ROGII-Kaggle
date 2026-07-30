@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "task_id": "T041",
+  "hypothesis_id": "H033",
+  "status": "IMPLEMENTATION_FROZEN_PRE_METRIC",
+  "recorded_at": "2026-07-30T18:13:00Z",
+  "base_head": "1ef3e2b06821b686a9d954cf0f58b35094c58c0e",
+  "config_sha256": "348ffade818e5952ea280c014e065b7ca29576cf0b0f4b9fb92def553ee1d646",
+  "preregistration_sha256": "f181115b995755fe2bdab92cde478e05583750a48012c8fce9faafa9c32b69fa",
+  "runner_sha256": "f40e711e10ee8b1963dc374268125a4cbd44e2dd1d2fa87adc6891e25f506f95",
+  "public_source_sha256": "2321997c8bcbca442d7d7abfc5b9b7eeed251bac8c671b3554b54c9355c231dc",
+  "prediction_phase_target_isolation": {
+    "horizontal_columns": ["MD", "Z", "GR", "TVT_input"],
+    "typewell_columns": ["TVT", "GR"],
+    "hidden_target_read": false,
+    "e011_oof_read": false,
+    "metric_computation": false,
+    "finalization_is_only_target_read_phase": true
+  },
+  "score_blind_smoke": {
+    "well_id": "000d7d20",
+    "hidden_rows": 3836,
+    "clean_cache_runs": 2,
+    "prediction_max_abs_delta": 0.0,
+    "pseudo_mse_max_abs_delta": 0.0,
+    "conservative_valid_cuts_per_tracker": [3, 3, 3],
+    "balanced_valid_cuts_per_tracker": [3, 3, 3],
+    "conservative_pseudo_mse": [6.681847378441318, 8.019406982009192, 1.2936487046328917],
+    "balanced_pseudo_mse": [3.0122650674872777, 5.630300653007013, 1.5827615558256485],
+    "input_immutable": true,
+    "visible_prefix_exact": true,
+    "finite_complete_predictions": true
+  },
+  "syntax_check": {
+    "command": "python3.12 -m py_compile tracking/evidence/T041/run_screen.py",
+    "passed": true
+  },
+  "frozen_primary": "0.5 * E011 + 0.5 * inverse-pseudo-MSE weighted PF/stable-HMM/edge-HMM using conservative cuts and floor 16",
+  "diagnostic_candidates_cannot_replace_primary": true,
+  "metrics_observed_before_freeze": false,
+  "public_code_promotable": false,
+  "kaggle_run_authorized": false,
+  "submission_authorized": false
+}

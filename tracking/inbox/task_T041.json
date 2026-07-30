@@ -1,0 +1,14 @@
+{
+  "payload": {
+    "depends_on": "T038,T039",
+    "due_at": "2026-07-31",
+    "phase": "frozen_public_frontier_visible_prefix_arbitration_screen",
+    "priority": 1,
+    "status": "active",
+    "task_id": "T041",
+    "title": "Audit and reconstruct the strongest public frontier mechanisms",
+    "updated_at": "2026-07-30T18:05:00Z"
+  },
+  "recorded_at": "2026-07-30T18:05:00Z",
+  "type": "task"
+}

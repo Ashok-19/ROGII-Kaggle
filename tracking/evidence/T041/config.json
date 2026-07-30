@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "task_id": "T041",
+  "hypothesis_id": "H033",
+  "decision_id": "D045",
+  "public_source": ".tmp_public_audit/amer_hmm/rogii-wellbore-geology-exact-hmm-smoother.ipynb",
+  "source_use": "research-only executable source audit; passing authorizes only a separate clean-room implementation",
+  "data_dir": "data/train",
+  "baseline_oof": "artifacts/E011/oof_predictions.csv.gz",
+  "sample": {
+    "fold_map": "folds/v1.json",
+    "wells_per_fold": 20,
+    "selection": "sort well IDs within each fold and take 20 equally spaced indices including endpoints",
+    "expected_wells": 100
+  },
+  "trackers": {
+    "pf": {"n_particles": 384, "n_seeds": 16, "scale": 5.0, "init_spread": 4.5},
+    "hmm_stable": {"step": 0.7, "n_rates": 41, "rate_span": 0.1, "sig_r": 0.002, "sig_p": 0.02, "mom": 0.998, "lam": 0.5, "emission": "gauss", "sigma_mode": "std", "rate_center": "zero"},
+    "hmm_edge": {"step": 0.7, "n_rates": 41, "rate_span": 0.1, "sig_r": 0.002, "sig_p": 0.02, "mom": 0.998, "lam": 1.0, "emission": "t", "sigma_mode": "mad", "rate_center": "zero"}
+  },
+  "cut_profiles": {
+    "conservative": [0.50, 0.65, 0.75],
+    "balanced": [0.55, 0.70, 0.84]
+  },
+  "minimum_pseudo_rows": 20,
+  "e011_weight": 0.5,
+  "inverse_mse_floor": 16.0,
+  "soft_temperatures": [4.0, 8.0],
+  "primary_candidate": "inverse_mse_conservative",
+  "diagnostic_candidates": ["hard_conservative", "inverse_mse_balanced", "soft_t4_conservative", "soft_t8_conservative", "uniform_tracker"],
+  "controls": ["shuffled_well_pseudo", "rotated_candidate_labels"],
+  "gates": {
+    "minimum_gain_vs_e011_rmse": 2.0,
+    "minimum_gain_vs_fixed_pf_blend_rmse": 0.25,
+    "minimum_fold_wins_vs_fixed_pf_blend": 4,
+    "minimum_cell_wins_vs_fixed_pf_blend": 18,
+    "maximum_p90_deterioration_vs_fixed_pf_blend": 0.0,
+    "maximum_worst20_share_increase_vs_fixed_pf_blend": 0.02,
+    "minimum_mean_rank_spearman": 0.20,
+    "minimum_tracker_hit_rate": 0.40,
+    "maximum_component_oracle_rmse": 6.0,
+    "minimum_control_loss_rmse": 0.25,
+    "maximum_projected_full_runtime_hours": 4.0,
+    "maximum_rss_gb": 4.0
+  },
+  "kaggle_run_authorized": false,
+  "submission_authorized": false
+}

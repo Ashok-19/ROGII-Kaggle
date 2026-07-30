@@ -1,0 +1,13 @@
+{
+  "payload": {
+    "decided_at": "2026-07-30",
+    "decision": "Select T041/H033 as the immediate public-frontier uplift route. Reconstruct only the self-contained trajectory mechanisms: likelihood PF, stable Gaussian HMM, heavy-tail HMM, visible-prefix pseudo-cut self-verification, uncertainty/diversity diagnostics, and exact E011 fallback. Exclude every mounted pretrained model, static prediction artifact, contact/formation input, same-well overlap rule, and fixed public-well shift.",
+    "decision_id": "D045",
+    "rationale": "The July 30 leaderboard has 42 teams below 6.0, but source audit shows the visible public code frontier is 82–92% one shared artifact-heavy lineage. E013 proves the clean PF has large genuine signal but catastrophic minority-well tail concentration. The independent HMM family and public prefix self-verification are the fastest materially different mechanisms available to attack that failure without importing opaque assets.",
+    "revisit_trigger": "Authorize E014 only if T041 beats E011 by at least 2.0 RMSE and the fixed 50/50 E011–PF reference by at least 0.25 on the frozen 100-well panel, passes fold/cell/tail/routing-control gates, and retains a component oracle at or below 6.0. Otherwise close the exact arbitration family without retuning.",
+    "source_ids": "T038,T039,E013,H032,T040,T041,H033,archive/competition/public_intelligence_delta_2026-07-30.md",
+    "title": "Use the public frontier as a mechanism catalogue, then repair its tail risk"
+  },
+  "recorded_at": "2026-07-30T18:05:00Z",
+  "type": "decision"
+}

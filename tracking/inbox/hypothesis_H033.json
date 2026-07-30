@@ -1,0 +1,14 @@
+{
+  "payload": {
+    "evidence_against": "E013 showed that a 20-well public-mechanism screen can overstate transfer, and prior pseudo-cut coefficient experiments failed because mask-local targets differed from the original boundary. Public notebook lineages also rely heavily on opaque artifacts and public-overlap logic that cannot be reused.",
+    "evidence_for": "The full likelihood-PF improves E011 from 12.5508 to 11.2011 and the fixed 50/50 blend reaches 9.9839, while stable and heavy-tail HMM branches show complementary behavior on ordinary and observable-edge panels. High-scoring public notebooks repeatedly use visible-prefix self-verification, candidate disagreement, and exact fallback to control branch failures.",
+    "hypothesis_id": "H033",
+    "next_test": "Run the frozen 100-well T041 source audit with three independent trackers, two fixed pseudo-cut profiles, an inverse-MSE primary arbitration rule, exact E011 fallback, and destructive score-routing controls. Escalate only on every registered gate.",
+    "priority": 1,
+    "statement": "Visible-prefix self-verification can identify which public-core trajectory tracker is reliable for each well strongly enough to improve the 50/50 E011–PF baseline and preserve a sub-6 component oracle.",
+    "status": "active",
+    "title": "Public-core tracker arbitration transfers robustly"
+  },
+  "recorded_at": "2026-07-30T18:05:00Z",
+  "type": "hypothesis"
+}
