@@ -1,0 +1,13 @@
+{
+  "type": "task",
+  "recorded_at": "2026-08-02T15:33:54Z",
+  "payload": {
+    "task_id": "T062",
+    "title": "Validate tail-safe 25 percent U-surface projection",
+    "status": "completed",
+    "priority": 1,
+    "phase": "completed_passed_all_registered_local_gates",
+    "depends_on": "T060,T061",
+    "due_at": "2026-08-02"
+  }
+}

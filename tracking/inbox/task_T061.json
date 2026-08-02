@@ -1,0 +1,13 @@
+{
+  "type": "task",
+  "recorded_at": "2026-08-02T15:27:36Z",
+  "payload": {
+    "task_id": "T061",
+    "title": "Replicate fixed 50 percent U projection across frozen base families",
+    "status": "completed",
+    "priority": 99,
+    "phase": "completed_rejected_replication_tail_failure",
+    "depends_on": "T060",
+    "due_at": "2026-08-02"
+  }
+}

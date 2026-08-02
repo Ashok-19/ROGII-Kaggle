@@ -1,0 +1,15 @@
+{
+  "type": "submission",
+  "recorded_at": "2026-08-02T17:12:34Z",
+  "payload": {
+    "submission_id": "K55191306",
+    "run_id": null,
+    "kaggle_ref": "55191306",
+    "submitted_at": "2026-08-02T17:12:34.823Z",
+    "public_score": null,
+    "private_score": null,
+    "description": "T064 exact T055 all-reference spatial plus frozen T063 tail-safe 25% U projection; notebook version 1; scriptVersionId 339740133; scoring pending",
+    "selected": 0,
+    "source": "kaggle_code_api"
+  }
+}

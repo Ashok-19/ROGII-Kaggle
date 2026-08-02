@@ -1,0 +1,14 @@
+{
+  "type": "hypothesis",
+  "recorded_at": "2026-08-02T17:12:34Z",
+  "payload": {
+    "hypothesis_id": "H047",
+    "title": "The best full-pool local composition is executable as T055 followed by tail-safe T063",
+    "statement": "Appending the frozen T063 25% U=TVT+Z surface projection after the exact T055 all-reference spatial notebook will preserve the verified T055 output before T063, remain hidden-test compatible through frozen fallbacks, and reproduce locally and on a private Kaggle run within numerical tolerance; leaderboard performance remains unknown until the code submission scores.",
+    "status": "active",
+    "priority": 1,
+    "evidence_for": "T064 version 1 completed privately. The pre-T063 IDs and values equal the prior T055 private output exactly; all required reports exist; hidden contract, ID order, finiteness, source-delta, edge-case and action-cap checks pass; local/Kaggle maximum difference is 5.4569682106375694e-12 ft.",
+    "evidence_against": "T055 scored 7.631 despite stronger local validation. T063 submission 55190050 and T064 submission 55191306 remain unscored, so no score-robustness conclusion exists.",
+    "next_test": "Record the actual T063 and T064 public scores without retuning. Preserve 6.494 as the verified account best until a lower score is posted."
+  }
+}

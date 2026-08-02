@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-08-02T15:18:06Z",
+  "payload": {
+    "decision_id": "D060",
+    "title": "Reject 50 percent U-surface projection",
+    "decided_at": "2026-08-02",
+    "decision": "Reject T060's 50% U=TVT+Z projection despite aggregate gains because its frozen tail and repeated-family gates failed. Do not deploy or cosmetically retune the 50% action.",
+    "rationale": "Primary pooled RMSE gains do not override increased tail concentration or failed repeated-fold evidence. The structural mechanism remains worth one independently frozen lower-strength replication.",
+    "revisit_trigger": "Only a preregistered materially lower projection strength that passes every base, fold, spatial, tail, destructive-control, and bootstrap gate may continue.",
+    "source_ids": "T060,H044,scratch/agents/t060-surface-trend/PRE_REGISTRATION.json,scratch/agents/t060-surface-trend/RESULT.md,scratch/agents/t060-surface-trend/summary.json"
+  }
+}

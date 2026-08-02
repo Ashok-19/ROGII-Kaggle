@@ -1,0 +1,13 @@
+{
+  "type": "task",
+  "recorded_at": "2026-08-02T17:12:34Z",
+  "payload": {
+    "task_id": "T064",
+    "title": "Package T055 plus tail-safe T063 as the best full-pool local notebook",
+    "status": "completed",
+    "priority": 1,
+    "phase": "completed_private_validation_submission_55191306_score_pending",
+    "depends_on": "T055,T062,T063,K55168325,K55190050",
+    "due_at": "2026-08-02"
+  }
+}

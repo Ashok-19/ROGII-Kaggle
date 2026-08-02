@@ -1,0 +1,15 @@
+{
+  "type": "submission",
+  "recorded_at": "2026-08-02T17:12:34Z",
+  "payload": {
+    "submission_id": "K55190050",
+    "run_id": null,
+    "kaggle_ref": "55190050",
+    "submitted_at": "2026-08-02T16:08:28.080Z",
+    "public_score": null,
+    "private_score": null,
+    "description": "T063 tail-safe surface regularization on verified 6.494 live parent; notebook-linked scriptVersionId 339727569; scoring pending",
+    "selected": 0,
+    "source": "kaggle_code_api"
+  }
+}

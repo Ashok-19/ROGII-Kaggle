@@ -1,0 +1,14 @@
+{
+  "type": "hypothesis",
+  "recorded_at": "2026-08-02T15:18:06Z",
+  "payload": {
+    "hypothesis_id": "H044",
+    "title": "Robust U-surface projection improves deployment bases without unacceptable tail risk",
+    "statement": "Projecting predicted U=TVT+Z toward a robust low-frequency polynomial surface can improve the frozen deployment families while preserving repeated-fold and tail stability.",
+    "status": "rejected",
+    "priority": 99,
+    "evidence_for": "The 50% projection improved aggregate RMSE on the tested bases and confirmed that the low-frequency U surface contains useful structural signal.",
+    "evidence_against": "The frozen 50% action failed tail-concentration and repeated-family gates, including the E011 family, so aggregate improvement was not promotion evidence.",
+    "next_test": "Run one preregistered lower-strength replication focused on tail safety rather than retuning after results."
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "hypothesis",
+  "recorded_at": "2026-08-02T15:33:54Z",
+  "payload": {
+    "hypothesis_id": "H046",
+    "title": "A 25 percent robust U projection is tail-safe across frozen bases",
+    "statement": "Retaining 75% of each raw prediction and applying 25% robust U=TVT+Z projection will improve all registered base, spatial-cell, repeated-fold, tail, and private-sized bootstrap evaluations without introducing a public-specific inference dependency.",
+    "status": "active",
+    "priority": 1,
+    "evidence_for": "All seven bases passed; 105/105 registered spatial cells and 175/175 repeated fold cells improved. The T055 full-pool base improved from 8.702719707562 to 8.546005491968, and the frozen cap remained within bounds.",
+    "evidence_against": "T055 itself transferred poorly to the public leaderboard, and neither T063 nor T064 has a public score yet. Local all-cell success is not hidden-score evidence.",
+    "next_test": "Measure the exact frozen action only through notebook-linked submissions T063 and T064; do not alter strength or add another scoring layer."
+  }
+}

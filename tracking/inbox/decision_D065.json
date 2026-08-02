@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-08-02T17:12:34Z",
+  "payload": {
+    "decision_id": "D065",
+    "title": "Accept T064 private validation and await measured score",
+    "decided_at": "2026-08-02",
+    "decision": "Accept exact T064 notebook version 1 as execution-valid and record notebook-linked submission 55191306. Keep submission 55140317 at 6.494 as the account best until Kaggle reports a lower public RMSE. Do not modify or resubmit T064 from queued-score feedback.",
+    "rationale": "The exact authorized composition completed privately with scriptVersionId 339740133. It preserves T055 exactly before T063, matches local values within 5.46e-12 ft, passes all required outputs and hidden-contract checks, has no true log error, and uses no extra scoring mechanism.",
+    "revisit_trigger": "When Kaggle posts scores for 55190050 or 55191306, record them immediately and accept or reject each frozen branch from the measured result. Any new branch requires a new preregistration and independent mechanism.",
+    "source_ids": "T064,H047,K55191306,K55190050,scratch/agents/public-frontier-uplift-20260730/live_t064_best_local_fullpool"
+  }
+}

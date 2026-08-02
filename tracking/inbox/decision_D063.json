@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-08-02T17:12:34Z",
+  "payload": {
+    "decision_id": "D063",
+    "title": "Accept T063 execution and keep score conclusion pending",
+    "decided_at": "2026-08-02",
+    "decision": "Accept T063 as private-execution valid and preserve submission 55190050 as pending. Do not call it an improvement, sub-6, or sub-5 until Kaggle posts an actual public score.",
+    "rationale": "The private notebook completed, preserved the verified 6.494 parent before its single frozen surface layer, applied to three wells with no fallbacks, stayed under the 25 ft cap, passed hidden-test contracts, and matched local values within 5.46e-12 ft. The earlier failed receipt was a validator substring bug caused by root_mean_squared_error, not an execution exception.",
+    "revisit_trigger": "Record the actual public score and accept or reject the layer from measured leaderboard evidence; do not retune from the queued result.",
+    "source_ids": "T063,H046,K55190050,scratch/agents/public-frontier-uplift-20260730/live_t063_surface_v1"
+  }
+}

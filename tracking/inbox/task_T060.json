@@ -1,0 +1,13 @@
+{
+  "type": "task",
+  "recorded_at": "2026-08-02T15:18:06Z",
+  "payload": {
+    "task_id": "T060",
+    "title": "Test robust U-surface projection across frozen deployment bases",
+    "status": "completed",
+    "priority": 99,
+    "phase": "completed_rejected_tail_gate",
+    "depends_on": "T054,T055,T059",
+    "due_at": "2026-08-02"
+  }
+}

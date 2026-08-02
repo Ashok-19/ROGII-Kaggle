@@ -1,0 +1,13 @@
+{
+  "type": "task",
+  "recorded_at": "2026-08-02T17:12:34Z",
+  "payload": {
+    "task_id": "T063",
+    "title": "Run tail-safe U projection on the verified 6.494 live parent",
+    "status": "completed",
+    "priority": 1,
+    "phase": "completed_private_validation_submission_55190050_score_pending",
+    "depends_on": "T062,K55140317",
+    "due_at": "2026-08-02"
+  }
+}

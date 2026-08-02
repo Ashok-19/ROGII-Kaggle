@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-08-02T15:33:54Z",
+  "payload": {
+    "decision_id": "D062",
+    "title": "Pass tail-safe 25 percent surface projection to live parity",
+    "decided_at": "2026-08-02",
+    "decision": "Accept T062 as a local validation pass and authorize exact live notebook parity tests at fixed degree 4, 25% projection, 75% raw retention, Savitzky-Golay window 51, 500 ft warm-up, and 25 ft cap. Do not infer leaderboard performance.",
+    "rationale": "The exact action improved every registered base, spatial cell and fold cell and passed the frozen tail and bootstrap gates that rejected 50% projection.",
+    "revisit_trigger": "Reject deployment if live source lineage, fallbacks, action cap, ID order, finiteness, deterministic replay, or local/Kaggle parity fails; otherwise submit only under explicit authorization.",
+    "source_ids": "T062,H046,scratch/agents/t062-tail-safe-surface/PRE_REGISTRATION.json,scratch/agents/t062-tail-safe-surface/RESULT.md,scratch/agents/t062-tail-safe-surface/summary.json"
+  }
+}

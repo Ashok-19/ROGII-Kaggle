@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-08-02T16:47:00Z",
+  "payload": {
+    "decision_id": "D064",
+    "title": "Authorize exact T055 plus T063 best-local notebook packaging and submission",
+    "decided_at": "2026-08-02",
+    "decision": "Package only the exact T055 all-reference spatial live notebook followed by the exact frozen T063 tail-safe 25% U projection, validate it privately on Kaggle, and submit it through kaggle_create_code_competition_submission if all frozen execution, parity, fallback, source-delta, final-audit and hidden-contract checks pass. Do not add or retune any scoring layer.",
+    "rationale": "The user explicitly authorized this exact composition and submission. It is the strongest frozen full-pool local result at 8.546005491968, while its prior components already have complete private execution evidence. T055's 7.631 public regression is preserved as adverse transfer evidence, so no sub-6 or improvement claim is permitted before scoring.",
+    "revisit_trigger": "Stop and provide exact manual steps only after multiple distinct Kaggle or authentication failures. Reject execution if the pre-T063 output differs from the prior T055 private output, source lineage changes, any hidden/public-specific constant enters inference, required outputs are absent, or parity/fallback/action-cap checks fail.",
+    "source_ids": "T055,T062,T063,H047,K55140317,K55168325,K55190050,scratch/agents/public-frontier-uplift-20260730/live_t055_spatial_v1,scratch/agents/public-frontier-uplift-20260730/live_t063_surface_v1"
+  }
+}

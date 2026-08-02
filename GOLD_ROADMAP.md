@@ -1,12 +1,12 @@
 # ROGII Gold Medal Roadmap
 
-Updated: 2026-07-28
+Updated: 2026-08-02
 Final deadline: 2026-08-05 23:59 UTC / 2026-08-06 05:29 Asia/Kolkata  
-Time remaining at update: approximately 8.2 days
+Time remaining at update: approximately 3.3 days
 
 ## Objective and reality check
 
-The goal is a gold-medal-level final placement with an original, reproducible solution. A medal cannot be guaranteed. The verified 2026-07-27 public frontier is 4.679 at rank 1, 4.902 at rank 2, 5.237 at rank 5, and 5.444 at rank 10. The account's best Kaggle-MCP-verified score is 7.119; the user-reported 6.888 score still needs a submission reference. The public board covers only 26% of test rows, so these scores do not authorize public-score-directed tuning.
+The goal is a gold-medal-level final placement with an original, reproducible solution. A medal cannot be guaranteed. The verified 2026-08-02 public frontier begins at 4.668, 4.902, and 4.919, with approximately 5.904 near rank 50. The account's verified best is submission 55140317 at 6.494. The viewer successor scored 6.741 and T055 scored 7.631. T063 submission 55190050 and T064 submission 55191306 are notebook-linked but unscored. The public board covers only 26% of test rows, so these scores do not authorize public-score-directed tuning.
 
 The public board is not the final objective. Private-leaderboard robustness, legal provenance, and reproducibility determine whether a high public score is useful.
 
@@ -117,10 +117,10 @@ D035 selects H022/T030, but the full-data weights are oracle diagnostics. T030 m
 
 These are campaign targets, not promises or medal definitions:
 
-- **Foundation target:** independently reproduce a valid whole-well suffix baseline and metric.
-- **Competitive target:** repeated-CV system whose public score is below the archived top-100 band of 6.799 without relying on copied artifacts.
-- **Gold-contending target:** reach or beat the current top-25 band of 6.199, then build a decorrelated second family with stronger private expectation.
-- **Stretch target:** approach the current top-10 band of 5.523 with controlled datum/trend gains.
+- **Foundation target:** independently reproduce a valid whole-well suffix baseline and metric — completed.
+- **Current verified account baseline:** 6.494 public RMSE from submission 55140317.
+- **Mandatory campaign target:** a legal, reproducible verified public RMSE below 5.000 before the deadline.
+- **Private-expectation target:** retain at least one decorrelated, cross-validated final family rather than selecting solely from the 26% public split.
 
 A single public score does not satisfy a target unless the corresponding local evidence and reproducibility gate pass.
 
@@ -286,6 +286,16 @@ E012/H015 is completed and rejected. Two preimplementation screens completed 226
 
 E013/H031 is completed and rejected. A clean-room sequential likelihood-PF matches the audited source-visible implementation exactly on three frozen wells. The preregistered 75% PF blend reaches 10.1053319479 RMSE on all 773 wells versus E011 at 12.5507562957, wins 5/5 maps and 25/25 cells, improves every legacy group and p90, and passes all PF-specific destructive and structural controls. It misses the 8.0 GO gate and increases worst-5% SSE share from 31.53% to 46.31%. The registered 50% diagnostic reaches 9.9839055870 but is not eligible for post-result promotion and remains tail-concentrated. Independent validation reproduces every decisive metric and artifact hash. E011 remains primary.
 
+### July 30–August 1 public-frontier campaign reconciliation
+
+- T040-T042 completed without a promotable legal router. T043 was preregistered but never executed and is superseded.
+- T044 fixed-bank scoring reaches 9.276142 for E011/PF, 5.883054 per-well oracle, and 3.929439 per-row oracle.
+- T045 strict outer-cross-fitted residual ridge reaches 8.807531 and wins all five development folds, but lacks untouched confirmation.
+- T046 adds independent candidate coverage: 5.038768 per-well oracle and 3.012660 per-row oracle. Its saved public-package pipeline is not outer-fold isolated and cannot be promoted directly.
+- T047-T050 reject the aggressive viewer route. The full viewer combination reaches 8.497975 aggregate but regresses fold 0; learned row/well gates fail to repair it.
+- Actual submissions are definitive: the exact live-midpoint parent scores 6.494; the viewer successor scores 6.741. The 4.910822 projection is retracted.
+- D048 freezes the 6.494 parent and selects H036/T051, a strict outer-isolated reconstruction of the independent T046 package candidate family. No Kaggle run or submission is authorized by this roadmap update.
+
 ### July 24–26 — Tabular residual and datum models
 
 Deliverables:
@@ -394,7 +404,20 @@ These defaults may be revised only through a recorded decision before seeing the
 31. **H029/T037 — Full-emission structured path decoding — selected 2026-07-27.** Preserve the exact 1,520 nonzero T033 pair-dictionary paths plus zero fallback, deduplicate paths before graph construction, compute row/node hidden-GR/typewell emissions, and hard-decode one path with Viterbi continuity. Fit and select every emission/transition branch split-locally across all 25 contexts; GO requires at most 8.0 RMSE and breakthrough requires at most 5.0 with all transfer, tail, resource, and destructive-control gates.
 32. **H030/T038 — Public HMM/PF mechanism worth audit — completed and passed 2026-07-28.** The fixed 75% sequential-PF blend reaches 6.114432 on a frozen 20-well panel, wins all five strata, and reproduces exactly. This authorizes clean-room full validation only.
 33. **H031/T039/E013 — Clean-room sequential likelihood-PF full validation — completed and rejected 2026-07-28.** The frozen primary reaches 10.105332 with broad average gains but fails the 8.0 GO and worst-5% concentration gates. The 50% diagnostic reaches 9.983906 but remains research-only. No package or submission.
-34. **H032/T040 — PF catastrophe-identifiability worth screen — queued 2026-07-28.** Use only PF-internal legal diagnostics and whole-well cross-fitting. A router is authorized only if held-out catastrophe discrimination is material and hidden-label exact-E011 fallback headroom is at least 1.0 RMSE.
+34. **H032/T040 — PF catastrophe-identifiability worth screen — completed and superseded 2026-07-30.** The broader public-core selector route replaced the PF-only question.
+35. **H033/T041 — Public-frontier visible-prefix arbitration — completed and rejected 2026-07-30.** Legal arbitration scores 11.154148 versus the 9.276142 fixed reference; corrupted routing controls are better and projected runtime fails.
+36. **H034/T042 — Posterior diagnostic whole-well selector — completed and rejected 2026-07-30.** Best placement gains only 0.199380, wins 3/5 folds and 15/25 cells, and worsens tail concentration.
+37. **H035/T043 — Row-level posterior uncertainty fusion — superseded unrun 2026-08-01.** Only preregistration/config/runner exist; no result or validation exists. Do not falsely mark it executed.
+38. **T044 — Public-frontier reconstruction and fixed-bank scoring — completed and rejected 2026-07-31.** Fixed reference 9.276142; well oracle 5.883054; row oracle 3.929439. Replay provenance is not inference.
+39. **T045 — Outer-cross-fitted residual selector — completed research-only 2026-07-31.** Ridge residual reaches 8.807531 and improves all five folds; no untouched-holdout promotion.
+40. **T046 — Public-package candidate expansion — completed diagnostic 2026-07-31.** Well oracle 5.038768 and row oracle 3.012660, but imputation/features are not outer-fold isolated.
+41. **T047 — Viewer analog audit — completed and rejected 2026-07-31.** Standalone analog paths are very weak; only tiny diagnostic weights help.
+42. **T048 — Viewer GR-DP audit — completed and rejected 2026-07-31.** Full combination reaches 8.497975 aggregate but regresses fold 0; only a tiny 1% linear-dip leg is all-fold safe.
+43. **T049 — Row-level viewer selector — completed and rejected 2026-07-31.** No learned selector beats T045; ridge variants are unstable and HGB variants regress.
+44. **T050 — Well-level viewer gate and live submission — completed and rejected 2026-07-31.** Learned gates do not repair fold 0; actual viewer submission is 6.741 versus parent 6.494.
+45. **H036/T051 — Strict outer-isolated package-candidate reconstruction — selected 2026-08-01.** Rebuild T046 imputation/features inside every outer fold, freeze candidates/placements, require tail stability and untouched-holdout confirmation, then compare one mechanism at a time against the exact 6.494 parent contract.
+46. **H036/T051 — completed and rejected 2026-08-01.** The best strict isolated HGB candidate reaches 9.262632 versus T045 at 8.807531, wins 1/5 folds, worsens p90 by 1.852272, and improves 44/100 wells. The preregistered development gate fails; the 100-well holdout remains sealed.
+47. **H029/T037 — full-emission structured path decoding — resumed 2026-08-01.** This is now the immediate model route. It preserves the exact 4.628457 path-oracle capacity and tests row/node emissions omitted by T036's 39-summary candidate ranking.
 
 ## Explicitly rejected behavior
 
@@ -421,4 +444,35 @@ Foundation is complete only when:
 - legacy roadmap is preserved;
 - no training run is falsely presented as completed.
 
-Foundation through E013 is complete. E011 remains deployment primary. T038 identified a powerful sequential-PF lead on a small frozen panel, but E013 full validation rejects fixed PF placement at 10.105332 because the gain does not reach the 8.0 gate and tail concentration deteriorates sharply. D044 permits only T040's PF-internal catastrophe-identifiability worth screen; no PF router, package, Kaggle run, or submission is authorized unless that fresh screen passes.
+Foundation through E013 and T040-T051 is reconciled. The account's verified public best is 6.494 from submission 55140317; no sub-5 result has been achieved. T051's strict isolated package-HGB route failed and its holdout remains sealed. D049 resumes only H029/T037, the preregistered full-emission structured decoder with a verified 4.628457 exact-path oracle. No package, Kaggle run, competition submission, final selection, commit, or push is authorized by this update.
+
+
+## August 2 final-window update: T060-T064
+
+### Closed branches
+
+- **T060 / H044 — REJECT:** 50% robust `U = TVT + Z` projection improved aggregate RMSE but failed frozen tail and repeated-family gates.
+- **T061 / H045 — REJECT:** exact 50% replication reproduced the tail failure, including on E011-family evidence. No retuning around 50% is allowed.
+- **T055 unconditional spatial deployment — PUBLIC REJECT:** local full-pool RMSE 8.702720 did not transfer; submission 55168325 scored 7.631 versus the 6.494 parent.
+
+### Passed local mechanism
+
+- **T062 / H046 — LOCAL PASS:** 75% raw retention plus 25% robust degree-4 U projection passed all seven bases, 105/105 spatial cells, 175/175 fold cells, tail gates and private-sized bootstraps. On the T055 full-pool base it improved 8.702719707562 to 8.546005491968.
+- This pass authorizes exact live parity only. It does not predict public score.
+
+### Live notebooks and submissions
+
+- **T063:** exact 25% surface layer on the verified 6.494 parent. Private execution complete and numerically matched locally. Submission 55190050, scriptVersionId 339727569, remains unscored.
+- **T064:** exact `6.494 parent -> T055 -> T063` composition, no extra scorer. Private notebook version 1 completed with scriptVersionId 339740133. Pre-T063 output equals the prior T055 private output exactly; all required reports, hidden contract, deterministic/order-invariance, edge-case, action-cap, finite, ID-order and log checks pass. Final CSV SHA-256: `6b49a3becac34406cb8d1989c561dc08995c1059ebf734d0a823cdea4e45f3dc`; local/Kaggle max difference: `5.4569682106375694e-12 ft`. Notebook-linked submission 55191306 remains unscored.
+
+### Current deployment policy
+
+1. Preserve submission 55140317 at **6.494** as the verified safe reference.
+2. Record T063 and T064 scores immediately when Kaggle posts them; do not infer or extrapolate.
+3. Do not reopen T055, 50% U projection, viewer shifts, public-well transactions, or score-affine tuning.
+4. Use remaining submissions only for materially independent, source-audited, preregistered mechanisms with full execution contracts.
+5. The exact winning neural WARP checkpoint remains unavailable. A public `warp-lite` LightGBM residual-rate artifact was recovered, but it is not the winning architecture and its host notebook includes a public-probe-derived bias layer. It requires isolated provenance and whole-well validation before any consideration.
+
+### Immediate next action
+
+Wait only for the already queued T063/T064 measured scores while continuing independent source audit. If neither beats 6.494, retain 6.494 and prioritize a genuinely independent legal mechanism rather than another correlated spatial/surface correction.

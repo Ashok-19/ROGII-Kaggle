@@ -1,0 +1,14 @@
+{
+  "type": "hypothesis",
+  "recorded_at": "2026-08-02T15:27:36Z",
+  "payload": {
+    "hypothesis_id": "H045",
+    "title": "Fixed 50 percent U projection replicates safely across independent bases",
+    "statement": "The exact T060 50% robust U projection will reproduce aggregate gains without violating family-specific tail gates when applied across the frozen independent base set.",
+    "status": "rejected",
+    "priority": 99,
+    "evidence_for": "The fixed action continued to show broad aggregate structural improvement, confirming the sign and representation were not accidental.",
+    "evidence_against": "Replication preserved the decisive tail failure, including on the E011 family, so the 50% action remained unsafe.",
+    "next_test": "Freeze one tail-safe 25% projection and require all registered bases, spatial cells, fold cells, and bootstraps to improve before live packaging."
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "decision",
+  "recorded_at": "2026-08-02T15:27:36Z",
+  "payload": {
+    "decision_id": "D061",
+    "title": "Reject fixed 50 percent surface replication",
+    "decided_at": "2026-08-02",
+    "decision": "Reject H045/T061. The exact 50% surface projection is closed because its tail failure replicated across frozen families.",
+    "rationale": "A replicated aggregate gain with replicated tail failure is not a deployable improvement. Further tuning around 50% would be post-result cosmetic search.",
+    "revisit_trigger": "Continue only with the separately preregistered 25% tail-safe action and its stricter all-cell gates.",
+    "source_ids": "T061,H045,scratch/agents/t061-surface-replication/PRE_REGISTRATION.json,scratch/agents/t061-surface-replication/RESULT.md,scratch/agents/t061-surface-replication/summary.json"
+  }
+}
